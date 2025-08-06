@@ -47,7 +47,7 @@ public class TelaLogin extends JFrame {
 	}
 
 	/**
-	 * sjfjssjfsjfsjfsjjsjsjfsjsjjsjsjjsjsjsjs
+	 * Create the frame
 	 */
 	public TelaLogin() {
 		setResizable(false);
