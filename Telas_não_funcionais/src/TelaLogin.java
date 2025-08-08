@@ -1,27 +1,15 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Canvas;
 import java.awt.Color;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.SwingConstants;
-import java.awt.Panel;
-import java.awt.Label;
-import javax.swing.JTextArea;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTextField;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.Insets;
+
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class TelaLogin extends JFrame {
 
