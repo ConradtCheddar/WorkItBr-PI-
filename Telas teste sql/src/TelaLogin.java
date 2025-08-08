@@ -101,18 +101,34 @@ public class TelaLogin extends JFrame {
 		passwordField.setBounds(324, 288, 136, 33);
 		contentPane.add(passwordField);
 		
-		try {
-			 Class.forName("com.mysql.cj.jdbc.Driver");
-			  Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-			  System.out.println("Conexão estabelecida com sucesso!");
-			    Statement stmt = conn.createStatement();
-			    stmt.execute("SELECT * FROM Login");
-			    conn.close();
-		 } catch (ClassNotFoundException e) {
-	            e.printStackTrace();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
+		btnLogin.addActionListener(e -> {
+		    String usuario = txtUsuario.getText();
+		    String senha = new String(passwordField.getPassword());
+
+		    try {
+		        Class.forName("com.mysql.cj.jdbc.Driver");
+		        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+		        String sql = "INSERT INTO Login (Email, Nome, CPF_CNPJ, Telefone, Senha) VALUES (?, ?, ?, ?, ?)";
+		        var stmt = conn.prepareStatement(sql);
+		        stmt.setString(1, usuario);          // Email
+		        stmt.setString(2, "NomeTeste");      // Nome
+		        stmt.setInt(3, 123456789);           // CPF/CNPJ
+		        stmt.setString(4, "999999999");      // Telefone
+		        stmt.setString(5, senha);            // Senha
+
+		        stmt.executeUpdate();
+		        System.out.println("Usuário cadastrado com sucesso!");
+
+		        stmt.close();
+		        conn.close();
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		    }
+		});
+		
+		
 	}
+}
+
 
