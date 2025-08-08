@@ -1,3 +1,7 @@
+CREATE Database WorkItBr_BD
+
+use WorkItBr_BD
+
 CREATE TABLE Contratado 
 ( 
  Github INT,  
