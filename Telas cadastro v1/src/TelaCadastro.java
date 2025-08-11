@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JOptionPane;
 
-public class TelaLogin extends JFrame {
+public class TelaCadastro extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,7 +30,7 @@ public class TelaLogin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaLogin frame = new TelaLogin();
+					TelaCadastro frame = new TelaCadastro();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +50,7 @@ public class TelaLogin extends JFrame {
 	  private JTextField txtCPF_CNPJ;
 	  private JTextField txtTelefone;
 	  private JPasswordField txtsenha2;
-	public TelaLogin() {
+	public TelaCadastro() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 788, 560);
