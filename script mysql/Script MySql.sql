@@ -27,7 +27,7 @@ CREATE TABLE Login
 ( 
  Email VARCHAR(25) NOT NULL DEFAULT '20',  
  Nome VARCHAR(30) NOT NULL,  
- CPF_CNPJ INT NOT NULL,  
+ CPF_CNPJ varchar(12) NOT NULL,  
  Telefone VARCHAR(12) NOT NULL, 
  Senha VARCHAR(50) NOT NULL, 
  idLogin INT PRIMARY KEY AUTO_INCREMENT  
@@ -42,3 +42,5 @@ CREATE TABLE administrador
 ALTER TABLE Contratado ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
 ALTER TABLE Contratante ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
 ALTER TABLE administrador ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
+
+select * from Login

@@ -14,13 +14,14 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 
 public class TelaLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUsuario;
-	private JPasswordField passwordField;
+	private JPasswordField txtsenha1;
 
 	/**
 	 * Launch the application.
@@ -45,6 +46,10 @@ public class TelaLogin extends JFrame {
 	  String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";  
 	  String Usuario = "root";
 	  String Senha = "admin";
+	  private JTextField txtEmail;
+	  private JTextField txtCPF_CNPJ;
+	  private JTextField txtTelefone;
+	  private JPasswordField txtsenha2;
 	public TelaLogin() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,13 +60,13 @@ public class TelaLogin extends JFrame {
 		setContentPane(contentPane);
 
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setForeground(Color.WHITE);
+		btnLogin.setForeground(new Color(0, 0, 0));
 		btnLogin.setBackground(Color.BLUE);
-		btnLogin.setBounds(324, 346, 136, 33);
+		btnLogin.setBounds(324, 425, 136, 33);
 		contentPane.add(btnLogin);
 		
 		txtUsuario = new JTextField();
-		txtUsuario.setBounds(324, 202, 136, 33);
+		txtUsuario.setBounds(81, 163, 136, 33);
 		txtUsuario.setFocusable(true);
 		
 		contentPane.setLayout(null);
@@ -85,50 +90,114 @@ public class TelaLogin extends JFrame {
 		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
-		JLabel lblUsuario = new JLabel("Usuário");
+		JLabel lblUsuario = new JLabel("Nome do Usuario");
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsuario.setBounds(324, 164, 136, 27);
+		lblUsuario.setBounds(81, 125, 136, 27);
 		contentPane.add(lblUsuario);
 		
 		JLabel lblNewLabel_1 = new JLabel("Senha");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(324, 263, 136, 14);
+		lblNewLabel_1.setBounds(324, 261, 136, 27);
 		contentPane.add(lblNewLabel_1);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(324, 288, 136, 33);
-		contentPane.add(passwordField);
+		txtsenha1 = new JPasswordField();
+		txtsenha1.setBounds(324, 299, 136, 33);
+		contentPane.add(txtsenha1);
+		
+		JLabel Email = new JLabel("Email");
+		Email.setHorizontalAlignment(SwingConstants.CENTER);
+		Email.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		Email.setBounds(324, 125, 136, 27);
+		contentPane.add(Email);
+		
+		txtEmail = new JTextField();
+		txtEmail.setForeground(Color.BLACK);
+		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtEmail.setFocusable(true);
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(324, 163, 136, 33);
+		contentPane.add(txtEmail);
+		
+		JLabel CPF_CNPJ = new JLabel("CPF/CNPJ");
+		CPF_CNPJ.setHorizontalAlignment(SwingConstants.CENTER);
+		CPF_CNPJ.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		CPF_CNPJ.setBounds(568, 125, 136, 27);
+		contentPane.add(CPF_CNPJ);
+		
+		txtCPF_CNPJ = new JTextField();
+		txtCPF_CNPJ.setForeground(Color.BLACK);
+		txtCPF_CNPJ.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtCPF_CNPJ.setFocusable(true);
+		txtCPF_CNPJ.setColumns(10);
+		txtCPF_CNPJ.setBounds(568, 163, 136, 33);
+		contentPane.add(txtCPF_CNPJ);
+		
+		JLabel Telefone = new JLabel("N* Telefone");
+		Telefone.setHorizontalAlignment(SwingConstants.CENTER);
+		Telefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		Telefone.setBounds(81, 261, 136, 27);
+		contentPane.add(Telefone);
+		
+		txtTelefone = new JTextField();
+		txtTelefone.setForeground(Color.BLACK);
+		txtTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtTelefone.setFocusable(true);
+		txtTelefone.setColumns(10);
+		txtTelefone.setBounds(81, 299, 136, 33);
+		contentPane.add(txtTelefone);
+		
+		JLabel senha_confirm = new JLabel("Confirmar Senha");
+		senha_confirm.setHorizontalAlignment(SwingConstants.CENTER);
+		senha_confirm.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		senha_confirm.setBounds(568, 261, 136, 27);
+		contentPane.add(senha_confirm);
+		
+		txtsenha2 = new JPasswordField();
+		txtsenha2.setBounds(568, 299, 136, 33);
+		contentPane.add(txtsenha2);
 		
 		btnLogin.addActionListener(e -> {
+		    String email = txtEmail.getText();
 		    String usuario = txtUsuario.getText();
-		    String senha = new String(passwordField.getPassword());
+		    String cpf_cnpj = txtCPF_CNPJ.getText();
+		    String telefone = txtTelefone.getText();
+		    String senha = new String(txtsenha1.getPassword());
+		    String senha2 = new String(txtsenha2.getPassword());
+		    
+		    if (senha.equals(senha2)) {
+		    	try {
+			        Class.forName("com.mysql.cj.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-		    try {
-		        Class.forName("com.mysql.cj.jdbc.Driver");
-		        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+			        String sql = "INSERT INTO Login (Email, Nome, CPF_CNPJ, Telefone, Senha) VALUES (?, ?, ?, ?, ?)";
+			        var stmt = conn.prepareStatement(sql);
+			        stmt.setString(1, email);          // Email
+			        stmt.setString(2, usuario);      // Nome
+			        stmt.setString(3, cpf_cnpj);           // CPF/CNPJ
+			        stmt.setString(4, telefone);      // Telefone
+			        stmt.setString(5, senha);            // Senha
 
-		        String sql = "INSERT INTO Login (Email, Nome, CPF_CNPJ, Telefone, Senha) VALUES (?, ?, ?, ?, ?)";
-		        var stmt = conn.prepareStatement(sql);
-		        stmt.setString(1, usuario);          // Email
-		        stmt.setString(2, "NomeTeste");      // Nome
-		        stmt.setInt(3, 123456789);           // CPF/CNPJ
-		        stmt.setString(4, "999999999");      // Telefone
-		        stmt.setString(5, senha);            // Senha
+			        stmt.executeUpdate();
+			        System.out.println("Usuário cadastrado com sucesso!");
 
-		        stmt.executeUpdate();
-		        System.out.println("Usuário cadastrado com sucesso!");
-
-		        stmt.close();
-		        conn.close();
-		    } catch (Exception ex) {
-		        ex.printStackTrace();
+			        stmt.close();
+			        conn.close();
+			    } catch (Exception ex) {
+			        ex.printStackTrace();
+			    }
+			}else{
+				JOptionPane.showMessageDialog(null,"Senha Incoreta","Erro",JOptionPane.ERROR_MESSAGE);
+			};
+		    });
+		    	
 		    }
-		});
+		   
+		    
 		
 		
 	}
-}
+
 
 
