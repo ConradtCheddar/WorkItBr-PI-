@@ -1,81 +1,60 @@
 package packageDefault;
 
 import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JComboBox;
-import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
-public class TelaLogin extends JFrame {
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class TelaLogin extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private Seila seila;
 
 	/**
-	 * Launch the application.
+	 * Create the panel.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaLogin frame = new TelaLogin();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	public TelaLogin(Seila janela) {
+		
+		seila = janela;
+		
+		setBorder(new EmptyBorder(0, 0, 0, 0));
+		
+		setLayout(new MigLayout("", "[grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]", "[grow][][][][][][][][][][][][][][][][][][][][][grow]"));
+		
+		JLabel lblNewLabel = new JLabel("Teste");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblNewLabel, "cell 8 6 16 2,grow");
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Container contentPane = seila.getContentPane();
+				contentPane.remove(TelaLogin.this);
+				
+						
 			}
 		});
+		add(btnNewButton, "cell 8 11 16 1,grow");
+		
+		
+		
+		
+		
+		
+
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public TelaLogin() {
-		setTitle("WorkITBr");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1169, 788);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
-		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("fill, insets 0", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", 
-				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.BLUE);
-		contentPane.add(panel, "cell 0 0 24 2,grow");
-		panel.setLayout(new MigLayout("fill", "[center]", "[]"));
-		
-		JLabel lblNewLabel = new JLabel("WorkITBr");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setForeground(Color.WHITE);
-		panel.add(lblNewLabel, "cell 0 0, grow, push");
-		
-		JPanel panel_1 = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
-		contentPane.add(panel_1, "cell 2 6 2 1");
-		
-		panel.addComponentListener(new ComponentAdapter() {
-		    @Override
-		    public void componentResized(ComponentEvent e) {
-		        int panelHeight = panel.getHeight();
-		        int fontSize = Math.max(35, panelHeight / 3);
-		        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-		    }
-		});
-		
-		
-	}
 }
