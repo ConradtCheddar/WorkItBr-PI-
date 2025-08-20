@@ -1,5 +1,7 @@
 package telas_Final;
 
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
 
 public class TelaCadastro2 extends JPanel {
@@ -9,7 +11,8 @@ public class TelaCadastro2 extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TelaCadastro2() {
+	public TelaCadastro2(Primario prim) {
+		setPreferredSize(new Dimension(700, 500));
 
 	}
 

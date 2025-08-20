@@ -18,9 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
+import org.jdesktop.swingx.prompt.PromptSupport;
+
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaLogin extends JPanel {
 
@@ -31,9 +36,6 @@ public class TelaLogin extends JPanel {
 	String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	String Usuario = "root";
 	String Senha = "admin";
-	private JTextField txtUsurio;
-	private JPasswordField passwordField_1;
-	
 
 	/**
 	 * Create the panel.
@@ -43,9 +45,10 @@ public class TelaLogin extends JPanel {
 	public TelaLogin(Primario prim) {
 		setPreferredSize(new Dimension(700, 500));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][][][][grow][grow][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][35px]"));
-		
-		
+		setLayout(new MigLayout("fill, insets 0",
+				"[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]",
+				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][][][][grow][grow][grow][grow][grow][][grow][][grow][][][grow][grow][grow][grow][grow][grow][][35px]"));
+
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLUE);
 		add(panel, "flowx,cell 0 0 25 1,grow");
@@ -56,71 +59,81 @@ public class TelaLogin extends JPanel {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
-		
-		JLabel lblNewLabel_1 = new JLabel("Usuário");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblNewLabel_1, "cell 10 9 5 2,grow");
 
-		txtUsurio = new JTextField();
-		txtUsurio.setForeground(Color.BLACK);
-		txtUsurio.setHorizontalAlignment(SwingConstants.CENTER);
-		txtUsurio.setText("");
-		add(txtUsurio, "cell 10 11 5 1,grow");
-		txtUsurio.setColumns(10);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Senha");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblNewLabel_1_1, "cell 10 18 5 2,grow");
+		txtUsuario = new JTextField();
+		txtUsuario.setForeground(Color.BLACK);
+		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		add(txtUsuario, "cell 10 11 5 1,grow");
+		txtUsuario.setColumns(10);
+		PromptSupport.setPrompt("Usuario", txtUsuario);
+		PromptSupport.setForeground(new Color(100, 100, 100), txtUsuario);
 
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setHorizontalAlignment(SwingConstants.CENTER);
-		passwordField_1.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
+		passwordField = new JPasswordField();
+		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
+		PromptSupport.setPrompt("Senha", passwordField);
+		PromptSupport.setForeground(new Color(100, 100, 100), passwordField);
 
-		add(passwordField_1, "flowy,cell 10 20 5 2,grow");
-
-//		textField = new JTextField();
-//		add(textField, "cell 10 10 5 1,grow");
-//		textField.setColumns(10);
-//		
-//		passwordField_1 = new JPasswordField();
-//		add(passwordField_1, "cell 10 18 5 2,grow");
+		add(passwordField, "flowy,cell 10 20 5 2,grow");
 
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setFocusTraversalPolicyProvider(true);
+		btnLogin.setForeground(Color.WHITE);
+		btnLogin.setBackground(new Color(0, 0, 255));
 		add(btnLogin, "cell 11 28 3 2,grow");
+
+		JLabel lblNewLabel_2 = new JLabel("Ainda não tem um login?");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		add(lblNewLabel_2, "cell 12 30,grow");
+
+		JLabel lblNewLabel_3 = new JLabel("Cadastre-se");
+		lblNewLabel_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				prim.mostrarTela(prim.CAD1_PANEL);
+			}
+		});
+
+		prim.requestFocusInWindow();
+
+		lblNewLabel_3.setForeground(new Color(51, 102, 255));
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		add(lblNewLabel_3, "cell 13 30,growx");
+
 		btnLogin.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        String usuario = txtUsuario.getText();
-		        String senha = new String(passwordField.getPassword());
+			public void actionPerformed(ActionEvent e) {
+				String usuario = txtUsuario.getText();
+				String senha = new String(passwordField.getPassword());
 
-		        try {
-		        	
-		            Class.forName("com.mysql.cj.jdbc.Driver");
-		            Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+				try {
 
-		            
-		            String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
-		            var stmt = conn.prepareStatement(sql);
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-		           
-		            stmt.setString(1, usuario);
-		            stmt.setString(2, senha);
+					String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
+					var stmt = conn.prepareStatement(sql);
 
-		            var rs = stmt.executeQuery();
+					stmt.setString(1, usuario);
+					stmt.setString(2, senha);
 
-		            if (rs.next()) {
-		                System.out.println(" Login realizado com sucesso");
-		              
-		            } else {
-		                System.out.println(" Usuário ou senha incorretos");
-		            }
+					var rs = stmt.executeQuery();
 
-		            rs.close();
-		            stmt.close();
-		            conn.close();
-		        } catch (Exception ex) {
-		            ex.printStackTrace();
-		        }
-		    }
+					if (rs.next()) {
+						System.out.println(" Login realizado com sucesso");
+
+					} else {
+						System.out.println(" Usuário ou senha incorretos");
+					}
+
+					rs.close();
+					stmt.close();
+					conn.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		});
 
 		addComponentListener(new ComponentAdapter() {
@@ -131,30 +144,43 @@ public class TelaLogin extends JPanel {
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 			}
 		});
-		
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
 				int fontSize = Math.max(15, panelHeight / 37);
-				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
+				// lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 				btnLogin.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				// lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				PromptSupport.setPrompt("Senha", passwordField);
+				PromptSupport.setPrompt("Usuario", txtUsuario);
+				txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				passwordField.setFont(italicPlaceholderFont);
 			}
 		});
-		
+
 		try {
-			 Class.forName("com.mysql.cj.jdbc.Driver");
-			  Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-			  System.out.println("Conexão estabelecida com sucesso!");
-			    Statement stmt = conn.createStatement();
-			    stmt.execute("SELECT * FROM Login");
-			    conn.close();
-		 } catch (ClassNotFoundException e) {
-	            e.printStackTrace();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+			System.out.println("Conexão estabelecida com sucesso!");
+			Statement stmt = conn.createStatement();
+			stmt.execute("SELECT * FROM Login");
+			conn.close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		setFocusable(true);
+		requestFocusInWindow();
+		SwingUtilities.invokeLater(() -> {
+			btnLogin.requestFocusInWindow();
+		});
 
 	}
 

@@ -14,53 +14,46 @@ public class Primario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JPanel currentPanel;
+	private CardLayout cardLayout;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Primario frame = new Primario();
-					JPanel panel_1 = new TelaLogin(frame);
-					frame.atualizarPainel(panel_1);
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private TelaLogin telaLogin;
+	private TelaCadastro1 telaCadastro1;
+	private TelaCadastro2 telaCadastro2;
+
+	public static final String LOGIN_PANEL = "Login";
+	public static final String CAD1_PANEL = "Cadastro1";
+	public static final String CAD2_PANEL = "Cadastro2";
 
 	/**
 	 * Create the frame.
 	 */
 	public Primario() {
+		setFocusTraversalPolicyProvider(true);
 		setTitle("WorkITBr");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		setPreferredSize(new Dimension(1034, 771));
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		setContentPane(contentPane);
-		contentPane.setLayout(new CardLayout(0, 0));
+		setBounds(100, 100, 700, 500);
+		setLocationRelativeTo(null);
 
+		cardLayout = new CardLayout();
+
+		contentPane = new JPanel(cardLayout);
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+		telaLogin = new TelaLogin(this);
+		telaCadastro1 = new TelaCadastro1(this);
+		telaCadastro2 = new TelaCadastro2(this);
+
+		contentPane.add(telaLogin, LOGIN_PANEL);
+		contentPane.add(telaCadastro1, CAD1_PANEL);
+		contentPane.add(telaCadastro2, CAD2_PANEL);
+
+		setContentPane(contentPane);
+
+		mostrarTela(LOGIN_PANEL);
 	}
 
-	public void atualizarPainel(JPanel j) {
-
-		if (currentPanel != null) {
-			contentPane.remove(currentPanel);
-		}
-
-		currentPanel = j;
-		contentPane.add(j, "cell 0 1,grow");
-
-		pack();
-
+	public void mostrarTela(String panelName) {
+		cardLayout.show(contentPane, panelName);
 	}
 
 }
