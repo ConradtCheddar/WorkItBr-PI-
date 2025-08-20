@@ -43,7 +43,10 @@ ALTER TABLE  Contratado ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
 ALTER TABLE Contratante ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
 ALTER TABLE administrador ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
 
-insert into login (Nome,Email,CPF_CNPJ,Telefone,Senha)
-values('Admin','default','default','default','workitbr@321');
+INSERT INTO login (Nome, Email, CPF_CNPJ, Telefone, Senha)
+SELECT 'Admin', 'default', 'default', 'default', 'workitbr@321'
+WHERE NOT EXISTS (
+SELECT 1 FROM login WHERE Nome = 'Admin');
+
 
 select * from Login
