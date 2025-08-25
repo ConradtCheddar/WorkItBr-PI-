@@ -113,8 +113,9 @@ public class TelaCadastro2 extends JPanel {
 				prim.mostrarTela(prim.TEMP_PANEL);
 			}
 		});
-		add(btnCadastrar, "cell 11 34 16 5,grow");
 		btnCadastrar.putClientProperty("JComponent.roundRect", true);
+		add(btnCadastrar, "cell 10 34 18 5,grow");
+
 		
 		addComponentListener(new ComponentAdapter() {
 			@Override
