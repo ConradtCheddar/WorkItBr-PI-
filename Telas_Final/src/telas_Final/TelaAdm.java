@@ -3,6 +3,8 @@ package telas_Final;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,14 +21,14 @@ public class TelaAdm extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TelaAdm() {
+	public TelaAdm(Primario prim) {
 		setPreferredSize(new Dimension(700, 500));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][][grow][grow][][grow][grow][][grow][grow][][][][][grow][grow][grow][grow][grow][][grow][][][grow][][][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][][grow][grow][][grow][grow][][grow][grow][][][][][][][grow][grow][grow][grow][grow][][grow][][][grow][][][grow][grow][grow][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLUE);
-		add(panel, "flowx,cell 0 0 28 1,grow");
+		add(panel, "flowx,cell 0 0 29 1,grow");
 		panel.setLayout(new MigLayout("fill", "[center]", "[]"));
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
@@ -36,15 +38,41 @@ public class TelaAdm extends JPanel {
 		lblNewLabel.setForeground(Color.WHITE);
 		
 		JPanel panel_1 = new JPanel();
-		add(panel_1, "cell 2 6 8 37,grow");
+		panel_1.setBackground(Color.LIGHT_GRAY);
+		add(panel_1, "cell 2 6 8 39,grow");
 		
 		JPanel panel_2 = new JPanel();
-		add(panel_2, "cell 18 6 8 37,grow");
+		panel_2.setBackground(Color.LIGHT_GRAY);
+		add(panel_2, "cell 19 6 8 39,grow");
 		
-		JButton btnNewButton = new JButton("New button");
-		add(btnNewButton, "cell 11 14 6 1,grow");
+		JButton btnBanir = new JButton("Banir Usuário");
+		btnBanir.setBackground(Color.BLUE);
+		btnBanir.setForeground(Color.WHITE);
+		add(btnBanir, "cell 11 23 7 1,grow");
 		
+		JButton btnAnalisar = new JButton("Analisar Denúncia");
+		btnAnalisar.setForeground(Color.WHITE);
+		btnAnalisar.setBackground(Color.BLUE);
+		add(btnAnalisar, "cell 11 28 7 1,grow");
 		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 17);
+				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+			}
+		});
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 35);
+				btnAnalisar.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				btnBanir.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+			}
+		});
 
 	}
 

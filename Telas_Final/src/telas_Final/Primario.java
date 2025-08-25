@@ -20,11 +20,13 @@ public class Primario extends JFrame {
 	private TelaCadastro1 telaCadastro1;
 	private TelaCadastro2 telaCadastro2;
 	private Temp temp;
+	private TelaAdm adm;
 
 	public static final String LOGIN_PANEL = "Login";
 	public static final String CAD1_PANEL = "Cadastro1";
 	public static final String CAD2_PANEL = "Cadastro2";
 	public static final String TEMP_PANEL = "Temp";
+	public static final String ADM_PANEL = "Adm";
 
 	/**
 	 * Create the frame.
@@ -45,11 +47,13 @@ public class Primario extends JFrame {
 		telaCadastro1 = new TelaCadastro1(this);
 		telaCadastro2 = new TelaCadastro2(this);
 		temp = new Temp(this);
+		adm = new TelaAdm(this);
 
 		contentPane.add(telaLogin, LOGIN_PANEL);
 		contentPane.add(telaCadastro1, CAD1_PANEL);
 		contentPane.add(telaCadastro2, CAD2_PANEL);
 		contentPane.add(temp, TEMP_PANEL);
+		contentPane.add(adm, ADM_PANEL);
 
 		setContentPane(contentPane);
 
