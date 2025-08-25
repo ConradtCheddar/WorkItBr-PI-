@@ -104,35 +104,36 @@ public class TelaLogin extends JPanel {
 
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				String usuario = txtUsuario.getText();
 				String senha = new String(passwordField.getPassword());
-
-				try {
-
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-
-					String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
-					var stmt = conn.prepareStatement(sql);
-
-					stmt.setString(1, usuario);
-					stmt.setString(2, senha);
-
-					var rs = stmt.executeQuery();
-
-					if (rs.next()) {
-						System.out.println(" Login realizado com sucesso");
-
-					} else {
-						System.out.println(" Usuário ou senha incorretos");
-					}
-
-					rs.close();
-					stmt.close();
-					conn.close();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+				prim.mostrarTela(prim.TEMP_PANEL);
+//				try {
+//
+//					Class.forName("com.mysql.cj.jdbc.Driver");
+//					Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+//
+//					String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
+//					var stmt = conn.prepareStatement(sql);
+//
+//					stmt.setString(1, usuario);
+//					stmt.setString(2, senha);
+//
+//					var rs = stmt.executeQuery();
+//
+//					if (rs.next()) {
+//						System.out.println(" Login realizado com sucesso");
+//
+//					} else {
+//						System.out.println(" Usuário ou senha incorretos");
+//					}
+//
+//					rs.close();
+//					stmt.close();
+//					conn.close();
+//				} catch (Exception ex) {
+//					ex.printStackTrace();
+//				}
 			}
 		});
 
