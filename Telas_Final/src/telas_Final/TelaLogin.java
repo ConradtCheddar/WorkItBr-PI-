@@ -1,6 +1,7 @@
 package telas_Final;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.swingx.prompt.PromptSupport;
+
+import com.formdev.flatlaf.FlatClientProperties;
 
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
@@ -65,14 +68,14 @@ public class TelaLogin extends JPanel {
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		add(txtUsuario, "cell 10 11 5 1,grow");
 		txtUsuario.setColumns(10);
-		PromptSupport.setPrompt("Usuario", txtUsuario);
-		PromptSupport.setForeground(new Color(100, 100, 100), txtUsuario);
+		txtUsuario.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
+		txtUsuario.putClientProperty("JComponent.roundRect", true);
 
 		passwordField = new JPasswordField();
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
-		PromptSupport.setPrompt("Senha", passwordField);
-		PromptSupport.setForeground(new Color(100, 100, 100), passwordField);
+		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
+		passwordField.putClientProperty("JComponent.roundRect", true);
 
 		add(passwordField, "flowy,cell 10 20 5 2,grow");
 
@@ -81,6 +84,7 @@ public class TelaLogin extends JPanel {
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(new Color(0, 0, 255));
 		add(btnLogin, "cell 11 28 3 2,grow");
+		btnLogin.putClientProperty("JComponent.roundRect", true);
 
 		JLabel lblNewLabel_2 = new JLabel("Ainda não tem um login?");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 8));
@@ -88,16 +92,26 @@ public class TelaLogin extends JPanel {
 		add(lblNewLabel_2, "cell 12 30,grow");
 
 		JLabel lblNewLabel_3 = new JLabel("Cadastre-se");
+		lblNewLabel_3.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblNewLabel_3.addMouseListener(new MouseAdapter() {
 			@Override
+            public void mouseEntered(MouseEvent e) {
+				lblNewLabel_3.setText("<html><a style='text-decoration: underline; color: blue;' href=''>Cadastre-se</a></html>");
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            	lblNewLabel_3.setText("<html><a style='text-decoration: none; color: blue;' href=''>Cadastre-se</a></html>");
+            }
+			@Override
 			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.CAD1_PANEL);
+				prim.mostrarTela(prim.CAD2_PANEL);
 			}
 		});
 
 		prim.requestFocusInWindow();
 
-		lblNewLabel_3.setForeground(new Color(51, 102, 255));
+		lblNewLabel_3.setForeground(Color.BLUE);
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		add(lblNewLabel_3, "cell 13 30,growx");

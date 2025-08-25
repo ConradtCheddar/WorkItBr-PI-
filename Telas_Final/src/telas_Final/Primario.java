@@ -35,7 +35,7 @@ public class Primario extends JFrame {
 		setFocusTraversalPolicyProvider(true);
 		setTitle("WorkITBr");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 500);
+		setBounds(100, 100, 900, 600);
 		setLocationRelativeTo(null);
 
 		cardLayout = new CardLayout();

@@ -12,6 +12,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 public class TelaAdm extends JPanel {
@@ -48,11 +50,13 @@ public class TelaAdm extends JPanel {
 		JButton btnBanir = new JButton("Banir Usuário");
 		btnBanir.setBackground(Color.BLUE);
 		btnBanir.setForeground(Color.WHITE);
+		btnBanir.putClientProperty("JComponent.roundRect", true);
 		add(btnBanir, "cell 11 23 7 1,grow");
 		
 		JButton btnAnalisar = new JButton("Analisar Denúncia");
 		btnAnalisar.setForeground(Color.WHITE);
 		btnAnalisar.setBackground(Color.BLUE);
+		btnAnalisar.putClientProperty("JComponent.roundRect", true);
 		add(btnAnalisar, "cell 11 28 7 1,grow");
 		
 		addComponentListener(new ComponentAdapter() {
