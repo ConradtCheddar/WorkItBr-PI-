@@ -29,7 +29,7 @@ public class TelaAdm extends JPanel {
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][][grow][grow][][grow][grow][][grow][grow][][][][][][][grow][grow][grow][grow][grow][][grow][][][grow][][][grow][grow][grow][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.BLUE);
+		panel.setBackground(new Color(0, 102, 204));
 		add(panel, "flowx,cell 0 0 29 1,grow");
 		panel.setLayout(new MigLayout("fill", "[center]", "[]"));
 
@@ -48,14 +48,14 @@ public class TelaAdm extends JPanel {
 		add(panel_2, "cell 19 6 8 39,grow");
 		
 		JButton btnBanir = new JButton("Banir Usuário");
-		btnBanir.setBackground(Color.BLUE);
+		btnBanir.setBackground(new Color(0, 102, 204));
 		btnBanir.setForeground(Color.WHITE);
 		btnBanir.putClientProperty("JComponent.roundRect", true);
 		add(btnBanir, "cell 11 23 7 1,grow");
 		
 		JButton btnAnalisar = new JButton("Analisar Denúncia");
 		btnAnalisar.setForeground(Color.WHITE);
-		btnAnalisar.setBackground(Color.BLUE);
+		btnAnalisar.setBackground(new Color(0, 102, 204));
 		btnAnalisar.putClientProperty("JComponent.roundRect", true);
 		add(btnAnalisar, "cell 11 28 7 1,grow");
 		
