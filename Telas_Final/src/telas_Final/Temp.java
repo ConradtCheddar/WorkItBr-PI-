@@ -24,7 +24,7 @@ public class Temp extends JPanel {
 	public Temp(Primario prim) {
 		setPreferredSize(new Dimension(700, 500));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][grow][][grow][grow][][grow][grow][][][][][][grow][grow][grow][][grow][grow][][grow][][][grow][][][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][grow][][grow][grow][][grow][grow][][][][][][grow][grow][grow][][grow][grow][][grow][][][][grow][][][grow][grow][grow][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLUE);
@@ -52,6 +52,14 @@ public class Temp extends JPanel {
 			}
 		});
 		add(btnADM, "cell 13 28,grow");
+		
+		JButton btnNewButton_1 = new JButton("Trabalhos");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prim.mostrarTela(prim.TRABALHOS_PANEL);
+			}
+		});
+		add(btnNewButton_1, "cell 13 34,grow");
 		
 		
 		

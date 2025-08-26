@@ -8,10 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.swingx.prompt.PromptSupport;
@@ -27,16 +24,11 @@ import org.jdesktop.swingx.prompt.PromptSupport;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class TelaLogin extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
-	String Usuario = "root";
-	String Senha = "admin";
 	private JTextField txtUsuario;
 	private JPasswordField passwordField;
 
@@ -48,7 +40,9 @@ public class TelaLogin extends JPanel {
 	public TelaLogin(Primario prim) {
 		setPreferredSize(new Dimension(700, 500));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0",
+				"[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]",
+				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
@@ -62,7 +56,7 @@ public class TelaLogin extends JPanel {
 		lblNewLabel.setForeground(Color.WHITE);
 
 		prim.requestFocusInWindow();
-		
+
 		txtUsuario = new JTextField();
 		txtUsuario.setForeground(Color.BLACK);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -71,47 +65,19 @@ public class TelaLogin extends JPanel {
 		txtUsuario.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
 		txtUsuario.putClientProperty("JComponent.roundRect", true);
 
-		
 		passwordField = new JPasswordField();
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
 		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
 		passwordField.putClientProperty("JComponent.roundRect", true);
 		add(passwordField, "flowy,cell 4 8 13 1,growx");
-		
-		
+
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String usuario = txtUsuario.getText();
 				String senha = new String(passwordField.getPassword());
 				prim.mostrarTela(prim.TEMP_PANEL);
-				try {
-
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-
-					String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
-					var stmt = conn.prepareStatement(sql);
-
-					stmt.setString(1, usuario);
-					stmt.setString(2, senha);
-
-					var rs = stmt.executeQuery();
-
-					if (rs.next()) {
-						System.out.println(" Login realizado com sucesso");
-
-					} else {
-						System.out.println(" Usuário ou senha incorretos");
-					}
-
-					rs.close();
-					stmt.close();
-					conn.close();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
 			}
 		});
 		btnLogin.setFocusTraversalPolicyProvider(true);
@@ -120,23 +86,26 @@ public class TelaLogin extends JPanel {
 		btnLogin.putClientProperty(FlatClientProperties.STYLE, "arc:999;");
 		add(btnLogin, "cell 5 13 11 1,grow");
 		requestFocusInWindow();
-		
+
 		JLabel lblntlg = new JLabel("Ainda não tem um Login?");
 		lblntlg.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblntlg, "cell 9 14,grow");
-		
+
 		JLabel lblCadastrese = new JLabel("Cadastre-se");
 		lblCadastrese.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblCadastrese.addMouseListener(new MouseAdapter() {
 			@Override
-            public void mouseEntered(MouseEvent e) {
-				lblCadastrese.setText("<html><a style='text-decoration: underline; color: #0066cc;' href=''>Cadastre-se</a></html>");
-            }
+			public void mouseEntered(MouseEvent e) {
+				lblCadastrese.setText(
+						"<html><a style='text-decoration: underline; color: #0066cc;' href=''>Cadastre-se</a></html>");
+			}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-            	lblCadastrese.setText("<html><a style='text-decoration: none; color: #0066cc;' href=''>Cadastre-se</a></html>");
-            }
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCadastrese.setText(
+						"<html><a style='text-decoration: none; color: #0066cc;' href=''>Cadastre-se</a></html>");
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				prim.mostrarTela(prim.CAD2_PANEL);
@@ -164,7 +133,7 @@ public class TelaLogin extends JPanel {
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
 				int fontSize = Math.max(15, panelHeight / 37);
-				int fontSize2 = Math.max(15, panelHeight /23);
+				int fontSize2 = Math.max(15, panelHeight / 23);
 				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
 				btnLogin.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
@@ -176,21 +145,7 @@ public class TelaLogin extends JPanel {
 			}
 		});
 
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-			System.out.println("Conexão estabelecida com sucesso!");
-			Statement stmt = conn.createStatement();
-			stmt.execute("SELECT * FROM Login");
-			conn.close();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
 		setFocusable(true);
-		
 
 	}
 
