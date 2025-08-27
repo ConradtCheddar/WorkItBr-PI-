@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -11,6 +12,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,6 +33,10 @@ public class TelaLogin extends JPanel {
 
 	private JTextField txtUsuario;
 	private JPasswordField passwordField;
+	
+	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
 	/**
 	 * Create the panel.
@@ -38,19 +44,17 @@ public class TelaLogin extends JPanel {
 	 * @param frame
 	 */
 	public TelaLogin(Primario prim) {
-		setPreferredSize(new Dimension(700, 500));
+		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0",
-				"[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]",
-				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 26 1,grow");
-		panel.setLayout(new MigLayout("fill", "[center]", "[]"));
+		add(panel, "flowx,cell 0 0 41 1,grow");
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "cell 0 0");
+		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
@@ -77,7 +81,7 @@ public class TelaLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String usuario = txtUsuario.getText();
 				String senha = new String(passwordField.getPassword());
-				prim.mostrarTela(prim.TEMP_PANEL);
+				prim.mostrarTela(prim.TRABALHOS_PANEL);
 			}
 		});
 		btnLogin.setFocusTraversalPolicyProvider(true);

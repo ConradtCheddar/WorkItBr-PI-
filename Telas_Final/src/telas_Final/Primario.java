@@ -43,12 +43,12 @@ public class Primario extends JFrame {
 		setBounds(100, 100, 900, 600);
 		setLocationRelativeTo(null);
 		List<Image> icons = new ArrayList<>();
-		icons.add(new ImageIcon(getClass().getResource("/imagens/icon_16x16.png")).getImage());
-		icons.add(new ImageIcon(getClass().getResource("/imagens/icon_32x32.png")).getImage());
-		icons.add(new ImageIcon(getClass().getResource("/imagens/icon_64x64.png")).getImage());
-		icons.add(new ImageIcon(getClass().getResource("/imagens/icon_128x128.png")).getImage());
-		icons.add(new ImageIcon(getClass().getResource("/imagens/icon_256x256.png")).getImage());
-		icons.add(new ImageIcon(getClass().getResource("/imagens/icon_512x512.png")).getImage());
+		icons.add(new ImageIcon(getClass().getResource("/imagens/w.png")).getImage());
+		icons.add(new ImageIcon(getClass().getResource("/imagens/w.png")).getImage());
+		icons.add(new ImageIcon(getClass().getResource("/imagens/w.png")).getImage());
+		icons.add(new ImageIcon(getClass().getResource("/imagens/w.png")).getImage());
+		icons.add(new ImageIcon(getClass().getResource("/imagens/w.png")).getImage());
+		icons.add(new ImageIcon(getClass().getResource("/imagens/w.png")).getImage());
 
 
 		setIconImages(icons);

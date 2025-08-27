@@ -1,10 +1,14 @@
 package telas_Final;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,11 +18,16 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class TelaAdm extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	
+	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
 	/**
 	 * Create the panel.
@@ -30,11 +39,23 @@ public class TelaAdm extends JPanel {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 29 1,grow");
-		panel.setLayout(new MigLayout("fill", "[center]", "[]"));
+		add(panel, "flowx,cell 0 0 41 1,grow");
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
+		
+		JLabel lblMenu = new JLabel(menuResized);
+		lblMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				prim.mostrarTela(prim.TEMP_PANEL);
+			}
+		});
+		lblMenu.setHorizontalAlignment(SwingConstants.TRAILING);
+		panel.add(lblMenu, "cell 11 0,grow");
+		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "cell 0 0");
+		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);

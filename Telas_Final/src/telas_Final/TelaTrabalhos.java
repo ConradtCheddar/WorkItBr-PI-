@@ -6,6 +6,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -16,11 +18,22 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaTrabalhos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
+	
+	ImageIcon chatIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
+	Image scaledImage = chatIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+	ImageIcon chatResized = new ImageIcon(scaledImage);
+	
+	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
+	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
 	/**
 	 * Create the panel.
@@ -33,19 +46,22 @@ public class TelaTrabalhos extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
 		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[center]", "[]"));
-		URL imageUrl = getClass().getResource("/imagens/clickable_icon.png");
-		System.out.println("URL do ícone: " + imageUrl);
-
-		if (imageUrl == null) {
-		    System.err.println("Imagem não encontrada!");
-		} else {
-		    JLabel iconLabel = new JLabel(new ImageIcon(imageUrl));
-		    // Adicione no layout
-		}
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
+		
+		JLabel lblMenu = new JLabel(menuResized);
+		lblMenu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				prim.mostrarTela(prim.TEMP_PANEL);
+			}
+		});
+		lblMenu.setHorizontalAlignment(SwingConstants.TRAILING);
+		panel.add(lblMenu, "cell 11 0,grow");
+		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "cell 0 0");
+		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
@@ -86,28 +102,61 @@ public class TelaTrabalhos extends JPanel {
 		panel_4.setBackground(Color.LIGHT_GRAY);
 		add(panel_4, "cell 7 13 11 2,grow");
 		panel_4.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
-		
-		ImageIcon originalIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
-		Image scaledImage = originalIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-		ImageIcon resizedIcon = new ImageIcon(scaledImage);
 
-		JLabel iconLabel = new JLabel(resizedIcon);
+		JLabel iconLabel = new JLabel(chatResized);
 		add(iconLabel, "cell 18 5");
 		iconLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		JLabel lblNewLabel_3 = new JLabel(resizedIcon);
-		add(lblNewLabel_3, "cell 18 8");
+		JLabel lblNewLabel_3 = new JLabel(chatResized);
+		lblNewLabel_3.setVerticalAlignment(SwingConstants.BOTTOM);
+		add(lblNewLabel_3, "cell 18 8,alignx center,aligny center");
 		lblNewLabel_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		JLabel lblNewLabel_4 = new JLabel(resizedIcon);
-		add(lblNewLabel_4, "cell 18 11");
+		JLabel lblNewLabel_4 = new JLabel(chatResized);
+		lblNewLabel_4.setVerticalAlignment(SwingConstants.BOTTOM);
+		add(lblNewLabel_4, "cell 18 11,alignx center,aligny center");
 		lblNewLabel_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		JLabel lblNewLabel_5 = new JLabel(resizedIcon);
-		add(lblNewLabel_5, "cell 18 14");
+		JLabel lblNewLabel_5 = new JLabel(chatResized);
+		lblNewLabel_5.setVerticalTextPosition(SwingConstants.BOTTOM);
+		lblNewLabel_5.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		lblNewLabel_5.setVerticalAlignment(SwingConstants.BOTTOM);
+		add(lblNewLabel_5, "cell 18 14,alignx center,aligny center");
 		lblNewLabel_5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 17);
+				int fontSize2 = Math.max(15, panelHeight / 40);
+				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+			}
+		});
 		
+		panel.addComponentListener(new ComponentAdapter() {
+	        @Override
+	        public void componentResized(ComponentEvent e) {
+	            ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+	            Image img = menuIcon.getImage();
+	            Image scaled = img.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
+	            lblMenu.setIcon(new ImageIcon(scaled));
+	        }
+	    });
+		
+		panel.addComponentListener(new ComponentAdapter() {
+	        @Override
+	        public void componentResized(ComponentEvent e) {
+	            ImageIcon chatIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
+	            Image img = chatIcon.getImage();
+	            Image scaled = img.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
+	            iconLabel.setIcon(new ImageIcon(scaled));
+	            lblNewLabel_3.setIcon(new ImageIcon(scaled));
+	            lblNewLabel_4.setIcon(new ImageIcon(scaled));
+	            lblNewLabel_5.setIcon(new ImageIcon(scaled));
+	        }
+	    });
 
 
 	}

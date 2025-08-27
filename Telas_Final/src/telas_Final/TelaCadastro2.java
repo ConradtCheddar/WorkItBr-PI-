@@ -1,8 +1,10 @@
 package telas_Final;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -19,6 +21,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -37,6 +40,10 @@ public class TelaCadastro2 extends JPanel {
 	private JRadioButton rdbtnContratado;
 	private JButton btnCadastrar;
 
+	
+	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
 	/**
 	 * Create the panel.
@@ -45,16 +52,15 @@ public class TelaCadastro2 extends JPanel {
 	public TelaCadastro2(Primario prim) {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", 
-				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 40 1,grow");
-		panel.setLayout(new MigLayout("fill", "[center]", "[]"));
+		add(panel, "flowx,cell 0 0 41 1,grow");
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "cell 0 0");
+		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
@@ -108,7 +114,7 @@ public class TelaCadastro2 extends JPanel {
 		btnCadastrar.setBackground(new Color(0, 102, 204));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
+				prim.mostrarTela(prim.TRABALHOS_PANEL);
 			}
 		});
 		btnCadastrar.putClientProperty("JComponent.roundRect", true);
