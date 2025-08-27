@@ -6,7 +6,7 @@ CREATE TABLE if not exists Contratado
 ( 
  Github INT,  
  idLogin INT,  
- idContratado INT PRIMARY KEY AUTO_INCREMENT 
+ idContratado boolean PRIMARY KEY 
 ); 
 
 CREATE TABLE if not exists Servico 
@@ -19,7 +19,7 @@ CREATE TABLE if not exists Servico
 
 CREATE TABLE if not exists Contratante 
 ( 
- id_contratante INT PRIMARY KEY,  
+ id_contratante boolean PRIMARY KEY,  
  idLogin INT
 ); 
 
@@ -35,7 +35,7 @@ CREATE TABLE if not exists Login
 
 CREATE TABLE if not exists administrador 
 ( 
- id_admin INT PRIMARY KEY,  
+ id_admin boolean PRIMARY KEY,  
  idLogin INT 
 ); 
 
@@ -43,8 +43,8 @@ ALTER TABLE  Contratado ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
 ALTER TABLE Contratante ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
 ALTER TABLE administrador ADD FOREIGN KEY(idLogin) REFERENCES Login (idLogin);
 
-INSERT INTO login (Nome, Email, CPF_CNPJ, Telefone, Senha)
-SELECT 'Admin', 'default', 'default', 'default', 'workitbr@321'
+INSERT INTO login (Nome, Email, CPF_CNPJ, Telefone, Senha, id_admin)
+SELECT 'Admin', 'default', 'default', 'default', 'workitbr@321', true
 WHERE NOT EXISTS (
 SELECT 1 FROM login WHERE Nome = 'Admin');
 
