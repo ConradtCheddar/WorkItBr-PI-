@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 public class TelaCadastroFuncional extends JFrame {
 
@@ -62,7 +63,7 @@ public class TelaCadastroFuncional extends JFrame {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setForeground(new Color(0, 0, 0));
 		btnLogin.setBackground(Color.BLUE);
-		btnLogin.setBounds(324, 425, 136, 33);
+		btnLogin.setBounds(514, 388, 136, 33);
 		contentPane.add(btnLogin);
 		
 		txtUsuario = new JTextField();
@@ -158,6 +159,14 @@ public class TelaCadastroFuncional extends JFrame {
 		txtsenha2.setBounds(568, 299, 136, 33);
 		contentPane.add(txtsenha2);
 		
+		JRadioButton btncontratante = new JRadioButton("contratante");
+		btncontratante.setBounds(81, 371, 109, 23);
+		contentPane.add(btncontratante);
+		
+		JRadioButton btncontratado = new JRadioButton("contratado");
+		btncontratado.setBounds(287, 371, 109, 23);
+		contentPane.add(btncontratado);
+		
 		btnLogin.addActionListener(e -> {
 		    String email = txtEmail.getText();
 		    String usuario = txtUsuario.getText();
@@ -165,8 +174,69 @@ public class TelaCadastroFuncional extends JFrame {
 		    String telefone = txtTelefone.getText();
 		    String senha = new String(txtsenha1.getPassword());
 		    String senha2 = new String(txtsenha2.getPassword());
+		    boolean contratado = btncontratado.isSelected();
+		    boolean contratante = btncontratante.isSelected();
 		    
-		    System.out.println(email);
+		    if(contratado == true) {
+		    	if(email.isEmpty() || usuario.isEmpty() || cpf_cnpj.isEmpty() || telefone.isEmpty() || senha.isEmpty() || senha2.isEmpty()) {
+			    	JOptionPane.showMessageDialog(null,"Preencha todos os espaços","Erro",JOptionPane.ERROR_MESSAGE);
+			    }else {
+			    	if (senha.equals(senha2)) {
+				    	try {
+					        Class.forName("com.mysql.cj.jdbc.Driver");
+					        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+					        String sql = "INSERT INTO Login (Email, Nome, CPF_CNPJ, Telefone, Senha, I) VALUES (?, ?, ?, ?, ?)";
+					        var stmt = conn.prepareStatement(sql);
+					        stmt.setString(1, email);          // Email
+					        stmt.setString(2, usuario);      // Nome
+					        stmt.setString(3, cpf_cnpj);           // CPF/CNPJ
+					        stmt.setString(4, telefone);      // Telefone
+					        stmt.setString(5, senha);            // Senha
+					        stmt.setBoolean(6, contratado);    //contratado
+
+					        stmt.executeUpdate();
+					        System.out.println("Usuário cadastrado com sucesso!");
+
+					        stmt.close();
+					        conn.close();
+					    } catch (Exception ex) {
+					        ex.printStackTrace();
+					    }
+					}else{
+						JOptionPane.showMessageDialog(null,"Senha Incoreta","Erro",JOptionPane.ERROR_MESSAGE);
+					};
+		    }
+		    }else if (contratante == true){
+		    	if(email.isEmpty() || usuario.isEmpty() || cpf_cnpj.isEmpty() || telefone.isEmpty() || senha.isEmpty() || senha2.isEmpty()) {
+			    	JOptionPane.showMessageDialog(null,"Preencha todos os espaços","Erro",JOptionPane.ERROR_MESSAGE);
+			    }else {
+			    	if (senha.equals(senha2)) {
+				    	try {
+					        Class.forName("com.mysql.cj.jdbc.Driver");
+					        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+					        String sql = "INSERT INTO Login (Email, Nome, CPF_CNPJ, Telefone, Senha) VALUES (?, ?, ?, ?, ?)";
+					        var stmt = conn.prepareStatement(sql);
+					        stmt.setString(1, email);          // Email
+					        stmt.setString(2, usuario);      // Nome
+					        stmt.setString(3, cpf_cnpj);           // CPF/CNPJ
+					        stmt.setString(4, telefone);      // Telefone
+					        stmt.setString(5, senha);            // Senha
+					        stmt.setBoolean(6, contratante);    //contratante
+
+					        stmt.executeUpdate();
+					        System.out.println("Usuário cadastrado com sucesso!");
+
+					        stmt.close();
+					        conn.close();
+					    } catch (Exception ex) {
+					        ex.printStackTrace();
+					    }
+					}else{
+						JOptionPane.showMessageDialog(null,"Senha Incoreta","Erro",JOptionPane.ERROR_MESSAGE);
+					};
+		    }
 		    
 		    if(email.isEmpty() || usuario.isEmpty() || cpf_cnpj.isEmpty() || telefone.isEmpty() || senha.isEmpty() || senha2.isEmpty()) {
 		    	JOptionPane.showMessageDialog(null,"Preencha todos os espaços","Erro",JOptionPane.ERROR_MESSAGE);
@@ -201,10 +271,6 @@ public class TelaCadastroFuncional extends JFrame {
 		    });
 		    	
 		    }
-		   
-		    
-		
-		
 	}
 
 
