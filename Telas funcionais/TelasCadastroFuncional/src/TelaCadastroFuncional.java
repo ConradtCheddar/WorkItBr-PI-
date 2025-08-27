@@ -166,30 +166,38 @@ public class TelaCadastroFuncional extends JFrame {
 		    String senha = new String(txtsenha1.getPassword());
 		    String senha2 = new String(txtsenha2.getPassword());
 		    
-		    if (senha.equals(senha2)) {
-		    	try {
-			        Class.forName("com.mysql.cj.jdbc.Driver");
-			        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+		    System.out.println(email);
+		    
+		    if(email.isEmpty() || usuario.isEmpty() || cpf_cnpj.isEmpty() || telefone.isEmpty() || senha.isEmpty() || senha2.isEmpty()) {
+		    	JOptionPane.showMessageDialog(null,"Preencha todos os espaços","Erro",JOptionPane.ERROR_MESSAGE);
+		    }else {
+		    	if (senha.equals(senha2)) {
+			    	try {
+				        Class.forName("com.mysql.cj.jdbc.Driver");
+				        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-			        String sql = "INSERT INTO Login (Email, Nome, CPF_CNPJ, Telefone, Senha) VALUES (?, ?, ?, ?, ?)";
-			        var stmt = conn.prepareStatement(sql);
-			        stmt.setString(1, email);          // Email
-			        stmt.setString(2, usuario);      // Nome
-			        stmt.setString(3, cpf_cnpj);           // CPF/CNPJ
-			        stmt.setString(4, telefone);      // Telefone
-			        stmt.setString(5, senha);            // Senha
+				        String sql = "INSERT INTO Login (Email, Nome, CPF_CNPJ, Telefone, Senha) VALUES (?, ?, ?, ?, ?)";
+				        var stmt = conn.prepareStatement(sql);
+				        stmt.setString(1, email);          // Email
+				        stmt.setString(2, usuario);      // Nome
+				        stmt.setString(3, cpf_cnpj);           // CPF/CNPJ
+				        stmt.setString(4, telefone);      // Telefone
+				        stmt.setString(5, senha);            // Senha
 
-			        stmt.executeUpdate();
-			        System.out.println("Usuário cadastrado com sucesso!");
+				        stmt.executeUpdate();
+				        System.out.println("Usuário cadastrado com sucesso!");
 
-			        stmt.close();
-			        conn.close();
-			    } catch (Exception ex) {
-			        ex.printStackTrace();
-			    }
-			}else{
-				JOptionPane.showMessageDialog(null,"Senha Incoreta","Erro",JOptionPane.ERROR_MESSAGE);
-			};
+				        stmt.close();
+				        conn.close();
+				    } catch (Exception ex) {
+				        ex.printStackTrace();
+				    }
+				}else{
+					JOptionPane.showMessageDialog(null,"Senha Incoreta","Erro",JOptionPane.ERROR_MESSAGE);
+				};
+		    }
+		    
+		    
 		    });
 		    	
 		    }
