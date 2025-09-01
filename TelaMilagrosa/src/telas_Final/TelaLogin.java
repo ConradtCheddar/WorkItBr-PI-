@@ -105,7 +105,7 @@ public class TelaLogin extends JPanel {
 
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String usuario = txtUsuario.getText();
 				String senha = passwordField.getText();
 				prim.mostrarTela(prim.TEMP_PANEL);
@@ -118,40 +118,38 @@ public class TelaLogin extends JPanel {
 					var stmt = conn.prepareStatement(sql);
 
 					stmt.setString(1, usuario);
-				stmt.setString(2, senha);
+					stmt.setString(2, senha);
 
-				var rs = stmt.executeQuery();
+					var rs = stmt.executeQuery();
 
-				if (rs.next()) {
-	               boolean idAdmin = rs.getBoolean("idAdmin");
-	               if(idAdmin == true) {
-	            	   prim.mostrarTela(Primario.ADM_PANEL);
-	               }
-	                }else if (rs.next()) {
-			               boolean idContratado = rs.getBoolean("idContratado");
-			               if(idContratado == true) {
-			            	   prim.mostrarTela(Primario.ADM_PANEL); // colocar tela contratado.
-			               }
-			                }else if (rs.next()) {
-					               boolean idContratante = rs.getBoolean("idContratante");
-					               if(idContratante == true) {
-					            	   prim.mostrarTela(Primario.ADM_PANEL); // colocar tela contratante.
-					               }
-			                }else {
-					                	JOptionPane.showMessageDialog(null, "erro", "erro",JOptionPane.ERROR_MESSAGE);
-					                }
+					if (rs.next()) {
+						boolean idAdmin = rs.getBoolean("idAdmin");
+						if (idAdmin == true) {
+							prim.mostrarTela(Primario.ADM_PANEL);
+						}
+					} else if (rs.next()) {
+						boolean idContratado = rs.getBoolean("idContratado");
+						if (idContratado == true) {
+							prim.mostrarTela(Primario.ADM_PANEL); // colocar tela contratado.
+						}
+					} else if (rs.next()) {
+						boolean idContratante = rs.getBoolean("idContratante");
+						if (idContratante == true) {
+							prim.mostrarTela(Primario.ADM_PANEL); // colocar tela contratante.
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+					}
 
-
-				rs.close();
-				stmt.close();
-			  conn.close();
+					rs.close();
+					stmt.close();
+					conn.close();
 				} catch (Exception ex) {
-		          ex.printStackTrace();
-			}
+					ex.printStackTrace();
+				}
 			}
 		});
 
-		
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
