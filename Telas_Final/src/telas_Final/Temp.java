@@ -84,6 +84,14 @@ public class Temp extends JPanel {
 		});
 		add(btnNewButton_1, "cell 11 11,grow");
 		
+		JButton btnNewButton_2 = new JButton("Contratante");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prim.mostrarTela(prim.CONTRATANTE_PANEL);
+			}
+		});
+		add(btnNewButton_2, "cell 11 12,grow");
+		
 		panel.addComponentListener(new ComponentAdapter() {
 	        @Override
 	        public void componentResized(ComponentEvent e) {

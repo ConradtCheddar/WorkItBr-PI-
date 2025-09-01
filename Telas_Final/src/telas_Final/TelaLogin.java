@@ -11,10 +11,13 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -33,7 +36,7 @@ public class TelaLogin extends JPanel {
 
 	private JTextField txtUsuario;
 	private JPasswordField passwordField;
-	
+
 	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
 	ImageIcon menuResized = new ImageIcon(scaledImage2);
@@ -46,7 +49,9 @@ public class TelaLogin extends JPanel {
 	public TelaLogin(Primario prim) {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0",
+				"[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]",
+				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
@@ -62,7 +67,7 @@ public class TelaLogin extends JPanel {
 		prim.requestFocusInWindow();
 
 		txtUsuario = new JTextField();
-		txtUsuario.setForeground(Color.BLACK);
+		txtUsuario.setForeground(Color.WHITE);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		add(txtUsuario, "cell 4 5 13 1,growx");
 		txtUsuario.setColumns(10);
@@ -79,9 +84,42 @@ public class TelaLogin extends JPanel {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				String usuario = txtUsuario.getText();
-				String senha = new String(passwordField.getPassword());
-				prim.mostrarTela(prim.TRABALHOS_PANEL);
+				String senha = passwordField.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection conn = DriverManager.getConnection(prim.url, prim.Usuario, prim.Senha);
+
+					String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
+					var stmt = conn.prepareStatement(sql);
+
+					stmt.setString(1, usuario);
+					stmt.setString(2, senha);
+
+					var rs = stmt.executeQuery();
+
+					if (rs.next()) {
+						boolean idAdmin = rs.getBoolean("idAdmin");
+						boolean idContratado = rs.getBoolean("idContratado");
+						boolean idContratante = rs.getBoolean("idContratante");
+						if (idAdmin == true) {
+							prim.mostrarTela(Primario.ADM_PANEL);
+						} else if (idContratado == true) {
+							prim.mostrarTela(Primario.TRABALHOS_PANEL); // colocar tela contratado.
+						} else if (idContratante == true) {
+							prim.mostrarTela(Primario.CONTRATANTE_PANEL); // colocar tela contratante.
+						} else {
+							JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+
+					rs.close();
+					stmt.close();
+					conn.close();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		btnLogin.setFocusTraversalPolicyProvider(true);

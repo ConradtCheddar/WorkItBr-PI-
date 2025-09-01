@@ -28,13 +28,15 @@ public class Primario extends JFrame {
 	private Temp temp;
 	private TelaAdm adm;
 	private TelaTrabalhos trabalhos;
+	private TelaContratante Panelcontratante;
 
 	public static final String LOGIN_PANEL = "Login";
 	public static final String CAD2_PANEL = "Cadastro2";
 	public static final String TEMP_PANEL = "Temp";
 	public static final String ADM_PANEL = "Adm";
 	public static final String TRABALHOS_PANEL = "Trabalhos";
-
+	public static final String CONTRATANTE_PANEL = "Contratante";
+	
 	String email;
 	String usuario;
 	String cpf_cnpj;
@@ -44,9 +46,9 @@ public class Primario extends JFrame {
 	boolean contratante;
 	boolean contratado;
 
-	String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
-	String Usuario = "root";
-	String Senha = "admin";
+	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
+	static String Usuario = "root";
+	static String Senha = "admin";
 
 	/**
 	 * Create the frame.
@@ -78,12 +80,14 @@ public class Primario extends JFrame {
 		temp = new Temp(this);
 		adm = new TelaAdm(this);
 		trabalhos = new TelaTrabalhos(this);
+		Panelcontratante = new TelaContratante(this);
 
 		contentPane.add(telaLogin, LOGIN_PANEL);
 		contentPane.add(telaCadastro2, CAD2_PANEL);
 		contentPane.add(temp, TEMP_PANEL);
 		contentPane.add(adm, ADM_PANEL);
 		contentPane.add(trabalhos, TRABALHOS_PANEL);
+		contentPane.add(Panelcontratante, CONTRATANTE_PANEL);
 
 		setContentPane(contentPane);
 
@@ -123,7 +127,8 @@ public class Primario extends JFrame {
 						stmt.setBoolean(6, contratado); // contratado
 
 						stmt.executeUpdate();
-						System.out.println("Usuário cadastrado com sucesso!");
+						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Sucesso!", JOptionPane.PLAIN_MESSAGE);
+						mostrarTela(LOGIN_PANEL);
 
 						stmt.close();
 						conn.close();
@@ -155,7 +160,8 @@ public class Primario extends JFrame {
 						stmt.setBoolean(6, contratante); // contratante
 
 						stmt.executeUpdate();
-						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso", "Erro", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Sucesso!", JOptionPane.PLAIN_MESSAGE);
+						mostrarTela(LOGIN_PANEL);
 
 						stmt.close();
 						conn.close();
