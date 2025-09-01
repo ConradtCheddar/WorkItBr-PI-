@@ -11,6 +11,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -34,8 +35,8 @@ public class TelaCadastro2 extends JPanel {
 	private JTextField tfTelefone;
 	private JTextField tfCPF;
 	private JTextField tfUsuario;
-	private JTextField tfSenha;
-	private JTextField tfConfirmarSenha;
+	private JPasswordField senha;
+	private JPasswordField senha2;
 	private JRadioButton rdbtnContratante;
 	private JRadioButton rdbtnContratado;
 	private JButton btnCadastrar;
@@ -81,7 +82,7 @@ public class TelaCadastro2 extends JPanel {
 		tfCPF = new JTextField();
 		add(tfCPF, "cell 4 5 13 1,growx");
 		tfCPF.setColumns(10);
-		tfCPF.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "CPF");
+		tfCPF.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "CPF-CNPJ");
 		tfCPF.putClientProperty("JComponent.roundRect", true);
 		
 		tfUsuario = new JTextField();
@@ -90,17 +91,17 @@ public class TelaCadastro2 extends JPanel {
 		tfUsuario.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
 		tfUsuario.putClientProperty("JComponent.roundRect", true);
 		
-		tfSenha = new JTextField();
-		add(tfSenha, "cell 4 8 13 1,growx");
-		tfSenha.setColumns(10);
-		tfSenha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
-		tfSenha.putClientProperty("JComponent.roundRect", true);
+		senha = new JPasswordField();
+		add(senha, "cell 4 8 13 1,growx");
+		senha.setColumns(10);
+		senha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
+		senha.putClientProperty("JComponent.roundRect", true);
 		
-		tfConfirmarSenha = new JTextField();
-		add(tfConfirmarSenha, "cell 4 9 13 1,growx");
-		tfConfirmarSenha.setColumns(10);
-		tfConfirmarSenha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirmar Senha");
-		tfConfirmarSenha.putClientProperty("JComponent.roundRect", true);
+		senha2 = new JPasswordField();
+		add(senha2, "cell 4 9 13 1,growx");
+		senha2.setColumns(10);
+		senha2.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirmar Senha");
+		senha2.putClientProperty("JComponent.roundRect", true);
 		
 		rdbtnContratante = new JRadioButton("Contratante");
 		add(rdbtnContratante, "cell 7 12");
@@ -114,7 +115,8 @@ public class TelaCadastro2 extends JPanel {
 		btnCadastrar.setBackground(new Color(0, 102, 204));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				prim.mostrarTela(prim.TRABALHOS_PANEL);
+				prim.cadastrar(tfEmail, tfUsuario, tfCPF, tfTelefone, senha, senha2, rdbtnContratado.isSelected(), rdbtnContratante.isSelected());
+			//	prim.mostrarTela(prim.TRABALHOS_PANEL);
 			}
 		});
 		btnCadastrar.putClientProperty("JComponent.roundRect", true);
@@ -145,8 +147,8 @@ public class TelaCadastro2 extends JPanel {
 				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 				tfUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfSenha.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfConfirmarSenha.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				senha.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				senha2.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 				rdbtnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				rdbtnContratante.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
