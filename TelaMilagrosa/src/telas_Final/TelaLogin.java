@@ -106,8 +106,7 @@ public class TelaLogin extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String usuario = txtUsuario.getText()
-						;
+				String usuario = txtUsuario.getText();
 				String senha = passwordField.getText();
 				prim.mostrarTela(prim.TEMP_PANEL);
 				try {
@@ -124,15 +123,25 @@ public class TelaLogin extends JPanel {
 				var rs = stmt.executeQuery();
 
 				if (rs.next()) {
-	               int idlogin = rs.getInt("idlogin");
-	               if(idlogin == 1) {
+	               boolean idAdmin = rs.getBoolean("idAdmin");
+	               if(idAdmin == true) {
 	            	   prim.mostrarTela(Primario.ADM_PANEL);
 	               }
-	                } else {
-	                    JOptionPane.showMessageDialog(null, "erro", "erro",JOptionPane.ERROR_MESSAGE);
-	                    
-	                }
-	
+	                }else if (rs.next()) {
+			               boolean idContratado = rs.getBoolean("idContratado");
+			               if(idContratado == true) {
+			            	   prim.mostrarTela(Primario.ADM_PANEL); // colocar tela contratado.
+			               }
+			                }else if (rs.next()) {
+					               boolean idContratante = rs.getBoolean("idContratante");
+					               if(idContratante == true) {
+					            	   prim.mostrarTela(Primario.ADM_PANEL); // colocar tela contratante.
+					               }
+			                }else {
+					                	JOptionPane.showMessageDialog(null, "erro", "erro",JOptionPane.ERROR_MESSAGE);
+					                }
+
+
 				rs.close();
 				stmt.close();
 			  conn.close();
