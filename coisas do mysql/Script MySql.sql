@@ -12,12 +12,12 @@ CREATE TABLE if not exists Servico
 
 CREATE TABLE if not exists Login 
 ( 
- Email VARCHAR(25) NOT NULL DEFAULT '20',  
- Nome VARCHAR(30) NOT NULL,  
- CPF_CNPJ varchar(12) NOT NULL,  
- Telefone VARCHAR(12) NOT NULL, 
- Senha VARCHAR(50) NOT NULL, 
- github VARCHAR(50),
+ Email VARCHAR(60) NOT NULL DEFAULT '20',  
+ Nome VARCHAR(60) NOT NULL,  
+ CPF_CNPJ varchar(60) NOT NULL,  
+ Telefone VARCHAR(60) NOT NULL, 
+ Senha VARCHAR(60) NOT NULL, 
+ github VARCHAR(60),
  idLogin INT PRIMARY KEY AUTO_INCREMENT, 
  idContratado boolean,
  idAdmin boolean,
