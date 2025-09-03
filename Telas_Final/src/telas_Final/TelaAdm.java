@@ -26,7 +26,7 @@ public class TelaAdm extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
 	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
 	/**
@@ -98,6 +98,15 @@ public class TelaAdm extends JPanel {
 				btnBanir.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 			}
 		});
+		panel.addComponentListener(new ComponentAdapter() {
+	        @Override
+	        public void componentResized(ComponentEvent e) {
+	            ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+	            Image img = menuIcon.getImage();
+	            Image scaled = img.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
+	            lblMenu.setIcon(new ImageIcon(scaled));
+	        }
+	    });
 
 	}
 

@@ -85,41 +85,24 @@ public class TelaLogin extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String usuario = txtUsuario.getText();
-				String senha = passwordField.getText();
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection conn = DriverManager.getConnection(prim.url, prim.Usuario, prim.Senha);
+				String nome = txtUsuario.getText();
+				String senha = new String(passwordField.getPassword());
 
-					String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
-					var stmt = conn.prepareStatement(sql);
+				UsuarioDAO dao = new UsuarioDAO();
+				Usuario u = dao.login(nome, senha);
 
-					stmt.setString(1, usuario);
-					stmt.setString(2, senha);
-
-					var rs = stmt.executeQuery();
-
-					if (rs.next()) {
-						boolean idAdmin = rs.getBoolean("idAdmin");
-						boolean idContratado = rs.getBoolean("idContratado");
-						boolean idContratante = rs.getBoolean("idContratante");
-						if (idAdmin == true) {
-							prim.mostrarTela(Primario.ADM_PANEL);
-						} else if (idContratado == true) {
-							prim.mostrarTela(Primario.TRABALHOS_PANEL); // colocar tela contratado.
-						} else if (idContratante == true) {
-							prim.mostrarTela(Primario.CONTRATANTE_PANEL); // colocar tela contratante.
-						} else {
-							JOptionPane.showMessageDialog(null, "erro", "erro", JOptionPane.ERROR_MESSAGE);
-						}
+				if (u != null) {
+					if (u.isContratado()) {
+						prim.mostrarTela(Primario.TRABALHOS_PANEL);
+					} else if (u.isContratante()) {
+						prim.mostrarTela(Primario.CONTRATANTE_PANEL);
+					} else {
+						prim.mostrarTela(Primario.ADM_PANEL);
 					}
-
-					rs.close();
-					stmt.close();
-					conn.close();
-				} catch (Exception ex) {
-					ex.printStackTrace();
 				}
+				txtUsuario.setText("");
+				passwordField.setText("");
+
 			}
 		});
 		btnLogin.setFocusTraversalPolicyProvider(true);
