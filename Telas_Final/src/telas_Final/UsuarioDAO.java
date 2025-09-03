@@ -11,7 +11,7 @@ public class UsuarioDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	static String Senha = "root";
+	static String Senha = "admin";
 
 	public UsuarioDAO() {
 
