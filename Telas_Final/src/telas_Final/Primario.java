@@ -44,7 +44,7 @@ public class Primario extends JFrame {
 		setFocusTraversalPolicyProvider(true);
 		setTitle("WorkITBr");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 600);
+		setBounds(100, 100, 900, 700);
 		setLocationRelativeTo(null);
 		List<Image> icons = new ArrayList<>();
 		icons.add(new ImageIcon(getClass().getResource("/imagens/w.png")).getImage());

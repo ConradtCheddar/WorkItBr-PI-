@@ -52,6 +52,7 @@ public class TelaAdm extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				prim.mostrarTela(prim.TEMP_PANEL);
+				System.out.println(getSize());
 			}
 		});
 		panel.add(lblBarra, "cell 12 0,grow");
