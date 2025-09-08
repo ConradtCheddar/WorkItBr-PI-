@@ -28,6 +28,10 @@ public class TelaAdm extends JPanel {
 	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
 	ImageIcon menuResized = new ImageIcon(scaledImage2);
+	
+	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
+	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
+	ImageIcon barraResized = new ImageIcon(scaledImage3);
 
 	/**
 	 * Create the panel.
@@ -42,6 +46,17 @@ public class TelaAdm extends JPanel {
 		add(panel, "flowx,cell 0 0 41 1,grow");
 		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
 		
+		JLabel lblBarra = new JLabel(barraResized);
+		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblBarra.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				prim.mostrarTela(prim.TEMP_PANEL);
+			}
+		});
+		panel.add(lblBarra, "cell 12 0,grow");
+		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 		JLabel lblMenu = new JLabel(menuResized);
 		lblMenu.addMouseListener(new MouseAdapter() {
 			@Override
@@ -49,8 +64,8 @@ public class TelaAdm extends JPanel {
 				prim.mostrarTela(prim.TEMP_PANEL);
 			}
 		});
-		lblMenu.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel.add(lblMenu, "cell 11 0,grow");
+		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblMenu, "cell 0 0,grow");
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 
@@ -104,7 +119,11 @@ public class TelaAdm extends JPanel {
 	            ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 	            Image img = menuIcon.getImage();
 	            Image scaled = img.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
+	            ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
+	            Image imgbarra = barraIcon.getImage();
+	            Image scaledBarra = imgbarra.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
 	            lblMenu.setIcon(new ImageIcon(scaled));
+	            lblBarra.setIcon(new ImageIcon(scaledBarra));
 	        }
 	    });
 

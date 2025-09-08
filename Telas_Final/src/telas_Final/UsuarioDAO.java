@@ -36,6 +36,7 @@ public class UsuarioDAO {
 
 						String sql = "INSERT INTO Login (Email, Nome, CPF_CNPJ, Telefone, Senha, idContratado) VALUES (?, ?, ?, ?, ?, ?)";
 						var stmt = conn.prepareStatement(sql);
+						
 						stmt.setString(1, u.getEmail()); // Email
 						stmt.setString(2, u.getUsuario()); // Nome
 						stmt.setString(3, u.getCpfCnpj()); // CPF/CNPJ
@@ -54,7 +55,7 @@ public class UsuarioDAO {
 						ex.printStackTrace();
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Senha Incoreta", "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Senhas se diferem", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 				;
 			}
@@ -103,46 +104,37 @@ public class UsuarioDAO {
 		}
 
 	}
-	
+
 	public Usuario login(String nome, String senha) {
-	    try {
-	        Class.forName("com.mysql.cj.jdbc.Driver");
-	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-	        String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
-	        var stmt = conn.prepareStatement(sql);
+			String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
+			var stmt = conn.prepareStatement(sql);
 
-	        stmt.setString(1, nome);
-	        stmt.setString(2, senha);
+			stmt.setString(1, nome);
+			stmt.setString(2, senha);
 
-	        var rs = stmt.executeQuery();
+			var rs = stmt.executeQuery();
 
-	        if (rs.next()) {
-	            Usuario u = new Usuario(
-	                rs.getString("Email"),
-	                rs.getString("Nome"),
-	                rs.getString("CPF_CNPJ"),
-	                rs.getString("Telefone"),
-	                rs.getString("Senha"),
-	                rs.getBoolean("idContratado"),
-	                rs.getBoolean("idContratante")
-	            );
-	            rs.close();
-	            stmt.close();
-	            conn.close();
-	            return u;
-	        }
+			if (rs.next()) {
+				Usuario u = new Usuario(rs.getString("Email"), rs.getString("Nome"), rs.getString("CPF_CNPJ"),
+						rs.getString("Telefone"), rs.getString("Senha"), rs.getBoolean("idContratado"),
+						rs.getBoolean("idContratante"));
+				rs.close();
+				stmt.close();
+				conn.close();
+				return u;
+			}
 
-	        rs.close();
-	        stmt.close();
-	        conn.close();
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	    }
-	    return null;
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
-	
-	
-	
-	
+
 }

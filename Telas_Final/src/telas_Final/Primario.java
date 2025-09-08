@@ -78,7 +78,7 @@ public class Primario extends JFrame {
 
 		setContentPane(contentPane);
 
-		mostrarTela(LOGIN_PANEL);
+		mostrarTela(CONTRATANTE_PANEL);
 	}
 
 	public static void mostrarTela(String panelName) {
