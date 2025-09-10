@@ -1,32 +1,30 @@
-package telas_Final;
+package view;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-
-import org.jdesktop.swingx.prompt.PromptSupport;
-
-import com.formdev.flatlaf.FlatClientProperties;
-
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JTextField;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import com.formdev.flatlaf.FlatClientProperties;
+
+import model.Usuario;
+import model.UsuarioDAO;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaCadastro2 extends JPanel {
 

@@ -1,4 +1,4 @@
-package telas_Final;
+package view;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -10,18 +10,18 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JTextField;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-public class TelaAdm extends JPanel {
+public class TelaContratante extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -32,27 +32,37 @@ public class TelaAdm extends JPanel {
 	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
 	ImageIcon barraResized = new ImageIcon(scaledImage3);
+	
+	private JTextField tfPesquisar;
 
 	/**
 	 * Create the panel.
 	 */
-	public TelaAdm(Primario prim) {
-		setPreferredSize(new Dimension(700, 500));
+	public TelaContratante(Primario prim) {
+		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][][grow][grow][][grow][grow][][grow][grow][][][][][][][grow][grow][grow][grow][grow][][grow][][][grow][][][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
 		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[]"));
 		
 		JLabel lblBarra = new JLabel(barraResized);
 		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblBarra.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
-				System.out.println(getSize());
+//				prim.mostrarTela(prim.TEMP_PANEL);
+				Dimension currentSize = prim.getSize();
+		        int currentWidth = currentSize.width;
+		        int currentHeight = currentSize.height;
+		        int newWidth = Math.max(currentWidth, 900);
+		        int newHeight = Math.max(currentHeight, 700);
+		        
+		        if (currentWidth < 900 || currentHeight < 700) {
+		            prim.setSize(newWidth, newHeight);
+		        }
 			}
 		});
 		panel.add(lblBarra, "cell 12 0,grow");
@@ -71,49 +81,55 @@ public class TelaAdm extends JPanel {
 		
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
+		panel.add(lblNewLabel, "flowx,cell 6 0,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
 		
+
+		
+		tfPesquisar = new JTextField();
+		add(tfPesquisar, "cell 4 4 14 1,grow");
+		tfPesquisar.setColumns(10);
+		tfPesquisar.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Pesquisar...");
+		tfPesquisar.putClientProperty("JComponent.roundRect", true);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
-		add(panel_1, "cell 2 6 8 39,grow");
+		panel_1.setForeground(Color.LIGHT_GRAY);
+		add(panel_1, "cell 3 6 4 3,grow");
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.LIGHT_GRAY);
-		add(panel_2, "cell 19 6 8 39,grow");
+		add(panel_2, "cell 9 6 4 3,grow");
 		
-		JButton btnBanir = new JButton("Banir Usuário");
-		btnBanir.setBackground(new Color(0, 102, 204));
-		btnBanir.setForeground(Color.WHITE);
-		btnBanir.putClientProperty("JComponent.roundRect", true);
-		add(btnBanir, "cell 11 23 7 1,grow");
+		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.LIGHT_GRAY);
+		add(panel_3, "cell 15 6 4 3,grow");
 		
-		JButton btnAnalisar = new JButton("Analisar Denúncia");
-		btnAnalisar.setForeground(Color.WHITE);
-		btnAnalisar.setBackground(new Color(0, 102, 204));
-		btnAnalisar.putClientProperty("JComponent.roundRect", true);
-		add(btnAnalisar, "cell 11 28 7 1,grow");
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(Color.LIGHT_GRAY);
+		add(panel_4, "cell 3 12 4 3,grow");
 		
+		JPanel panel_5 = new JPanel();
+		panel_5.setBackground(Color.LIGHT_GRAY);
+		add(panel_5, "cell 9 12 4 3,grow");
+		
+		JPanel panel_6 = new JPanel();
+		panel_6.setBackground(Color.LIGHT_GRAY);
+		add(panel_6, "cell 15 12 4 3,grow");
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
 				int fontSize = Math.max(15, panelHeight / 17);
+				int fontSize2 = Math.max(15, panelHeight / 40);
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				tfPesquisar.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 			}
 		});
 		
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 35);
-				btnAnalisar.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				btnBanir.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-			}
-		});
 		panel.addComponentListener(new ComponentAdapter() {
 	        @Override
 	        public void componentResized(ComponentEvent e) {
@@ -127,7 +143,11 @@ public class TelaAdm extends JPanel {
 	            lblBarra.setIcon(new ImageIcon(scaledBarra));
 	        }
 	    });
-
+		
+		
+	
 	}
+	
+	
 
 }

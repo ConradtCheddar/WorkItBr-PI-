@@ -1,4 +1,4 @@
-package telas_Final;
+package model;
 
 public class Usuario {
 	private String email;

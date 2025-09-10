@@ -1,6 +1,8 @@
-package telas_Final;
+package main;
 
 import javax.swing.UIManager;
+
+import view.Primario;
 
 public class Main {
 	public static void main(String[] args) {

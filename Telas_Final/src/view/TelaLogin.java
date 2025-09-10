@@ -1,5 +1,5 @@
 
-package telas_Final;
+package view;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -12,13 +12,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -29,6 +26,8 @@ import org.jdesktop.swingx.prompt.PromptSupport;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import model.Usuario;
+import model.UsuarioDAO;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaLogin extends JPanel {
