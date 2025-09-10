@@ -142,6 +142,43 @@ public class UsuarioDAO {
 	    return null;
 	}
 	
+	public Usuario configU(String nome) {
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+	        String sql = "SELECT * FROM Login WHERE Nome = ?";
+	        var stmt = conn.prepareStatement(sql);
+
+	        stmt.setString(1, nome);
+
+	        var rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            Usuario u = new Usuario(
+	                rs.getString("Email"),
+	                rs.getString("Nome"),
+	                rs.getString("CPF_CNPJ"),
+	                rs.getString("Telefone"),
+	                rs.getString("Senha"),
+	                rs.getBoolean("idContratado"),
+	                rs.getBoolean("idContratante")
+	            );
+	            rs.close();
+	            stmt.close();
+	            conn.close();
+	            return u;
+	        }
+
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	    return null;
+	}
+	
 	
 	
 	

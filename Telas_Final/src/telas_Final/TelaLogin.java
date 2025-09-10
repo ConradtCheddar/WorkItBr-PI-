@@ -93,6 +93,7 @@ public class TelaLogin extends JPanel {
 				Usuario u = dao.login(nome, senha);
 
 				if (u != null) {
+					prim.setUsuario(u);
 					if (u.isContratado()) {
 						prim.mostrarTela(Primario.TRABALHOS_PANEL);
 					} else if (u.isContratante()) {

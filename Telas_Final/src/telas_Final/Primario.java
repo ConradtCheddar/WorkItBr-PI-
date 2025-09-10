@@ -29,6 +29,7 @@ public class Primario extends JFrame {
 	private TelaAdm adm;
 	private TelaTrabalhos trabalhos;
 	private TelaContratante Panelcontratante;
+	private Usuario usuario;
 
 	public static final String LOGIN_PANEL = "Login";
 	public static final String CAD2_PANEL = "Cadastro2";
@@ -69,7 +70,7 @@ public class Primario extends JFrame {
 		adm = new TelaAdm(this);
 		trabalhos = new TelaTrabalhos(this);
 		Panelcontratante = new TelaContratante(this);
-		telaconfiguser =new TelaConfigUser(this);
+		telaconfiguser = new TelaConfigUser(this );
 		
 
 		contentPane.add(telaLogin, LOGIN_PANEL);
@@ -82,11 +83,22 @@ public class Primario extends JFrame {
 
 		setContentPane(contentPane);
 
-		mostrarTela(CONFIG_USER_PANEL);
+		mostrarTela(LOGIN_PANEL);
 	}
+
 
 	public static void mostrarTela(String panelName) {
 		cardLayout.show(contentPane, panelName);
+	}
+	
+
+
+
+
+	public void setUsuario(Usuario u) {
+		this.usuario = u;
+		telaconfiguser.mostrarDados(u);
+		
 	}
 
 

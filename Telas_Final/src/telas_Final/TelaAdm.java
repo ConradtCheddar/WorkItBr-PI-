@@ -29,6 +29,8 @@ public class TelaAdm extends JPanel {
 	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
 	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
+	private Usuario usuario;
+
 	/**
 	 * Create the panel.
 	 */
