@@ -84,6 +84,9 @@ public class Primario extends JFrame {
 	public static void mostrarTela(String panelName) {
 		cardLayout.show(contentPane, panelName);
 	}
+	public void adicionarTela(String nome, JPanel tela) {
+		this.contentPane.add(tela, nome);
+	}
 
 
 
