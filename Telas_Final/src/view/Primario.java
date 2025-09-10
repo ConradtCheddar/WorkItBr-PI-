@@ -24,7 +24,7 @@ public class Primario extends JFrame {
 
 	private TelaLogin telaLogin;
 
-	private TelaCadastro2 telaCadastro2;
+	private TelaCadastro telaCadastro2;
 	private Temp temp;
 	private TelaAdm adm;
 	private TelaTrabalhos trabalhos;
@@ -63,7 +63,7 @@ public class Primario extends JFrame {
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		telaLogin = new TelaLogin(this);
-		telaCadastro2 = new TelaCadastro2(this);
+		telaCadastro2 = new TelaCadastro(this);
 		temp = new Temp(this);
 		adm = new TelaAdm(this);
 		trabalhos = new TelaTrabalhos(this);

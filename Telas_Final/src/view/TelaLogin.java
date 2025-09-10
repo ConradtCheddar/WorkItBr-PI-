@@ -36,17 +36,17 @@ public class TelaLogin extends JPanel {
 
 	private JTextField txtUsuario;
 	private JPasswordField passwordField;
+	private JButton btnLogin;
 
 	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
 	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
 	/**
-	 * Create the panel.
-	 * 
-	 * @param frame
+	 * Declaração dos elementos da tela
 	 */
-	public TelaLogin(Primario prim) {
+
+	public TelaLogin() {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0",
@@ -82,29 +82,6 @@ public class TelaLogin extends JPanel {
 		add(passwordField, "flowy,cell 4 8 13 1,growx");
 
 		JButton btnLogin = new JButton("Login");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				String nome = txtUsuario.getText();
-				String senha = new String(passwordField.getPassword());
-
-				UsuarioDAO dao = new UsuarioDAO();
-				Usuario u = dao.login(nome, senha);
-
-				if (u != null) {
-					if (u.isContratado()) {
-						prim.mostrarTela(Primario.TRABALHOS_PANEL);
-					} else if (u.isContratante()) {
-						prim.mostrarTela(Primario.CONTRATANTE_PANEL);
-					} else {
-						prim.mostrarTela(Primario.ADM_PANEL);
-					}
-				}
-				txtUsuario.setText("");
-				passwordField.setText("");
-
-			}
-		});
 		btnLogin.setFocusTraversalPolicyProvider(true);
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(new Color(0, 102, 204));
@@ -118,6 +95,39 @@ public class TelaLogin extends JPanel {
 
 		JLabel lblCadastrese = new JLabel("Cadastre-se");
 		lblCadastrese.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		prim.requestFocusInWindow();
+
+		lblCadastrese.setForeground(new Color(0, 102, 204));
+		lblCadastrese.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		add(lblCadastrese, "cell 10 14,grow");
+	}
+
+	/**
+	 * Metodo responsavel por salvar o dado do campo "usuario"
+	 */
+	public String getUsuario() {
+		return this.txtUsuario.getText();
+	}
+
+	/**
+	 * Metodo responsavel por salvar o dado do campo "senha"
+	 */
+	public String getSenha() {
+		return this.passwordField.getText();
+	}
+
+	/**
+	* Metodo responsavel pelo funcionamento do botão "Login"
+	*/
+	public void login(ActionListener actionListener) {
+		this.btnLogin.addActionListener(actionListener);		
+	}
+			
+		/**
+		 * Metodo responsavel pelo funcionamento do botão "Cadastre-se"
+		 */
+
 		lblCadastrese.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -137,12 +147,9 @@ public class TelaLogin extends JPanel {
 			}
 		});
 
-		prim.requestFocusInWindow();
-
-		lblCadastrese.setForeground(new Color(0, 102, 204));
-		lblCadastrese.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		add(lblCadastrese, "cell 10 14,grow");
+		/**
+		 * Metodo responsavel pelo funcionamento do redimencionamento do painel
+		 */
 
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -171,7 +178,5 @@ public class TelaLogin extends JPanel {
 		});
 
 		setFocusable(true);
-
-	}
-
+}
 }

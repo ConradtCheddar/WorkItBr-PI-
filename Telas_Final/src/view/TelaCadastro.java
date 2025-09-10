@@ -26,7 +26,7 @@ import model.Usuario;
 import model.UsuarioDAO;
 import net.miginfocom.swing.MigLayout;
 
-public class TelaCadastro2 extends JPanel {
+public class TelaCadastro extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField tfEmail;
@@ -47,7 +47,7 @@ public class TelaCadastro2 extends JPanel {
 	 * Create the panel.
 	 * 
 	 */
-	public TelaCadastro2(Primario prim) {
+	public TelaCadastro(Primario prim) {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0",
