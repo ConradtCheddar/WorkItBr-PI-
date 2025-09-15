@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import controller.Navegador;
 import view.Primario;
 
 public class UsuarioDAO {
@@ -14,7 +15,7 @@ public class UsuarioDAO {
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
 	static String Senha = "admin";
-
+	Navegador n = new Navegador(null);
 	public UsuarioDAO() {
 
 	}
@@ -49,7 +50,7 @@ public class UsuarioDAO {
 						stmt.executeUpdate();
 						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Sucesso!",
 								JOptionPane.PLAIN_MESSAGE);
-						Primario.mostrarTela(Primario.LOGIN_PANEL);
+						n.navegarPara("LOGIN");
 
 						stmt.close();
 						conn.close();
@@ -89,7 +90,7 @@ public class UsuarioDAO {
 						stmt.executeUpdate();
 						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Sucesso!",
 								JOptionPane.PLAIN_MESSAGE);
-						Primario.mostrarTela(Primario.LOGIN_PANEL);
+						n.navegarPara("LOGIN");
 
 						stmt.close();
 						conn.close();

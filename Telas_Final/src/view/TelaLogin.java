@@ -12,6 +12,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,6 +38,7 @@ public class TelaLogin extends JPanel {
 	private JTextField txtUsuario;
 	private JPasswordField passwordField;
 	private JButton btnLogin;
+	private JLabel lblCadastrese;
 
 	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
@@ -64,8 +66,6 @@ public class TelaLogin extends JPanel {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
 
-		prim.requestFocusInWindow();
-
 		txtUsuario = new JTextField();
 		txtUsuario.setForeground(Color.WHITE);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -81,7 +81,7 @@ public class TelaLogin extends JPanel {
 		passwordField.putClientProperty("JComponent.roundRect", true);
 		add(passwordField, "flowy,cell 4 8 13 1,growx");
 
-		JButton btnLogin = new JButton("Login");
+		btnLogin = new JButton("Login");
 		btnLogin.setFocusTraversalPolicyProvider(true);
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(new Color(0, 102, 204));
@@ -93,14 +93,52 @@ public class TelaLogin extends JPanel {
 		lblntlg.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblntlg, "cell 9 14,grow");
 
-		JLabel lblCadastrese = new JLabel("Cadastre-se");
+		lblCadastrese = new JLabel("Cadastre-se");
 		lblCadastrese.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		prim.requestFocusInWindow();
 
 		lblCadastrese.setForeground(new Color(0, 102, 204));
 		lblCadastrese.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		add(lblCadastrese, "cell 10 14,grow");
+		lblCadastrese.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblCadastrese.setText(
+						"<html><a style='text-decoration: underline; color: #0066cc;' href=''>Cadastre-se</a></html>");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblCadastrese.setText(
+						"<html><a style='text-decoration: none; color: #0066cc;' href=''>Cadastre-se</a></html>");
+			}
+
+			
+		});
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 17);
+			}
+		});
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 37);
+				int fontSize2 = Math.max(15, panelHeight / 23);
+				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
+				btnLogin.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				PromptSupport.setPrompt("Senha", passwordField);
+				PromptSupport.setPrompt("Usuario", txtUsuario);
+				txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				passwordField.setFont(italicPlaceholderFont);
+			}
+		});
 	}
 
 	/**
@@ -118,65 +156,31 @@ public class TelaLogin extends JPanel {
 	}
 
 	/**
-	* Metodo responsavel pelo funcionamento do botão "Login"
-	*/
+	 * Metodo responsavel pelo funcionamento do botão "Login"
+	 */
 	public void login(ActionListener actionListener) {
-		this.btnLogin.addActionListener(actionListener);		
+		this.btnLogin.addActionListener(actionListener);
 	}
-			
-		/**
-		 * Metodo responsavel pelo funcionamento do botão "Cadastre-se"
-		 */
 
-		lblCadastrese.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblCadastrese.setText(
-						"<html><a style='text-decoration: underline; color: #0066cc;' href=''>Cadastre-se</a></html>");
-			}
+	/**
+	 * Metodo responsavel pelo funcionamento do botão "Cadastre-se"
+	 */
+	
+	public void cadastro(MouseListener actionListener) {
+	    this.lblCadastrese.addMouseListener(actionListener);
+	}
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblCadastrese.setText(
-						"<html><a style='text-decoration: none; color: #0066cc;' href=''>Cadastre-se</a></html>");
-			}
+	/**
+	 * Metodo responsavel pelo funcionamento do redimencionamento do painel
+	 */
+	
+	/**
+	 * metodo responsavel pela limpeza do formulario
+	 */
+	public void limparFormulario() {
+		txtUsuario.setText("");
+		passwordField.setText("");
+	}
 
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.CAD2_PANEL);
-			}
-		});
 
-		/**
-		 * Metodo responsavel pelo funcionamento do redimencionamento do painel
-		 */
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 17);
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-			}
-		});
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 37);
-				int fontSize2 = Math.max(15, panelHeight / 23);
-				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
-				btnLogin.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				lblntlg.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				PromptSupport.setPrompt("Senha", passwordField);
-				PromptSupport.setPrompt("Usuario", txtUsuario);
-				txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				passwordField.setFont(italicPlaceholderFont);
-			}
-		});
-
-		setFocusable(true);
-}
 }

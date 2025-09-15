@@ -38,7 +38,7 @@ public class TelaContratante extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TelaContratante(Primario prim) {
+	public TelaContratante() {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));

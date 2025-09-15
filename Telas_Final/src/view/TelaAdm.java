@@ -36,7 +36,7 @@ public class TelaAdm extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TelaAdm(Primario prim) {
+	public TelaAdm() {
 		setPreferredSize(new Dimension(700, 500));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][][grow][grow][][grow][grow][][grow][grow][][][][][][][grow][grow][grow][grow][grow][][grow][][][grow][][][grow][grow][grow][grow][grow][grow][35px]"));

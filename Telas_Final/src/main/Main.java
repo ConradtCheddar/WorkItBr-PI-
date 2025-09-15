@@ -2,8 +2,9 @@ package main;
 
 import javax.swing.UIManager;
 
+import controller.CadastroController;
 import controller.LoginController;
-import controller.TelaController;
+import controller.Navegador;
 import model.UsuarioDAO;
 import view.Primario;
 import view.TelaAdm;
@@ -22,25 +23,29 @@ public class Main {
 	        }
 	    Primario prim = new Primario();
 	    
-		prim.setVisible(true);
-		TelaController navegador =new TelaController(prim);
+		
+		Navegador navegador =new Navegador(prim);
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		
-		TelaLogin telaLogin = new TelaLogin();
-		LoginController loginController = new LoginController(telaLogin,usuarioDAO,navegador);
-		TelaCadastro telaCadastro = new TelaCadastro();
-		Temp temp = new Temp();
-		TelaAdm adm = new TelaAdm();
-		TelaTrabalhos trabalhos = new TelaTrabalhos();
-		TelaContratante Panelcontratante = new TelaContratante();
+		//tela de login
+		TelaLogin telalogin = new TelaLogin();
+		LoginController logincontroller = new LoginController(telalogin, usuarioDAO, navegador);
 		
-		navegador.adicionarPainel(telaLogin, "LOGIN_PANEL");
-		contentPane.add(telaCadastro, CAD2_PANEL);
-		contentPane.add(temp, TEMP_PANEL);
-		contentPane.add(adm, ADM_PANEL);
-		contentPane.add(trabalhos, TRABALHOS_PANEL);
-		contentPane.add(Panelcontratante, CONTRATANTE_PANEL);
+		//tela de cadastro
+		TelaCadastro telacadastro = new TelaCadastro();
+		CadastroController cadastrocontroller = new CadastroController(telacadastro, usuarioDAO, navegador);
 		
+		
+		
+		
+		
+		
+		navegador.adicionarPainel("LOGIN", telalogin);
+		navegador.adicionarPainel("CADASTRO", telacadastro);
+		
+		navegador.navegarPara("LOGIN");
+		
+		prim.setVisible(true);
 		
 	}
 }

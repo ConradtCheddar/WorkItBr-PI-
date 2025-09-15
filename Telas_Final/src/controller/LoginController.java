@@ -1,5 +1,8 @@
 package controller;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import model.Usuario;
 import model.UsuarioDAO;
 import view.Primario;
@@ -8,9 +11,9 @@ import view.TelaLogin;
 public class LoginController {
 	private final TelaLogin view;
 	private final UsuarioDAO model;
-	private final TelaController navegador;
+	private final Navegador navegador;
 	
-	public LoginController(TelaLogin view, UsuarioDAO model, TelaController navegador){
+	public LoginController(TelaLogin view, UsuarioDAO model, Navegador navegador){
 		this.view = view;
 		this.model = model;
 		this.navegador = navegador;
@@ -21,24 +24,25 @@ public class LoginController {
 
 			UsuarioDAO dao = new UsuarioDAO();
 			Usuario u = dao.login(nome, senha);
-	
-		});
-		
-		this.view.login(e ->{
-			Usuario u = new Usuario(u.getUsuario(),u.getCpfCnpj(),u.getEmail(),u.getTelefone(),u.getSenha(), u.isContratado(), u.isContratante());
 			
 			if (u != null) {
 				if (u.isContratado()) {
-					this.navegador.mostrarTela(Primario.TRABALHOS_PANEL);
+						navegador.navegarPara("LOGIN");
 				} else if (u.isContratante()) {
-					prim.mostrarTela(Primario.CONTRATANTE_PANEL);
-				} else {
-					prim.mostrarTela(Primario.ADM_PANEL);
+						navegador.navegarPara("LOGIN");
+					} else {
+						navegador.navegarPara("LOGIN");
+					}
 				}
-			}
-			txtUsuario.setText("");
-			passwordField.setText("");
-			
+				this.view.limparFormulario();
+	
+		});
+
+		this.view.cadastro(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        navegador.navegarPara("CADASTRO");
+		    }
 		});
 	}
 	

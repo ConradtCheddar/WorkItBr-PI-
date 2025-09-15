@@ -47,7 +47,7 @@ public class TelaCadastro extends JPanel {
 	 * Create the panel.
 	 * 
 	 */
-	public TelaCadastro(Primario prim) {
+	public TelaCadastro() {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0",
@@ -110,34 +110,6 @@ public class TelaCadastro extends JPanel {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setForeground(Color.WHITE);
 		btnCadastrar.setBackground(new Color(0, 102, 204));
-		btnCadastrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				String email = tfEmail.getText();
-			    String usuario = tfUsuario.getText();
-			    String cpf = tfCPF.getText();
-			    String telefone = tfTelefone.getText();
-			    String senha1 = new String(senha.getPassword());
-			    String senha2Text = new String(senha2.getPassword());
-				
-				UsuarioDAO dao = new UsuarioDAO();
-				Usuario u = new Usuario(email, usuario, cpf, telefone, senha1, rdbtnContratado.isSelected(), rdbtnContratante.isSelected());
-
-
-				dao.cadastrar(u, senha2Text);
-				
-				
-				tfEmail.setText("");
-				tfTelefone.setText("");
-				tfCPF.setText("");
-				tfUsuario.setText("");
-				senha.setText("");
-				senha2.setText("");
-				rdbtnContratado.setSelected(false);
-				rdbtnContratante.setSelected(false);
-				// prim.mostrarTela(prim.TRABALHOS_PANEL);
-			}
-		});
 		btnCadastrar.putClientProperty("JComponent.roundRect", true);
 		add(btnCadastrar, "cell 7 14 7 2,grow");
 
@@ -174,5 +146,133 @@ public class TelaCadastro extends JPanel {
 		});
 
 	}
+	
+	/**
+	 *metodo para a funcionalidade do botão cadastrar 
+	 */
+	public void cadastrar(ActionListener actionlistener) {
+		this.btnCadastrar.addActionListener(actionlistener);
+	}
+	
+	/**
+	 * metodo para limpar caixas de texto
+	 */
+	public void limparCampos() {
+		tfEmail.setText("");
+		tfTelefone.setText("");
+		tfCPF.setText("");
+		tfUsuario.setText("");
+		senha.setText("");
+		senha2.setText("");
+		rdbtnContratado.setSelected(false);
+		rdbtnContratante.setSelected(false);
+	}
+	
+	/**
+	 * getters & setters
+	 * @return
+	 */
+
+	public JTextField getTfEmail() {
+		return tfEmail;
+	}
+
+	public void setTfEmail(JTextField tfEmail) {
+		this.tfEmail = tfEmail;
+	}
+
+	public JTextField getTfTelefone() {
+		return tfTelefone;
+	}
+
+	public void setTfTelefone(JTextField tfTelefone) {
+		this.tfTelefone = tfTelefone;
+	}
+
+	public JTextField getTfCPF() {
+		return tfCPF;
+	}
+
+	public void setTfCPF(JTextField tfCPF) {
+		this.tfCPF = tfCPF;
+	}
+
+	public JTextField getTfUsuario() {
+		return tfUsuario;
+	}
+
+	public void setTfUsuario(JTextField tfUsuario) {
+		this.tfUsuario = tfUsuario;
+	}
+
+	public JPasswordField getSenha() {
+		return senha;
+	}
+
+	public void setSenha(JPasswordField senha) {
+		this.senha = senha;
+	}
+
+	public JPasswordField getSenha2() {
+		return senha2;
+	}
+
+	public void setSenha2(JPasswordField senha2) {
+		this.senha2 = senha2;
+	}
+
+	public JRadioButton getRdbtnContratante() {
+		return rdbtnContratante;
+	}
+
+	public void setRdbtnContratante(JRadioButton rdbtnContratante) {
+		this.rdbtnContratante = rdbtnContratante;
+	}
+
+	public JRadioButton getRdbtnContratado() {
+		return rdbtnContratado;
+	}
+
+	public void setRdbtnContratado(JRadioButton rdbtnContratado) {
+		this.rdbtnContratado = rdbtnContratado;
+	}
+
+	public JButton getBtnCadastrar() {
+		return btnCadastrar;
+	}
+
+	public void setBtnCadastrar(JButton btnCadastrar) {
+		this.btnCadastrar = btnCadastrar;
+	}
+
+	public ImageIcon getMenuIcon() {
+		return menuIcon;
+	}
+
+	public void setMenuIcon(ImageIcon menuIcon) {
+		this.menuIcon = menuIcon;
+	}
+
+	public Image getScaledImage2() {
+		return scaledImage2;
+	}
+
+	public void setScaledImage2(Image scaledImage2) {
+		this.scaledImage2 = scaledImage2;
+	}
+
+	public ImageIcon getMenuResized() {
+		return menuResized;
+	}
+
+	public void setMenuResized(ImageIcon menuResized) {
+		this.menuResized = menuResized;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 
 }

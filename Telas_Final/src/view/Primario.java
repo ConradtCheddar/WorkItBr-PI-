@@ -22,21 +22,6 @@ public class Primario extends JFrame {
 	private static JPanel contentPane;
 	private static CardLayout cardLayout;
 
-	private TelaLogin telaLogin;
-
-	private TelaCadastro telaCadastro2;
-	private Temp temp;
-	private TelaAdm adm;
-	private TelaTrabalhos trabalhos;
-	private TelaContratante Panelcontratante;
-
-	public static final String LOGIN_PANEL = "Login";
-	public static final String CAD2_PANEL = "Cadastro2";
-	public static final String TEMP_PANEL = "Temp";
-	public static final String ADM_PANEL = "Adm";
-	public static final String TRABALHOS_PANEL = "Trabalhos";
-	public static final String CONTRATANTE_PANEL = "Contratante";
-
 	/**
 	 * Create the frame.
 	 */
@@ -57,35 +42,21 @@ public class Primario extends JFrame {
 		setIconImages(icons);
 		UIManager.put("Button.arc", 999);
 
-		cardLayout = new CardLayout();
+		this.cardLayout = new CardLayout();
 
-		contentPane = new JPanel(cardLayout);
-		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		this.contentPane = new JPanel(cardLayout);
+		this.contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+		setContentPane(this.contentPane);
 
-		telaLogin = new TelaLogin(this);
-		telaCadastro2 = new TelaCadastro(this);
-		temp = new Temp(this);
-		adm = new TelaAdm(this);
-		trabalhos = new TelaTrabalhos(this);
-		Panelcontratante = new TelaContratante(this);
-
-		contentPane.add(telaLogin, LOGIN_PANEL);
-		contentPane.add(telaCadastro2, CAD2_PANEL);
-		contentPane.add(temp, TEMP_PANEL);
-		contentPane.add(adm, ADM_PANEL);
-		contentPane.add(trabalhos, TRABALHOS_PANEL);
-		contentPane.add(Panelcontratante, CONTRATANTE_PANEL);
-
-		setContentPane(contentPane);
-
-		mostrarTela(CONTRATANTE_PANEL);
 	}
 
-	public static void mostrarTela(String panelName) {
-		cardLayout.show(contentPane, panelName);
+	public void mostrarTela(String panelName) {
+		this.cardLayout.show(this.contentPane, panelName);
+		this.pack();
 	}
-	public void adicionarTela(String nome, JPanel tela) {
-		this.contentPane.add(tela, nome);
+	
+	public void adicionarTela(String panelName, JPanel tela) {
+		this.contentPane.add(tela, panelName);
 	}
 
 
