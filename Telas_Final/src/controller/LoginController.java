@@ -27,7 +27,7 @@ public class LoginController {
 			
 			if (u != null) {
 				if (u.isContratado()) {
-						navegador.navegarPara("LOGIN");
+						navegador.navegarPara("CONTRATADO");
 				} else if (u.isContratante()) {
 						navegador.navegarPara("CONTRATANTE");
 					} else {

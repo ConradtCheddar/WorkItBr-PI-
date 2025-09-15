@@ -3,6 +3,7 @@ package main;
 import javax.swing.UIManager;
 
 import controller.CadastroController;
+import controller.ContratadoController;
 import controller.ContratanteController;
 import controller.LoginController;
 import controller.Navegador;
@@ -12,7 +13,7 @@ import view.TelaAdm;
 import view.TelaCadastro;
 import view.TelaContratante;
 import view.TelaLogin;
-import view.TelaTrabalhos;
+import view.TelaContratado;
 import view.Temp;
 
 public class Main {
@@ -40,6 +41,10 @@ public class Main {
 		TelaContratante telacontratante = new TelaContratante();
 		ContratanteController contratanteController = new ContratanteController();
 		
+		//tela do contratado
+		TelaContratado telacontratado = new TelaContratado();
+		ContratadoController contratadocontroller = new ContratadoController();
+		
 		
 		
 		
@@ -48,6 +53,7 @@ public class Main {
 		navegador.adicionarPainel("LOGIN", telalogin);
 		navegador.adicionarPainel("CADASTRO", telacadastro);
 		navegador.adicionarPainel("CONTRATANTE", telacontratante);
+		navegador.adicionarPainel("CONTRATADO", telacontratado);
 		
 		navegador.navegarPara("LOGIN");
 		
