@@ -3,6 +3,7 @@ package main;
 import javax.swing.UIManager;
 
 import controller.CadastroController;
+import controller.ContratanteController;
 import controller.LoginController;
 import controller.Navegador;
 import model.UsuarioDAO;
@@ -35,6 +36,10 @@ public class Main {
 		TelaCadastro telacadastro = new TelaCadastro();
 		CadastroController cadastrocontroller = new CadastroController(telacadastro, usuarioDAO, navegador);
 		
+		//tela do contratante
+		TelaContratante telacontratante = new TelaContratante();
+		ContratanteController contratanteController = new ContratanteController();
+		
 		
 		
 		
@@ -42,6 +47,7 @@ public class Main {
 		
 		navegador.adicionarPainel("LOGIN", telalogin);
 		navegador.adicionarPainel("CADASTRO", telacadastro);
+		navegador.adicionarPainel("CONTRATANTE", telacontratante);
 		
 		navegador.navegarPara("LOGIN");
 		

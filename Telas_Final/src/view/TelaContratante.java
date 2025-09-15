@@ -50,21 +50,21 @@ public class TelaContratante extends JPanel {
 		
 		JLabel lblBarra = new JLabel(barraResized);
 		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBarra.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-//				prim.mostrarTela(prim.TEMP_PANEL);
-				Dimension currentSize = prim.getSize();
-		        int currentWidth = currentSize.width;
-		        int currentHeight = currentSize.height;
-		        int newWidth = Math.max(currentWidth, 900);
-		        int newHeight = Math.max(currentHeight, 700);
-		        
-		        if (currentWidth < 900 || currentHeight < 700) {
-		            prim.setSize(newWidth, newHeight);
-		        }
-			}
-		});
+//		lblBarra.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+////////				prim.mostrarTela(prim.TEMP_PANEL);
+//////			//	Dimension currentSize = prim.getSize();
+//////		       // int currentWidth = currentSize.width;
+//////		       // int currentHeight = currentSize.height;
+//////		       // int newWidth = Math.max(currentWidth, 900);
+//////		      //  int newHeight = Math.max(currentHeight, 700);
+//////		        
+//////		        if (currentWidth < 900 || currentHeight < 700) {
+//////		        //    prim.setSize(newWidth, newHeight);
+//////		        }
+//////			}
+////		});
 		panel.add(lblBarra, "cell 12 0,grow");
 		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
@@ -72,7 +72,7 @@ public class TelaContratante extends JPanel {
 		lblMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
+			//	prim.mostrarTela(prim.TEMP_PANEL);
 			}
 		});
 		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
@@ -150,4 +150,4 @@ public class TelaContratante extends JPanel {
 	
 	
 
-}
+		}
