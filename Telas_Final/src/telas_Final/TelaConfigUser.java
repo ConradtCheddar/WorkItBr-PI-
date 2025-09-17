@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -16,13 +18,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaConfigUser extends JPanel {
 
@@ -44,6 +51,7 @@ public class TelaConfigUser extends JPanel {
 	private JTextField tfEmail;
 	private JTextField tfTelefone;
 	private JTextField tfCPF;
+	private Image imagemSelecionada;
 
 	/**
 	 * Create the panel.
@@ -54,9 +62,7 @@ public class TelaConfigUser extends JPanel {
 	public TelaConfigUser(Primario prim) {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0",
-				"[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]",
-				"[35px][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][35px]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
@@ -101,7 +107,16 @@ public class TelaConfigUser extends JPanel {
 		add(fundo, "cell 12 2 8 9,grow");
 		fundo.setLayout(null);
 
-		foto = new JPanel();
+		
+		foto = new JPanel() {
+		    @Override
+		    protected void paintComponent(Graphics g) {
+		        super.paintComponent(g); 
+		        if (imagemSelecionada != null) {
+		            g.drawImage(imagemSelecionada, 0, 0, getWidth(), getHeight(), this);
+		        }
+		    }
+		};
 		foto.setBackground(new Color(0, 255, 0));
 		foto.setBounds(10, 11, 349, 281);
 		fundo.add(foto);
@@ -164,10 +179,49 @@ public class TelaConfigUser extends JPanel {
 		add(tfCPF, "cell 2 11 5 1,growx");
 		tfCPF.setColumns(10);
 		 tfCPF.putClientProperty("JComponent.roundRect", true);
+				
+						JButton btnNewButton = new JButton("Alterar Dados");
+						btnNewButton.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								 
+						        String novoNome = tfNome.getText().isEmpty() ? u.getUsuario() : tfNome.getText();
+						        String novaSenha = tfSenha.getText().isEmpty() ? u.getSenha() : tfSenha.getText();
+						        String novoEmail = tfEmail.getText().isEmpty() ? u.getEmail() : tfEmail.getText();
+						        String novoTelefone = tfTelefone.getText().isEmpty() ? u.getTelefone() : tfTelefone.getText();
+						        String novoCpfCnpj = tfCPF.getText().isEmpty() ? u.getCpfCnpj() : tfCPF.getText();
 
-		JButton btnNewButton = new JButton("Alterar Dados");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		add(btnNewButton, "cell 15 13 1 2,grow");
+						    
+						        u.setUsuario(novoNome);
+						        u.setSenha(novaSenha);
+						        u.setEmail(novoEmail);
+						        u.setTelefone(novoTelefone);
+						        u.setCpfCnpj(novoCpfCnpj);
+
+						        UsuarioDAO dao = new UsuarioDAO();
+						        dao.atualizarUsuario(u);
+							}
+						});
+						
+						JButton btnAlterarImagem = new JButton("Alterar Imagem");
+						btnAlterarImagem.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								        JFileChooser fileChooser = new JFileChooser();
+								        FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagens", "jpg", "png", "jpeg", "gif");
+								        fileChooser.setFileFilter(filter);
+								        int result = fileChooser.showOpenDialog(null); 
+								        if (result == JFileChooser.APPROVE_OPTION) {
+								            File selectedFile = fileChooser.getSelectedFile();
+								            ImageIcon selectedImageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+								            imagemSelecionada = selectedImageIcon.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(), Image.SCALE_SMOOTH);
+								            foto.repaint();
+							        }
+							}
+						});
+						
+						
+						add(btnAlterarImagem, "cell 15 11,growx");
+						btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
+						add(btnNewButton, "cell 15 14,grow");
 		btnNewButton.putClientProperty("JComponent.roundRect", true);
 
 		panel.addComponentListener(new ComponentAdapter() {

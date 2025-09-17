@@ -179,7 +179,35 @@ public class UsuarioDAO {
 	    return null;
 	}
 	
-	
+	public void atualizarUsuario(Usuario u) {
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+	        String sql = "UPDATE Login SET Email = ?, Nome = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ? WHERE Nome = ?";
+	        var stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, u.getEmail());
+	        stmt.setString(2, u.getUsuario());
+	        stmt.setString(3, u.getCpfCnpj());
+	        stmt.setString(4, u.getTelefone());
+	        stmt.setString(5, u.getSenha());
+	        stmt.setString(6, u.getUsuario()); 
+
+	        int rowsUpdated = stmt.executeUpdate();
+
+	        if (rowsUpdated > 0) {
+	            JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Usuário não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+	        }
+
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Erro ao atualizar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
 	
 	
 }
