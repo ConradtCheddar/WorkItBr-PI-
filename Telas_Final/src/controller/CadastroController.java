@@ -1,5 +1,8 @@
 package controller;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import model.Usuario;
 import model.UsuarioDAO;
 import view.TelaCadastro;
@@ -9,7 +12,7 @@ public class CadastroController {
 	private final TelaCadastro view;
 	private final UsuarioDAO model;
 	private final Navegador navegador;
-	
+
 	public CadastroController(TelaCadastro view, UsuarioDAO model, Navegador navegador){
 		this.view = view;
 		this.model = model;
@@ -30,5 +33,14 @@ public class CadastroController {
 			dao.cadastrar(u, senha2Text);
 			navegador.navegarPara("LOGIN");
 		});
+		
+		this.view.retorno(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        navegador.navegarPara("LOGIN");
+		    }
+		    });
+	}
+}
 
-}}
+

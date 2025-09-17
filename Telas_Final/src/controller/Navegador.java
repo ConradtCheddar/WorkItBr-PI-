@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import view.Primario;
 
 public class Navegador {
+	
 	private Primario prim;
 	
 	public Navegador(Primario prim) {

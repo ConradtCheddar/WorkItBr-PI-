@@ -13,13 +13,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import controller.Navegador;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JTextField;
 
 public class TelaContratante extends JPanel {
 
@@ -34,6 +35,7 @@ public class TelaContratante extends JPanel {
 	ImageIcon barraResized = new ImageIcon(scaledImage3);
 	
 	private JTextField tfPesquisar;
+	Navegador navegador = new Navegador(null);
 
 	/**
 	 * Create the panel.
@@ -50,21 +52,12 @@ public class TelaContratante extends JPanel {
 		
 		JLabel lblBarra = new JLabel(barraResized);
 		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-//		lblBarra.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-////////				prim.mostrarTela(prim.TEMP_PANEL);
-//////			//	Dimension currentSize = prim.getSize();
-//////		       // int currentWidth = currentSize.width;
-//////		       // int currentHeight = currentSize.height;
-//////		       // int newWidth = Math.max(currentWidth, 900);
-//////		      //  int newHeight = Math.max(currentHeight, 700);
-//////		        
-//////		        if (currentWidth < 900 || currentHeight < 700) {
-//////		        //    prim.setSize(newWidth, newHeight);
-//////		        }
-//////			}
-////		});
+		lblBarra.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				navegador.navegarPara("LOGIN");
+			}
+		});
 		panel.add(lblBarra, "cell 12 0,grow");
 		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		

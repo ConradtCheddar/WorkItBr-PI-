@@ -1,13 +1,14 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -22,8 +23,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
-import model.Usuario;
-import model.UsuarioDAO;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaCadastro extends JPanel {
@@ -43,6 +42,11 @@ public class TelaCadastro extends JPanel {
 	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
 	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
+	ImageIcon setaIcon = new ImageIcon(getClass().getResource("/imagens/seta_retorno.png"));
+	Image scaledseta = setaIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
+	ImageIcon setaResized = new ImageIcon(scaledseta);
+	private JLabel lblSeta;
+
 	/**
 	 * Create the panel.
 	 * 
@@ -57,10 +61,15 @@ public class TelaCadastro extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
 		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[]"));
+
+		lblSeta = new JLabel(setaResized);
+		lblSeta.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel.add(lblSeta, "cell 0 0");
+		lblSeta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
+		panel.add(lblNewLabel, "flowx,cell 1 0 12 1,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
@@ -142,18 +151,24 @@ public class TelaCadastro extends JPanel {
 				rdbtnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				rdbtnContratante.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				Image img = setaIcon.getImage();
+				ImageIcon setaIcon = new ImageIcon(getClass().getResource("/imagens/seta_retorno.png"));
+				Image imgseta = setaIcon.getImage();
+				Image scaledseta = imgseta.getScaledInstance(panel.getWidth() / 40, panel.getHeight() * 2 / 4,
+						Image.SCALE_SMOOTH);
+				lblSeta.setIcon(new ImageIcon(scaledseta));
 			}
 		});
 
 	}
-	
+
 	/**
-	 *metodo para a funcionalidade do botão cadastrar 
+	 * metodo para a funcionalidade do botão cadastrar
 	 */
 	public void cadastrar(ActionListener actionlistener) {
 		this.btnCadastrar.addActionListener(actionlistener);
 	}
-	
+
 	/**
 	 * metodo para limpar caixas de texto
 	 */
@@ -169,7 +184,15 @@ public class TelaCadastro extends JPanel {
 	}
 	
 	/**
+	 * metodo para a seta de retorno
+	 */
+	public void retorno(MouseListener actionListener) {
+	    this.lblSeta.addMouseListener(actionListener);
+	}
+
+	/**
 	 * getters & setters
+	 * 
 	 * @return
 	 */
 
@@ -272,7 +295,5 @@ public class TelaCadastro extends JPanel {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
 }

@@ -5,22 +5,22 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-
-import net.miginfocom.swing.MigLayout;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import controller.Navegador;
+import net.miginfocom.swing.MigLayout;
 
 public class Temp extends JPanel {
 
@@ -33,6 +33,16 @@ public class Temp extends JPanel {
 	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
 	ImageIcon barraResized = new ImageIcon(scaledImage3);
+	
+	Primario prim;
+	
+	Navegador navegador = new Navegador(prim);
+	
+	JButton btnLogin;
+	JButton btnADM;
+	JButton btnContratado;
+	JButton btnContratante;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -51,7 +61,7 @@ public class Temp extends JPanel {
 		lblBarra.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
+				navegador.navegarPara("TEMP");
 			}
 		});
 		panel.add(lblBarra, "cell 12 0,grow");
@@ -61,7 +71,7 @@ public class Temp extends JPanel {
 		lblMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
+				navegador.navegarPara("TEMP");
 			}
 		});
 		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
@@ -75,37 +85,17 @@ public class Temp extends JPanel {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
 		
-		JButton btnNewButton = new JButton("Login");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				prim.mostrarTela(prim.LOGIN_PANEL);
-			}
-		});
-		add(btnNewButton, "cell 11 9,grow");
+		btnLogin = new JButton("Login");
+		add(btnLogin, "cell 11 9,grow");
 		
-		JButton btnADM = new JButton("ADM");
-		btnADM.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				prim.mostrarTela(prim.ADM_PANEL);
-			}
-		});
+		btnADM = new JButton("ADM");
 		add(btnADM, "cell 11 10,grow");
 		
-		JButton btnNewButton_1 = new JButton("Trabalhos");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				prim.mostrarTela(prim.TRABALHOS_PANEL);
-			}
-		});
-		add(btnNewButton_1, "cell 11 11,grow");
+		btnContratado = new JButton("Contratado");
+		add(btnContratado, "cell 11 11,grow");
 		
-		JButton btnNewButton_2 = new JButton("Contratante");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				prim.mostrarTela(prim.CONTRATANTE_PANEL);
-			}
-		});
-		add(btnNewButton_2, "cell 11 12,grow");
+		btnContratante = new JButton("Contratante");
+		add(btnContratante, "cell 11 12,grow");
 		
 		panel.addComponentListener(new ComponentAdapter() {
 	        @Override
@@ -123,5 +113,20 @@ public class Temp extends JPanel {
 		
 
 	}
+	
+	public void login(ActionListener actionListener) {
+		this.btnLogin.addActionListener(actionListener);
+	}
+	public void adm(ActionListener actionListener) {
+		this.btnADM.addActionListener(actionListener);
+	}
+	public void contratado(ActionListener actionListener) {
+		this.btnContratado.addActionListener(actionListener);
+	}
+	public void contratante(ActionListener actionListener) {
+		this.btnContratante.addActionListener(actionListener);
+	}
+	
+	
 
 }

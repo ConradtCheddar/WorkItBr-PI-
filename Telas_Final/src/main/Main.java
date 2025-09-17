@@ -7,13 +7,14 @@ import controller.ContratadoController;
 import controller.ContratanteController;
 import controller.LoginController;
 import controller.Navegador;
+import controller.TempController;
 import model.UsuarioDAO;
 import view.Primario;
 import view.TelaAdm;
 import view.TelaCadastro;
+import view.TelaContratado;
 import view.TelaContratante;
 import view.TelaLogin;
-import view.TelaContratado;
 import view.Temp;
 
 public class Main {
@@ -45,6 +46,13 @@ public class Main {
 		TelaContratado telacontratado = new TelaContratado();
 		ContratadoController contratadocontroller = new ContratadoController();
 		
+		Temp temp = new Temp();
+		TempController tempcontroller = new TempController(temp, usuarioDAO, navegador);
+		
+		TelaAdm telaadm = new TelaAdm();
+		
+		
+		
 		
 		
 		
@@ -54,8 +62,10 @@ public class Main {
 		navegador.adicionarPainel("CADASTRO", telacadastro);
 		navegador.adicionarPainel("CONTRATANTE", telacontratante);
 		navegador.adicionarPainel("CONTRATADO", telacontratado);
+		navegador.adicionarPainel("TEMP", temp);
+		navegador.adicionarPainel("ADM", telaadm);
 		
-		navegador.navegarPara("LOGIN");
+		navegador.navegarPara("TEMP");
 		
 		prim.setVisible(true);
 		
