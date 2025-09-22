@@ -21,6 +21,8 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class TelaAdm extends JPanel {
 
@@ -41,20 +43,14 @@ public class TelaAdm extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaAdm() {
-		setPreferredSize(new Dimension(700, 500));
+		setPreferredSize(new Dimension(707, 500));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][][grow][grow][][grow][grow][][grow][grow][][][][][][][grow][grow][grow][grow][grow][][grow][][][grow][][][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][98.00,grow][grow][81.00][-56.00][65.00,grow][][]", "[35px][66.00,grow][grow][][][66]"));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][][]", "[]"));
-		
-		lblBarra = new JLabel(barraResized);
-		lblBarra.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lblBarra, "flowx,cell 0 0,grow");
-		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
+		add(panel, "flowx,cell 0 0 20 1,grow");
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][][][]", "[]"));
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
 		panel.add(lblNewLabel, "cell 1 0 12 1,grow");
@@ -64,30 +60,13 @@ public class TelaAdm extends JPanel {
 		
 		lblMenu = new JLabel(menuResized);
 		lblMenu.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(lblMenu, "cell 13 0,grow");
+		panel.add(lblMenu, "cell 1 0 12 1,grow");
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.LIGHT_GRAY);
-		add(panel_1, "cell 2 6 8 39,grow");
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.LIGHT_GRAY);
-		add(panel_2, "cell 19 6 8 39,grow");
-		
-		JButton btnBanir = new JButton("Banir Usuário");
-		btnBanir.setBackground(new Color(0, 102, 204));
-		btnBanir.setForeground(Color.WHITE);
-		btnBanir.putClientProperty("JComponent.roundRect", true);
-		add(btnBanir, "cell 11 23 7 1,grow");
-		
-		JButton btnAnalisar = new JButton("Analisar Denúncia");
-		btnAnalisar.setForeground(Color.WHITE);
-		btnAnalisar.setBackground(new Color(0, 102, 204));
-		btnAnalisar.putClientProperty("JComponent.roundRect", true);
-		add(btnAnalisar, "cell 11 28 7 1,grow");
+		lblBarra = new JLabel(barraResized);
+		lblBarra.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblBarra, "cell 1 0 12 1,grow");
+		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -103,8 +82,6 @@ public class TelaAdm extends JPanel {
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
 				int fontSize = Math.max(15, panelHeight / 35);
-				btnAnalisar.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				btnBanir.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 			}
 		});
 		panel.addComponentListener(new ComponentAdapter() {
