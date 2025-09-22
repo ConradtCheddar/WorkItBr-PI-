@@ -97,6 +97,15 @@ public class Temp extends JPanel {
 		btnContratante = new JButton("Contratante");
 		add(btnContratante, "cell 11 12,grow");
 		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 17);
+				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+			}
+		});
+		
 		panel.addComponentListener(new ComponentAdapter() {
 	        @Override
 	        public void componentResized(ComponentEvent e) {

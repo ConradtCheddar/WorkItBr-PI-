@@ -121,6 +121,7 @@ public class TelaLogin extends JPanel {
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
 				int fontSize = Math.max(15, panelHeight / 17);
+				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 			}
 		});
 

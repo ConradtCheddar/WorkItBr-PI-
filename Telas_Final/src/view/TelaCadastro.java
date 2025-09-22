@@ -61,18 +61,18 @@ public class TelaCadastro extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
 		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[]"));
-
-		lblSeta = new JLabel(setaResized);
-		lblSeta.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(lblSeta, "cell 0 0");
-		lblSeta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[100px]"));
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 1 0 12 1,grow");
+		panel.add(lblNewLabel, "flowx,cell 1 0 11 1,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
+		
+		lblSeta = new JLabel(setaResized);
+		lblSeta.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblSeta, "flowx,cell 0 0 13 1,grow");
+		lblSeta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		tfEmail = new JTextField();
 		add(tfEmail, "cell 4 3 13 1,growx");

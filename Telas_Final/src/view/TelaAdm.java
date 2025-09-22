@@ -9,6 +9,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,6 +33,9 @@ public class TelaAdm extends JPanel {
 	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
 	ImageIcon barraResized = new ImageIcon(scaledImage3);
+	
+	JLabel lblBarra;
+	JLabel lblMenu;
 
 	/**
 	 * Create the panel.
@@ -44,37 +48,26 @@ public class TelaAdm extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
 		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
+		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][][]", "[]"));
 		
-		JLabel lblBarra = new JLabel(barraResized);
-		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBarra.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
-				System.out.println(getSize());
-			}
-		});
-		panel.add(lblBarra, "cell 12 0,grow");
+		lblBarra = new JLabel(barraResized);
+		lblBarra.setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(lblBarra, "flowx,cell 0 0,grow");
 		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		JLabel lblMenu = new JLabel(menuResized);
-		lblMenu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
-			}
-		});
-		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lblMenu, "cell 0 0,grow");
-		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
+		panel.add(lblNewLabel, "cell 1 0 12 1,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
+		
+		lblMenu = new JLabel(menuResized);
+		lblMenu.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel.add(lblMenu, "cell 13 0,grow");
+		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
@@ -128,6 +121,13 @@ public class TelaAdm extends JPanel {
 	        }
 	    });
 
+	}
+	
+	public void barra(MouseListener actionListener) {
+	    this.lblBarra.addMouseListener(actionListener);
+	}
+	public void menu(MouseListener actionListener) {
+	    this.lblMenu.addMouseListener(actionListener);
 	}
 
 }

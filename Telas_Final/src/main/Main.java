@@ -40,11 +40,11 @@ public class Main {
 		
 		//tela do contratante
 		TelaContratante telacontratante = new TelaContratante();
-		ContratanteController contratanteController = new ContratanteController();
+		ContratanteController contratanteController = new ContratanteController(telacontratante, usuarioDAO, navegador);
 		
 		//tela do contratado
 		TelaContratado telacontratado = new TelaContratado();
-		ContratadoController contratadocontroller = new ContratadoController();
+		ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador);
 		
 		Temp temp = new Temp();
 		TempController tempcontroller = new TempController(temp, usuarioDAO, navegador);

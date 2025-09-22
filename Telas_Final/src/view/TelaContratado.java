@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -8,7 +9,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.net.URL;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,9 +21,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import net.miginfocom.swing.MigLayout;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class TelaContratado extends JPanel {
 
@@ -38,6 +38,11 @@ public class TelaContratado extends JPanel {
 	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
 	ImageIcon barraResized = new ImageIcon(scaledImage3);
+	
+	
+	JPanel panel;
+	JLabel lblBarra;
+	JLabel lblMenu;
 
 	/**
 	 * Create the panel.
@@ -47,29 +52,17 @@ public class TelaContratado extends JPanel {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(new Color(0, 102, 204));
 		add(panel, "flowx,cell 0 0 41 1,grow");
 		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[]"));
 		
-		JLabel lblBarra = new JLabel(barraResized);
+		lblBarra = new JLabel(barraResized);
 		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBarra.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
-			}
-		});
 		panel.add(lblBarra, "cell 12 0,grow");
 		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		JLabel lblMenu = new JLabel(menuResized);
-		lblMenu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				prim.mostrarTela(prim.TEMP_PANEL);
-			}
-		});
+		lblMenu = new JLabel(menuResized);
 		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblMenu, "cell 0 0,grow");
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -178,6 +171,13 @@ public class TelaContratado extends JPanel {
 	    });
 
 
+	}
+	
+	public void barra(MouseListener actionListener) {
+	    this.lblBarra.addMouseListener(actionListener);
+	}
+	public void menu(MouseListener actionListener) {
+	    this.lblMenu.addMouseListener(actionListener);
 	}
 
 }
