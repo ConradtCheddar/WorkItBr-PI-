@@ -82,7 +82,7 @@ public class TelaConfigUser extends JPanel {
 
 		JLabel lblMenu = new JLabel(menuResized);
 		lblMenu.addMouseListener(new MouseAdapter() {
-			@Override
+			@Override	
 			public void mouseClicked(MouseEvent e) {
 				prim.mostrarTela(prim.TEMP_PANEL);
 			}
@@ -211,9 +211,12 @@ public class TelaConfigUser extends JPanel {
 								        int result = fileChooser.showOpenDialog(null); 
 								        if (result == JFileChooser.APPROVE_OPTION) {
 								            File selectedFile = fileChooser.getSelectedFile();
+								            String caminho = selectedFile.getAbsolutePath(); 
 								            ImageIcon selectedImageIcon = new ImageIcon(selectedFile.getAbsolutePath());
 								            imagemSelecionada = selectedImageIcon.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(), Image.SCALE_SMOOTH);
 								            foto.repaint();
+								            
+								            u.setCaminhoFoto(caminho);
 							        }
 							}
 						});
@@ -243,12 +246,29 @@ public class TelaConfigUser extends JPanel {
 	}
 
 	public void mostrarDados(Usuario usuario) {
-		this.u = usuario;
+		this.u = usuario;	
+		
+		 tfNome.setText(usuario.getUsuario());
+		 tfSenha.setText(usuario.getSenha());
+		 tfEmail.setText(usuario.getEmail());
+		 tfTelefone.setText(usuario.getTelefone());
+		 tfCPF.setText(usuario.getCpfCnpj());
+		      
 		tfTelefone.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, usuario.getTelefone());
 		tfCPF.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, usuario.getCpfCnpj());
 		tfEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, usuario.getEmail());
 		tfSenha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, usuario.getSenha());
 		tfNome.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, usuario.getUsuario());
 
-	}
+	    if (usuario.getCaminhoFoto() != null) {
+	        ImageIcon imgIcon = new ImageIcon(usuario.getCaminhoFoto());
+	        imagemSelecionada = imgIcon.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(), Image.SCALE_SMOOTH);
+	        foto.repaint();
+	    foto.repaint();
+    }else {
+        imagemSelecionada = null;
+        foto.repaint();
+    }
+		
+}
 }

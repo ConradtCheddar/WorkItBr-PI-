@@ -40,6 +40,7 @@ public class TelaCadastro2 extends JPanel {
 	private JRadioButton rdbtnContratante;
 	private JRadioButton rdbtnContratado;
 	private JButton btnCadastrar;
+	private String caminhoFoto;
 
 	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
@@ -121,9 +122,10 @@ public class TelaCadastro2 extends JPanel {
 			    String telefone = tfTelefone.getText();
 			    String senha1 = new String(senha.getPassword());
 			    String senha2Text = new String(senha2.getPassword());
+			    
 				
 				UsuarioDAO dao = new UsuarioDAO();
-				Usuario u = new Usuario(email, usuario, cpf, telefone, senha1, rdbtnContratado.isSelected(), rdbtnContratante.isSelected());
+				Usuario u = new Usuario(email, usuario, cpf, telefone, senha1,rdbtnContratado.isSelected(), rdbtnContratante.isSelected(),caminhoFoto);
 
 
 				dao.cadastrar(u, senha2Text);

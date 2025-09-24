@@ -8,9 +8,10 @@ public class Usuario {
 	private String senha;
 	private boolean contratado;
 	private boolean contratante;
+	private String caminhoFoto;
 
 	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, boolean contratado,
-			boolean contratante) {
+			boolean contratante,String caminhofoto) {
 		this.email = email;
 		this.usuario = usuario;
 		this.cpfCnpj = cpfCnpj;
@@ -18,8 +19,20 @@ public class Usuario {
 		this.senha = senha;
 		this.contratado = contratado;
 		this.contratante = contratante;
+		this.caminhoFoto = caminhofoto;
 	}
 
+	
+
+public String getCaminhoFoto() {
+    return caminhoFoto;
+}
+
+public void setCaminhoFoto(String caminhoFoto) {
+    this.caminhoFoto = caminhoFoto;
+}
+	
+	
 	public String getEmail() {
 		return email;
 	}

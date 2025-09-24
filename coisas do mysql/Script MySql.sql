@@ -1,3 +1,4 @@
+
 CREATE Database if not exists WorkItBr_BD;
 
 use WorkItBr_BD;
@@ -28,11 +29,6 @@ INSERT INTO login (Nome, Email, CPF_CNPJ, Telefone, Senha, idAdmin)
 SELECT 'Admin', 'default', 'default', 'default', 'workitbr@321', true
 WHERE NOT EXISTS (
 SELECT 1 FROM login WHERE Nome = 'Admin');
-
+ALTER TABLE Login ADD COLUMN caminhofoto VARCHAR(255);
 
 select * from Login
-
-
-
-
-
