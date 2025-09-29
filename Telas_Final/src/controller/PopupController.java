@@ -37,13 +37,6 @@ public class PopupController {
         panel.add(bottomPanel, BorderLayout.SOUTH);
 
         popupMenu.add(panel);
-        
-        this.view.barra(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		    	popupMenu.show(view.getLblBarra(), 0, view.getLblBarra().getHeight());
-		    }
-		});
 		
 	}
 	private JButton criarBotaoMenu(String texto) {
