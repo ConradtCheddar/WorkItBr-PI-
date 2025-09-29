@@ -23,12 +23,13 @@ public class Primario extends JFrame {
 	private static CardLayout cardLayout;
 
 	private TelaLogin telaLogin;
-
+	private TelaConfigUser telaconfiguser;
 	private TelaCadastro2 telaCadastro2;
 	private Temp temp;
 	private TelaAdm adm;
 	private TelaTrabalhos trabalhos;
 	private TelaContratante Panelcontratante;
+	private Usuario usuario;
 
 	public static final String LOGIN_PANEL = "Login";
 	public static final String CAD2_PANEL = "Cadastro2";
@@ -36,6 +37,7 @@ public class Primario extends JFrame {
 	public static final String ADM_PANEL = "Adm";
 	public static final String TRABALHOS_PANEL = "Trabalhos";
 	public static final String CONTRATANTE_PANEL = "Contratante";
+	public static final String CONFIG_USER_PANEL = "ConfigUser";
 
 	/**
 	 * Create the frame.
@@ -68,6 +70,8 @@ public class Primario extends JFrame {
 		adm = new TelaAdm(this);
 		trabalhos = new TelaTrabalhos(this);
 		Panelcontratante = new TelaContratante(this);
+		telaconfiguser = new TelaConfigUser(this );
+		
 
 		contentPane.add(telaLogin, LOGIN_PANEL);
 		contentPane.add(telaCadastro2, CAD2_PANEL);
@@ -75,14 +79,26 @@ public class Primario extends JFrame {
 		contentPane.add(adm, ADM_PANEL);
 		contentPane.add(trabalhos, TRABALHOS_PANEL);
 		contentPane.add(Panelcontratante, CONTRATANTE_PANEL);
+		contentPane.add(telaconfiguser, CONFIG_USER_PANEL);
 
 		setContentPane(contentPane);
 
 		mostrarTela(CONTRATANTE_PANEL);
 	}
 
+
 	public static void mostrarTela(String panelName) {
 		cardLayout.show(contentPane, panelName);
+	}
+	
+
+
+
+
+	public void setUsuario(Usuario u) {
+		this.usuario = u;
+		telaconfiguser.mostrarDados(u);
+		
 	}
 
 

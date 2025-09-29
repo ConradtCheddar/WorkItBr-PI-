@@ -81,6 +81,14 @@ public class Temp extends JPanel {
 				prim.mostrarTela(prim.LOGIN_PANEL);
 			}
 		});
+		
+		JButton btnNewButton_3 = new JButton("Config");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prim.mostrarTela(prim.CONFIG_USER_PANEL);
+			}
+		});
+		add(btnNewButton_3, "cell 11 6,grow");
 		add(btnNewButton, "cell 11 9,grow");
 		
 		JButton btnADM = new JButton("ADM");
