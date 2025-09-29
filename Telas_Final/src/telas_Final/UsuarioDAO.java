@@ -126,7 +126,8 @@ public class UsuarioDAO {
 	                rs.getString("Senha"),
 	                rs.getBoolean("idContratado"),
 	                rs.getBoolean("idContratante"),
-	                rs.getString("caminhofoto")
+	                rs.getString("caminhofoto"),
+	                rs.getInt("idLogin")
 	            );
 	            rs.close();
 	            stmt.close();
@@ -164,7 +165,8 @@ public class UsuarioDAO {
 	                rs.getString("Senha"),
 	                rs.getBoolean("idContratado"),
 	                rs.getBoolean("idContratante"),
-	                rs.getString("caminhofoto")
+	                rs.getString("caminhofoto"),
+	                rs.getInt("idLogin")
 	            );
 	            rs.close();
 	            stmt.close();
@@ -186,7 +188,7 @@ public class UsuarioDAO {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-	        String sql = "UPDATE Login SET Email = ?, Nome = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, caminhofoto = ? WHERE Nome = ?";
+	        String sql = "UPDATE Login SET Email = ?, Nome = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, caminhofoto = ? WHERE idLogin = ?";
 	        var stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, u.getEmail());
 	        stmt.setString(2, u.getUsuario());
@@ -194,7 +196,7 @@ public class UsuarioDAO {
 	        stmt.setString(4, u.getTelefone());
 	        stmt.setString(5, u.getSenha());
 	        stmt.setString(6, u. getCaminhoFoto());
-	        stmt.setString(7, u.getUsuario());
+	        stmt.setInt(7, u.getIdLogin());
 
 	        int rowsUpdated = stmt.executeUpdate();
 

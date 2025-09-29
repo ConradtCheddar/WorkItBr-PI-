@@ -125,8 +125,7 @@ public class TelaCadastro2 extends JPanel {
 			    
 				
 				UsuarioDAO dao = new UsuarioDAO();
-				Usuario u = new Usuario(email, usuario, cpf, telefone, senha1,rdbtnContratado.isSelected(), rdbtnContratante.isSelected(),caminhoFoto);
-
+				Usuario u = new Usuario(email, usuario, cpf, telefone, senha1,rdbtnContratado.isSelected(), rdbtnContratante.isSelected(), caminhoFoto,0);
 
 				dao.cadastrar(u, senha2Text);
 				
