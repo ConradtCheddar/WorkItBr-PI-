@@ -16,6 +16,7 @@ import view.TelaContratado;
 import view.TelaContratante;
 import view.TelaLogin;
 import view.Temp;
+import view.wbBarra;
 
 public class Main {
 	public static void main(String[] args) {
@@ -50,6 +51,7 @@ public class Main {
 		TempController tempcontroller = new TempController(temp, usuarioDAO, navegador);
 		
 		TelaAdm telaadm = new TelaAdm();
+		wbBarra wbb = new wbBarra();
 		
 		
 		
@@ -64,8 +66,11 @@ public class Main {
 		navegador.adicionarPainel("CONTRATADO", telacontratado);
 		navegador.adicionarPainel("TEMP", temp);
 		navegador.adicionarPainel("ADM", telaadm);
+		navegador.adicionarPainelWB("WBB", wbb);
 		
-		navegador.navegarPara("TEMP");
+		
+		navegador.navegarPara("LOGIN");
+		navegador.navegarParaWB("WBB");
 		
 		prim.setVisible(true);
 		

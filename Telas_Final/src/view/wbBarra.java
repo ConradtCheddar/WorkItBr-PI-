@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -22,9 +21,8 @@ public class wbBarra extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static JPanel contentPane;
 	
-	private static CardLayout cardLayout;
+	//private static CardLayout cardLayout;
 	
 	JPanel wbPanel;
 	JLabel lblBarra;
@@ -42,17 +40,15 @@ public class wbBarra extends JPanel {
 	 * Create the panel.
 	 */
 	public wbBarra() {
-		this.cardLayout = new CardLayout();
+	//	this.cardLayout = new CardLayout();
 
-		this.contentPane = new JPanel();
-		contentPane.setPreferredSize(new Dimension(900, 100));
-		contentPane.setBackground(new Color(0, 102, 204));
-		this.contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-		contentPane.setLayout(new MigLayout("fill, insets 0", "[20px]", "[35px]"));
+		setPreferredSize(new Dimension(900, 100));
+		setBackground(new Color(0, 102, 204));
+		setBorder(new EmptyBorder(0, 0, 0, 0));
+		setLayout(new MigLayout("fill, insets 0", "[grow][grow][grow]", "[grow]"));
 		
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 102, 204));
-		contentPane.setLayout(new MigLayout("", "[grow]", "[grow]"));
+		
+
 		
 		lblBarra = new JLabel(barraResized);
 		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -65,24 +61,33 @@ public class wbBarra extends JPanel {
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		contentPane.add(lblNewLabel, "cell 0 0 12 2,grow");
+		add(lblNewLabel, "cell 0 0 12 2,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
 		
-		contentPane.addComponentListener(new ComponentAdapter() {
+		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 				Image img = menuIcon.getImage();
-				Image scaled = img.getScaledInstance(contentPane.getWidth() / 40, contentPane.getHeight() * 2 / 4,
+				Image scaled = img.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
 						Image.SCALE_SMOOTH);
 				ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 				Image imgbarra = barraIcon.getImage();
-				Image scaledBarra = imgbarra.getScaledInstance(contentPane.getWidth() / 40, contentPane.getHeight() * 2 / 4,
+				Image scaledBarra = imgbarra.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
 						Image.SCALE_SMOOTH);
 				lblMenu.setIcon(new ImageIcon(scaled));
 				lblBarra.setIcon(new ImageIcon(scaledBarra));
+			}
+		});
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 17);
+				int fontSize2 = Math.max(15, panelHeight / 40);
+				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 			}
 		});
 	}

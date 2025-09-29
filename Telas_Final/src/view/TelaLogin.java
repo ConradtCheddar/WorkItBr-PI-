@@ -55,17 +55,6 @@ public class TelaLogin extends JPanel {
 				"[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]",
 				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
-
-		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setForeground(Color.WHITE);
-
 		txtUsuario = new JTextField();
 		txtUsuario.setForeground(Color.WHITE);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -121,7 +110,6 @@ public class TelaLogin extends JPanel {
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
 				int fontSize = Math.max(15, panelHeight / 17);
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 			}
 		});
 

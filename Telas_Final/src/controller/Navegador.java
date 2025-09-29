@@ -30,8 +30,11 @@ public class Navegador {
 		this.prim.dispose();
 	}
 	
-
-
-
-
+	public void adicionarPainelWB(String nome, JPanel tela) {
+		this.prim.adicionarTelaWB(nome, tela);
+	}
+	
+	public void navegarParaWB(String nome) {
+		this.prim.mostrarTelaWB(nome);
+	}
 }
