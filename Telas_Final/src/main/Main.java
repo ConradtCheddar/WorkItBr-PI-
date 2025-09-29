@@ -8,6 +8,7 @@ import controller.ContratanteController;
 import controller.LoginController;
 import controller.Navegador;
 import controller.TempController;
+import controller.WBController;
 import model.UsuarioDAO;
 import view.Primario;
 import view.TelaAdm;
@@ -52,6 +53,7 @@ public class Main {
 		
 		TelaAdm telaadm = new TelaAdm();
 		wbBarra wbb = new wbBarra();
+		WBController wbcontroller = new WBController(wbb, usuarioDAO, navegador);
 		
 		
 		
@@ -66,11 +68,10 @@ public class Main {
 		navegador.adicionarPainel("CONTRATADO", telacontratado);
 		navegador.adicionarPainel("TEMP", temp);
 		navegador.adicionarPainel("ADM", telaadm);
-		navegador.adicionarPainelWB("WBB", wbb);
+		navegador.adicionarPainelWB(wbb);
 		
 		
 		navegador.navegarPara("LOGIN");
-		navegador.navegarParaWB("WBB");
 		
 		prim.setVisible(true);
 		

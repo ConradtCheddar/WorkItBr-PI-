@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 import view.Primario;
+import view.wbBarra;
 
 public class Navegador {
 	
@@ -12,6 +13,7 @@ public class Navegador {
 	
 	public Navegador(Primario prim) {
 		this.prim = prim;
+		
 	}
 	/**
 	 * metodo para adicionar um Jpanel
@@ -30,11 +32,9 @@ public class Navegador {
 		this.prim.dispose();
 	}
 	
-	public void adicionarPainelWB(String nome, JPanel tela) {
-		this.prim.adicionarTelaWB(nome, tela);
+	public void adicionarPainelWB(JPanel tela) {
+		this.prim.adicionarTelaWB(tela);
 	}
 	
-	public void navegarParaWB(String nome) {
-		this.prim.mostrarTelaWB(nome);
-	}
+	
 }

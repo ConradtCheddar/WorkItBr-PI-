@@ -109,7 +109,7 @@ public class TelaLogin extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 17);
+				int fontSize1 = Math.max(15, panelHeight / 17);
 			}
 		});
 
@@ -125,6 +125,7 @@ public class TelaLogin extends JPanel {
 				PromptSupport.setPrompt("Senha", passwordField);
 				PromptSupport.setPrompt("Usuario", txtUsuario);
 				txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblntlg.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 				passwordField.setFont(italicPlaceholderFont);
 			}
 		});

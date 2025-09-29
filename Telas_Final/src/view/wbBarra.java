@@ -45,26 +45,23 @@ public class wbBarra extends JPanel {
 		setPreferredSize(new Dimension(900, 100));
 		setBackground(new Color(0, 102, 204));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[grow][grow][grow]", "[grow]"));
-		
-		
-
-		
-		lblBarra = new JLabel(barraResized);
-		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(lblBarra, "cell 0 0 12 2,grow");
-		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		setLayout(new MigLayout("fill, debug ", "[grow][grow][grow]", "[grow]"));
 		
 		lblMenu = new JLabel(menuResized);
 		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		add(lblMenu, "cell 0 0 12 2,grow");
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		add(lblMenu, "cell 0 0,alignx left,growy");
 		
 		JLabel lblNewLabel = new JLabel("WorkITBr");
-		add(lblNewLabel, "cell 0 0 12 2,grow");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
+		add(lblNewLabel, "cell 1 0,grow");
+
+		lblBarra = new JLabel(barraResized);
+		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		add(lblBarra, "cell 2 0,alignx right,growy");
 		
 		addComponentListener(new ComponentAdapter() {
 			@Override

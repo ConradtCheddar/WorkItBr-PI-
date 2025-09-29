@@ -37,8 +37,6 @@ public class Primario extends JFrame {
 	JPanel wbPanel;
 	
 	private static CardLayout cardLayout;
-	
-	private static CardLayout cardLayout2;
 
 	/**
 	 * Create the frame.
@@ -61,22 +59,22 @@ public class Primario extends JFrame {
 		UIManager.put("Button.arc", 999);
 		
 		this.cardLayout = new CardLayout();
-		this.cardLayout2 = new CardLayout();
 
 		this.contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 102, 204));
 		this.contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(this.contentPane);
-		contentPane.setLayout(new MigLayout("fill, insets 0", "[20px][grow][20px]", "[35px][grow][35px]"));
+		contentPane.setLayout(new MigLayout("fill, insets 0, debug", "[20px][grow][20px]", "[35px][grow][35px]"));
 		
-		wbPanel = new JPanel(cardLayout2);
-		wbPanel.setBackground(new Color(0, 102, 204));
+		wbPanel = new JPanel();
+		wbPanel.setBackground(Color.WHITE);
 		contentPane.add(wbPanel, "cell 0 0 3 1,grow");
+		wbPanel.setLayout(new MigLayout("fill, insets 0", "[]", "[]"));
 		
 		this.cPanel = new JPanel(cardLayout);
 		this.cPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		contentPane.add(cPanel,"cell 0 1 3 2,grow");
-
+		
 	}
 
 	public void mostrarTela(String panelName) {
@@ -88,12 +86,8 @@ public class Primario extends JFrame {
 		this.cPanel.add(tela, panelName);
 	}
 	
-	public void mostrarTelaWB(String panelName) {
-		this.cardLayout2.show(this.wbPanel, panelName);
-		this.pack();
-	}
 	
-	public void adicionarTelaWB(String panelName, JPanel tela) {
-		this.wbPanel.add(tela, panelName);
+	public void adicionarTelaWB(JPanel tela) {
+		this.wbPanel.add(tela);
 	}
 }

@@ -50,40 +50,6 @@ public class Temp extends JPanel {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
-
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[]"));
-		
-		JLabel lblBarra = new JLabel(barraResized);
-		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBarra.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				navegador.navegarPara("TEMP");
-			}
-		});
-		panel.add(lblBarra, "cell 12 0,grow");
-		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		JLabel lblMenu = new JLabel(menuResized);
-		lblMenu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				navegador.navegarPara("TEMP");
-			}
-		});
-		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lblMenu, "cell 0 0,grow");
-		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-
-		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 6 0,grow");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setForeground(Color.WHITE);
 		
 		btnLogin = new JButton("Login");
 		add(btnLogin, "cell 11 9,grow");
@@ -97,29 +63,7 @@ public class Temp extends JPanel {
 		btnContratante = new JButton("Contratante");
 		add(btnContratante, "cell 11 12,grow");
 		
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 17);
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-			}
-		});
-		
-		panel.addComponentListener(new ComponentAdapter() {
-	        @Override
-	        public void componentResized(ComponentEvent e) {
-	            ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	            Image img = menuIcon.getImage();
-	            Image scaled = img.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
-	            ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-	            Image imgbarra = barraIcon.getImage();
-	            Image scaledBarra = imgbarra.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
-	            lblMenu.setIcon(new ImageIcon(scaled));
-	            lblBarra.setIcon(new ImageIcon(scaledBarra));
-	        }
-	    });
-		
+	
 
 	}
 	
