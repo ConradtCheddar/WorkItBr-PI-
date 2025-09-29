@@ -27,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import java.awt.GridLayout;
 import net.miginfocom.swing.MigLayout;
+import java.awt.BorderLayout;
 
 public class Primario extends JFrame {
 
@@ -37,6 +38,9 @@ public class Primario extends JFrame {
 	JPanel wbPanel;
 	
 	private static CardLayout cardLayout;
+	private JTextField textField;
+	
+	private wbBarra wbb;
 
 	/**
 	 * Create the frame.
@@ -58,22 +62,25 @@ public class Primario extends JFrame {
 		setIconImages(icons);
 		UIManager.put("Button.arc", 999);
 		
+		wbb = new wbBarra();
+		
 		this.cardLayout = new CardLayout();
 
 		this.contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 102, 204));
 		this.contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(this.contentPane);
-		contentPane.setLayout(new MigLayout("fill, insets 0, debug", "[20px][grow][20px]", "[35px][grow][35px]"));
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		wbPanel = new JPanel();
-		wbPanel.setBackground(Color.WHITE);
-		contentPane.add(wbPanel, "cell 0 0 3 1,grow");
-		wbPanel.setLayout(new MigLayout("fill, insets 0", "[]", "[]"));
+		
+		
+		contentPane.add(wbb, BorderLayout.NORTH);
 		
 		this.cPanel = new JPanel(cardLayout);
 		this.cPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		contentPane.add(cPanel,"cell 0 1 3 2,grow");
+		contentPane.add(cPanel, BorderLayout.CENTER);
+		
+		
 		
 	}
 
@@ -88,6 +95,6 @@ public class Primario extends JFrame {
 	
 	
 	public void adicionarTelaWB(JPanel tela) {
-		this.wbPanel.add(tela);
+		this.wbb.add(tela);
 	}
 }
