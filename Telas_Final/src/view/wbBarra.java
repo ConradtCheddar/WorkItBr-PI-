@@ -25,7 +25,7 @@ public class wbBarra extends JPanel {
 	//private static CardLayout cardLayout;
 	
 	JPanel wbPanel;
-	JLabel lblBarra;
+	private JLabel lblBarra;
 	JLabel lblMenu;
 	
 	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
@@ -58,10 +58,10 @@ public class wbBarra extends JPanel {
 		lblNewLabel.setForeground(Color.WHITE);
 		add(lblNewLabel, "cell 1 0,grow");
 
-		lblBarra = new JLabel(barraResized);
-		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		add(lblBarra, "cell 2 0,alignx right,growy");
+		setLblBarra(new JLabel(barraResized));
+		getLblBarra().setHorizontalAlignment(SwingConstants.RIGHT);
+		getLblBarra().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		add(getLblBarra(), "cell 2 0,alignx right,growy");
 		
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -75,7 +75,7 @@ public class wbBarra extends JPanel {
 				Image scaledBarra = imgbarra.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
 						Image.SCALE_SMOOTH);
 				lblMenu.setIcon(new ImageIcon(scaled));
-				lblBarra.setIcon(new ImageIcon(scaledBarra));
+				getLblBarra().setIcon(new ImageIcon(scaledBarra));
 			}
 		});
 		addComponentListener(new ComponentAdapter() {
@@ -90,11 +90,19 @@ public class wbBarra extends JPanel {
 	}
 	
 	public void barra(MouseListener actionListener) {
-		this.lblBarra.addMouseListener(actionListener);
+		this.getLblBarra().addMouseListener(actionListener);
 	}
 
 	public void menu(MouseListener actionListener) {
 		this.lblMenu.addMouseListener(actionListener);
+	}
+
+	public JLabel getLblBarra() {
+		return lblBarra;
+	}
+
+	public void setLblBarra(JLabel lblBarra) {
+		this.lblBarra = lblBarra;
 	}
 
 }
