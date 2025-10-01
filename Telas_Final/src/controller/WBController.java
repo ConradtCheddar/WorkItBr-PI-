@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import model.Usuario;
 import model.UsuarioDAO;
 import view.TelaContratante;
 import view.wbBarra;
@@ -20,6 +21,7 @@ public class WBController {
 		this.view.barra(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	System.out.println("click");
 		        navegador.navegarPara("TEMP");
 		    }
 		});
@@ -28,6 +30,12 @@ public class WBController {
 		    public void mouseClicked(MouseEvent e) {
 		        navegador.navegarPara("TEMP");
 		    }
+		});
+		
+		this.view.btn(e ->{
+			System.out.println("btn");
+			navegador.navegarPara("TEMP");
+	
 		});
 	}
 }

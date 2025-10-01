@@ -68,7 +68,7 @@ public class Main {
 		navegador.adicionarPainel("CONTRATADO", telacontratado);
 		navegador.adicionarPainel("TEMP", temp);
 		navegador.adicionarPainel("ADM", telaadm);
-		
+	
 		
 		navegador.navegarPara("LOGIN");
 		

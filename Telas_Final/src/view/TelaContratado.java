@@ -30,14 +30,14 @@ public class TelaContratado extends JPanel {
 	ImageIcon chatIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
 	Image scaledImage = chatIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
 	ImageIcon chatResized = new ImageIcon(scaledImage);
-	
-	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-	ImageIcon menuResized = new ImageIcon(scaledImage2);
-	
-	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-	ImageIcon barraResized = new ImageIcon(scaledImage3);
+//	
+//	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+//	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
+//	ImageIcon menuResized = new ImageIcon(scaledImage2);
+//	
+//	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
+//	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
+//	ImageIcon barraResized = new ImageIcon(scaledImage3);
 	
 	
 	JPanel panel;
@@ -57,12 +57,12 @@ public class TelaContratado extends JPanel {
 		add(panel, "flowx,cell 0 0 41 1,grow");
 		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[]"));
 		
-		lblBarra = new JLabel(barraResized);
+		lblBarra = new JLabel("lol2");
 		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblBarra, "cell 12 0,grow");
 		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		lblMenu = new JLabel(menuResized);
+		lblMenu = new JLabel("lol2");
 		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblMenu, "cell 0 0,grow");
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

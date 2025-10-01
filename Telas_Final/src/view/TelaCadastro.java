@@ -38,13 +38,13 @@ public class TelaCadastro extends JPanel {
 	private JRadioButton rdbtnContratado;
 	private JButton btnCadastrar;
 
-	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-	ImageIcon menuResized = new ImageIcon(scaledImage2);
-
-	ImageIcon setaIcon = new ImageIcon(getClass().getResource("/imagens/seta_retorno.png"));
-	Image scaledseta = setaIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-	ImageIcon setaResized = new ImageIcon(scaledseta);
+//	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+//	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+//	ImageIcon menuResized = new ImageIcon(scaledImage2);
+//
+//	ImageIcon setaIcon = new ImageIcon(getClass().getResource("/imagens/seta_retorno.png"));
+//	Image scaledseta = setaIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
+//	ImageIcon setaResized = new ImageIcon(scaledseta);
 	private JLabel lblSeta;
 
 	/**
@@ -69,7 +69,7 @@ public class TelaCadastro extends JPanel {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
 		
-		lblSeta = new JLabel(setaResized);
+		lblSeta = new JLabel("lol3");
 		lblSeta.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblSeta, "flowx,cell 0 0 13 1,grow");
 		lblSeta.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -151,7 +151,7 @@ public class TelaCadastro extends JPanel {
 				rdbtnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				rdbtnContratante.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				Image img = setaIcon.getImage();
+//				Image img = setaIcon.getImage();
 				ImageIcon setaIcon = new ImageIcon(getClass().getResource("/imagens/seta_retorno.png"));
 				Image imgseta = setaIcon.getImage();
 				Image scaledseta = imgseta.getScaledInstance(panel.getWidth() / 40, panel.getHeight() * 2 / 4,
@@ -268,29 +268,29 @@ public class TelaCadastro extends JPanel {
 		this.btnCadastrar = btnCadastrar;
 	}
 
-	public ImageIcon getMenuIcon() {
-		return menuIcon;
-	}
-
-	public void setMenuIcon(ImageIcon menuIcon) {
-		this.menuIcon = menuIcon;
-	}
-
-	public Image getScaledImage2() {
-		return scaledImage2;
-	}
-
-	public void setScaledImage2(Image scaledImage2) {
-		this.scaledImage2 = scaledImage2;
-	}
-
-	public ImageIcon getMenuResized() {
-		return menuResized;
-	}
-
-	public void setMenuResized(ImageIcon menuResized) {
-		this.menuResized = menuResized;
-	}
+//	public ImageIcon getMenuIcon() {
+//		return menuIcon;
+//	}
+//
+//	public void setMenuIcon(ImageIcon menuIcon) {
+//		this.menuIcon = menuIcon;
+//	}
+//
+//	public Image getScaledImage2() {
+//		return scaledImage2;
+//	}
+//
+//	public void setScaledImage2(Image scaledImage2) {
+//		this.scaledImage2 = scaledImage2;
+//	}
+//
+//	public ImageIcon getMenuResized() {
+//		return menuResized;
+//	}
+//
+//	public void setMenuResized(ImageIcon menuResized) {
+//		this.menuResized = menuResized;
+//	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
