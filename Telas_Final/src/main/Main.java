@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.PopupMenu;
+
 import javax.swing.UIManager;
 
 import controller.CadastroController;
@@ -7,6 +9,7 @@ import controller.ContratadoController;
 import controller.ContratanteController;
 import controller.LoginController;
 import controller.Navegador;
+import controller.PopupController;
 import controller.TempController;
 import controller.WBController;
 import model.UsuarioDAO;
@@ -31,6 +34,8 @@ public class Main {
 		
 		Navegador navegador =new Navegador(prim);
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
+	    PopupController popup = new PopupController();
+	     
 		
 		//tela de login
 		TelaLogin telalogin = new TelaLogin();
@@ -53,11 +58,12 @@ public class Main {
 		
 		TelaAdm telaadm = new TelaAdm();
 		wbBarra wbb = new wbBarra();
-		WBController wbcontroller = new WBController(wbb, usuarioDAO, navegador);
+		WBController wbcontroller = new WBController(wbb, usuarioDAO, navegador, popup);
 		
 		
 		
-		
+	
+	   
 		
 		
 		

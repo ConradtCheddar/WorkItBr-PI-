@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
@@ -15,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controller.PopupController;
 import net.miginfocom.swing.MigLayout;
 
 public class wbBarra extends JPanel {
@@ -63,6 +66,16 @@ public class wbBarra extends JPanel {
 		getLblBarra().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(getLblBarra(), "cell 2 0,alignx right,growy");
 		
+		
+		getLblBarra().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// Aqui chamamos o PopupController
+				PopupController popup = new PopupController();
+				popup.PopupMenu(e, getLblBarra()); // Passando o evento e o componente
+			}
+		});
+		
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -88,6 +101,7 @@ public class wbBarra extends JPanel {
 			}
 		});
 	}
+	
 	
 	public void barra(MouseListener actionListener) {
 		this.getLblBarra().addMouseListener(actionListener);
