@@ -37,9 +37,6 @@ public class TelaContratante extends JPanel {
 
 	private JTextField tfPesquisar;
 
-	JLabel lblBarra;
-	JLabel lblMenu;
-
 	/**
 	 * Create the panel.
 	 */
@@ -49,27 +46,6 @@ public class TelaContratante extends JPanel {
 		setLayout(new MigLayout("fill, insets 0",
 				"[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]",
 				"[35px][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
-
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[]"));
-
-		lblBarra = new JLabel("lol1");
-		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(lblBarra, "cell 12 0,grow");
-		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-		lblMenu = new JLabel("lol1");
-		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lblMenu, "cell 0 0,grow");
-		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 6 0,grow");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setForeground(Color.WHITE);
 
 		tfPesquisar = new JTextField();
 		add(tfPesquisar, "cell 4 4 14 1,grow");
@@ -102,16 +78,6 @@ public class TelaContratante extends JPanel {
 		panel_6.setBackground(Color.LIGHT_GRAY);
 		add(panel_6, "cell 15 12 4 3,grow");
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 17);
-				int fontSize2 = Math.max(15, panelHeight / 40);
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfPesquisar.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-			}
-		});
 
 //		panel.addComponentListener(new ComponentAdapter() {
 //			@Override
@@ -131,12 +97,5 @@ public class TelaContratante extends JPanel {
 
 	}
 
-	public void barra(MouseListener actionListener) {
-		this.lblBarra.addMouseListener(actionListener);
-	}
-
-	public void menu(MouseListener actionListener) {
-		this.lblMenu.addMouseListener(actionListener);
-	}
 
 }

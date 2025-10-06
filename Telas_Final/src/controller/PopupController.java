@@ -1,4 +1,5 @@
 package controller;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,54 +14,54 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 public class PopupController {
-    
-    public void PopupMenu(MouseEvent e, JComponent parent) {
-        JPopupMenu popupMenu = new JPopupMenu() {
-            @Override
-            public Dimension getPreferredSize() {  
-                return new Dimension(220, 250);
-            }
-        };
-        
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.WHITE);
-        panel.setPreferredSize(new Dimension(220, 250));
 
-        JPanel topPanel = new JPanel(new GridLayout(3, 1, 0, 0));
-        topPanel.setBackground(Color.WHITE);
+	public void PopupMenu(MouseEvent e, JComponent parent) {
+		JPopupMenu popupMenu = new JPopupMenu() {
+			@Override
+			public Dimension getPreferredSize() {
+				return new Dimension(220, 250);
+			}
+		};
 
-        topPanel.add(criarBotaoMenu("Botão 1"));
-        topPanel.add(criarBotaoMenu("Botão 2"));
-        topPanel.add(criarBotaoMenu("Botão 3"));
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setBackground(Color.DARK_GRAY);
+		panel.setPreferredSize(new Dimension(220, 250));
 
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
-        bottomPanel.setBackground(Color.WHITE);
+		JPanel topPanel = new JPanel(new GridLayout(3, 1, 0, 0));
+		topPanel.setBackground(Color.DARK_GRAY);
 
-        panel.add(topPanel, BorderLayout.NORTH);
-        panel.add(bottomPanel, BorderLayout.SOUTH);
+		topPanel.add(criarBotaoMenu("Botão 1"));
+		topPanel.add(criarBotaoMenu("Botão 2"));
+		topPanel.add(criarBotaoMenu("Botão 3"));
 
-        popupMenu.add(panel);
+		JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
+		bottomPanel.setBackground(Color.DARK_GRAY);
 
-      
-        popupMenu.show(parent, e.getX(), e.getY());
-    }
+		panel.add(topPanel, BorderLayout.NORTH);
+		panel.add(bottomPanel, BorderLayout.SOUTH);
 
-    private JButton criarBotaoMenu(String texto) {
-        JButton botao = new JButton(texto);
-        botao.setBackground(Color.WHITE);
+		popupMenu.add(panel);
 
-        botao.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                botao.setBackground(new Color(240, 240, 240));
-            }
+		popupMenu.show(parent, e.getX(), e.getY());
+	}
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                botao.setBackground(Color.WHITE);
-            }
-        });
+	private JButton criarBotaoMenu(String texto) {
+		JButton botao = new JButton(texto);
+		botao.setBackground(new Color(0, 102, 204));
 
-        return botao;
-    }
+		botao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				botao.setBackground(new Color(0, 110, 204));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				botao.setBackground(new Color(0, 102, 204));
+			}
+		});
+
+		return botao;
+	}
+
 }

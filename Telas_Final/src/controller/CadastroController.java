@@ -33,13 +33,6 @@ public class CadastroController {
 			dao.cadastrar(u, senha2Text);
 			navegador.navegarPara("LOGIN");
 		});
-		
-		this.view.retorno(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		        navegador.navegarPara("LOGIN");
-		    }
-		    });
 	}
 }
 

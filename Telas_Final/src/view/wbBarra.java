@@ -20,9 +20,6 @@ import javax.swing.border.EmptyBorder;
 
 import controller.PopupController;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class wbBarra extends JPanel {
 
@@ -32,9 +29,6 @@ public class wbBarra extends JPanel {
 	private JLabel lblBarra;
 	JLabel lblMenu;
 	JLabel lblNewLabel;
-	private JButton btnNewButton;
-
-
 
 	/**
 	 * Create the panel.
@@ -51,44 +45,30 @@ public class wbBarra extends JPanel {
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(lblMenu, "flowx,cell 0 0,alignx left,growy");
 
-		lblBarra = new JLabel("gyj");
-		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		add(lblBarra, "cell 2 0,alignx right,growy");
-		
-		btnNewButton = new JButton("New button");
-		add(btnNewButton, "cell 0 0");
-		
 		lblNewLabel = new JLabel("WorkITBr");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
 		add(lblNewLabel, "cell 1 0,grow");
 
-
 		setLblBarra(new JLabel());
 		getLblBarra().setHorizontalAlignment(SwingConstants.RIGHT);
 		getLblBarra().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(getLblBarra(), "cell 2 0,alignx right,growy");
-		
-		
-		getLblBarra().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// Aqui chamamos o PopupController
-				PopupController popup = new PopupController();
-				popup.PopupMenu(e, getLblBarra()); // Passando o evento e o componente
-			}
-		});
 
+//		this.lblBarra.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//			
+//				PopupController popup = new PopupController();
+//				popup.PopupMenu(e, getLblBarra()); 
+//			}
+//		});
 		
+
 		lblMenu.setBorder(BorderFactory.createLineBorder(Color.RED));
 		lblBarra.setBorder(BorderFactory.createLineBorder(Color.RED));
 		lblNewLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
-		
-		
-
-
 
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -96,8 +76,7 @@ public class wbBarra extends JPanel {
 
 				ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 				Image img = menuIcon.getImage();
-				Image scaled = img.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
-						Image.SCALE_SMOOTH);
+				Image scaled = img.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4, Image.SCALE_SMOOTH);
 				ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 				Image imgbarra = barraIcon.getImage();
 				Image scaledBarra = imgbarra.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
@@ -106,6 +85,7 @@ public class wbBarra extends JPanel {
 				getLblBarra().setIcon(new ImageIcon(scaledBarra));
 			}
 		});
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -115,15 +95,13 @@ public class wbBarra extends JPanel {
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 
 				ajustarFonte();
-			//	ajustarIcones();
+				// ajustarIcones();
 
 			}
 		});
 
 	}
 
-	
-	
 	public void barra(MouseListener actionListener) {
 		this.getLblBarra().addMouseListener(actionListener);
 	}
@@ -136,16 +114,10 @@ public class wbBarra extends JPanel {
 //	public void menu(MouseListener actionListener) {
 //		this.lblMenu.addMouseListener(actionListener);
 //	}
-	
-	public void menu(MouseAdapter mouseAdapter) { 
-	    this.lblMenu.addMouseListener(mouseAdapter);
+
+	public void menu(MouseAdapter mouseAdapter) {
+		this.lblMenu.addMouseListener(mouseAdapter);
 	}
-	
-	public void btn(ActionListener actionListener) { 
-	    this.btnNewButton.addActionListener(actionListener);
-	}
-	
-	
 
 	public void ajustarFonte() {
 		int w = getWidth();
@@ -160,11 +132,11 @@ public class wbBarra extends JPanel {
 	}
 
 	public void ajustarIcones() {
-		int largura = Math.max(10, getWidth() / 25);
-		int altura = Math.max(10, getHeight() * 2 / 5);
-		
-		int larguraCasa = Math.max(10, getWidth() / 25);
-		int alturaCasa = Math.max(10, getHeight() * 2 / 4);
+		int largura = Math.max(50, getWidth() / 25);
+		int altura = Math.max(50, getHeight() * 2 / 5);
+
+		int larguraCasa = Math.max(50, getWidth() / 25);
+		int alturaCasa = Math.max(50, getHeight() * 2 / 3);
 
 		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 		Image img = menuIcon.getImage();

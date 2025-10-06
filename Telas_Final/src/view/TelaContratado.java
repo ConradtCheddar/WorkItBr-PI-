@@ -30,19 +30,6 @@ public class TelaContratado extends JPanel {
 	ImageIcon chatIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
 	Image scaledImage = chatIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
 	ImageIcon chatResized = new ImageIcon(scaledImage);
-//	
-//	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-//	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-//	ImageIcon menuResized = new ImageIcon(scaledImage2);
-//	
-//	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-//	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-//	ImageIcon barraResized = new ImageIcon(scaledImage3);
-	
-	
-	JPanel panel;
-	JLabel lblBarra;
-	JLabel lblMenu;
 
 	/**
 	 * Create the panel.
@@ -51,28 +38,6 @@ public class TelaContratado extends JPanel {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
-
-		panel = new JPanel();
-		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][][]", "[]"));
-		
-		lblBarra = new JLabel("lol2");
-		lblBarra.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(lblBarra, "cell 12 0,grow");
-		lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		lblMenu = new JLabel("lol2");
-		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(lblMenu, "cell 0 0,grow");
-		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-
-		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 6 0,grow");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setForeground(Color.WHITE);
 		
 		JLabel lblNewLabel_1 = new JLabel("Trabalhos em andamento");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -131,53 +96,8 @@ public class TelaContratado extends JPanel {
 		lblNewLabel_5.setVerticalAlignment(SwingConstants.BOTTOM);
 		add(lblNewLabel_5, "cell 18 14,alignx center,aligny center");
 		lblNewLabel_5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 17);
-				int fontSize2 = Math.max(15, panelHeight / 40);
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-			}
-		});
-		
-		panel.addComponentListener(new ComponentAdapter() {
-	        @Override
-	        public void componentResized(ComponentEvent e) {
-	            ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	            Image img = menuIcon.getImage();
-	            Image scaled = img.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
-	            ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-	            Image imgbarra = barraIcon.getImage();
-	            Image scaledBarra = imgbarra.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
-	            lblMenu.setIcon(new ImageIcon(scaled));
-	            lblBarra.setIcon(new ImageIcon(scaledBarra));
-	        }
-	    });
-		
-		panel.addComponentListener(new ComponentAdapter() {
-	        @Override
-	        public void componentResized(ComponentEvent e) {
-	            ImageIcon chatIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
-	            Image img = chatIcon.getImage();
-	            Image scaled = img.getScaledInstance(panel.getWidth() / 40, panel.getHeight()*2 / 4, Image.SCALE_SMOOTH);
-	            iconLabel.setIcon(new ImageIcon(scaled));
-	            lblNewLabel_3.setIcon(new ImageIcon(scaled));
-	            lblNewLabel_4.setIcon(new ImageIcon(scaled));
-	            lblNewLabel_5.setIcon(new ImageIcon(scaled));
-	        }
-	    });
 
 
-	}
-	
-	public void barra(MouseListener actionListener) {
-	    this.lblBarra.addMouseListener(actionListener);
-	}
-	public void menu(MouseListener actionListener) {
-	    this.lblMenu.addMouseListener(actionListener);
 	}
 
 }

@@ -18,17 +18,6 @@ public class ContratanteController {
 		this.model = model;
 		this.navegador = navegador;
 		
-		this.view.barra(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		        navegador.navegarPara("TEMP");
-		    }
-		});
-		this.view.menu(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		        navegador.navegarPara("TEMP");
-		    }
-		});
+
 	}
 }

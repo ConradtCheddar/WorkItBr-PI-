@@ -21,9 +21,11 @@ public class Primario extends JFrame {
 	
 	JPanel cPanel;
 	JPanel wbPanel;
+	DrawerMenu dm;
 	
 	private static CardLayout cardLayout;
 	private JTextField textField;
+	
 	
 	private wbBarra wbb;
 
@@ -61,10 +63,14 @@ public class Primario extends JFrame {
 		
 		contentPane.add(wbb, BorderLayout.NORTH);
 		
+		
+		
 		this.cPanel = new JPanel(cardLayout);
 		this.cPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		contentPane.add(cPanel, BorderLayout.CENTER);
 		
+		dm = new DrawerMenu(this);
+		this.add(dm, BorderLayout.WEST);
 		
 		
 	}
