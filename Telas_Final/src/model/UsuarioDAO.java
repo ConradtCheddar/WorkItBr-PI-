@@ -20,7 +20,7 @@ public class UsuarioDAO {
 
 	}
 
-	public void cadastrar(Usuario u, String senha2) {
+	public void cadastrarU(Usuario u, String senha2) {
 
 		if (u.isContratado() == true) {
 

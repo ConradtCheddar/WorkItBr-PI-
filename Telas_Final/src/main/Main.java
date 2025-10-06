@@ -1,9 +1,8 @@
 package main;
 
-import java.awt.PopupMenu;
-
 import javax.swing.UIManager;
 
+import controller.CadastroContratanteController;
 import controller.CadastroController;
 import controller.ContratadoController;
 import controller.ContratanteController;
@@ -12,10 +11,12 @@ import controller.Navegador;
 import controller.PopupController;
 import controller.TempController;
 import controller.WBController;
+import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.Primario;
 import view.TelaAdm;
 import view.TelaCadastro;
+import view.TelaCadastroContratante;
 import view.TelaContratado;
 import view.TelaContratante;
 import view.TelaLogin;
@@ -34,6 +35,7 @@ public class Main {
 		
 		Navegador navegador =new Navegador(prim);
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		ServicoDAO servicoDAO = new ServicoDAO();
 	    PopupController popup = new PopupController();
 	     
 		
@@ -60,6 +62,9 @@ public class Main {
 		wbBarra wbb = new wbBarra();
 		WBController wbcontroller = new WBController(wbb, usuarioDAO, navegador, popup);
 		
+		TelaCadastroContratante telaCadastroContratante = new TelaCadastroContratante();
+		CadastroContratanteController cadastroContratanteController = new CadastroContratanteController(telaCadastroContratante, servicoDAO, navegador);
+		
 		
 		
 	
@@ -74,9 +79,10 @@ public class Main {
 		navegador.adicionarPainel("CONTRATADO", telacontratado);
 		navegador.adicionarPainel("TEMP", temp);
 		navegador.adicionarPainel("ADM", telaadm);
+		navegador.adicionarPainel("CADASTROCONTRATANTE", telaCadastroContratante);
 	
 		
-		navegador.navegarPara("LOGIN");
+		navegador.navegarPara("CADASTROCONTRATANTE");
 		
 		prim.setVisible(true);
 		
