@@ -26,6 +26,7 @@ public class Navegador {
 	
 	public void navegarPara(String nome) {
 		this.prim.mostrarTela(nome);
+		System.out.println("para");
 	}
 	
 	public void sair() {

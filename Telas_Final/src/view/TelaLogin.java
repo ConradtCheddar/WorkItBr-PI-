@@ -40,9 +40,9 @@ public class TelaLogin extends JPanel {
 	private JButton btnLogin;
 	private JLabel lblCadastrese;
 
-	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-	ImageIcon menuResized = new ImageIcon(scaledImage2);
+//	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+//	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+//	ImageIcon menuResized = new ImageIcon(scaledImage2);
 
 	/**
 	 * Declaração dos elementos da tela
