@@ -8,10 +8,7 @@ import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
-<<<<<<< HEAD
 import java.awt.event.MouseEvent;
-=======
->>>>>>> refactoramento
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
@@ -67,9 +64,9 @@ public class wbBarra extends JPanel {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel.setForeground(Color.WHITE);
 		add(lblNewLabel, "cell 1 0,grow");
-<<<<<<< HEAD
 
-		setLblBarra(new JLabel(barraResized));
+
+		setLblBarra(new JLabel());
 		getLblBarra().setHorizontalAlignment(SwingConstants.RIGHT);
 		getLblBarra().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(getLblBarra(), "cell 2 0,alignx right,growy");
@@ -83,8 +80,7 @@ public class wbBarra extends JPanel {
 				popup.PopupMenu(e, getLblBarra()); // Passando o evento e o componente
 			}
 		});
-=======
->>>>>>> refactoramento
+
 		
 		lblMenu.setBorder(BorderFactory.createLineBorder(Color.RED));
 		lblBarra.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -97,7 +93,7 @@ public class wbBarra extends JPanel {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-<<<<<<< HEAD
+
 				ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 				Image img = menuIcon.getImage();
 				Image scaled = img.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
@@ -117,26 +113,25 @@ public class wbBarra extends JPanel {
 				int fontSize = Math.max(15, panelHeight / 17);
 				int fontSize2 = Math.max(15, panelHeight / 40);
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-=======
+
 				ajustarFonte();
 			//	ajustarIcones();
->>>>>>> refactoramento
+
 			}
 		});
 
 	}
-<<<<<<< HEAD
+
 	
 	
 	public void barra(MouseListener actionListener) {
 		this.getLblBarra().addMouseListener(actionListener);
-=======
-
-	public void barra(MouseListener actionListener) {
-		System.out.println("barra");
-		this.lblBarra.addMouseListener(actionListener);
->>>>>>> refactoramento
 	}
+
+//	public void barra(MouseListener actionListener) {
+//		System.out.println("barra");
+//		this.lblBarra.addMouseListener(actionListener);
+//	}
 
 //	public void menu(MouseListener actionListener) {
 //		this.lblMenu.addMouseListener(actionListener);
