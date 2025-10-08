@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.UIManager;
 
+import controller.CadastroContratanteController;
 import controller.CadastroController;
 import controller.ContratadoController;
 import controller.ContratanteController;
@@ -11,11 +12,13 @@ import controller.PopupController;
 import controller.PopupMenuController;
 import controller.TempController;
 import controller.WBController;
+import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.DrawerMenu;
 import view.Primario;
 import view.TelaAdm;
 import view.TelaCadastro;
+import view.TelaCadastroContratante;
 import view.TelaContratado;
 import view.TelaContratante;
 import view.TelaLogin;

@@ -34,6 +34,7 @@ public class Temp extends JPanel {
 	JButton btnADM;
 	JButton btnContratado;
 	JButton btnContratante;
+	JButton btnCadastroContratante;
 	
 	/**
 	 * Create the panel.
@@ -54,6 +55,9 @@ public class Temp extends JPanel {
 		btnContratante = new JButton("Contratante");
 		add(btnContratante, "cell 11 12,grow");
 		
+		btnCadastroContratante = new JButton("Cadastro Contratante");
+		add(btnCadastroContratante, "cell 11 13,grow");
+		
 	
 
 	}
@@ -70,6 +74,10 @@ public class Temp extends JPanel {
 	public void contratante(ActionListener actionListener) {
 		this.btnContratante.addActionListener(actionListener);
 	}
+	public void cadastroContratante(ActionListener actionListener) {
+		this.btnCadastroContratante.addActionListener(actionListener);
+	}
+	
 	
 	
 

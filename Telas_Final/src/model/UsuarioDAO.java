@@ -17,7 +17,8 @@ public class UsuarioDAO {
 
 	}
 
-	public boolean cadastrar(Usuario u, String senha2) {
+	public void cadastrarU(Usuario u, String senha2) {
+
 		if (u.isContratado() == true) {
 			if (u.getEmail().isEmpty() || u.getUsuario().isEmpty() || u.getCpfCnpj().isEmpty()
 					|| u.getTelefone().isEmpty() || u.getSenha().isEmpty() || senha2.isEmpty()) {

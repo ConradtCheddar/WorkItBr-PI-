@@ -3,10 +3,12 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import model.Servico;
+import model.ServicoDAO;
 import model.Usuario;
 import model.UsuarioDAO;
 import view.TelaCadastro;
-import view.TelaLogin;
+import view.TelaCadastroContratante;
 
 public class CadastroController {
 	private final TelaCadastro view;
