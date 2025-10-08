@@ -4,12 +4,13 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import model.Usuario;
 import view.Primario;
 import view.wbBarra;
 
 public class Navegador {
-	
 	private Primario prim;
+	private Usuario currentUser;
 	
 	public Navegador(Primario prim) {
 		this.prim = prim;
@@ -36,6 +37,13 @@ public class Navegador {
 	
 	public void adicionarPainelWB(JPanel tela) {
 		this.prim.adicionarTelaWB(tela);
+	}
+
+	public void setCurrentUser(Usuario user) {
+		this.currentUser = user;
+	}
+	public Usuario getCurrentUser() {
+		return this.currentUser;
 	}
 	
 	

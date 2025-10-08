@@ -114,6 +114,10 @@ public class wbBarra extends JPanel {
 		this.lblMenu.addMouseListener(mouseAdapter);
 	}
 
+	public void setMenuClickListener(MouseListener listener) {
+		lblMenu.addMouseListener(listener);
+	}
+
 	public void ajustarFonte() {
 		int w = getWidth();
 		if (w <= 0)

@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import controller.Navegador;
+import model.UsuarioDAO;
+import model.Usuario;
+import view.TelaConfigUser;
+import controller.TelaConfigUserController;
 
 public class DrawerMenu extends JPanel {
     private static final int MENU_WIDTH = 250;
@@ -14,9 +18,13 @@ public class DrawerMenu extends JPanel {
     private Thread animationThread = null;
     private JButton btnLogout;
     private JButton btnSettings;
+    private JButton btnProfile;
+    private JButton btnTrabalhos;
+    private UsuarioDAO usuarioDAO;
 
-    public DrawerMenu(JFrame parentFrame) {
+    public DrawerMenu(JFrame parentFrame, UsuarioDAO usuarioDAO) {
         this.parentFrame = parentFrame;
+        this.usuarioDAO = usuarioDAO;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(Color.DARK_GRAY);
         int height = (parentFrame != null) ? parentFrame.getHeight() : 700;
@@ -27,7 +35,10 @@ public class DrawerMenu extends JPanel {
         setBounds(currentPosition, 0, MENU_WIDTH, height);
 
         add(createMenuButton("Home"));
-        add(createMenuButton("Profile"));
+        btnProfile = createMenuButton("Profile");
+        add(btnProfile);
+        btnTrabalhos = createMenuButton("Trabalhos");
+        add(btnTrabalhos);
         btnSettings = createMenuButton("Settings");
         add(btnSettings);
         btnLogout = createMenuButton("Logout");
@@ -55,6 +66,54 @@ public class DrawerMenu extends JPanel {
                 if (this.navegador != null) {
                     this.navegador.navegarPara("LOGIN");
                     this.setVisible(false);
+                }
+            });
+        }
+        if (btnTrabalhos != null) {
+            for (ActionListener al : btnTrabalhos.getActionListeners()) {
+                btnTrabalhos.removeActionListener(al);
+            }
+            btnTrabalhos.addActionListener(e -> {
+                if (this.navegador != null) {
+                    this.navegador.navegarPara("CADASTRO_CONTRATANTE");
+                    this.setVisible(false);
+                }
+            });
+        }
+        if (btnProfile != null) {
+            for (ActionListener al : btnProfile.getActionListeners()) {
+                btnProfile.removeActionListener(al);
+            }
+            btnProfile.addActionListener(e -> {
+                if (this.navegador != null) {
+                    Usuario usuario = this.navegador.getCurrentUser();
+                    if (usuario != null) {
+                        // Remove old CONFIG_USER panel if exists
+                        try {
+                            java.lang.reflect.Field cPanelField = navegador.getClass().getDeclaredField("cPanel");
+                            cPanelField.setAccessible(true);
+                            javax.swing.JPanel cPanel = (javax.swing.JPanel) cPanelField.get(navegador);
+                            java.awt.Component toRemove = null;
+                            for (java.awt.Component comp : cPanel.getComponents()) {
+                                if ("CONFIG_USER".equals(cPanel.getClientProperty(comp))) {
+                                    toRemove = comp;
+                                    break;
+                                }
+                            }
+                            if (toRemove != null) {
+                                cPanel.remove(toRemove);
+                            }
+                        } catch (Exception ex) {
+                            // Ignore if not found
+                        }
+                        TelaConfigUser telaConfigUser = new TelaConfigUser();
+                        new TelaConfigUserController(telaConfigUser, usuarioDAO, navegador, usuario);
+                        this.navegador.adicionarPainel("CONFIG_USER", telaConfigUser);
+                        this.navegador.navegarPara("CONFIG_USER");
+                        this.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Nenhum usuário logado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             });
         }

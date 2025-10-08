@@ -14,12 +14,14 @@ public class LoginController {
 	private final UsuarioDAO model;
 	private final Navegador navegador;
 	private final TelaCadastro telaCadastro;
+	private final PopupMenuController popupMenuController;
 	
-	public LoginController(TelaLogin view, UsuarioDAO model, Navegador navegador, TelaCadastro telaCadastro){
+	public LoginController(TelaLogin view, UsuarioDAO model, Navegador navegador, TelaCadastro telaCadastro, PopupMenuController popupMenuController){
 		this.view = view;
 		this.model = model;
 		this.navegador = navegador;
 		this.telaCadastro = telaCadastro;
+		this.popupMenuController = popupMenuController;
 		
 		this.view.login(e ->{
 			String nome = view.getUsuario();
@@ -29,6 +31,8 @@ public class LoginController {
 			Usuario u = dao.login(nome, senha);
 			
 			if (u != null) {
+				navegador.setCurrentUser(u);
+				popupMenuController.updateProfileAction();
 				if (u.isAdmin()) {
 					navegador.navegarPara("ADM");
 				} else if (u.isContratado()) {

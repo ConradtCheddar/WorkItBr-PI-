@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.jdesktop.swingx.prompt.PromptSupport;
+
 import com.formdev.flatlaf.FlatClientProperties;
 
 import net.miginfocom.swing.MigLayout;
@@ -100,6 +102,22 @@ public class TelaCadastro extends JPanel {
 		div = new ButtonGroup();
 		div.add(rdbtnContratante);
 		div.add(rdbtnContratado);
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize2 = Math.max(15, panelHeight / 40);
+				tfEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				tfUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				senha.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				senha2.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				btnCadastrar.putClientProperty("JComponent.roundRect", true);
+			}
+		});
 
 
 	}

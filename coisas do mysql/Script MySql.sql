@@ -24,13 +24,13 @@ CREATE TABLE if not exists Login
  idLogin INT PRIMARY KEY AUTO_INCREMENT, 
  idContratado boolean,
  idAdmin boolean,
- idContratante boolean
+ idContratante boolean,
+ caminhofoto VARCHAR(255)
 ); 
 
 INSERT INTO login (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, idAdmin)
 SELECT 'Admin', 'default', 'default', 'default', 'workitbr@321', true
 WHERE NOT EXISTS (
-SELECT 1 FROM login WHERE Nome = 'Admin');
-ALTER TABLE Login ADD COLUMN caminhofoto VARCHAR(255);
+SELECT 1 FROM login WHERE Nome_Usuario = 'Admin');
 
 select * from Login

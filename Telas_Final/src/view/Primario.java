@@ -93,6 +93,20 @@ public class Primario extends JFrame {
 		int x = dm.isVisible() && getDrawerMenuOpenState(dm) ? (w - menuWidth) : w;
 		contentPanel.setBounds(0, 0, w, h);
 		dm.setBounds(x, 0, menuWidth, h);
+
+		wbb.setMenuClickListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				dm.toggleMenu();
+			}
+		});
+		// Add this: clicking lblBarra also opens DrawerMenu
+		wbb.barra(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				dm.toggleMenu();
+			}
+		});
 	}
 
 	public void mostrarTela(String panelName) {

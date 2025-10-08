@@ -9,9 +9,10 @@ public class Usuario {
 	private boolean contratado;
 	private boolean contratante;
 	private boolean admin;
+	private String caminhoFoto; // Added missing field
 
 	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, boolean contratado,
-			boolean contratante, boolean admin) {
+			boolean contratante, boolean admin, String caminhoFoto) {
 		this.email = email;
 		this.usuario = usuario;
 		this.cpfCnpj = cpfCnpj;
@@ -20,12 +21,7 @@ public class Usuario {
 		this.contratado = contratado;
 		this.contratante = contratante;
 		this.admin = admin;
-	}
-
-	// For backward compatibility
-	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, boolean contratado,
-			boolean contratante) {
-		this(email, usuario, cpfCnpj, telefone, senha, contratado, contratante, false);
+		this.caminhoFoto = caminhoFoto;
 	}
 
 	public String getEmail() {
@@ -91,4 +87,14 @@ public class Usuario {
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
 	}
+
+	public String getCaminhoFoto() {
+		return caminhoFoto;
+	}
+
+	public void setCaminhoFoto(String caminhoFoto) {
+		this.caminhoFoto = caminhoFoto;
+	}
+
+	
 }

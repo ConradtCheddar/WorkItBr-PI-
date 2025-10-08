@@ -4,54 +4,41 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-import controller.Navegador;
-import view.Primario;
 
 public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
 	static String Senha = "admin";
-	Navegador n = new Navegador(null);
 	public ServicoDAO() {
 
 	}
 
-	public void cadastrarS(Servico s) {
+	public boolean cadastrarS(Servico s) {
+		if (s.getNome_Servico().isEmpty() || s.getModalidade().isEmpty() || s.getValor().isEmpty() || s.getDescricao().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		} else {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-			if (s.getNome_Servico().isEmpty() || s.getModalidade().isEmpty() || s.getValor().isEmpty() || s.getDescricao().isEmpty()) {
-
-				JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
-
-			} else {
-
-					try {
-						Class.forName("com.mysql.cj.jdbc.Driver");
-						Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-
-						String sql = "INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao) VALUES (?, ?, ?, ?)";
-						var stmt = conn.prepareStatement(sql);
-						
-						stmt.setString(1, s.getNome_Servico()); // Nome do serviço
-						stmt.setString(2, s.getValor()); // Valor
-						stmt.setString(3, s.getModalidade()); // Modalidade
-						stmt.setString(4, s.getDescricao()); // Descrição
-						
-						stmt.executeUpdate();
-						JOptionPane.showMessageDialog(null, "Serviço cadastrado com sucesso!", "Sucesso!",
-								JOptionPane.PLAIN_MESSAGE);
-						n.navegarPara("LOGIN");
-
-						stmt.close();
-						conn.close();
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
+				String sql = "INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao) VALUES (?, ?, ?, ?)";
+				var stmt = conn.prepareStatement(sql);
+				stmt.setString(1, s.getNome_Servico());
+				stmt.setString(2, s.getValor());
+				stmt.setString(3, s.getModalidade());
+				stmt.setString(4, s.getDescricao());
+				stmt.executeUpdate();
+				JOptionPane.showMessageDialog(null, "Serviço cadastrado com sucesso!", "Sucesso!", JOptionPane.PLAIN_MESSAGE);
+				stmt.close();
+				conn.close();
+				return true;
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				return false;
 			}
-
+		}
 	}
 
 //	public Usuario login(String nome, String senha) {

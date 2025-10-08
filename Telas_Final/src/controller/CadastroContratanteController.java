@@ -28,11 +28,11 @@ public class CadastroContratanteController {
 			ServicoDAO dao = new ServicoDAO();
 			Servico s = new Servico(nome_Servico,modalidade,valor,descricao, false);
 
-			dao.cadastrarS(s);
-			navegador.navegarPara("CONTRATANTE");
+			boolean sucesso = dao.cadastrarS(s);
+			if (sucesso) {
+				navegador.navegarPara("CONTRATANTE");
+			}
 		});
 		
 	}
 }
-
-
