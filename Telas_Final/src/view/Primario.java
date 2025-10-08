@@ -78,7 +78,10 @@ public class Primario extends JFrame {
 				int w = getWidth();
 				int h = getHeight();
 				contentPanel.setBounds(0, 0, w, h);
-				dm.setBounds(0, 0, dm.getPreferredSize().width, h);
+				// Position DrawerMenu at the right edge
+				int menuWidth = dm.getPreferredSize().width;
+				int x = dm.isVisible() && getDrawerMenuOpenState(dm) ? (w - menuWidth) : w;
+				dm.setBounds(x, 0, menuWidth, h);
 				layeredPane.revalidate();
 				layeredPane.repaint();
 			}
@@ -86,8 +89,10 @@ public class Primario extends JFrame {
 		// Initial sizing
 		int w = getWidth();
 		int h = getHeight();
+		int menuWidth = dm.getPreferredSize().width;
+		int x = dm.isVisible() && getDrawerMenuOpenState(dm) ? (w - menuWidth) : w;
 		contentPanel.setBounds(0, 0, w, h);
-		dm.setBounds(0, 0, dm.getPreferredSize().width, h);
+		dm.setBounds(x, 0, menuWidth, h);
 	}
 
 	public void mostrarTela(String panelName) {
@@ -102,5 +107,16 @@ public class Primario extends JFrame {
 
 	public void adicionarTelaWB(JPanel tela) {
 		this.wbb.add(tela);
+	}
+
+	// Helper method to check DrawerMenu open state
+	private boolean getDrawerMenuOpenState(DrawerMenu dm) {
+		try {
+			java.lang.reflect.Field field = DrawerMenu.class.getDeclaredField("isOpen");
+			field.setAccessible(true);
+			return field.getBoolean(dm);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

@@ -65,7 +65,6 @@ public class wbBarra extends JPanel {
 		getLblBarra().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		getLblBarra().setPreferredSize(new Dimension(96, 48));
 		getLblBarra().setMinimumSize(new Dimension(64, 40));
-		// Set initial icon with default size to avoid squeeze
 		ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 		Image imgBarra = barraIcon.getImage();
 		Image scaledBarra = imgBarra.getScaledInstance(64, 40, Image.SCALE_SMOOTH);
@@ -130,11 +129,11 @@ public class wbBarra extends JPanel {
 	public void ajustarIcones() {
 		int w = getWidth() > 0 ? getWidth() : 900;
 		int h = getHeight() > 0 ? getHeight() : 85;
-		int largura = Math.max(64, w / 25); // barra mais larga
-		int altura = Math.max(40, h * 2 / 5); // altura máxima 40
+		int largura = Math.max(64, w / 25);
+		int altura = Math.max(40, h * 2 / 5); 
 
 		int larguraCasa = Math.max(32, w / 45);
-		int alturaCasa = Math.max(32, Math.min(40, h * 2 / 3)); // altura máxima 40
+		int alturaCasa = Math.max(32, Math.min(40, h * 2 / 3));
 
 		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 		Image img = menuIcon.getImage();

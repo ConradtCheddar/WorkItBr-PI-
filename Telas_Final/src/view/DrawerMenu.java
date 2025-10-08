@@ -7,12 +7,11 @@ import controller.Navegador;
 
 public class DrawerMenu extends JPanel {
     private static final int MENU_WIDTH = 250;
-    private static final int MENU_HIDE_POSITION = -MENU_WIDTH;
-    private static final int MENU_SHOW_POSITION = 0;
     private JFrame parentFrame;
     private Navegador navegador;
-    private int currentPosition = MENU_HIDE_POSITION;
-    private Timer timer;
+    private int currentPosition; // x position
+    private boolean isOpen = false;
+    private Thread animationThread = null;
     private JButton btnLogout;
     private JButton btnSettings;
 
@@ -23,21 +22,16 @@ public class DrawerMenu extends JPanel {
         int height = (parentFrame != null) ? parentFrame.getHeight() : 700;
         setPreferredSize(new Dimension(MENU_WIDTH, height));
         setVisible(false);
+        // Start off-screen right
+        currentPosition = (parentFrame != null ? parentFrame.getWidth() : 900);
+        setBounds(currentPosition, 0, MENU_WIDTH, height);
 
-        
         add(createMenuButton("Home"));
         add(createMenuButton("Profile"));
         btnSettings = createMenuButton("Settings");
         add(btnSettings);
         btnLogout = createMenuButton("Logout");
         add(btnLogout);
-
-        
-        timer = new Timer(10, e -> {
-            if (currentPosition != MENU_SHOW_POSITION && currentPosition != MENU_HIDE_POSITION) {
-                setLocation(currentPosition, 0);
-            }
-        });
     }
 
     public void setNavegador(Navegador navegador) {
@@ -67,33 +61,45 @@ public class DrawerMenu extends JPanel {
     }
 
     public void toggleMenu() {
-        System.out.println("toggleMenu called, current visible: " + isVisible()); // debug
-        setVisible(!isVisible());
-        if (getParent() != null) {
-            getParent().revalidate();
-            getParent().repaint();
+        if (parentFrame == null) return;
+        int frameWidth = parentFrame.getWidth();
+        int targetOpen = frameWidth - MENU_WIDTH;
+        int targetClose = frameWidth;
+        setVisible(true);
+        if (animationThread != null && animationThread.isAlive()) {
+            animationThread.interrupt();
         }
-        revalidate();
-        repaint();
+        animationThread = new Thread(() -> {
+            try {
+                if (!isOpen) {
+                    // Animate open
+                    for (int x = frameWidth; x >= targetOpen; x -= 20) {
+                        setLocation(x, 0);
+                        currentPosition = x;
+                        Thread.sleep(5);
+                    }
+                    setLocation(targetOpen, 0);
+                    currentPosition = targetOpen;
+                    isOpen = true;
+                } else {
+                    // Animate close
+                    for (int x = currentPosition; x <= targetClose; x += 20) {
+                        setLocation(x, 0);
+                        currentPosition = x;
+                        Thread.sleep(5);
+                    }
+                    setLocation(targetClose, 0);
+                    currentPosition = targetClose;
+                    isOpen = false;
+                    SwingUtilities.invokeLater(() -> setVisible(false));
+                }
+            } catch (InterruptedException e) {
+                // Animation interrupted
+            }
+        });
+        animationThread.start();
     }
 
-    private void animateMenu(int targetPosition) {
-        new Thread(() -> {
-            while (currentPosition != targetPosition) {
-                currentPosition += (targetPosition > currentPosition) ? 10 : -10;
-                if (Math.abs(currentPosition - targetPosition) < 10) {
-                    currentPosition = targetPosition;
-                    break;
-                }
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            setLocation(currentPosition, 0);
-        }).start();
-    }
     private JButton createMenuButton(String text) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -108,6 +114,10 @@ public class DrawerMenu extends JPanel {
         this.parentFrame = parentFrame;
         if (parentFrame != null) {
             setPreferredSize(new Dimension(MENU_WIDTH, parentFrame.getHeight()));
+            int frameWidth = parentFrame.getWidth();
+            int y = 0;
+            int x = isOpen ? (frameWidth - MENU_WIDTH) : frameWidth;
+            setBounds(x, y, MENU_WIDTH, parentFrame.getHeight());
             revalidate();
             repaint();
         }
