@@ -3,10 +3,12 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import model.Servico;
+import model.ServicoDAO;
 import model.Usuario;
 import model.UsuarioDAO;
 import view.TelaCadastro;
-import view.TelaLogin;
+import view.TelaCadastroContratante;
 
 public class CadastroController {
 	private final TelaCadastro view;
@@ -30,10 +32,15 @@ public class CadastroController {
 			Usuario u = new Usuario(email, usuario, cpf, telefone, senha1, this.view.getRdbtnContratado().isSelected(), this.view.getRdbtnContratante().isSelected());
 
 
-			dao.cadastrar(u, senha2Text);
-			navegador.navegarPara("LOGIN");
+			dao.cadastrarU(u, senha2Text);
+			navegador.navegarPara("CONTRATANTE");
 		});
+<<<<<<< HEAD
 	}
+=======
+		
+>>>>>>> Func_Contratante
 }
+	}
 
 

@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.UIManager;
 
+import controller.CadastroContratanteController;
 import controller.CadastroController;
 import controller.ContratadoController;
 import controller.ContratanteController;
@@ -11,11 +12,13 @@ import controller.PopupController;
 import controller.PopupMenuController;
 import controller.TempController;
 import controller.WBController;
+import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.DrawerMenu;
 import view.Primario;
 import view.TelaAdm;
 import view.TelaCadastro;
+import view.TelaCadastroContratante;
 import view.TelaContratado;
 import view.TelaContratante;
 import view.TelaLogin;
@@ -38,9 +41,17 @@ public class Main {
 		Navegador navegador = new Navegador(prim);
 		pm.setNavegador(navegador);
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
+<<<<<<< HEAD
 		PopupController popup = new PopupController();
 
 		// tela de login
+=======
+		ServicoDAO servicoDAO = new ServicoDAO();
+	    PopupController popup = new PopupController();
+	     
+		
+		//tela de login
+>>>>>>> Func_Contratante
 		TelaLogin telalogin = new TelaLogin();
 		LoginController logincontroller = new LoginController(telalogin, usuarioDAO, navegador);
 
@@ -60,6 +71,22 @@ public class Main {
 		TempController tempcontroller = new TempController(temp, usuarioDAO, navegador);
 
 		TelaAdm telaadm = new TelaAdm();
+<<<<<<< HEAD
+=======
+		wbBarra wbb = new wbBarra();
+		WBController wbcontroller = new WBController(wbb, usuarioDAO, navegador, popup);
+		
+		TelaCadastroContratante telaCadastroContratante = new TelaCadastroContratante();
+		CadastroContratanteController cadastroContratanteController = new CadastroContratanteController(telaCadastroContratante, servicoDAO, navegador);
+		
+		
+		
+	
+	   
+		
+		
+		
+>>>>>>> Func_Contratante
 		
 		PopupMenuController popup2 = new PopupMenuController(pm, navegador);
 		WBController wbcontroller = new WBController(wbb, usuarioDAO, navegador, popup, popup2);
@@ -70,8 +97,16 @@ public class Main {
 		navegador.adicionarPainel("CONTRATADO", telacontratado);
 		navegador.adicionarPainel("TEMP", temp);
 		navegador.adicionarPainel("ADM", telaadm);
+<<<<<<< HEAD
 
 		navegador.navegarPara("LOGIN");
+=======
+		navegador.adicionarPainel("CADASTROCONTRATANTE", telaCadastroContratante);
+	
+		
+		navegador.navegarPara("CADASTROCONTRATANTE");
+		
+>>>>>>> Func_Contratante
 		prim.setVisible(true);
 	}
 }
