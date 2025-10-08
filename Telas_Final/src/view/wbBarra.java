@@ -43,12 +43,11 @@ public class wbBarra extends JPanel {
 		lblMenu = new JLabel();
 		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblMenu.setEnabled(true); // Ensure enabled
-		lblMenu.setVisible(true); // Ensure visible
-		lblMenu.setPreferredSize(new Dimension(48, 48)); // Set preferred size for click area
-		lblMenu.setOpaque(true); // For debug, make background visible
-		lblMenu.setBackground(Color.LIGHT_GRAY); // For debug, distinguish area
-		// Set icon at construction
+		lblMenu.setEnabled(true);
+		lblMenu.setVisible(true);
+		lblMenu.setPreferredSize(new Dimension(48, 40)); // altura menor
+		lblMenu.setMinimumSize(new Dimension(32, 32));
+
 		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 		Image img = menuIcon.getImage();
 		Image scaled = img.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
@@ -64,16 +63,21 @@ public class wbBarra extends JPanel {
 		setLblBarra(new JLabel());
 		getLblBarra().setHorizontalAlignment(SwingConstants.RIGHT);
 		getLblBarra().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		add(getLblBarra(), "cell 2 0,alignx right,growy");
+		getLblBarra().setPreferredSize(new Dimension(96, 48));
+		getLblBarra().setMinimumSize(new Dimension(64, 40));
+		// Set initial icon with default size to avoid squeeze
+		ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
+		Image imgBarra = barraIcon.getImage();
+		Image scaledBarra = imgBarra.getScaledInstance(64, 40, Image.SCALE_SMOOTH);
+		getLblBarra().setIcon(new ImageIcon(scaledBarra));
+		add(getLblBarra(), "cell 2 0,alignx right,growy,gapright 15px");
 
-		lblMenu.setBorder(BorderFactory.createLineBorder(Color.RED));
-		lblBarra.setBorder(BorderFactory.createLineBorder(Color.RED));
-		lblNewLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
 
+		ajustarIcones();
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-
+				ajustarIcones();
 				ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 				Image imgbarra = barraIcon.getImage();
 				Image scaledBarra = imgbarra.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
@@ -91,11 +95,16 @@ public class wbBarra extends JPanel {
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 
 				ajustarFonte();
-				// ajustarIcones();
 
 			}
 		});
 
+	}
+
+	@Override
+	public void addNotify() {
+		super.addNotify();
+		ajustarIcones();
 	}
 
 	public void barra(MouseListener actionListener) {
@@ -103,7 +112,6 @@ public class wbBarra extends JPanel {
 	}
 
 	public void menu(MouseAdapter mouseAdapter) {
-		System.out.println("menu() called: attaching MouseAdapter to lblMenu"); // debug
 		this.lblMenu.addMouseListener(mouseAdapter);
 	}
 
@@ -120,11 +128,13 @@ public class wbBarra extends JPanel {
 	}
 
 	public void ajustarIcones() {
-		int largura = Math.max(50, getWidth() / 25);
-		int altura = Math.max(50, getHeight() * 2 / 5);
+		int w = getWidth() > 0 ? getWidth() : 900;
+		int h = getHeight() > 0 ? getHeight() : 85;
+		int largura = Math.max(64, w / 25); // barra mais larga
+		int altura = Math.max(40, h * 2 / 5); // altura máxima 40
 
-		int larguraCasa = Math.max(50, getWidth() / 25);
-		int alturaCasa = Math.max(50, getHeight() * 2 / 3);
+		int larguraCasa = Math.max(32, w / 45);
+		int alturaCasa = Math.max(32, Math.min(40, h * 2 / 3)); // altura máxima 40
 
 		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 		Image img = menuIcon.getImage();

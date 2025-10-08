@@ -15,19 +15,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class Primario extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-    private JLayeredPane layeredPane;
-    private JPanel contentPanel;
-    private JPanel cPanel;
-    private DrawerMenu dm;
-    private static CardLayout cardLayout;
-    private JTextField textField;
-    private wbBarra wbb;
+	private static final long serialVersionUID = 1L;
+	private JLayeredPane layeredPane;
+	private JPanel contentPanel;
+	private JPanel cPanel;
+	private DrawerMenu dm;
+	private static CardLayout cardLayout;
+	private JTextField textField;
+	private wbBarra wbb;
 
-    /**
+	/**
 	 * Create the frame.
 	 */
 	public Primario(wbBarra wbb, DrawerMenu dm) {
@@ -48,16 +50,15 @@ public class Primario extends JFrame {
 		setIconImages(icons);
 		UIManager.put("Button.arc", 999);
 
-		// Use JLayeredPane for overlay
+		// Use BorderLayout for layeredPane to fill the frame
 		layeredPane = new JLayeredPane();
-		layeredPane.setPreferredSize(new Dimension(900, 700));
+		layeredPane.setLayout(null); // We'll manage layout manually for overlay
 		setContentPane(layeredPane);
 
-		// Main content panel (holds wbBarra and cPanel)
 		contentPanel = new JPanel(new BorderLayout());
-		contentPanel.setBounds(0, 0, 900, 700);
 		contentPanel.setBackground(new Color(0, 102, 204));
 		contentPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
+		// Remove setBounds and setPreferredSize
 		layeredPane.add(contentPanel, JLayeredPane.DEFAULT_LAYER);
 
 		contentPanel.add(wbb, BorderLayout.NORTH);
@@ -66,15 +67,33 @@ public class Primario extends JFrame {
 		this.cPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		contentPanel.add(cPanel, BorderLayout.CENTER);
 
-		// DrawerMenu overlay
-		dm.setBounds(0, 0, dm.getPreferredSize().width, dm.getPreferredSize().height);
+		// Remove setBounds for DrawerMenu, set size dynamically
 		layeredPane.add(dm, JLayeredPane.PALETTE_LAYER);
-		dm.setVisible(false); // Start hidden
+		dm.setVisible(false);
+
+		// Add resize listener to update contentPanel and DrawerMenu size
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int w = getWidth();
+				int h = getHeight();
+				contentPanel.setBounds(0, 0, w, h);
+				dm.setBounds(0, 0, dm.getPreferredSize().width, h);
+				layeredPane.revalidate();
+				layeredPane.repaint();
+			}
+		});
+		// Initial sizing
+		int w = getWidth();
+		int h = getHeight();
+		contentPanel.setBounds(0, 0, w, h);
+		dm.setBounds(0, 0, dm.getPreferredSize().width, h);
 	}
 
 	public void mostrarTela(String panelName) {
 		this.cardLayout.show(this.cPanel, panelName);
-		this.pack();
+		this.cPanel.revalidate();
+		this.cPanel.repaint();
 	}
 
 	public void adicionarTela(String panelName, JPanel tela) {

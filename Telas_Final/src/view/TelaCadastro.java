@@ -43,7 +43,6 @@ public class TelaCadastro extends JPanel {
 	 * 
 	 */
 	public TelaCadastro() {
-		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0",
 				"[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]",
@@ -203,30 +202,6 @@ public class TelaCadastro extends JPanel {
 	public void setBtnCadastrar(JButton btnCadastrar) {
 		this.btnCadastrar = btnCadastrar;
 	}
-
-//	public ImageIcon getMenuIcon() {
-//		return menuIcon;
-//	}
-//
-//	public void setMenuIcon(ImageIcon menuIcon) {
-//		this.menuIcon = menuIcon;
-//	}
-//
-//	public Image getScaledImage2() {
-//		return scaledImage2;
-//	}
-//
-//	public void setScaledImage2(Image scaledImage2) {
-//		this.scaledImage2 = scaledImage2;
-//	}
-//
-//	public ImageIcon getMenuResized() {
-//		return menuResized;
-//	}
-//
-//	public void setMenuResized(ImageIcon menuResized) {
-//		this.menuResized = menuResized;
-//	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

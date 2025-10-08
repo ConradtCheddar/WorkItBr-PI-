@@ -22,10 +22,12 @@ public class Navegador {
 	 */
 	public void adicionarPainel(String nome, JPanel tela) {
 		this.prim.adicionarTela(nome, tela);
+		
 	}
 	
 	public void navegarPara(String nome) {
 		this.prim.mostrarTela(nome);
+
 	}
 	
 	public void sair() {

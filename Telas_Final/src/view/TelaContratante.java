@@ -27,21 +27,12 @@ public class TelaContratante extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-//	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-//	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-//	ImageIcon menuResized = new ImageIcon(scaledImage2);
-//
-//	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-//	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-//	ImageIcon barraResized = new ImageIcon(scaledImage3);
-
 	private JTextField tfPesquisar;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaContratante() {
-		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0",
 				"[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]",
@@ -77,23 +68,6 @@ public class TelaContratante extends JPanel {
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(Color.LIGHT_GRAY);
 		add(panel_6, "cell 15 12 4 3,grow");
-
-
-//		panel.addComponentListener(new ComponentAdapter() {
-//			@Override
-//			public void componentResized(ComponentEvent e) {
-//				ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-//				Image img = menuIcon.getImage();
-//				Image scaled = img.getScaledInstance(panel.getWidth() / 40, panel.getHeight() * 2 / 4,
-//						Image.SCALE_SMOOTH);
-//				ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-//				Image imgbarra = barraIcon.getImage();
-//				Image scaledBarra = imgbarra.getScaledInstance(panel.getWidth() / 40, panel.getHeight() * 2 / 4,
-//						Image.SCALE_SMOOTH);
-//				lblMenu.setIcon(new ImageIcon(scaled));
-//				lblBarra.setIcon(new ImageIcon(scaledBarra));
-//			}
-//		});
 
 	}
 

@@ -30,13 +30,13 @@ public class Main {
 			System.err.println("Falha ao carregar o tema FlatLaf");
 		}
 		wbBarra wbb = new wbBarra();
-		// Create DrawerMenu once and pass to Primario and PopupMenuController
-		DrawerMenu pm = new DrawerMenu(null); // We'll set Primario after construction
+		
+		DrawerMenu pm = new DrawerMenu(null);
 		Primario prim = new Primario(wbb, pm);
-		pm.setParentFrame(prim); // Set parentFrame reference after Primario is constructed
+		pm.setParentFrame(prim);
 
 		Navegador navegador = new Navegador(prim);
-		pm.setNavegador(navegador); // Set Navegador reference for logout
+		pm.setNavegador(navegador);
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		PopupController popup = new PopupController();
 

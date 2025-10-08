@@ -39,16 +39,11 @@ public class TelaLogin extends JPanel {
 	private JButton btnLogin;
 	private JLabel lblCadastrese;
 
-//	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-//	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-//	ImageIcon menuResized = new ImageIcon(scaledImage2);
-
 	/**
 	 * Declaração dos elementos da tela
 	 */
 
 	public TelaLogin() {
-		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 

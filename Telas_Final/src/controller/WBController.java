@@ -25,8 +25,7 @@ public class WBController {
         this.view.barra(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("lblBarra clicked!"); // debug print
-                popup2.getView().toggleMenu(); // Open DrawerMenu on lblBarra click
+                popup2.getView().toggleMenu();
             }
         });
 		
@@ -35,35 +34,8 @@ public class WBController {
         this.view.menu(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("lblMenu clicked!"); // debug
                 popup2.getView().toggleMenu();
             }
         });
     }
-    
-//	public WBController(wbBarra view, UsuarioDAO model, Navegador navegador){
-//		this.view = view;
-//		this.model = model;
-//		this.navegador = navegador;
-//		
-//		this.view.barra(new MouseAdapter() {
-//		    @Override
-//		    public void mouseClicked(MouseEvent e) {
-//		    	System.out.println("click");
-//		        navegador.navegarPara("TEMP");
-//		    }
-//		});
-//		this.view.menu(new MouseAdapter() {
-//		    @Override
-//		    public void mouseClicked(MouseEvent e) {
-//		        navegador.navegarPara("TEMP");
-//		    }
-//		});
-//		
-//		this.view.btn(e ->{
-//			System.out.println("btn");
-//			navegador.navegarPara("TEMP");
-//	
-//		});
-//	}
 }
