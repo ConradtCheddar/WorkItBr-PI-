@@ -1,13 +1,14 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -22,11 +23,9 @@ import javax.swing.border.EmptyBorder;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
-import model.Usuario;
-import model.UsuarioDAO;
 import net.miginfocom.swing.MigLayout;
 
-public class TelaCadastro2 extends JPanel {
+public class TelaCadastro extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField tfEmail;
@@ -40,31 +39,15 @@ public class TelaCadastro2 extends JPanel {
 	private JButton btnCadastrar;
 	private String caminhoFoto;
 
-	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-	ImageIcon menuResized = new ImageIcon(scaledImage2);
-
 	/**
 	 * Create the panel.
 	 * 
 	 */
-	public TelaCadastro2(Primario prim) {
-		setPreferredSize(new Dimension(900, 700));
+	public TelaCadastro() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0",
 				"[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]",
 				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
-
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 102, 204));
-		add(panel, "flowx,cell 0 0 41 1,grow");
-		panel.setLayout(new MigLayout("fill", "[][][][][][][][][][][][]", "[]"));
-
-		JLabel lblNewLabel = new JLabel("WorkITBr");
-		panel.add(lblNewLabel, "flowx,cell 0 0 12 1,grow");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setForeground(Color.WHITE);
 
 		tfEmail = new JTextField();
 		add(tfEmail, "cell 4 3 13 1,growx");
@@ -111,6 +94,7 @@ public class TelaCadastro2 extends JPanel {
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setForeground(Color.WHITE);
 		btnCadastrar.setBackground(new Color(0, 102, 204));
+<<<<<<< HEAD:Telas_Final/src/view/TelaCadastro2.java
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -139,6 +123,8 @@ public class TelaCadastro2 extends JPanel {
 				// prim.mostrarTela(prim.TRABALHOS_PANEL);
 			}
 		});
+=======
+>>>>>>> Popup:Telas_Final/src/view/TelaCadastro.java
 		btnCadastrar.putClientProperty("JComponent.roundRect", true);
 		add(btnCadastrar, "cell 7 14 7 2,grow");
 
@@ -147,33 +133,110 @@ public class TelaCadastro2 extends JPanel {
 		div.add(rdbtnContratante);
 		div.add(rdbtnContratado);
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 17);
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-			}
-		});
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 33);
-				int fontSize2 = Math.max(15, panelHeight / 40);
-				tfEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				senha.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				senha2.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				rdbtnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				rdbtnContratante.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-			}
-		});
+	}
 
+	/**
+	 * metodo para a funcionalidade do botão cadastrar
+	 */
+	public void cadastrar(ActionListener actionlistener) {
+		this.btnCadastrar.addActionListener(actionlistener);
+	}
+
+	/**
+	 * metodo para limpar caixas de texto
+	 */
+	public void limparCampos() {
+		tfEmail.setText("");
+		tfTelefone.setText("");
+		tfCPF.setText("");
+		tfUsuario.setText("");
+		senha.setText("");
+		senha2.setText("");
+		rdbtnContratado.setSelected(false);
+		rdbtnContratante.setSelected(false);
+	}
+
+	/**
+	 * getters & setters
+	 * 
+	 * @return
+	 */
+
+	public JTextField getTfEmail() {
+		return tfEmail;
+	}
+
+	public void setTfEmail(JTextField tfEmail) {
+		this.tfEmail = tfEmail;
+	}
+
+	public JTextField getTfTelefone() {
+		return tfTelefone;
+	}
+
+	public void setTfTelefone(JTextField tfTelefone) {
+		this.tfTelefone = tfTelefone;
+	}
+
+	public JTextField getTfCPF() {
+		return tfCPF;
+	}
+
+	public void setTfCPF(JTextField tfCPF) {
+		this.tfCPF = tfCPF;
+	}
+
+	public JTextField getTfUsuario() {
+		return tfUsuario;
+	}
+
+	public void setTfUsuario(JTextField tfUsuario) {
+		this.tfUsuario = tfUsuario;
+	}
+
+	public JPasswordField getSenha() {
+		return senha;
+	}
+
+	public void setSenha(JPasswordField senha) {
+		this.senha = senha;
+	}
+
+	public JPasswordField getSenha2() {
+		return senha2;
+	}
+
+	public void setSenha2(JPasswordField senha2) {
+		this.senha2 = senha2;
+	}
+
+	public JRadioButton getRdbtnContratante() {
+		return rdbtnContratante;
+	}
+
+	public void setRdbtnContratante(JRadioButton rdbtnContratante) {
+		this.rdbtnContratante = rdbtnContratante;
+	}
+
+	public JRadioButton getRdbtnContratado() {
+		return rdbtnContratado;
+	}
+
+	public void setRdbtnContratado(JRadioButton rdbtnContratado) {
+		this.rdbtnContratado = rdbtnContratado;
+	}
+
+	public JButton getBtnCadastrar() {
+		return btnCadastrar;
+	}
+
+	public void setBtnCadastrar(JButton btnCadastrar) {
+		this.btnCadastrar = btnCadastrar;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
