@@ -42,10 +42,9 @@ public class Main {
 
 		// tela de login
 		TelaLogin telalogin = new TelaLogin();
-		LoginController logincontroller = new LoginController(telalogin, usuarioDAO, navegador);
-
 		// tela de cadastro
 		TelaCadastro telacadastro = new TelaCadastro();
+		LoginController logincontroller = new LoginController(telalogin, usuarioDAO, navegador, telacadastro);
 		CadastroController cadastrocontroller = new CadastroController(telacadastro, usuarioDAO, navegador);
 
 		// tela do contratante

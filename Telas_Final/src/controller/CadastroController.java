@@ -26,14 +26,14 @@ public class CadastroController {
 		    String senha1 = new String(this.view.getSenha().getPassword());
 		    String senha2Text = new String(this.view.getSenha2().getPassword());
 			
-			UsuarioDAO dao = new UsuarioDAO();
 			Usuario u = new Usuario(email, usuario, cpf, telefone, senha1, this.view.getRdbtnContratado().isSelected(), this.view.getRdbtnContratante().isSelected());
 
-
-			dao.cadastrar(u, senha2Text);
-			navegador.navegarPara("LOGIN");
+			boolean sucesso = model.cadastrar(u, senha2Text);
+			if (sucesso) {
+				navegador.navegarPara("LOGIN");
+				this.view.limparCampos();
+			}
+			
 		});
 	}
 }
-
-

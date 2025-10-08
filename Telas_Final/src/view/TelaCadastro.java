@@ -37,6 +37,7 @@ public class TelaCadastro extends JPanel {
 	private JRadioButton rdbtnContratante;
 	private JRadioButton rdbtnContratado;
 	private JButton btnCadastrar;
+	private ButtonGroup div;
 
 	/**
 	 * Create the panel.
@@ -96,8 +97,7 @@ public class TelaCadastro extends JPanel {
 		btnCadastrar.putClientProperty("JComponent.roundRect", true);
 		add(btnCadastrar, "cell 7 14 7 2,grow");
 
-		ButtonGroup div = new ButtonGroup();
-
+		div = new ButtonGroup();
 		div.add(rdbtnContratante);
 		div.add(rdbtnContratado);
 
@@ -121,8 +121,7 @@ public class TelaCadastro extends JPanel {
 		tfUsuario.setText("");
 		senha.setText("");
 		senha2.setText("");
-		rdbtnContratado.setSelected(false);
-		rdbtnContratante.setSelected(false);
+		div.clearSelection();
 	}
 
 	/**

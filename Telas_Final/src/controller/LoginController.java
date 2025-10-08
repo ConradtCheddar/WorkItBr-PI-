@@ -7,16 +7,19 @@ import model.Usuario;
 import model.UsuarioDAO;
 import view.Primario;
 import view.TelaLogin;
+import view.TelaCadastro;
 
 public class LoginController {
 	private final TelaLogin view;
 	private final UsuarioDAO model;
 	private final Navegador navegador;
+	private final TelaCadastro telaCadastro;
 	
-	public LoginController(TelaLogin view, UsuarioDAO model, Navegador navegador){
+	public LoginController(TelaLogin view, UsuarioDAO model, Navegador navegador, TelaCadastro telaCadastro){
 		this.view = view;
 		this.model = model;
 		this.navegador = navegador;
+		this.telaCadastro = telaCadastro;
 		
 		this.view.login(e ->{
 			String nome = view.getUsuario();
@@ -26,21 +29,24 @@ public class LoginController {
 			Usuario u = dao.login(nome, senha);
 			
 			if (u != null) {
-				if (u.isContratado()) {
-						navegador.navegarPara("CONTRATADO");
+				if (u.isAdmin()) {
+					navegador.navegarPara("ADM");
+				} else if (u.isContratado()) {
+					navegador.navegarPara("CONTRATADO");
 				} else if (u.isContratante()) {
-						navegador.navegarPara("CONTRATANTE");
-					} else {
-						navegador.navegarPara("LOGIN");
-					}
+					navegador.navegarPara("CONTRATANTE");
+				} else {
+					navegador.navegarPara("LOGIN");
 				}
-				this.view.limparFormulario();
+			}
+			this.view.limparFormulario();
 	
 		});
 
 		this.view.cadastro(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		        telaCadastro.limparCampos();
 		        navegador.navegarPara("CADASTRO");
 		    }
 		});

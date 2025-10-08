@@ -8,9 +8,10 @@ public class Usuario {
 	private String senha;
 	private boolean contratado;
 	private boolean contratante;
+	private boolean admin;
 
 	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, boolean contratado,
-			boolean contratante) {
+			boolean contratante, boolean admin) {
 		this.email = email;
 		this.usuario = usuario;
 		this.cpfCnpj = cpfCnpj;
@@ -18,6 +19,13 @@ public class Usuario {
 		this.senha = senha;
 		this.contratado = contratado;
 		this.contratante = contratante;
+		this.admin = admin;
+	}
+
+	// For backward compatibility
+	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, boolean contratado,
+			boolean contratante) {
+		this(email, usuario, cpfCnpj, telefone, senha, contratado, contratante, false);
 	}
 
 	public String getEmail() {
@@ -74,5 +82,13 @@ public class Usuario {
 
 	public void setContratante(boolean contratante) {
 		this.contratante = contratante;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 }
