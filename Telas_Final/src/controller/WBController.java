@@ -25,7 +25,8 @@ public class WBController {
         this.view.barra(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                popup.PopupMenu(e, view.getLblBarra());
+                System.out.println("lblBarra clicked!"); // debug print
+                popup2.getView().toggleMenu(); // Open DrawerMenu on lblBarra click
             }
         });
 		
@@ -34,7 +35,8 @@ public class WBController {
         this.view.menu(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-            	popup2.getView().toggleMenu();
+                System.out.println("lblMenu clicked!"); // debug
+                popup2.getView().toggleMenu();
             }
         });
     }

@@ -43,6 +43,16 @@ public class wbBarra extends JPanel {
 		lblMenu = new JLabel();
 		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblMenu.setEnabled(true); // Ensure enabled
+		lblMenu.setVisible(true); // Ensure visible
+		lblMenu.setPreferredSize(new Dimension(48, 48)); // Set preferred size for click area
+		lblMenu.setOpaque(true); // For debug, make background visible
+		lblMenu.setBackground(Color.LIGHT_GRAY); // For debug, distinguish area
+		// Set icon at construction
+		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+		Image img = menuIcon.getImage();
+		Image scaled = img.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+		lblMenu.setIcon(new ImageIcon(scaled));
 		add(lblMenu, "flowx,cell 0 0,alignx left,growy");
 
 		lblNewLabel = new JLabel("WorkITBr");
@@ -56,16 +66,6 @@ public class wbBarra extends JPanel {
 		getLblBarra().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(getLblBarra(), "cell 2 0,alignx right,growy");
 
-//		this.lblBarra.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//			
-//				PopupController popup = new PopupController();
-//				popup.PopupMenu(e, getLblBarra()); 
-//			}
-//		});
-		
-
 		lblMenu.setBorder(BorderFactory.createLineBorder(Color.RED));
 		lblBarra.setBorder(BorderFactory.createLineBorder(Color.RED));
 		lblNewLabel.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -74,14 +74,10 @@ public class wbBarra extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 
-				ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-				Image img = menuIcon.getImage();
-				Image scaled = img.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4, Image.SCALE_SMOOTH);
 				ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 				Image imgbarra = barraIcon.getImage();
 				Image scaledBarra = imgbarra.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
 						Image.SCALE_SMOOTH);
-				lblMenu.setIcon(new ImageIcon(scaled));
 				getLblBarra().setIcon(new ImageIcon(scaledBarra));
 			}
 		});
@@ -106,16 +102,8 @@ public class wbBarra extends JPanel {
 		this.getLblBarra().addMouseListener(actionListener);
 	}
 
-//	public void barra(MouseListener actionListener) {
-//		System.out.println("barra");
-//		this.lblBarra.addMouseListener(actionListener);
-//	}
-
-//	public void menu(MouseListener actionListener) {
-//		this.lblMenu.addMouseListener(actionListener);
-//	}
-
 	public void menu(MouseAdapter mouseAdapter) {
+		System.out.println("menu() called: attaching MouseAdapter to lblMenu"); // debug
 		this.lblMenu.addMouseListener(mouseAdapter);
 	}
 

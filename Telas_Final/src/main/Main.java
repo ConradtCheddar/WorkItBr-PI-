@@ -29,9 +29,14 @@ public class Main {
 		} catch (Exception ex) {
 			System.err.println("Falha ao carregar o tema FlatLaf");
 		}
-		Primario prim = new Primario();
+		wbBarra wbb = new wbBarra();
+		// Create DrawerMenu once and pass to Primario and PopupMenuController
+		DrawerMenu pm = new DrawerMenu(null); // We'll set Primario after construction
+		Primario prim = new Primario(wbb, pm);
+		pm.setParentFrame(prim); // Set parentFrame reference after Primario is constructed
 
 		Navegador navegador = new Navegador(prim);
+		pm.setNavegador(navegador); // Set Navegador reference for logout
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		PopupController popup = new PopupController();
 
@@ -55,17 +60,9 @@ public class Main {
 		TempController tempcontroller = new TempController(temp, usuarioDAO, navegador);
 
 		TelaAdm telaadm = new TelaAdm();
-		wbBarra wbb = new wbBarra();
-		
-		DrawerMenu pm = new DrawerMenu(prim);
 		
 		PopupMenuController popup2 = new PopupMenuController(pm, navegador);
-		
 		WBController wbcontroller = new WBController(wbb, usuarioDAO, navegador, popup, popup2);
-		
-		
-		
-		
 
 		navegador.adicionarPainel("LOGIN", telalogin);
 		navegador.adicionarPainel("CADASTRO", telacadastro);
@@ -75,8 +72,6 @@ public class Main {
 		navegador.adicionarPainel("ADM", telaadm);
 
 		navegador.navegarPara("LOGIN");
-
 		prim.setVisible(true);
-
 	}
 }
