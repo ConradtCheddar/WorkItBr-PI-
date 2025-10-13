@@ -30,14 +30,14 @@ CREATE TABLE IF NOT EXISTS Servico (
     CONSTRAINT fk_contratado FOREIGN KEY (id_contratado) REFERENCES Usuarios(idUsuario) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-INSERT INTO Login (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, isAdmin, isContratante, isContratado)
+INSERT INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, isAdmin, isContratante, isContratado)
 SELECT 'Admin', 'admin@workit.com', '00000000000', '11999999999', 'workitbr@321', TRUE, TRUE, TRUE
 WHERE NOT EXISTS (
     SELECT 1 FROM Usuarios WHERE Nome_Usuario = 'Admin'
 );
 
 INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, Aceito, id_contratante)
-SELECT 'teste1', 100, 'Remoto', 'Serviço ainda não aceito', FALSE, idLogin
+SELECT 'teste1', 100, 'Remoto', 'Serviço ainda não aceito', FALSE, idUsuario
 FROM Usuarios
 WHERE Nome_Usuario = 'Admin'
 AND NOT EXISTS (
@@ -45,7 +45,7 @@ AND NOT EXISTS (
 );
 
 INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, Aceito, id_contratante)
-SELECT 'teste2', 200, 'Presencial', 'Serviço aceito por um contratado', TRUE, idLogin
+SELECT 'teste2', 200, 'Presencial', 'Serviço aceito por um contratado', TRUE, idUsuario
 FROM Usuarios
 WHERE Nome_Usuario = 'Admin'
 AND NOT EXISTS (
