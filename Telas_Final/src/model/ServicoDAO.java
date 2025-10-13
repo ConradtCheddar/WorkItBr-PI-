@@ -2,6 +2,9 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -23,7 +26,7 @@ public class ServicoDAO {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-				String sql = "INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, id_contratante) VALUES (?, ?, ?, ?, ?)";
+				String sql = "INSERT INTO Servico (Nome_servico, Modalidade, Valor, Descricao, id_contratante) VALUES (?, ?, ?, ?, ?)";
 				var stmt = conn.prepareStatement(sql);
 				stmt.setString(1, s.getNome_Servico());
 				stmt.setString(2, s.getValor());
@@ -40,6 +43,34 @@ public class ServicoDAO {
 				return false;
 			}
 		}
+	}
+
+	public List<Servico> listarServicos() {
+	    List<Servico> servicos = new ArrayList<>();
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+	        String sql = "SELECT * FROM Servico";
+	        var stmt = conn.prepareStatement(sql);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            Servico s = new Servico(
+	                rs.getString("Nome_servico"),
+	                rs.getString("Valor"),
+	                rs.getString("Modalidade"),
+	                rs.getString("Descricao"),
+	                rs.getBoolean("Aceito"),
+	                null // contratante não carregado aqui
+	            );
+	            servicos.add(s);
+	        }
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	    return servicos;
 	}
 
 //	public Usuario login(String nome, String senha) {

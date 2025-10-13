@@ -3,7 +3,7 @@ package model;
 public class BD {
 	
 
-//
+
 //CREATE Database if not exists WorkItBr_BD;
 //
 //use WorkItBr_BD;
@@ -15,7 +15,15 @@ public class BD {
 // Valor int NOT NULL,  
 // Modalidade VARCHAR(50) NOT NULL,  
 // Descricao longtext NOT NULL,
-// Aceito boolean
+// Aceito boolean,
+// `id_contratado` int DEFAULT NULL,
+//  `id_contratante` int NOT NULL,
+//    PRIMARY KEY (`ID_servico`),
+//  KEY `fk_idContratante_idx` (`id_contratante`),
+//  KEY `fk_idContratado_idx` (`id_contratado`),
+//  CONSTRAINT `fk_idContratado_login` FOREIGN KEY (`id_contratado`) REFERENCES `login` (`idLogin`),
+//  CONSTRAINT `fk_idContratante_login` FOREIGN KEY (`id_contratante`) REFERENCES `login` (`idLogin`)
+//
 //);
 //
 //CREATE TABLE if not exists Login 
@@ -51,6 +59,7 @@ public class BD {
 //select * from Login;
 //
 //select * from servico;
+
 
 
 

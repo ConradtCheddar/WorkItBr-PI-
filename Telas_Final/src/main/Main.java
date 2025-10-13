@@ -60,6 +60,8 @@ public class Main {
 		// tela do contratado
 		TelaContratado telacontratado = new TelaContratado();
 		ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador);
+		// Ensure listaDisponivel is updated every time TelaContratado is shown
+        telacontratado.setOnShow(() -> contratadocontroller.atualizarListaDisponivel());
 		
 		TelaCadastroContratante telacadastrocontratante = new TelaCadastroContratante();
 		CadastroContratanteController cadastrocontratantecontroller = new CadastroContratanteController(telacadastrocontratante, new ServicoDAO(), navegador);

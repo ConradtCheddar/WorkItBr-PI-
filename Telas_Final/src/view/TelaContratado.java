@@ -33,13 +33,15 @@ public class TelaContratado extends JPanel {
 	ImageIcon chatIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
 	Image scaledImage = chatIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
 	ImageIcon chatResized = new ImageIcon(scaledImage);
+	private JList listaDisponivel;
+	private Runnable onShowCallback;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaContratado() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][][][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -48,59 +50,17 @@ public class TelaContratado extends JPanel {
 		
 		JLabel lblAndamento = new JLabel("Trabalhos em andamento");
 		lblAndamento.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblAndamento, "cell 3 4,grow");
-		add(scrollPane, "cell 2 6 3 11,grow");
+		add(lblAndamento, "cell 3 1,grow");
+		add(scrollPane, "cell 2 2 3 18,grow");
 		
 		JList listAndamento = new JList();
 		scrollPane.setViewportView(listAndamento);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		add(scrollPane_1, "cell 6 2 15 18,grow");
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.LIGHT_GRAY);
-		add(panel_1, "cell 7 6 11 2,grow");
-		panel_1.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
-		
-		
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(Color.LIGHT_GRAY);
-		add(panel_2, "cell 7 9 11 2,grow");
-		panel_2.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
-		
-		
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.LIGHT_GRAY);
-		add(panel_3, "cell 7 12 11 2,grow");
-		panel_3.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
-		
-		
-		
-		JPanel panel_4 = new JPanel();
-		panel_4.setBackground(Color.LIGHT_GRAY);
-		add(panel_4, "cell 7 15 11 2,grow");
-		panel_4.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
-
-		JLabel iconLabel = new JLabel(chatResized);
-		add(iconLabel, "cell 18 7");
-		iconLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		JLabel lblNewLabel_3 = new JLabel(chatResized);
-		lblNewLabel_3.setVerticalAlignment(SwingConstants.BOTTOM);
-		add(lblNewLabel_3, "cell 18 10,alignx center,aligny center");
-		lblNewLabel_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		JLabel lblNewLabel_4 = new JLabel(chatResized);
-		lblNewLabel_4.setVerticalAlignment(SwingConstants.BOTTOM);
-		add(lblNewLabel_4, "cell 18 13,alignx center,aligny center");
-		lblNewLabel_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		
-		JLabel lblNewLabel_5 = new JLabel(chatResized);
-		lblNewLabel_5.setVerticalTextPosition(SwingConstants.BOTTOM);
-		lblNewLabel_5.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		lblNewLabel_5.setVerticalAlignment(SwingConstants.BOTTOM);
-		add(lblNewLabel_5, "cell 18 16,alignx center,aligny center");
-		lblNewLabel_5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		listaDisponivel = new JList();
+		scrollPane_1.setViewportView(listaDisponivel);
 		
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -116,4 +76,19 @@ public class TelaContratado extends JPanel {
 
 	}
 
+	public JList getListaDisponivel() {
+		return listaDisponivel;
+	}
+
+	public void setOnShow(Runnable r) {
+		this.onShowCallback = r;
+	}
+
+	@Override
+	public void addNotify() {
+		super.addNotify();
+		if (onShowCallback != null) {
+			onShowCallback.run();
+		}
+	}
 }
