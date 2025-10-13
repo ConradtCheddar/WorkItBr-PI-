@@ -50,7 +50,7 @@ public class ServicoDAO {
 	    try {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-	        String sql = "SELECT * FROM Servico";
+	        String sql = "SELECT * FROM Servico WHERE Aceito = false";
 	        var stmt = conn.prepareStatement(sql);
 	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {
@@ -60,7 +60,35 @@ public class ServicoDAO {
 	                rs.getString("Modalidade"),
 	                rs.getString("Descricao"),
 	                rs.getBoolean("Aceito"),
-	                null // contratante não carregado aqui
+	                null
+	            );
+	            servicos.add(s);
+	        }
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	    return servicos;
+	}
+	
+	public List<Servico> listarServicosAceitos() {
+	    List<Servico> servicos = new ArrayList<>();
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+	        String sql = "SELECT * FROM Servico WHERE Aceito = true";
+	        var stmt = conn.prepareStatement(sql);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            Servico s = new Servico(
+	                rs.getString("Nome_servico"),
+	                rs.getString("Valor"),
+	                rs.getString("Modalidade"),
+	                rs.getString("Descricao"),
+	                rs.getBoolean("Aceito"),
+	                null
 	            );
 	            servicos.add(s);
 	        }

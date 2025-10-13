@@ -1,7 +1,10 @@
 package controller;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 
@@ -12,7 +15,7 @@ import view.TelaContratado;
 import view.TelaContratante;
 import view.ServicoListCellRenderer;
 
-public class ContratadoController {
+public class ContratadoController extends ComponentAdapter {
 	private final TelaContratado view;
 	private final UsuarioDAO model;
 	private final Navegador navegador;
@@ -41,5 +44,12 @@ public class ContratadoController {
 			listModel.addElement(s);
 		}
 		this.view.getListaDisponivel().setModel(listModel);
+	}
+	
+	@Override
+	public void componentShown(ComponentEvent e) {
+		System.out.println("att");
+		atualizarListaDisponivel();
+
 	}
 }
