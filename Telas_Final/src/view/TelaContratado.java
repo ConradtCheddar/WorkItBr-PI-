@@ -31,9 +31,6 @@ public class TelaContratado extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
 	
-	ImageIcon chatIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
-	Image scaledImage = chatIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-	ImageIcon chatResized = new ImageIcon(scaledImage);
 	private JList listaDisponivel;
 	private Runnable onShowCallback;
 
@@ -95,5 +92,9 @@ public class TelaContratado extends JPanel {
 	
 	public void adicionarOuvinte(ComponentListener listener) {
 		this.addComponentListener(listener);
+	}
+	
+	public void cliqueDuploNoJList(MouseListener actionListener) {
+	    this.listaDisponivel.addMouseListener(actionListener);
 	}
 }

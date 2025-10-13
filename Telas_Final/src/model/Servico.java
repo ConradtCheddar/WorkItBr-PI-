@@ -3,14 +3,14 @@ package model;
 public class Servico {
 	
 	private String nome_Servico;
-	private String valor;
+	private double valor;
 	private String modalidade;
 	private String descricao;
 	private Boolean aceito;
 	private Usuario contratante;
 	private Usuario contratado;
 
-	public Servico(String nome_Servico, String valor, String modalidade, String descricao, boolean aceito, Usuario contratante) {
+	public Servico(String nome_Servico, double valor, String modalidade, String descricao, boolean aceito, Usuario contratante) {
 		this.nome_Servico = nome_Servico;
 		this.valor = valor;
 		this.modalidade = modalidade;
@@ -28,11 +28,11 @@ public class Servico {
 		this.nome_Servico = nome_Servico;
 	}
 
-	public String getValor() {
+	public double getValor() {
 		return valor;
 	}
 
-	public void setValor(String valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 

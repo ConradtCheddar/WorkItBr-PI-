@@ -18,7 +18,9 @@ public class ServicoDAO {
 	}
 
 	public boolean cadastrarS(Servico s) {
-		if (s.getNome_Servico().isEmpty() || s.getModalidade().isEmpty() || s.getValor().isEmpty() || s.getDescricao().isEmpty()) {
+		
+		
+		if (s.getNome_Servico().isEmpty() || s.getModalidade().isEmpty() || Double.toString(s.getValor()).isEmpty() || s.getDescricao().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else {
@@ -29,7 +31,7 @@ public class ServicoDAO {
 				String sql = "INSERT INTO Servico (Nome_servico, Modalidade, Valor, Descricao, id_contratante) VALUES (?, ?, ?, ?, ?)";
 				var stmt = conn.prepareStatement(sql);
 				stmt.setString(1, s.getNome_Servico());
-				stmt.setString(2, s.getValor());
+				stmt.setDouble(2, s.getValor());
 				stmt.setString(3, s.getModalidade());
 				stmt.setString(4, s.getDescricao());
 				stmt.setInt(5, s.getContratante().getIdUsuario());
@@ -56,7 +58,7 @@ public class ServicoDAO {
 	        while (rs.next()) {
 	            Servico s = new Servico(
 	                rs.getString("Nome_servico"),
-	                rs.getString("Valor"),
+	                rs.getDouble("Valor"),
 	                rs.getString("Modalidade"),
 	                rs.getString("Descricao"),
 	                rs.getBoolean("Aceito"),
@@ -84,7 +86,7 @@ public class ServicoDAO {
 	        while (rs.next()) {
 	            Servico s = new Servico(
 	                rs.getString("Nome_servico"),
-	                rs.getString("Valor"),
+	                rs.getDouble("Valor"),
 	                rs.getString("Modalidade"),
 	                rs.getString("Descricao"),
 	                rs.getBoolean("Aceito"),
