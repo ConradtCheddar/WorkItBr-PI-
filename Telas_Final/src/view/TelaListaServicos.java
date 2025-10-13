@@ -37,6 +37,7 @@ public class TelaListaServicos extends JPanel {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private DefaultTableModel model;
+	private Runnable onShowCallback;
 
 	/**
 	 * Create the panel.
@@ -74,7 +75,7 @@ public class TelaListaServicos extends JPanel {
 	}
 
 	public void atualizarTable(ArrayList<Servico> lista) {
-		System.out.println("sdghdf");
+		this.model.setRowCount(0); // Clear table before adding new rows
 		for(int i =0; i<lista.size(); i++) {
 			Object[] newRowData = {lista.get(i).getNome_Servico(),lista.get(i).getValor(),lista.get(i).getModalidade()};
 			this.model.addRow(newRowData);
@@ -90,8 +91,19 @@ public class TelaListaServicos extends JPanel {
 		this.table = table;
 	}
 	
+	@Override
+	public void addNotify() {
+		super.addNotify();
+		if (onShowCallback != null) {
+			onShowCallback.run();
+		}
 	}
 
+	public void setOnShow(Runnable r) {
+		this.onShowCallback = r;
+	}
+	
+	}
 
 //	/**
 //	 * metodo para a funcionalidade do botão cadastrar

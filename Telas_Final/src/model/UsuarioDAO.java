@@ -31,7 +31,7 @@ public class UsuarioDAO {
 						Class.forName("com.mysql.cj.jdbc.Driver");
 						Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-						String sql = "INSERT INTO Usuarios (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, idContratado) VALUES (?, ?, ?, ?, ?, ?)";
+						String sql = "INSERT INTO Usuarios (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, isContratado) VALUES (?, ?, ?, ?, ?, ?)";
 						var stmt = conn.prepareStatement(sql);
 						stmt.setString(1, u.getEmail()); // Email
 						stmt.setString(2, u.getUsuario()); // Nome
@@ -67,7 +67,7 @@ public class UsuarioDAO {
 						Class.forName("com.mysql.cj.jdbc.Driver");
 						Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-						String sql = "INSERT INTO Usuarios (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, idContratante) VALUES (?, ?, ?, ?, ?, ?)";
+						String sql = "INSERT INTO Usuarios (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, isContratante) VALUES (?, ?, ?, ?, ?, ?)";
 						var stmt = conn.prepareStatement(sql);
 						stmt.setString(1, u.getEmail()); // Email
 						stmt.setString(2, u.getUsuario()); // Nome

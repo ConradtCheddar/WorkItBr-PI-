@@ -71,8 +71,9 @@ public class Main {
 		
 		TelaListaServicos telaservicos = new TelaListaServicos();
 		ListaServicosController controller = new ListaServicosController(telaservicos, servicoDAO, navegador);
+		telaservicos.setOnShow(() -> controller.atualizarTabelaServicosDoUsuario());
 
-		
+
 		navegador.adicionarPainel("LOGIN", telalogin);
 		navegador.adicionarPainel("CADASTRO", telacadastro);
 		navegador.adicionarPainel("CONTRATANTE", telacontratante);

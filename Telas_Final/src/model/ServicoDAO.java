@@ -30,8 +30,8 @@ public class ServicoDAO {
 				String sql = "INSERT INTO Servico (Nome_servico, Modalidade, Valor, Descricao, id_contratante) VALUES (?, ?, ?, ?, ?)";
 				var stmt = conn.prepareStatement(sql);
 				stmt.setString(1, s.getNome_Servico());
-				stmt.setDouble(2, s.getValor());
-				stmt.setString(3, s.getModalidade());
+				stmt.setString(2, s.getModalidade());
+				stmt.setDouble(3, s.getValor());
 				stmt.setString(4, s.getDescricao());
 				stmt.setInt(5, s.getContratante().getIdUsuario());
 				stmt.executeUpdate();
@@ -51,7 +51,7 @@ public class ServicoDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-			String sql = "SELECT * FROM Servico WHERE idContratante = ?";
+			String sql = "SELECT * FROM Servico WHERE id_contratante = ?";
 			var stmt = conn.prepareStatement(sql);
 
 			stmt.setInt(1, u.getIdUsuario());

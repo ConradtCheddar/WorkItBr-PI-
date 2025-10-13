@@ -28,7 +28,9 @@ public class Navegador {
 	
 	public void navegarPara(String nome) {
 		this.prim.mostrarTela(nome);
-
+		if ("SERVICOS".equals(nome)) {
+			controller.ListaServicosController.atualizarTabelaSeExistir();
+		}
 	}
 	
 	public void sair() {
