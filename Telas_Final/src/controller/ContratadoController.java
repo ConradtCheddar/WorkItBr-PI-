@@ -52,16 +52,14 @@ public class ContratadoController extends ComponentAdapter {
                         System.out.println("Nome do Serviço: " + nomeServico);
                         System.out.println("Descrição do Serviço: " + descricaoServico);
                         System.out.println("Valor do Serviço: " + valorServico);
+//        		        navegador.navegarPara("CADASTRO");
                     } else {
                         System.out.println("O item selecionado não é do tipo Servico");
-                    }
-                    
-                    System.out.println("Clique duplo em: " + selectedItem);
-                    
+                    }   
                     
                 }
 
-//		        navegador.navegarPara("CADASTRO");
+
 		    }
 		});
 		
