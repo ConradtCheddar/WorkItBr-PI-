@@ -22,11 +22,11 @@ public class CadastroContratanteController {
 			
 			String nome_Servico = this.view.getTfNome().getText();
 		    String modalidade = this.view.getTfModalidade().getText();
-		    String valor = this.view.getTfValor().getText();
+		    Double valor = Double.parseDouble(this.view.getTfValor().getText());
 		    String descricao = this.view.getTfDescricao().getText();
 		    
 			ServicoDAO dao = new ServicoDAO();
-			Servico s = new Servico(nome_Servico,modalidade,valor,descricao, false, navegador.getCurrentUser());
+			Servico s = new Servico(nome_Servico,valor,modalidade,descricao, false, navegador.getCurrentUser());
 
 			boolean sucesso = dao.cadastrarS(s);
 			if (sucesso) {

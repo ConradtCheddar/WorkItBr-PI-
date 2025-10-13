@@ -11,7 +11,8 @@ public class UsuarioDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	static String Senha = "admin";
+	//static String Senha = "admin";
+		static String Senha = "aluno";
 
 	public UsuarioDAO() {
 
@@ -30,7 +31,7 @@ public class UsuarioDAO {
 						Class.forName("com.mysql.cj.jdbc.Driver");
 						Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-						String sql = "INSERT INTO Login (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, idContratado) VALUES (?, ?, ?, ?, ?, ?)";
+						String sql = "INSERT INTO Usuarios (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, idContratado) VALUES (?, ?, ?, ?, ?, ?)";
 						var stmt = conn.prepareStatement(sql);
 						stmt.setString(1, u.getEmail()); // Email
 						stmt.setString(2, u.getUsuario()); // Nome
@@ -66,7 +67,7 @@ public class UsuarioDAO {
 						Class.forName("com.mysql.cj.jdbc.Driver");
 						Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-						String sql = "INSERT INTO Login (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, idContratante) VALUES (?, ?, ?, ?, ?, ?)";
+						String sql = "INSERT INTO Usuarios (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, idContratante) VALUES (?, ?, ?, ?, ?, ?)";
 						var stmt = conn.prepareStatement(sql);
 						stmt.setString(1, u.getEmail()); // Email
 						stmt.setString(2, u.getUsuario()); // Nome
@@ -102,7 +103,7 @@ public class UsuarioDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-			String sql = "SELECT * FROM Login WHERE Nome_Usuario = ? AND Senha = ?";
+			String sql = "SELECT * FROM Usuarios WHERE Nome_Usuario = ? AND Senha = ?";
 			var stmt = conn.prepareStatement(sql);
 
 			stmt.setString(1, nome);
@@ -117,12 +118,12 @@ public class UsuarioDAO {
 					rs.getString("CPF_CNPJ"),
 					rs.getString("Telefone"),
 					rs.getString("Senha"),
-					rs.getBoolean("idContratado"),
-					rs.getBoolean("idContratante"),
-					rs.getBoolean("idAdmin"),
+					rs.getBoolean("isContratado"),
+					rs.getBoolean("isContratante"),
+					rs.getBoolean("isAdmin"),
 					rs.getString("CaminhoFoto")
 				);
-				u.setIdUsuario(rs.getInt("idLogin"));
+				u.setIdUsuario(rs.getInt("idUsuario"));
 				rs.close();
 				stmt.close();
 				conn.close();
@@ -142,7 +143,7 @@ public class UsuarioDAO {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-	        String sql = "SELECT * FROM Login WHERE Nome_Usuario = ?";
+	        String sql = "SELECT * FROM Usuarios WHERE Nome_Usuario = ?";
 	        var stmt = conn.prepareStatement(sql);
 
 	        stmt.setString(1, nome);
@@ -156,12 +157,12 @@ public class UsuarioDAO {
 						rs.getString("CPF_CNPJ"),
 						rs.getString("Telefone"),
 						rs.getString("Senha"),
-						rs.getBoolean("idContratado"),
-						rs.getBoolean("idContratante"),
-						rs.getBoolean("idAdmin"),
+						rs.getBoolean("isContratado"),
+						rs.getBoolean("isContratante"),
+						rs.getBoolean("isAdmin"),
 						rs.getString("CaminhoFoto")
 	            );
-	            u.setIdUsuario(rs.getInt("idLogin"));
+	            u.setIdUsuario(rs.getInt("idUsuario"));
 	            rs.close();
 	            stmt.close();
 	            conn.close();

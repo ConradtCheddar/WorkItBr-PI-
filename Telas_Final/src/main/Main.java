@@ -10,7 +10,6 @@ import controller.LoginController;
 import controller.Navegador;
 import controller.PopupController;
 import controller.PopupMenuController;
-import controller.TelaConfigUserController;
 import controller.TempController;
 import model.ServicoDAO;
 import model.UsuarioDAO;
@@ -19,9 +18,9 @@ import view.Primario;
 import view.TelaAdm;
 import view.TelaCadastro;
 import view.TelaCadastroContratante;
-import view.TelaConfigUser;
 import view.TelaContratado;
 import view.TelaContratante;
+import view.TelaListaServicos;
 import view.TelaLogin;
 import view.Temp;
 import view.wbBarra;
@@ -60,8 +59,6 @@ public class Main {
 		// tela do contratado
 		TelaContratado telacontratado = new TelaContratado();
 		ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador);
-		// Ensure listaDisponivel is updated every time TelaContratado is shown
-        telacontratado.setOnShow(() -> contratadocontroller.atualizarListaDisponivel());
 		
 		TelaCadastroContratante telacadastrocontratante = new TelaCadastroContratante();
 		CadastroContratanteController cadastrocontratantecontroller = new CadastroContratanteController(telacadastrocontratante, new ServicoDAO(), navegador);
@@ -71,6 +68,9 @@ public class Main {
 
 		TelaAdm telaadm = new TelaAdm();
 		
+		TelaListaServicos telaservicos = new TelaListaServicos();
+		//TelaServicoController telaServicoController = new TelaServicoController(telaservicos, servicoDAO, navegador);
+		
 		navegador.adicionarPainel("LOGIN", telalogin);
 		navegador.adicionarPainel("CADASTRO", telacadastro);
 		navegador.adicionarPainel("CONTRATANTE", telacontratante);
@@ -78,6 +78,8 @@ public class Main {
 		navegador.adicionarPainel("TEMP", temp);
 		navegador.adicionarPainel("ADM", telaadm);
 		navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
+		navegador.adicionarPainel("SERVICOS", telaservicos);
+		
 
 		navegador.navegarPara("LOGIN");
 		prim.setVisible(true);
