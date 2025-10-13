@@ -23,6 +23,7 @@ import view.TelaConfigUser;
 import view.TelaContratado;
 import view.TelaContratante;
 import view.TelaLogin;
+import view.TelaServicos;
 import view.Temp;
 import view.wbBarra;
 
@@ -69,6 +70,8 @@ public class Main {
 
 		TelaAdm telaadm = new TelaAdm();
 		
+		TelaServicos telaservicos = new TelaServicos();
+		
 		navegador.adicionarPainel("LOGIN", telalogin);
 		navegador.adicionarPainel("CADASTRO", telacadastro);
 		navegador.adicionarPainel("CONTRATANTE", telacontratante);
@@ -76,8 +79,10 @@ public class Main {
 		navegador.adicionarPainel("TEMP", temp);
 		navegador.adicionarPainel("ADM", telaadm);
 		navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
+		navegador.adicionarPainel("SERVICOS", telaservicos);
+		
 
-		navegador.navegarPara("LOGIN");
+		navegador.navegarPara("SERVICOS");
 		prim.setVisible(true);
 		pm.setNavegador(navegador);
 
