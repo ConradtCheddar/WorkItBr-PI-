@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -24,15 +25,18 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import model.Servico;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextArea;
 import javax.swing.JList;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class TelaServicos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private DefaultTableModel model;
 
 	/**
 	 * Create the panel.
@@ -43,26 +47,39 @@ public class TelaServicos extends JPanel {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 		
+		Object dados[][]= {
+			{null, null, null},
+			{null, null, null},
+			{null, null, null},
+			{null, null, null},
+			{null, null, null},
+			{null, null, null},
+			{null, null, null},
+			{null, null, null},
+			{null, null, null},
+			{null, null, null}};
+		
+		String colunas[]= {
+			"Nome", "valor", "modalidade"
+		};
+		
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "cell 11 6 10 9,grow");
+		
 		table = new JTable();
+		scrollPane.setViewportView(table);
 		table.setForeground(new Color(255, 255, 255));
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"Nome", "valor", "modalidade"
-			}
-		));
-		add(table, "cell 1 1 5 13,grow");
+		this.model = new DefaultTableModel(dados,colunas);
+		table.setModel(model);
+	}
+
+	public void atualizarTable(ArrayList<Servico> lista) {
+		System.out.println("sdghdf");
+		for(int i =0; i<lista.size(); i++) {
+			Object[] newRowData = {lista.get(i).getNome_Servico(),lista.get(i).getValor(),lista.get(i).getModalidade()};
+			this.model.addRow(newRowData);
+		}
+			
 	}
 
 

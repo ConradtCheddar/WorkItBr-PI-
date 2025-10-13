@@ -75,7 +75,7 @@ public class DrawerMenu extends JPanel {
             }
             btnTrabalhos.addActionListener(e -> {
                 if (this.navegador != null) {
-                    this.navegador.navegarPara("CADASTRO_CONTRATANTE");
+                    this.navegador.navegarPara("SERVICOS");
                     this.setVisible(false);
                 }
             });

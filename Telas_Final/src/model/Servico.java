@@ -7,13 +7,16 @@ public class Servico {
 	private String modalidade;
 	private String descricao;
 	private Boolean aceito;
+	private Usuario idContratante;
+	private Usuario idContratado;
 
-	public Servico(String nome_Servico, String valor, String modalidade, String descricao, boolean aceito) {
+	public Servico(String nome_Servico, String valor, String modalidade, String descricao, boolean aceito, Usuario idContratante) {
 		this.nome_Servico = nome_Servico;
 		this.valor = valor;
 		this.modalidade = modalidade;
 		this.descricao = descricao;
 		this.aceito = aceito;
+		this.idContratante = idContratante;
 
 }
 
@@ -56,5 +59,22 @@ public class Servico {
 	public void setAceito(Boolean aceito) {
 		this.aceito = aceito;
 	}
+
+	public Usuario getIdContratante() {
+		return idContratante;
+	}
+
+	public void setIdContratante(Usuario idContratante) {
+		this.idContratante = idContratante;
+	}
+
+	public Usuario getIdContratado() {
+		return idContratado;
+	}
+
+	public void setIdContratado(Usuario idContratado) {
+		this.idContratado = idContratado;
+	}
+	
 	
 	}

@@ -10,6 +10,7 @@ public class Usuario {
 	private boolean contratante;
 	private boolean admin;
 	private String caminhoFoto; // Added missing field
+	private int idLogin;
 
 	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, boolean contratado,
 			boolean contratante, boolean admin, String caminhoFoto) {
@@ -95,6 +96,15 @@ public class Usuario {
 	public void setCaminhoFoto(String caminhoFoto) {
 		this.caminhoFoto = caminhoFoto;
 	}
+
+	public int getIdLogin() {
+		return idLogin;
+	}
+
+	public void setIdLogin(int idLogin) {
+		this.idLogin = idLogin;
+	}
+	
 
 	
 }

@@ -11,6 +11,7 @@ import controller.Navegador;
 import controller.PopupController;
 import controller.PopupMenuController;
 import controller.TelaConfigUserController;
+import controller.TelaServicoController;
 import controller.TempController;
 import model.ServicoDAO;
 import model.UsuarioDAO;
@@ -71,6 +72,7 @@ public class Main {
 		TelaAdm telaadm = new TelaAdm();
 		
 		TelaServicos telaservicos = new TelaServicos();
+		//TelaServicoController telaServicoController = new TelaServicoController(telaservicos, servicoDAO, navegador);
 		
 		navegador.adicionarPainel("LOGIN", telalogin);
 		navegador.adicionarPainel("CADASTRO", telacadastro);
@@ -82,7 +84,7 @@ public class Main {
 		navegador.adicionarPainel("SERVICOS", telaservicos);
 		
 
-		navegador.navegarPara("SERVICOS");
+		navegador.navegarPara("LOGIN");
 		prim.setVisible(true);
 		pm.setNavegador(navegador);
 

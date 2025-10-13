@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -40,6 +41,46 @@ public class ServicoDAO {
 			}
 		}
 	}
+	
+
+public ArrayList<Servico> buscarTodosServicosPorUsuario(Usuario u){
+	try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+		String sql = "SELECT * FROM Servico WHERE idContratante = ?";
+		var stmt = conn.prepareStatement(sql);
+
+		stmt.setInt(1, u.getIdLogin());
+		
+
+		var rs = stmt.executeQuery();
+
+		ArrayList<Servico> listaServicos = new ArrayList<Servico>();
+		while (rs.next()) {
+			Servico s = new Servico(
+				rs.getString("Nome_servico"),
+				rs.getString("Valor"),
+				rs.getString("Modalidade"),
+				rs.getString("Descricao"),
+				rs.getBoolean("Aceito"),
+				u
+			);
+		listaServicos.add(s);
+			
+		}
+		
+		
+		rs.close();
+		stmt.close();
+		conn.close();
+		return listaServicos;
+	} catch (Exception ex) {
+		ex.printStackTrace();
+	}
+	return null;
+}
+	
 
 //	public Usuario login(String nome, String senha) {
 //		try {
