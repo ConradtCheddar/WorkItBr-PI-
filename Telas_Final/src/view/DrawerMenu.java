@@ -88,7 +88,6 @@ public class DrawerMenu extends JPanel {
                 if (this.navegador != null) {
                     Usuario usuario = this.navegador.getCurrentUser();
                     if (usuario != null) {
-                        // Remove old CONFIG_USER panel if exists
                         try {
                             java.lang.reflect.Field cPanelField = navegador.getClass().getDeclaredField("cPanel");
                             cPanelField.setAccessible(true);
@@ -104,7 +103,7 @@ public class DrawerMenu extends JPanel {
                                 cPanel.remove(toRemove);
                             }
                         } catch (Exception ex) {
-                            // Ignore if not found
+							ex.printStackTrace();
                         }
                         TelaConfigUser telaConfigUser = new TelaConfigUser();
                         new TelaConfigUserController(telaConfigUser, usuarioDAO, navegador, usuario);

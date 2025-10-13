@@ -31,7 +31,7 @@ public class LoginController {
 			Usuario u = dao.login(nome, senha);
 			
 			if (u != null) {
-				navegador.setCurrentUser(u);
+				this.navegador.setCurrentUser(u);
 				popupMenuController.updateProfileAction();
 				if (u.isAdmin()) {
 					navegador.navegarPara("ADM");

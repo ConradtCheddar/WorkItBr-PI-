@@ -26,7 +26,7 @@ public class CadastroContratanteController {
 		    String descricao = this.view.getTfDescricao().getText();
 		    
 			ServicoDAO dao = new ServicoDAO();
-			Servico s = new Servico(nome_Servico,modalidade,valor,descricao, false);
+			Servico s = new Servico(nome_Servico,modalidade,valor,descricao, false, navegador.getCurrentUser());
 
 			boolean sucesso = dao.cadastrarS(s);
 			if (sucesso) {

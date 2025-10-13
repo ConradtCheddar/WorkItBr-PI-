@@ -23,12 +23,13 @@ public class ServicoDAO {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-				String sql = "INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao) VALUES (?, ?, ?, ?)";
+				String sql = "INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, id_contratante) VALUES (?, ?, ?, ?, ?)";
 				var stmt = conn.prepareStatement(sql);
 				stmt.setString(1, s.getNome_Servico());
 				stmt.setString(2, s.getValor());
 				stmt.setString(3, s.getModalidade());
 				stmt.setString(4, s.getDescricao());
+				stmt.setInt(5, s.getContratante().getIdUsuario());
 				stmt.executeUpdate();
 				JOptionPane.showMessageDialog(null, "Serviço cadastrado com sucesso!", "Sucesso!", JOptionPane.PLAIN_MESSAGE);
 				stmt.close();

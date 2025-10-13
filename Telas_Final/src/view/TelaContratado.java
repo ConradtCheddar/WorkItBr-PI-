@@ -20,7 +20,10 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.jdesktop.swingx.prompt.PromptSupport;
+
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JList;
 
 public class TelaContratado extends JPanel {
 
@@ -36,65 +39,79 @@ public class TelaContratado extends JPanel {
 	 */
 	public TelaContratado() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
-		
-		JLabel lblNewLabel_1 = new JLabel("Trabalhos em andamento");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblNewLabel_1, "cell 2 3 3 1,grow");
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		scrollPane.setBackground(Color.LIGHT_GRAY);
 		scrollPane.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
-		add(scrollPane, "cell 2 4 3 11,grow");
+		
+		JLabel lblAndamento = new JLabel("Trabalhos em andamento");
+		lblAndamento.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblAndamento, "cell 3 4,grow");
+		add(scrollPane, "cell 2 6 3 11,grow");
+		
+		JList listAndamento = new JList();
+		scrollPane.setViewportView(listAndamento);
 		
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
-		add(panel_1, "cell 7 4 11 2,grow");
+		add(panel_1, "cell 7 6 11 2,grow");
 		panel_1.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
 		
 		
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.LIGHT_GRAY);
-		add(panel_2, "cell 7 7 11 2,grow");
+		add(panel_2, "cell 7 9 11 2,grow");
 		panel_2.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
 		
 		
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.LIGHT_GRAY);
-		add(panel_3, "cell 7 10 11 2,grow");
+		add(panel_3, "cell 7 12 11 2,grow");
 		panel_3.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
 		
 		
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(Color.LIGHT_GRAY);
-		add(panel_4, "cell 7 13 11 2,grow");
+		add(panel_4, "cell 7 15 11 2,grow");
 		panel_4.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
 
 		JLabel iconLabel = new JLabel(chatResized);
-		add(iconLabel, "cell 18 5");
+		add(iconLabel, "cell 18 7");
 		iconLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		JLabel lblNewLabel_3 = new JLabel(chatResized);
 		lblNewLabel_3.setVerticalAlignment(SwingConstants.BOTTOM);
-		add(lblNewLabel_3, "cell 18 8,alignx center,aligny center");
+		add(lblNewLabel_3, "cell 18 10,alignx center,aligny center");
 		lblNewLabel_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		JLabel lblNewLabel_4 = new JLabel(chatResized);
 		lblNewLabel_4.setVerticalAlignment(SwingConstants.BOTTOM);
-		add(lblNewLabel_4, "cell 18 11,alignx center,aligny center");
+		add(lblNewLabel_4, "cell 18 13,alignx center,aligny center");
 		lblNewLabel_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		JLabel lblNewLabel_5 = new JLabel(chatResized);
 		lblNewLabel_5.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblNewLabel_5.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		lblNewLabel_5.setVerticalAlignment(SwingConstants.BOTTOM);
-		add(lblNewLabel_5, "cell 18 14,alignx center,aligny center");
+		add(lblNewLabel_5, "cell 18 16,alignx center,aligny center");
 		lblNewLabel_5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 37);
+				int fontSize2 = Math.max(15, panelHeight / 27);
+				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
+				lblAndamento.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+			}
+		});
 
 
 	}

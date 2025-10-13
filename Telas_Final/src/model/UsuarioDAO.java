@@ -122,6 +122,7 @@ public class UsuarioDAO {
 					rs.getBoolean("idAdmin"),
 					rs.getString("CaminhoFoto")
 				);
+				u.setIdUsuario(rs.getInt("idLogin"));
 				rs.close();
 				stmt.close();
 				conn.close();
@@ -160,6 +161,7 @@ public class UsuarioDAO {
 						rs.getBoolean("idAdmin"),
 						rs.getString("CaminhoFoto")
 	            );
+	            u.setIdUsuario(rs.getInt("idLogin"));
 	            rs.close();
 	            stmt.close();
 	            conn.close();
