@@ -45,6 +45,44 @@ public class ServicoDAO {
 			}
 		}
 	}
+	
+	public ArrayList<Servico> buscarTodosServicosPorUsuario(Usuario u){
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+			String sql = "SELECT * FROM Servico WHERE idContratante = ?";
+			var stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, u.getIdUsuario());
+			
+
+			var rs = stmt.executeQuery();
+
+			ArrayList<Servico> listaServicos = new ArrayList<Servico>();
+			while (rs.next()) {
+				Servico s = new Servico(
+					rs.getString("Nome_servico"),
+					rs.getDouble("Valor"),
+					rs.getString("Modalidade"),
+					rs.getString("Descricao"),
+					rs.getBoolean("Aceito"),
+					u
+				);
+			listaServicos.add(s);
+				
+			}
+			
+			
+			rs.close();
+			stmt.close();
+			conn.close();
+			return listaServicos;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
 	public List<Servico> listarServicos() {
 	    List<Servico> servicos = new ArrayList<>();

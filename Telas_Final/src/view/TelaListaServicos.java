@@ -80,7 +80,17 @@ public class TelaListaServicos extends JPanel {
 			this.model.addRow(newRowData);
 		}
 			
-	}}
+	}
+
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+	
+	}
 
 
 //	/**

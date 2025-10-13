@@ -6,6 +6,7 @@ import controller.CadastroContratanteController;
 import controller.CadastroController;
 import controller.ContratadoController;
 import controller.ContratanteController;
+import controller.ListaServicosController;
 import controller.LoginController;
 import controller.Navegador;
 import controller.PopupController;
@@ -61,7 +62,7 @@ public class Main {
 		ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador);
 		
 		TelaCadastroContratante telacadastrocontratante = new TelaCadastroContratante();
-		CadastroContratanteController cadastrocontratantecontroller = new CadastroContratanteController(telacadastrocontratante, new ServicoDAO(), navegador);
+		CadastroContratanteController cadastrocontratantecontroller = new CadastroContratanteController(telacadastrocontratante, servicoDAO, navegador);
 		
 		Temp temp = new Temp();
 		TempController tempcontroller = new TempController(temp, usuarioDAO, navegador);
@@ -69,7 +70,8 @@ public class Main {
 		TelaAdm telaadm = new TelaAdm();
 		
 		TelaListaServicos telaservicos = new TelaListaServicos();
-		//TelaServicoController telaServicoController = new TelaServicoController(telaservicos, servicoDAO, navegador);
+		ListaServicosController controller = new ListaServicosController(telaservicos, servicoDAO, navegador);
+
 		
 		navegador.adicionarPainel("LOGIN", telalogin);
 		navegador.adicionarPainel("CADASTRO", telacadastro);
