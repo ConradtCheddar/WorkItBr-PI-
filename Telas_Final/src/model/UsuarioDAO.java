@@ -11,7 +11,7 @@ public class UsuarioDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	static String Senha = "admin";
+	static String Senha = "aluno";
 
 	public UsuarioDAO() {
 
@@ -117,9 +117,9 @@ public class UsuarioDAO {
 					rs.getString("CPF_CNPJ"),
 					rs.getString("Telefone"),
 					rs.getString("Senha"),
-					rs.getBoolean("idContratado"),
-					rs.getBoolean("idContratante"),
-					rs.getBoolean("idAdmin"),
+					rs.getBoolean("isContratado"),
+					rs.getBoolean("isContratante"),
+					rs.getBoolean("isAdmin"),
 					rs.getString("CaminhoFoto")
 				);
 				u.setIdUsuario(rs.getInt("idLogin"));
@@ -156,9 +156,9 @@ public class UsuarioDAO {
 						rs.getString("CPF_CNPJ"),
 						rs.getString("Telefone"),
 						rs.getString("Senha"),
-						rs.getBoolean("idContratado"),
-						rs.getBoolean("idContratante"),
-						rs.getBoolean("idAdmin"),
+						rs.getBoolean("isContratado"),
+						rs.getBoolean("isContratante"),
+						rs.getBoolean("isAdmin"),
 						rs.getString("CaminhoFoto")
 	            );
 	            u.setIdUsuario(rs.getInt("idLogin"));
