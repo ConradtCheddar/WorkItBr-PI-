@@ -32,6 +32,7 @@ public class TelaContratado extends JPanel {
 	private JScrollPane scrollPane;
 	
 	private JList listaDisponivel;
+	private JList listaAndamento;
 	private Runnable onShowCallback;
 
 	/**
@@ -51,8 +52,8 @@ public class TelaContratado extends JPanel {
 		add(lblAndamento, "cell 3 1,grow");
 		add(scrollPane, "cell 2 2 3 18,grow");
 		
-		JList listAndamento = new JList();
-		scrollPane.setViewportView(listAndamento);
+		listaAndamento = new JList();
+		scrollPane.setViewportView(listaAndamento);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 6 2 15 18,grow");
@@ -97,4 +98,18 @@ public class TelaContratado extends JPanel {
 	public void cliqueDuploNoJList(MouseListener actionListener) {
 	    this.listaDisponivel.addMouseListener(actionListener);
 	}
+
+	public void setListaDisponivel(JList listaDisponivel) {
+		this.listaDisponivel = listaDisponivel;
+	}
+
+	public JList getListaAndamento() {
+		return listaAndamento;
+	}
+
+	public void setListaAndamento(JList listAndamento) {
+		this.listaAndamento = listAndamento;
+	}
+	
+	
 }

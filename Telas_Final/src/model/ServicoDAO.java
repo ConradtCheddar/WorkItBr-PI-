@@ -12,7 +12,7 @@ public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	static String Senha = "aluno";
+	static String Senha = "admin";
 	public ServicoDAO() {
 
 	}
@@ -31,8 +31,8 @@ public class ServicoDAO {
 				String sql = "INSERT INTO Servico (Nome_servico, Modalidade, Valor, Descricao, id_contratante) VALUES (?, ?, ?, ?, ?)";
 				var stmt = conn.prepareStatement(sql);
 				stmt.setString(1, s.getNome_Servico());
-				stmt.setDouble(2, s.getValor());
-				stmt.setString(3, s.getModalidade());
+				stmt.setString(2, s.getModalidade());
+				stmt.setDouble(3, s.getValor());
 				stmt.setString(4, s.getDescricao());
 				stmt.setInt(5, s.getContratante().getIdUsuario());
 				stmt.executeUpdate();
@@ -102,37 +102,73 @@ public class ServicoDAO {
 	    }
 	    return servicos;
 	}
+	
+	public Servico configID(String nome) {
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-//	public Usuario login(String nome, String senha) {
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-//
-//			String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
-//			var stmt = conn.prepareStatement(sql);
-//
-//			stmt.setString(1, nome);
-//			stmt.setString(2, senha);
-//
-//			var rs = stmt.executeQuery();
-//
-//			if (rs.next()) {
-//				Usuario u = new Usuario(rs.getString("Email"), rs.getString("Nome"), rs.getString("CPF_CNPJ"),
-//						rs.getString("Telefone"), rs.getString("Senha"), rs.getBoolean("idContratado"),
-//						rs.getBoolean("idContratante"));
-//				rs.close();
-//				stmt.close();
-//				conn.close();
-//				return u;
-//			}
-//
-//			rs.close();
-//			stmt.close();
-//			conn.close();
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//		return null;
-//	}
+	        String sql = "SELECT * FROM Servico WHERE Nome_servico = ?";
+	        var stmt = conn.prepareStatement(sql);
+
+	        stmt.setString(1, nome);
+
+	        var rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	        	Servico u = new Servico(
+	            		rs.getString("Nome_servico"),
+						rs.getDouble("Valor"),
+						rs.getString("Modalidade"),
+						rs.getString("Descricao"),
+						rs.getBoolean("Aceito"),
+						null
+	            );
+	            u.setIdServico(rs.getInt("ID_servico"));
+	            rs.close();
+	            stmt.close();
+	            conn.close();
+	            return u;
+	        }
+
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	    return null;
+	}
+
+	public void atualizarServico(Servico u) {
+	    try {
+	    	System.out.println(u.getIdServico());
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+	        String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, Aceito = ? WHERE ID_servico = ?";
+	        var stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, u.getNome_Servico());
+	        stmt.setString(2, u.getModalidade());
+	        stmt.setDouble(3, u.getValor());
+	        stmt.setString(4, u.getDescricao());
+	        stmt.setBoolean(5, true);
+	        stmt.setInt(6, u.getIdServico());
+
+	        int rowsUpdated = stmt.executeUpdate();
+
+	        if (rowsUpdated > 0) {
+	            JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Servico não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+	        }
+
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Erro ao atualizar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
 
 }

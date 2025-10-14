@@ -13,6 +13,7 @@ import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.TelaContratado;
 import view.TelaContratante;
+import view.VisServico;
 import view.ServicoListCellRenderer;
 
 public class ContratadoController extends ComponentAdapter {
@@ -24,13 +25,6 @@ public class ContratadoController extends ComponentAdapter {
 		this.view = view;
 		this.model = model;
 		this.navegador = navegador;
-
-		// Fetch all jobs from the database and set them in listaDisponivel
-		ServicoDAO servicoDAO = new ServicoDAO();
-		java.util.List<Servico> servicos = servicoDAO.listarServicos();
-		DefaultListModel<Servico> listModel = new DefaultListModel<>();
-		
-		this.view.getListaDisponivel().setCellRenderer(new ServicoListCellRenderer());
 		
 		this.view.cliqueDuploNoJList(new MouseAdapter() {
 		    @Override
@@ -42,17 +36,19 @@ public class ContratadoController extends ComponentAdapter {
                     if (selectedItem instanceof Servico) {
                         Servico servicoSelecionado = (Servico) selectedItem;
 
-                        
                         String nomeServico = servicoSelecionado.getNome_Servico();
                         String descricaoServico = servicoSelecionado.getDescricao();
                         double valorServico = servicoSelecionado.getValor();
+                        int valorAceito = servicoSelecionado.getIdServico();
                         
+                        System.out.println(valorAceito);
+                        final ServicoDAO sd = new ServicoDAO();
+                        		
+                        VisServico vs = new VisServico(servicoSelecionado);
+                        VisServicoController vsc = new VisServicoController(vs, sd, navegador, servicoSelecionado);
+                        navegador.adicionarPainel("VISUALIZAR_SERVICO", vs);
+                        navegador.navegarPara("VISUALIZAR_SERVICO");
                         
-                        // Por exemplo, imprimir os valores
-                        System.out.println("Nome do Serviço: " + nomeServico);
-                        System.out.println("Descrição do Serviço: " + descricaoServico);
-                        System.out.println("Valor do Serviço: " + valorServico);
-//        		        navegador.navegarPara("CADASTRO");
                     } else {
                         System.out.println("O item selecionado não é do tipo Servico");
                     }   
@@ -76,10 +72,22 @@ public class ContratadoController extends ComponentAdapter {
 		this.view.getListaDisponivel().setCellRenderer(new ServicoListCellRenderer());
 	}
 	
+	public void atualizarListaAceitos() {
+		ServicoDAO servicoDAO = new ServicoDAO();
+		java.util.List<Servico> servicosAceitos = servicoDAO.listarServicosAceitos();
+		DefaultListModel<Servico> listModelAceito = new DefaultListModel<>();
+		for (Servico s : servicosAceitos) {
+			listModelAceito.addElement(s);
+		}
+		this.view.getListaAndamento().setModel(listModelAceito);
+		this.view.getListaAndamento().setCellRenderer(new ServicoListCellRenderer());
+	}
+	
 	@Override
 	public void componentShown(ComponentEvent e) {
 		System.out.println("att");
 		atualizarListaDisponivel();
+		atualizarListaAceitos();
 
 	}
 }
