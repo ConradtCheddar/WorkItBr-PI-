@@ -112,36 +112,45 @@ public class ServicoDAO {
 	    return servicos;
 	}
 
-//	public Usuario login(String nome, String senha) {
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-//
-//			String sql = "SELECT * FROM Login WHERE Nome = ? AND Senha = ?";
-//			var stmt = conn.prepareStatement(sql);
-//
-//			stmt.setString(1, nome);
-//			stmt.setString(2, senha);
-//
-//			var rs = stmt.executeQuery();
-//
-//			if (rs.next()) {
-//				Usuario u = new Usuario(rs.getString("Email"), rs.getString("Nome"), rs.getString("CPF_CNPJ"),
-//						rs.getString("Telefone"), rs.getString("Senha"), rs.getBoolean("idContratado"),
-//						rs.getBoolean("idContratante"));
-//				rs.close();
-//				stmt.close();
-//				conn.close();
-//				return u;
-//			}
-//
-//			rs.close();
-//			stmt.close();
-//			conn.close();
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//		return null;
-//	}
+	// dentro de model.ServicoDAO
+	public boolean atualizarServicoPorId(int idServico, Servico s) {
+	    String sql = "UPDATE Servicos SET Nome_servico = ?, Valor = ?, Modalidade = ?, Descricao = ?, Aceito = ? WHERE id_Servico = ?";
+	    Connection conn = null;
+	    java.sql.PreparedStatement stmt = null;
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        conn = DriverManager.getConnection(url, Usuario, Senha);
+	        conn.setAutoCommit(false); // usar transação
+
+	        stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, s.getNome_Servico());
+	        if (s.getValor() != null) {
+	            stmt.setDouble(2, s.getValor());
+	        } else {
+	            stmt.setNull(2, java.sql.Types.DOUBLE);
+	        }
+	        stmt.setString(3, s.getModalidade());
+	        stmt.setString(4, s.getDescricao());
+	        // supondo que Aceito esteja representado como 1/0 ou true/false no DB
+	        if (s.getAceito() != null) {
+	            stmt.setBoolean(5, s.getAceito());
+	        } else {
+	            stmt.setNull(5, java.sql.Types.BOOLEAN);
+	        }
+	        stmt.setInt(6, idServico);
+
+	        int rowsUpdated = stmt.executeUpdate();
+	        conn.commit();
+	        return rowsUpdated > 0;
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        try { if (conn != null) conn.rollback(); } catch (Exception e) { e.printStackTrace(); }
+	        return false;
+	    } finally {
+	        try { if (stmt != null) stmt.close(); } catch (Exception e) { /* ignore */ }
+	        try { if (conn != null) conn.close(); } catch (Exception e) { /* ignore */ }
+	    }
+	}
+
 
 }

@@ -213,7 +213,7 @@ public class TelaConfigUser extends JPanel {
 	}
 
 	/**
-	 * Metodo responsavel pelo funcionamento do botão "Login"
+	 * Metodo responsavel pelo funcionamento do botão "Alterar dados"
 	 */
 	public void AlterarDados(ActionListener actionListener) {
 		this.btnAlterarDados.addActionListener(actionListener);

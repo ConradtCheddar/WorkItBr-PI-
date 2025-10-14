@@ -35,10 +35,11 @@ public class TelaListaServicos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
-	private JTable table;
-	private DefaultTableModel model;
+	private JTable tableServicos;
+	private DefaultTableModel tableModel;
 	private Runnable onShowCallback;
 	private JButton btnVisualizar, btnEditar, btnDeletar;
+	Object[][] tableData = this.getItems();
 
 	/**
 	 * Create the panel.
@@ -71,15 +72,15 @@ public class TelaListaServicos extends JPanel {
 		String colunas[]= {
 			"Nome", "valor", "modalidade", "foi aceito?"
 		};
-		this.model = new DefaultTableModel(dados,colunas);
+		this.tableModel = new DefaultTableModel(dados,colunas);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 2 2 11 13,grow");
 		
-		table = new JTable();
-		scrollPane_1.setViewportView(table);
-		table.setForeground(new Color(255, 255, 255));
-		table.setModel(model);
+		tableServicos = new JTable();
+		scrollPane_1.setViewportView(tableServicos);
+		tableServicos.setForeground(new Color(255, 255, 255));
+		tableServicos.setModel(tableModel);
 		
 		btnVisualizar = new JButton("Visualizar");
 		add(btnVisualizar, "cell 19 4,grow");
@@ -95,20 +96,12 @@ public class TelaListaServicos extends JPanel {
 	}
 
 	public void atualizarTable(ArrayList<Servico> lista) {
-		this.model.setRowCount(0); // Clear table before adding new rows
+		this.tableModel.setRowCount(0); // Clear table before adding new rows
 		for(int i =0; i<lista.size(); i++) {
 			Object[] newRowData = {lista.get(i).getNome_Servico(),lista.get(i).getValor(),lista.get(i).getModalidade(),lista.get(i).getAceito()};
-			this.model.addRow(newRowData);
+			this.tableModel.addRow(newRowData);
 		}
 			
-	}
-
-	public JTable getTable() {
-		return table;
-	}
-
-	public void setTable(JTable table) {
-		this.table = table;
 	}
 	
 	@Override
@@ -122,13 +115,71 @@ public class TelaListaServicos extends JPanel {
 	public void setOnShow(Runnable r) {
 		this.onShowCallback = r;
 	}
+	
+	public Object[][] getItems() {
+		 int rowCount = tableModel.getRowCount();
+		    int colCount = tableModel.getColumnCount();
+
+		    Object[][] allValues = new Object[rowCount][colCount];
+
+		    for (int row = 0; row < rowCount; row++) {
+		        for (int col = 0; col < colCount; col++) {
+		            allValues[row][col] = tableModel.getValueAt(row, col);
+		        }
+		    }
+		    return allValues; 
+	}
 
 	/**
-	 * metodo para a funcionalidade do botão cadastrar
+	 * metodo para a funcionalidade do botão editar
 	 */
 	public void editar(ActionListener actionlistener) {
+		
 		this.btnEditar.addActionListener(actionlistener);
 	}
+	
+	
+	/**
+	 * getters & setters
+	 * 
+	 * @return
+	 */
+	
+	public javax.swing.JTable getTableServicos() {
+	    return this.getTableServicos(); // substitua pelo nome real da sua JTable
+	}
+
+	public void setTable(JTable table) {
+		this.tableServicos = table;
+	}
+
+	public Object[][] getTableData() {
+		return tableData;
+	}
+
+	public void setTableData(Object[][] tableData) {
+		this.tableData = tableData;
+	}
+
+	public javax.swing.table.DefaultTableModel getTableModelServicos() {
+	    return (javax.swing.table.DefaultTableModel) this.tableServicos.getModel();
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
+	}
+	
+	public javax.swing.JButton getBtnEditar() {
+	    return this.btnEditar; // substitua pelo nome real do botão
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 //	/**
 //	 * metodo para limpar caixas de texto
@@ -140,11 +191,7 @@ public class TelaListaServicos extends JPanel {
 //	
 //	
 //	
-//	/**
-//	 * getters & setters
-//	 * 
-//	 * @return
-//	 */
+
 //	public JTextField getTfNome() {
 //		return tfNome;
 //	}

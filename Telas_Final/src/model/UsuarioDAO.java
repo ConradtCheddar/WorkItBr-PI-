@@ -183,7 +183,7 @@ public class UsuarioDAO {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-	        String sql = "UPDATE Login SET Email = ?, Nome_Usuario = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, caminhofoto = ?";
+	        String sql = "UPDATE Usuarios SET Email = ?, Nome_Usuario = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, caminhofoto = ? WHERE idUsuario = ?";
 	        var stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, u.getEmail());
 	        stmt.setString(2, u.getUsuario());
@@ -191,6 +191,7 @@ public class UsuarioDAO {
 	        stmt.setString(4, u.getTelefone());
 	        stmt.setString(5, u.getSenha());
 	        stmt.setString(6, u. getCaminhoFoto());
+	        stmt.setInt(7, u.getIdUsuario());
 
 	        int rowsUpdated = stmt.executeUpdate();
 
@@ -207,5 +208,7 @@ public class UsuarioDAO {
 	        JOptionPane.showMessageDialog(null, "Erro ao atualizar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
 	    }
 	}
+	
+	
 
 }
