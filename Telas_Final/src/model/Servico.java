@@ -11,9 +11,9 @@ public class Servico {
 	private Usuario contratado;
 	private int idServico;
 	private int idContratante;
-	
 
-	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito, Usuario contratante) {
+	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito,
+			Usuario contratante) {
 		this.id = id;
 		this.nome_Servico = nome_Servico;
 		this.valor = valor;
@@ -23,7 +23,8 @@ public class Servico {
 		this.contratante = contratante;
 	}
 
-	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito, Usuario contratante) {
+	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito,
+			Usuario contratante) {
 		this(null, nome_Servico, valor, modalidade, descricao, aceito, contratante);
 	}
 
@@ -94,3 +95,4 @@ public class Servico {
 	public int getIdServico() {
 		return idServico;
 	}
+}

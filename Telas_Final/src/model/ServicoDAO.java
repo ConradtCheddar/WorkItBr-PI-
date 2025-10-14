@@ -143,11 +143,6 @@ public class ServicoDAO {
 	    return servicos;
 	}
 	
-	public Servico configID(String nome) {
-	    try {
-	        Class.forName("com.mysql.cj.jdbc.Driver");
-	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-
 	public Servico buscarServicoPorId(int idServico) {
         Servico servico = null;
         try {
