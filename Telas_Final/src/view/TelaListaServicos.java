@@ -38,6 +38,7 @@ public class TelaListaServicos extends JPanel {
 	private JTable table;
 	private DefaultTableModel model;
 	private Runnable onShowCallback;
+	private JButton btnVisualizar, btnEditar, btnDeletar;
 
 	/**
 	 * Create the panel.
@@ -46,38 +47,57 @@ public class TelaListaServicos extends JPanel {
 	public TelaListaServicos() {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 		
 		Object dados[][]= {
-			{null, null, null},
-			{null, null, null},
-			{null, null, null},
-			{null, null, null},
-			{null, null, null},
-			{null, null, null},
-			{null, null, null},
-			{null, null, null},
-			{null, null, null},
-			{null, null, null}};
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},
+			{null, null, null, null},};
 		
 		String colunas[]= {
-			"Nome", "valor", "modalidade"
+			"Nome", "valor", "modalidade", "foi aceito?"
 		};
+		this.model = new DefaultTableModel(dados,colunas);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "cell 11 6 10 9,grow");
+		JScrollPane scrollPane_1 = new JScrollPane();
+		add(scrollPane_1, "cell 2 2 11 13,grow");
 		
 		table = new JTable();
-		scrollPane.setViewportView(table);
+		scrollPane_1.setViewportView(table);
 		table.setForeground(new Color(255, 255, 255));
-		this.model = new DefaultTableModel(dados,colunas);
 		table.setModel(model);
+		
+		btnVisualizar = new JButton("Visualizar");
+		add(btnVisualizar, "cell 19 4,grow");
+		
+		btnEditar = new JButton("Editar");
+		add(btnEditar, "cell 19 6,grow");
+		
+		btnDeletar = new JButton("Deletar");
+		add(btnDeletar, "cell 19 8,grow");
+		
+		JButton btnNewButton_2_1 = new JButton("New button");
+		add(btnNewButton_2_1, "cell 19 10,grow");
 	}
 
 	public void atualizarTable(ArrayList<Servico> lista) {
 		this.model.setRowCount(0); // Clear table before adding new rows
 		for(int i =0; i<lista.size(); i++) {
-			Object[] newRowData = {lista.get(i).getNome_Servico(),lista.get(i).getValor(),lista.get(i).getModalidade()};
+			Object[] newRowData = {lista.get(i).getNome_Servico(),lista.get(i).getValor(),lista.get(i).getModalidade(),lista.get(i).getAceito()};
 			this.model.addRow(newRowData);
 		}
 			
@@ -102,16 +122,14 @@ public class TelaListaServicos extends JPanel {
 	public void setOnShow(Runnable r) {
 		this.onShowCallback = r;
 	}
-	
+
+	/**
+	 * metodo para a funcionalidade do botão cadastrar
+	 */
+	public void editar(ActionListener actionlistener) {
+		this.btnEditar.addActionListener(actionlistener);
 	}
 
-//	/**
-//	 * metodo para a funcionalidade do botão cadastrar
-//	 */
-//	public void cadastrar(ActionListener actionlistener) {
-//		this.btnCadastrarTrabalho.addActionListener(actionlistener);
-//	}
-//
 //	/**
 //	 * metodo para limpar caixas de texto
 //	 */
@@ -171,4 +189,5 @@ public class TelaListaServicos extends JPanel {
 //		return serialVersionUID;
 //	}
 //
-//}
+//
+}
