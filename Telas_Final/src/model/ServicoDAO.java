@@ -12,8 +12,8 @@ public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	static String Senha = "admin";
-	//static String Senha = "aluno";
+	//static String Senha = "admin";
+	static String Senha = "aluno";
 	public ServicoDAO() {
 
 	}
@@ -62,6 +62,7 @@ public class ServicoDAO {
 			ArrayList<Servico> listaServicos = new ArrayList<Servico>();
 			while (rs.next()) {
 				Servico s = new Servico(
+					rs.getInt("ID_servico"),
 					rs.getString("Nome_servico"),
 					rs.getDouble("Valor"),
 					rs.getString("Modalidade"),
@@ -112,45 +113,73 @@ public class ServicoDAO {
 	    return servicos;
 	}
 
-	// dentro de model.ServicoDAO
-	public boolean atualizarServicoPorId(int idServico, Servico s) {
-	    String sql = "UPDATE Servicos SET Nome_servico = ?, Valor = ?, Modalidade = ?, Descricao = ?, Aceito = ? WHERE id_Servico = ?";
-	    Connection conn = null;
-	    java.sql.PreparedStatement stmt = null;
-	    try {
-	        Class.forName("com.mysql.cj.jdbc.Driver");
-	        conn = DriverManager.getConnection(url, Usuario, Senha);
-	        conn.setAutoCommit(false); // usar transação
+	public Servico buscarServicoPorId(int idServico) {
+        Servico servico = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+            String sql = "SELECT * FROM Servico WHERE ID_servico = ?";
+            var stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idServico);
+            var rs = stmt.executeQuery();
+            if (rs.next()) {
+                servico = new Servico(
+                    rs.getInt("ID_servico"),
+                    rs.getString("Nome_servico"),
+                    rs.getDouble("Valor"),
+                    rs.getString("Modalidade"),
+                    rs.getString("Descricao"),
+                    rs.getBoolean("Aceito"),
+                    null // contratante não carregado aqui
+                );
+            }
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return servico;
+    }
 
-	        stmt = conn.prepareStatement(sql);
-	        stmt.setString(1, s.getNome_Servico());
-	        if (s.getValor() != null) {
-	            stmt.setDouble(2, s.getValor());
-	        } else {
-	            stmt.setNull(2, java.sql.Types.DOUBLE);
-	        }
-	        stmt.setString(3, s.getModalidade());
-	        stmt.setString(4, s.getDescricao());
-	        // supondo que Aceito esteja representado como 1/0 ou true/false no DB
-	        if (s.getAceito() != null) {
-	            stmt.setBoolean(5, s.getAceito());
-	        } else {
-	            stmt.setNull(5, java.sql.Types.BOOLEAN);
-	        }
-	        stmt.setInt(6, idServico);
-
-	        int rowsUpdated = stmt.executeUpdate();
-	        conn.commit();
-	        return rowsUpdated > 0;
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	        try { if (conn != null) conn.rollback(); } catch (Exception e) { e.printStackTrace(); }
-	        return false;
-	    } finally {
-	        try { if (stmt != null) stmt.close(); } catch (Exception e) { /* ignore */ }
-	        try { if (conn != null) conn.close(); } catch (Exception e) { /* ignore */ }
-	    }
-	}
+    public boolean atualizarServicoPorId(int idServico, Servico s) {
+        // Buscar valores atuais do serviço
+        Servico atual = buscarServicoPorId(idServico);
+        if (atual == null) return false;
+        // Usar o novo valor se não for nulo/vazio, senão manter o atual
+        String nome = (s.getNome_Servico() != null && !s.getNome_Servico().isEmpty()) ? s.getNome_Servico() : atual.getNome_Servico();
+        Double valor = (s.getValor() != null) ? s.getValor() : atual.getValor();
+        String modalidade = (s.getModalidade() != null && !s.getModalidade().isEmpty()) ? s.getModalidade() : atual.getModalidade();
+        String descricao = (s.getDescricao() != null && !s.getDescricao().isEmpty()) ? s.getDescricao() : atual.getDescricao();
+        Boolean aceito = (s.getAceito() != null) ? s.getAceito() : atual.getAceito();
+        // Nunca permitir descricao nula
+        if (descricao == null) descricao = "";
+        String sql = "UPDATE Servico SET Nome_servico = ?, Valor = ?, Modalidade = ?, Descricao = ?, Aceito = ? WHERE ID_servico = ?";
+        Connection conn = null;
+        java.sql.PreparedStatement stmt = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(url, Usuario, Senha);
+            conn.setAutoCommit(false);
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, nome);
+            stmt.setDouble(2, valor);
+            stmt.setString(3, modalidade);
+            stmt.setString(4, descricao);
+            stmt.setBoolean(5, aceito);
+            stmt.setInt(6, idServico);
+            int rowsUpdated = stmt.executeUpdate();
+            conn.commit();
+            return rowsUpdated > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            try { if (conn != null) conn.rollback(); } catch (Exception e) { e.printStackTrace(); }
+            return false;
+        } finally {
+            try { if (stmt != null) stmt.close(); } catch (Exception e) { /* ignore */ }
+            try { if (conn != null) conn.close(); } catch (Exception e) { /* ignore */ }
+        }
+    }
 
 
 }

@@ -24,6 +24,7 @@ public class ListaServicosController {
 		this.model = model;
 		this.navegador = navegador;
 		instanciaAtual = this;
+		ligarEditarSalvar();
 		//this.s = s;
 		}
 		
@@ -70,9 +71,15 @@ public class ListaServicosController {
 	public void ligarEditarSalvar() {
 	    // se sua view já tem um metodo editar(ActionListener) use esse
 	    view.getBtnEditar().addActionListener(new ActionListener() {
+	    	
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	
 	            JTable table = view.getTableServicos();
+	            // Força o JTable a salvar a edição ativa antes de ler os valores
+	            if (table.isEditing()) {
+	                table.getCellEditor().stopCellEditing();
+	            }
 	            TableModel modelTable = table.getModel();
 	            int rowCount = modelTable.getRowCount();
 	            int colCount = modelTable.getColumnCount();
@@ -122,7 +129,7 @@ public class ListaServicosController {
 
 	                    // tenta encontrar colunas por nome ao invés de índice fixo (mais robusto)
 	                    for (int c = 0; c < colCount; c++) {
-	                        String colName = modelTable.getColumnName(c).toLowerCase();
+	                        String colName = modelTable.getColumnName(c).toLowerCase().replace("ç", "c").replace("ã", "a").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u").replace(" ", "");
 	                        Object cell = modelTable.getValueAt(r, c);
 	                        if (colName.contains("nome")) {
 	                            nome = cell != null ? cell.toString() : null;

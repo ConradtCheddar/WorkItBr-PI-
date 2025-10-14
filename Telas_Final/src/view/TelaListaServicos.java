@@ -39,7 +39,7 @@ public class TelaListaServicos extends JPanel {
 	private DefaultTableModel tableModel;
 	private Runnable onShowCallback;
 	private JButton btnVisualizar, btnEditar, btnDeletar;
-	Object[][] tableData = this.getItems();
+	private Object[][] tableData;
 
 	/**
 	 * Create the panel.
@@ -50,29 +50,18 @@ public class TelaListaServicos extends JPanel {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 		
-		Object dados[][]= {
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},
-			{null, null, null, null},};
-		
 		String colunas[]= {
-			"Nome", "valor", "modalidade", "foi aceito?"
+			"ID", "Nome", "valor", "modalidade", "foi aceito?", "descrição"
 		};
-		this.tableModel = new DefaultTableModel(dados,colunas);
+		Object dados[][]= new Object[0][6];
+		this.tableModel = new DefaultTableModel(dados,colunas) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// Prevent editing the ID column
+				return column != 0;
+			}
+		};
+		this.tableData = this.getItems();
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 2 2 11 13,grow");
@@ -81,6 +70,10 @@ public class TelaListaServicos extends JPanel {
 		scrollPane_1.setViewportView(tableServicos);
 		tableServicos.setForeground(new Color(255, 255, 255));
 		tableServicos.setModel(tableModel);
+		// Hide the ID column from the user
+		tableServicos.getColumnModel().getColumn(0).setMinWidth(0);
+		tableServicos.getColumnModel().getColumn(0).setMaxWidth(0);
+		tableServicos.getColumnModel().getColumn(0).setWidth(0);
 		
 		btnVisualizar = new JButton("Visualizar");
 		add(btnVisualizar, "cell 19 4,grow");
@@ -98,7 +91,8 @@ public class TelaListaServicos extends JPanel {
 	public void atualizarTable(ArrayList<Servico> lista) {
 		this.tableModel.setRowCount(0); // Clear table before adding new rows
 		for(int i =0; i<lista.size(); i++) {
-			Object[] newRowData = {lista.get(i).getNome_Servico(),lista.get(i).getValor(),lista.get(i).getModalidade(),lista.get(i).getAceito()};
+			Servico s = lista.get(i);
+			Object[] newRowData = {s.getId(), s.getNome_Servico(), s.getValor(), s.getModalidade(), s.getAceito(), s.getDescricao()};
 			this.tableModel.addRow(newRowData);
 		}
 			
@@ -146,7 +140,7 @@ public class TelaListaServicos extends JPanel {
 	 */
 	
 	public javax.swing.JTable getTableServicos() {
-	    return this.getTableServicos(); // substitua pelo nome real da sua JTable
+	    return this.tableServicos;
 	}
 
 	public void setTable(JTable table) {

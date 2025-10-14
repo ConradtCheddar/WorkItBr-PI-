@@ -4,7 +4,7 @@ public class BD {
 	
 
 
-//	CREATE DATABASE IF NOT EXISTS WorkItBr_BD;
+////	CREATE DATABASE IF NOT EXISTS WorkItBr_BD;
 //	USE WorkItBr_BD;
 //
 //	CREATE TABLE IF NOT EXISTS Usuarios (

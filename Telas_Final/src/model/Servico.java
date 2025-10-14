@@ -1,7 +1,7 @@
 package model;
 
 public class Servico {
-	
+	private Integer id;
 	private String nome_Servico;
 	private Double valor;
 	private String modalidade;
@@ -10,15 +10,27 @@ public class Servico {
 	private Usuario contratante;
 	private Usuario contratado;
 
-	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito, Usuario contratante) {
+	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito, Usuario contratante) {
+		this.id = id;
 		this.nome_Servico = nome_Servico;
 		this.valor = valor;
 		this.modalidade = modalidade;
 		this.descricao = descricao;
 		this.aceito = aceito;
 		this.contratante = contratante;
+	}
 
-}
+	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito, Usuario contratante) {
+		this(null, nome_Servico, valor, modalidade, descricao, aceito, contratante);
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getNome_Servico() {
 		return nome_Servico;
