@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -30,10 +31,8 @@ public class TelaContratado extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
 	
-	ImageIcon chatIcon = new ImageIcon(getClass().getResource("/imagens/clickable_icon.png"));
-	Image scaledImage = chatIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-	ImageIcon chatResized = new ImageIcon(scaledImage);
 	private JList listaDisponivel;
+	private JList listaAndamento;
 	private Runnable onShowCallback;
 
 	/**
@@ -53,8 +52,8 @@ public class TelaContratado extends JPanel {
 		add(lblAndamento, "cell 3 1,grow");
 		add(scrollPane, "cell 2 2 3 18,grow");
 		
-		JList listAndamento = new JList();
-		scrollPane.setViewportView(listAndamento);
+		listaAndamento = new JList();
+		scrollPane.setViewportView(listaAndamento);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 6 2 15 18,grow");
@@ -91,4 +90,30 @@ public class TelaContratado extends JPanel {
 			onShowCallback.run();
 		}
 	}
+	
+	public void adicionarOuvinte(ComponentListener listener) {
+		this.addComponentListener(listener);
+	}
+	
+	public void cliqueDuploNoJList(MouseListener actionListener) {
+	    this.listaDisponivel.addMouseListener(actionListener);
+	}
+	
+	public void cliqueDuploNoAndamento(MouseListener actionListener) {
+	    this.listaAndamento.addMouseListener(actionListener);
+	}
+
+	public void setListaDisponivel(JList listaDisponivel) {
+		this.listaDisponivel = listaDisponivel;
+	}
+
+	public JList getListaAndamento() {
+		return listaAndamento;
+	}
+
+	public void setListaAndamento(JList listAndamento) {
+		this.listaAndamento = listAndamento;
+	}
+	
+	
 }

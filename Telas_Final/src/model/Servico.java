@@ -9,6 +9,9 @@ public class Servico {
 	private Boolean aceito;
 	private Usuario contratante;
 	private Usuario contratado;
+	private int idServico;
+	private int idContratante;
+	
 
 	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito, Usuario contratante) {
 		this.id = id;
@@ -71,7 +74,7 @@ public class Servico {
 	public void setAceito(Boolean aceito) {
 		this.aceito = aceito;
 	}
-	
+
 	public Usuario getContratante() {
 		return contratante;
 	}
@@ -87,5 +90,7 @@ public class Servico {
 	public void setContratado(Usuario contratado) {
 		this.contratado = contratado;
 	}
-	
+
+	public int getIdServico() {
+		return idServico;
 	}

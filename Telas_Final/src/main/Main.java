@@ -60,6 +60,7 @@ public class Main {
 		// tela do contratado
 		TelaContratado telacontratado = new TelaContratado();
 		ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador);
+        telacontratado.adicionarOuvinte(contratadocontroller);
 		
 		TelaCadastroContratante telacadastrocontratante = new TelaCadastroContratante();
 		CadastroContratanteController cadastrocontratantecontroller = new CadastroContratanteController(telacadastrocontratante, servicoDAO, navegador);

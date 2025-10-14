@@ -19,7 +19,9 @@ public class ServicoDAO {
 	}
 
 	public boolean cadastrarS(Servico s) {
-		if (s.getNome_Servico().isEmpty() || s.getModalidade().isEmpty() || s.getValor()==0 || s.getDescricao().isEmpty()) {
+		
+		
+		if (s.getNome_Servico().isEmpty() || s.getModalidade().isEmpty() || Double.toString(s.getValor()).isEmpty() || s.getDescricao().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else {
@@ -90,7 +92,7 @@ public class ServicoDAO {
 	    try {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-	        String sql = "SELECT * FROM Servico";
+	        String sql = "SELECT * FROM Servico WHERE Aceito = false";
 	        var stmt = conn.prepareStatement(sql);
 	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {
@@ -100,7 +102,7 @@ public class ServicoDAO {
 	                rs.getString("Modalidade"),
 	                rs.getString("Descricao"),
 	                rs.getBoolean("Aceito"),
-	                null // contratante não carregado aqui
+	                null
 	            );
 	            servicos.add(s);
 	        }
@@ -112,6 +114,39 @@ public class ServicoDAO {
 	    }
 	    return servicos;
 	}
+	
+	public List<Servico> listarServicosAceitos() {
+	    List<Servico> servicos = new ArrayList<>();
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+	        String sql = "SELECT * FROM Servico WHERE Aceito = true";
+	        var stmt = conn.prepareStatement(sql);
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+	            Servico s = new Servico(
+	                rs.getString("Nome_servico"),
+	                rs.getDouble("Valor"),
+	                rs.getString("Modalidade"),
+	                rs.getString("Descricao"),
+	                rs.getBoolean("Aceito"),
+	                null
+	            );
+	            servicos.add(s);
+	        }
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+	    return servicos;
+	}
+	
+	public Servico configID(String nome) {
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
 	public Servico buscarServicoPorId(int idServico) {
         Servico servico = null;
@@ -141,6 +176,37 @@ public class ServicoDAO {
         }
         return servico;
     }
+
+	public void aceitarServico(Servico u) {
+	    try {
+	    	System.out.println(u.getIdServico());
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+	        String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, Aceito = ? WHERE ID_servico = ?";
+	        var stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, u.getNome_Servico());
+	        stmt.setString(2, u.getModalidade());
+	        stmt.setDouble(3, u.getValor());
+	        stmt.setString(4, u.getDescricao());
+	        stmt.setBoolean(5, true);
+	        stmt.setInt(6, u.getIdServico());
+
+	        int rowsUpdated = stmt.executeUpdate();
+
+	        if (rowsUpdated > 0) {
+	            JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!", "Sucesso", JOptionPane.PLAIN_MESSAGE);
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Servico não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+	        }
+
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Erro ao atualizar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
 
     public boolean atualizarServicoPorId(int idServico, Servico s) {
         // Buscar valores atuais do serviço
