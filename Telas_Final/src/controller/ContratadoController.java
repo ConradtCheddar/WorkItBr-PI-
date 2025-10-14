@@ -14,6 +14,7 @@ import model.UsuarioDAO;
 import view.TelaContratado;
 import view.TelaContratante;
 import view.VisServico;
+import view.VisServicoAndamento;
 import view.ServicoListCellRenderer;
 
 public class ContratadoController extends ComponentAdapter {
@@ -46,6 +47,38 @@ public class ContratadoController extends ComponentAdapter {
                         		
                         VisServico vs = new VisServico(servicoSelecionado);
                         VisServicoController vsc = new VisServicoController(vs, sd, navegador, servicoSelecionado);
+                        navegador.adicionarPainel("VISUALIZAR_SERVICO", vs);
+                        navegador.navegarPara("VISUALIZAR_SERVICO");
+                        
+                    } else {
+                        System.out.println("O item selecionado não é do tipo Servico");
+                    }   
+                    
+                }
+
+
+		    }
+		});
+		
+		this.view.cliqueDuploNoAndamento(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		    	if (e.getClickCount() == 2) { 
+                    int index = view.getListaAndamento().locationToIndex(e.getPoint());
+                    Object selectedItem = view.getListaAndamento().getModel().getElementAt(index);
+                    
+                    if (selectedItem instanceof Servico) {
+                        Servico servicoSelecionado = (Servico) selectedItem;
+
+                        String nomeServico = servicoSelecionado.getNome_Servico();
+                        String descricaoServico = servicoSelecionado.getDescricao();
+                        double valorServico = servicoSelecionado.getValor();
+                        int valorAceito = servicoSelecionado.getIdServico();
+                        
+                        System.out.println(valorAceito);
+                        final ServicoDAO sd = new ServicoDAO();
+                        		
+                        VisServicoAndamento vs = new VisServicoAndamento(servicoSelecionado);
                         navegador.adicionarPainel("VISUALIZAR_SERVICO", vs);
                         navegador.navegarPara("VISUALIZAR_SERVICO");
                         

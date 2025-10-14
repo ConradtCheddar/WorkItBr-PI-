@@ -98,6 +98,10 @@ public class TelaContratado extends JPanel {
 	public void cliqueDuploNoJList(MouseListener actionListener) {
 	    this.listaDisponivel.addMouseListener(actionListener);
 	}
+	
+	public void cliqueDuploNoAndamento(MouseListener actionListener) {
+	    this.listaAndamento.addMouseListener(actionListener);
+	}
 
 	public void setListaDisponivel(JList listaDisponivel) {
 		this.listaDisponivel = listaDisponivel;

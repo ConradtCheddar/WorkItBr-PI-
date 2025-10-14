@@ -14,7 +14,7 @@ import model.Servico;
 
 import javax.swing.JTextPane;
 
-public class VisServico extends JPanel {
+public class VisServicoAndamento extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -26,12 +26,11 @@ public class VisServico extends JPanel {
 	JLabel lblModalidade;
 	JLabel lblPreco;
 	JTextPane tpDesc;
-	JButton btnAceitar;
 
 	/**
 	 * Create the panel.
 	 */
-	public VisServico(Servico s) {
+	public VisServicoAndamento(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
 		
 		panel = new JPanel();
@@ -42,7 +41,7 @@ public class VisServico extends JPanel {
 		panel.add(Perfil, "name_1709392782600");
 		
 		PanelInfo = new JPanel();
-		add(PanelInfo, "cell 4 0 6 7,grow");
+		add(PanelInfo, "cell 4 0 7 7,grow");
 		PanelInfo.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][][grow][grow][][grow][grow][grow][grow][grow]"));
 		
 		lblTitulo = new JLabel("Titulo");
@@ -58,14 +57,11 @@ public class VisServico extends JPanel {
 		PanelInfo.add(lblPreco, "cell 0 5 9 3,grow");
 		
 		PanelDesc = new JPanel();
-		add(PanelDesc, "cell 0 8 10 8,grow");
+		add(PanelDesc, "cell 0 8 11 9,grow");
 		PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
 		tpDesc = new JTextPane();
 		PanelDesc.add(tpDesc, "cell 0 0,grow");
-		
-		btnAceitar = new JButton("Aceitar");
-		add(btnAceitar, "cell 0 16 11 1,alignx center");
 
 		lblTitulo.setText(s.getNome_Servico());
 		lblModalidade.setText(s.getModalidade());
@@ -73,10 +69,6 @@ public class VisServico extends JPanel {
 		tpDesc.setText(s.getDescricao());
 		
 
-	}
-	
-	public void aceitar(ActionListener actionListener) {
-		this.btnAceitar.addActionListener(actionListener);
 	}
 
 }
