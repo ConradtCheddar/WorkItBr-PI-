@@ -12,7 +12,7 @@ public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	static String Senha = "admin";
+	static String Senha = "aluno";
 	public ServicoDAO() {
 
 	}
@@ -140,7 +140,7 @@ public class ServicoDAO {
 	    return null;
 	}
 
-	public void atualizarServico(Servico u) {
+	public void aceitarServico(Servico u) {
 	    try {
 	    	System.out.println(u.getIdServico());
 	        Class.forName("com.mysql.cj.jdbc.Driver");

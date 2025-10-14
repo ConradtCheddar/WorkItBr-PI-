@@ -25,8 +25,8 @@ public class VisServico extends JPanel {
 	JLabel lblTitulo;
 	JLabel lblModalidade;
 	JLabel lblPreco;
-	JTextPane tpDesc;
 	JButton btnAceitar;
+	private JLabel tpDesc;
 
 	/**
 	 * Create the panel.
@@ -61,8 +61,8 @@ public class VisServico extends JPanel {
 		add(PanelDesc, "cell 0 8 10 8,grow");
 		PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
-		tpDesc = new JTextPane();
-		PanelDesc.add(tpDesc, "cell 0 0,grow");
+		tpDesc = new JLabel("");
+		PanelDesc.add(tpDesc, "cell 0 0");
 		
 		btnAceitar = new JButton("Aceitar");
 		add(btnAceitar, "cell 0 16 11 1,alignx center");

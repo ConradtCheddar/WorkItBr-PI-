@@ -25,7 +25,7 @@ public class VisServicoAndamento extends JPanel {
 	JLabel lblTitulo;
 	JLabel lblModalidade;
 	JLabel lblPreco;
-	JTextPane tpDesc;
+	private JLabel tpDesc;
 
 	/**
 	 * Create the panel.
@@ -60,14 +60,13 @@ public class VisServicoAndamento extends JPanel {
 		add(PanelDesc, "cell 0 8 11 9,grow");
 		PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
-		tpDesc = new JTextPane();
-		PanelDesc.add(tpDesc, "cell 0 0,grow");
+		tpDesc = new JLabel("");
+		PanelDesc.add(tpDesc, "cell 0 0");
 
 		lblTitulo.setText(s.getNome_Servico());
 		lblModalidade.setText(s.getModalidade());
 		lblPreco.setText(Double.toString(s.getValor()));
 		tpDesc.setText(s.getDescricao());
-		
 
 	}
 

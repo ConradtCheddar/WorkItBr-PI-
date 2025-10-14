@@ -17,19 +17,6 @@ public class VisServicoAndamentoController {
 		this.navegador = navegador;
 		this.s= s;
 		
-		this.view.aceitar(e ->{
-			
-			Servico servico = this.model.configID(s.getNome_Servico());
-			
-			s.setIdServico(servico.getIdServico());
-			
-			System.out.println(s);
-			
-			this.model.atualizarServico(s);
-			
-			navegador.navegarPara("CONTRATADO");
-		});
-		
 		
 	}
 }
