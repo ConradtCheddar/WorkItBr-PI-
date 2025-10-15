@@ -35,6 +35,7 @@ public class TelaConfigUser extends JPanel {
 
 	private JTextField tfPesquisar;
 	private JPanel foto;
+	private JPanel cPanel;
 	private JTextField tfNome;
 	private JTextField tfSenha;
 	private JTextField tfEmail;
