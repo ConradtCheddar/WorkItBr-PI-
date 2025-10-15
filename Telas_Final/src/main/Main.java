@@ -85,7 +85,7 @@ public class Main {
 		navegador.adicionarPainel("SERVICOS", telaservicos);
 		
 
-		navegador.navegarPara("LOGIN");
+		navegador.navegarPara("CADASTRO_CONTRATANTE");
 		prim.setVisible(true);
 		pm.setNavegador(navegador);
 
