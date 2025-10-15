@@ -50,9 +50,10 @@ public class ContratadoController extends ComponentAdapter {
                         VisServicoController vsc = new VisServicoController(vs, sd, navegador, servicoSelecionado);
                         navegador.adicionarPainel("VISUALIZAR_SERVICO", vs);
                         navegador.navegarPara("VISUALIZAR_SERVICO");
+                       // navegador.navegarPara("VISUALIZAR_SERVICO");
                         
                     } else {
-                        System.out.println("O item selecionado não é do tipo Servico");
+
                     }   
                     
                 }
@@ -119,7 +120,6 @@ public class ContratadoController extends ComponentAdapter {
 	
 	@Override
 	public void componentShown(ComponentEvent e) {
-		System.out.println("att");
 		atualizarListaDisponivel();
 		atualizarListaAceitos();
 

@@ -86,7 +86,6 @@ public class Primario extends JFrame {
 				layeredPane.repaint();
 			}
 		});
-		// Initial sizing
 		int w = getWidth();
 		int h = getHeight();
 		int menuWidth = dm.getPreferredSize().width;
@@ -100,7 +99,6 @@ public class Primario extends JFrame {
 				dm.toggleMenu();
 			}
 		});
-		// Add this: clicking lblBarra also opens DrawerMenu
 		wbb.barra(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {

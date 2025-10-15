@@ -95,4 +95,12 @@ public class Servico {
 	public int getIdServico() {
 		return idServico;
 	}
+
+	public void setIdServico(int idServico) {
+		this.idServico = idServico;
+	}
+
+	
+	
+	
 }
