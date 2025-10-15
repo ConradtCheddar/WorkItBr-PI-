@@ -24,6 +24,7 @@ import view.TelaContratante;
 import view.TelaListaServicos;
 import view.TelaLogin;
 import view.Temp;
+import view.VisServicoCnte;
 import view.wbBarra;
 
 public class Main {

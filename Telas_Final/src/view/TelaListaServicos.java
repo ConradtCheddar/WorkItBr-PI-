@@ -35,10 +35,10 @@ public class TelaListaServicos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
-	private JTable tableServicos;
 	private DefaultTableModel tableModel;
 	private Runnable onShowCallback;
-	private JButton btnVisualizar, btnEditar, btnDeletar;
+	private JTable tableServicos;
+	private JButton btnVisualizar, btnEditar, btnDeletar, btnCadastrar;
 	private Object[][] tableData;
 
 	/**
@@ -61,12 +61,12 @@ public class TelaListaServicos extends JPanel {
 				return column != 0;
 			}
 		};
+		tableServicos = new JTable(tableModel);
 		this.tableData = this.getItems();
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 2 2 11 13,grow");
 		
-		tableServicos = new JTable();
 		scrollPane_1.setViewportView(tableServicos);
 		tableServicos.setForeground(new Color(255, 255, 255));
 		tableServicos.setModel(tableModel);
@@ -84,8 +84,8 @@ public class TelaListaServicos extends JPanel {
 		btnDeletar = new JButton("Deletar");
 		add(btnDeletar, "cell 19 8,grow");
 		
-		JButton btnNewButton_2_1 = new JButton("New button");
-		add(btnNewButton_2_1, "cell 19 10,grow");
+		btnCadastrar = new JButton("Cadastrar");
+		add(btnCadastrar, "cell 19 10,grow");
 	}
 
 	public void atualizarTable(ArrayList<Servico> lista) {
@@ -131,6 +131,27 @@ public class TelaListaServicos extends JPanel {
 		
 		this.btnEditar.addActionListener(actionlistener);
 	}
+	/**
+	 * metodo para a funcionalidade do botão deletar
+	 */
+	public void deletar(ActionListener actionlistener) {
+		
+		this.btnDeletar.addActionListener(actionlistener);
+	}
+	/**
+	 * metodo para a funcionalidade do botão Visualizar
+	 */
+	public void visualizar(ActionListener actionlistener) {
+		
+		this.btnVisualizar.addActionListener(actionlistener);
+	}
+	/**
+	 * metodo para a funcionalidade do botão Cadastrar
+	 */
+	public void cadastrar(ActionListener actionlistener) {
+		
+		this.btnCadastrar.addActionListener(actionlistener);
+	}
 	
 	
 	/**
@@ -140,7 +161,7 @@ public class TelaListaServicos extends JPanel {
 	 */
 	
 	public javax.swing.JTable getTableServicos() {
-	    return this.tableServicos;
+	    return tableServicos;
 	}
 
 	public void setTable(JTable table) {
@@ -162,73 +183,4 @@ public class TelaListaServicos extends JPanel {
 	public void setTableModel(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
 	}
-	
-	public javax.swing.JButton getBtnEditar() {
-	    return this.btnEditar; // substitua pelo nome real do botão
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-//	/**
-//	 * metodo para limpar caixas de texto
-//	 */
-//	public void limparCampos() {
-//		tfNome.setText("");
-//	}
-//
-//	
-//	
-//	
-
-//	public JTextField getTfNome() {
-//		return tfNome;
-//	}
-//
-//	public void setTfNome(JTextField tfNome) {
-//		this.tfNome = tfNome;
-//	}
-//
-//	public JButton getBtnCadastrarTrabalho() {
-//		return btnCadastrarTrabalho;
-//	}
-//
-//	public void setBtnCadastrarTrabalho(JButton btnCadastrarTrabalho) {
-//		this.btnCadastrarTrabalho = btnCadastrarTrabalho;
-//	}
-//
-//	public JTextField getTfModalidade() {
-//		return tfModalidade;
-//	}
-//
-//	public void setTfModalidade(JTextField tfModalidade) {
-//		this.tfModalidade = tfModalidade;
-//	}
-//
-//	public JTextField getTfValor() {
-//		return tfValor;
-//	}
-//
-//	public void setTfValor(JTextField tfValor) {
-//		this.tfValor = tfValor;
-//	}
-//
-//	public JTextArea getTfDescricao() {
-//		return tfDescricao;
-//	}
-//
-//	public void setTfDescricao(JTextArea tfDescricao) {
-//		this.tfDescricao = tfDescricao;
-//	}
-//
-//	public static long getSerialversionuid() {
-//		return serialVersionUID;
-//	}
-//
-//
 }

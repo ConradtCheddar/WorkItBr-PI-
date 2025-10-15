@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	//static String Senha = "admin";
-	static String Senha = "aluno";
+	static String Senha = "admin";
+	//static String Senha = "aluno";
 	public ServicoDAO() {
 
 	}
@@ -172,20 +173,20 @@ public class ServicoDAO {
         return servico;
     }
 
-	public void aceitarServico(Servico u) {
+	public void aceitarServico(Servico s) {
 	    try {
-	    	System.out.println(u.getIdServico());
+	    	System.out.println(s.getIdServico());
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
 	        String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, Aceito = ? WHERE ID_servico = ?";
 	        var stmt = conn.prepareStatement(sql);
-	        stmt.setString(1, u.getNome_Servico());
-	        stmt.setString(2, u.getModalidade());
-	        stmt.setDouble(3, u.getValor());
-	        stmt.setString(4, u.getDescricao());
+	        stmt.setString(1, s.getNome_Servico());
+	        stmt.setString(2, s.getModalidade());
+	        stmt.setDouble(3, s.getValor());
+	        stmt.setString(4, s.getDescricao());
 	        stmt.setBoolean(5, true);
-	        stmt.setInt(6, u.getIdServico());
+	        stmt.setInt(6, s.getIdServico());
 
 	        int rowsUpdated = stmt.executeUpdate();
 
@@ -240,6 +241,29 @@ public class ServicoDAO {
             try { if (stmt != null) stmt.close(); } catch (Exception e) { /* ignore */ }
             try { if (conn != null) conn.close(); } catch (Exception e) { /* ignore */ }
         }
+    }
+    
+    public void deletarServico(int id) {
+    	try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+			
+			String sql = "Delete from Servico where ID_servico = ?";
+			var stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Linha deletada com sucesso.");
+            } else {
+                System.out.println("Nenhuma linha encontrada.");
+            }
+			
+    	} catch (Exception ex) {
+	        ex.printStackTrace();
+	        JOptionPane.showMessageDialog(null, "Erro ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+	    }
+        
+    	
     }
 
 

@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS Usuarios (
 
 CREATE TABLE IF NOT EXISTS Servico (
     ID_servico INT PRIMARY KEY AUTO_INCREMENT,
-    Nome_servico VARCHAR(25) NOT NULL,
+    Nome_servico VARCHAR(50) NOT NULL,
     Valor Double NOT NULL,
     Modalidade VARCHAR(50) NOT NULL,
     Descricao LONGTEXT NOT NULL,

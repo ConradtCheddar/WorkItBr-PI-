@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 import model.Servico;
 import model.ServicoDAO;
@@ -83,7 +84,7 @@ public class ContratadoController extends ComponentAdapter {
                         navegador.navegarPara("VISUALIZAR_SERVICO");
                         
                     } else {
-                        System.out.println("O item selecionado não é do tipo Servico");
+                    	JOptionPane.showMessageDialog(null, "Nenhum servico selecionado", "Erro", JOptionPane.ERROR_MESSAGE);
                     }   
                     
                 }

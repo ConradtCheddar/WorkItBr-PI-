@@ -87,11 +87,11 @@ public class TelaCadastroContratante extends JPanel {
 	 */
 	public void limparCampos() {
 		tfNome.setText("");
+		tfModalidade.setText("");
+		tfValor.setText("");
+		tfDescricao.setText("");
 	}
 
-	
-	
-	
 	/**
 	 * getters & setters
 	 * 

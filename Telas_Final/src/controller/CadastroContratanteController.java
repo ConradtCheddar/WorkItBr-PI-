@@ -30,7 +30,9 @@ public class CadastroContratanteController {
 
 			boolean sucesso = dao.cadastrarS(s);
 			if (sucesso) {
-				navegador.navegarPara("CONTRATANTE");
+				this.view.limparCampos();
+				navegador.navegarPara("SERVICOS");
+				
 			}
 		});
 		

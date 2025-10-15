@@ -38,7 +38,7 @@ public class LoginController {
 				} else if (u.isContratado()) {
 					navegador.navegarPara("CONTRATADO");
 				} else if (u.isContratante()) {
-					navegador.navegarPara("CADASTRO_CONTRATANTE");
+					navegador.navegarPara("SERVICOS");
 				} else {
 					navegador.navegarPara("LOGIN");
 				}
