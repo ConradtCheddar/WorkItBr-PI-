@@ -13,8 +13,8 @@ public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	static String Senha = "admin";
-	//static String Senha = "aluno";
+	//static String Senha = "admin";
+	static String Senha = "aluno";
 	public ServicoDAO() {
 
 	}
@@ -183,47 +183,40 @@ public class ServicoDAO {
 	}
 	
 	public Servico configID(String nome) {
-	    try {
-	    	System.out.println(u.getIdServico());
-	        Class.forName("com.mysql.cj.jdbc.Driver");
-	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+		 try {
+		        Class.forName("com.mysql.cj.jdbc.Driver");
+		        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-	        String sql = "SELECT * FROM Servico WHERE Nome_servico = ?";
-	        var stmt = conn.prepareStatement(sql);
-	        stmt.setString(1, u.getNome_Servico());
-	        stmt.setString(2, u.getModalidade());
-	        stmt.setDouble(3, u.getValor());
-	        stmt.setString(4, u.getDescricao());
-	        stmt.setBoolean(5, true);
-	        stmt.setInt(6, u.getIdServico());
+		        String sql = "SELECT * FROM Servico WHERE Nome_servico = ?";
+		        var stmt = conn.prepareStatement(sql);
 
-	        stmt.setString(1, nome);
+		        stmt.setString(1, nome);
 
-	        var rs = stmt.executeQuery();
+		        var rs = stmt.executeQuery();
 
-	        if (rs.next()) {
-	        	Servico u = new Servico(
-	            		rs.getString("Nome_servico"),
-						rs.getDouble("Valor"),
-						rs.getString("Modalidade"),
-						rs.getString("Descricao"),
-						rs.getBoolean("Aceito"),
-						null
-	            );
-	            u.setIdServico(rs.getInt("ID_servico"));
-	            rs.close();
-	            stmt.close();
-	            conn.close();
-	            return u;
-	        }
+		        if (rs.next()) {
+		        	Servico u = new Servico(
+		            		rs.getString("Nome_servico"),
+							rs.getDouble("Valor"),
+							rs.getString("Modalidade"),
+							rs.getString("Descricao"),
+							rs.getBoolean("Aceito"),
+							null
+		            );
+		            u.setIdServico(rs.getInt("ID_servico"));
+		            rs.close();
+		            stmt.close();
+		            conn.close();
+		            return u;
+		        }
 
-	        rs.close();
-	        stmt.close();
-	        conn.close();
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	    }
-	    return null;
+		        rs.close();
+		        stmt.close();
+		        conn.close();
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		    }
+		    return null;
 	}
 
     public boolean atualizarServicoPorId(int idServico, Servico s) {
