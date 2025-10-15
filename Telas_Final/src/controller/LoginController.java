@@ -3,6 +3,8 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
 import model.Usuario;
 import model.UsuarioDAO;
 import view.Primario;
@@ -42,7 +44,10 @@ public class LoginController {
 				} else {
 					navegador.navegarPara("LOGIN");
 				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
+			
 			this.view.limparFormulario();
 	
 		});

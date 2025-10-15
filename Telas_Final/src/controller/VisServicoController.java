@@ -23,6 +23,8 @@ public class VisServicoController {
 			
 			s.setIdServico(servico.getIdServico());
 			
+			s.setIdContratado(navegador.getCurrentUser().getIdUsuario());
+			
 			this.model.aceitarServico(s);
 			
 			navegador.navegarPara("CONTRATADO");

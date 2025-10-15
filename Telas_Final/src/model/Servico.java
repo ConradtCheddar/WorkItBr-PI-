@@ -11,6 +11,7 @@ public class Servico {
 	private Usuario contratado;
 	private int idServico;
 	private int idContratante;
+	private int idContratado;
 
 	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito,
 			Usuario contratante) {
@@ -100,7 +101,20 @@ public class Servico {
 		this.idServico = idServico;
 	}
 
-	
-	
-	
+	public int getIdContratante() {
+		return idContratante;
+	}
+
+	public void setIdContratante(int idContratante) {
+		this.idContratante = idContratante;
+	}
+
+	public int getIdContratado() {
+		return idContratado;
+	}
+
+	public void setIdContratado(int idContratado) {
+		this.idContratado = idContratado;
+	}
+
 }

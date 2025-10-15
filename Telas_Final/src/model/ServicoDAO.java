@@ -156,14 +156,15 @@ public class ServicoDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-			String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, Aceito = ? WHERE ID_servico = ?";
+			String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, Aceito = ?, id_contratado = ? WHERE ID_servico = ?";
 			var stmt = conn.prepareStatement(sql);
 			stmt.setString(1, u.getNome_Servico());
 			stmt.setString(2, u.getModalidade());
 			stmt.setDouble(3, u.getValor());
 			stmt.setString(4, u.getDescricao());
 			stmt.setBoolean(5, true);
-			stmt.setInt(6, u.getIdServico());
+			stmt.setInt(6, u.getIdContratado());
+			stmt.setInt(7, u.getIdServico());
 
 			int rowsUpdated = stmt.executeUpdate();
 
