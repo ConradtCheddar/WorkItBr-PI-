@@ -25,6 +25,7 @@ import com.formdev.flatlaf.FlatClientProperties;
 
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class TelaCadastroContratante extends JPanel {
 
@@ -68,6 +69,8 @@ public class TelaCadastroContratante extends JPanel {
 		tfValor.putClientProperty("JComponent.roundRect", true);
 		
 		tfDescricao = new JTextArea();
+		tfDescricao.setWrapStyleWord(true);
+		tfDescricao.setLineWrap(true);
 		add(tfDescricao, "cell 14 2 6 7,grow");
 		add(btnCadastrarTrabalho, "cell 7 14 7 2,grow");
 		tfDescricao.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Descrição");
