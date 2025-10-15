@@ -48,7 +48,7 @@ public class TelaLogin extends JPanel {
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
 		txtUsuario = new JTextField();
-		txtUsuario.setForeground(Color.WHITE);
+		txtUsuario.setForeground(Color.BLACK);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		add(txtUsuario, "cell 4 5 13 1,growx");
 		txtUsuario.setColumns(10);
