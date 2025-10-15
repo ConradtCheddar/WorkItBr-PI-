@@ -35,6 +35,7 @@ public class TelaCadastroContratante extends JPanel {
 	private JTextField tfModalidade;
 	private JTextField tfValor;
 	private JTextArea tfDescricao;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the panel.
@@ -46,34 +47,38 @@ public class TelaCadastroContratante extends JPanel {
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 		
 				tfNome = new JTextField();
-				add(tfNome, "cell 2 2 7 1,growx");
-				tfNome.setColumns(10);
+				add(tfNome, "cell 2 2 10 1,grow");
+				tfNome.setColumns(25);
 				tfNome.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nome");
 				tfNome.putClientProperty("JComponent.roundRect", true);
 
 		btnCadastrarTrabalho = new JButton("Cadastrar Trabalho");
+		btnCadastrarTrabalho.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnCadastrarTrabalho.setForeground(Color.WHITE);
 		btnCadastrarTrabalho.setBackground(new Color(0, 102, 204));
 		btnCadastrarTrabalho.putClientProperty("JComponent.roundRect", true);
 		
 		tfModalidade = new JTextField();
-		add(tfModalidade, "cell 2 2 7 1,growx");
+		add(tfModalidade, "cell 2 6 10 1,grow");
 		tfModalidade.setColumns(10);
 		tfModalidade.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Modalidade");
 		tfModalidade.putClientProperty("JComponent.roundRect", true);
 		
 		tfValor = new JTextField();
-		add(tfValor, "cell 2 2 7 1,growx");
+		add(tfValor, "cell 2 10 10 1,grow");
 		tfValor.setColumns(10);
 		tfValor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Valor");
 		tfValor.putClientProperty("JComponent.roundRect", true);
 		
-		tfDescricao = new JTextArea();
-		tfDescricao.setWrapStyleWord(true);
+		scrollPane = new JScrollPane();
+		add(scrollPane, "cell 14 2 6 9,grow");
+		
+		tfDescricao = new JTextArea(); 
+		scrollPane.setViewportView(tfDescricao);
 		tfDescricao.setLineWrap(true);
-		add(tfDescricao, "cell 14 2 6 7,grow");
-		add(btnCadastrarTrabalho, "cell 7 14 7 2,grow");
-		tfDescricao.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Descrição");
+		tfDescricao.setWrapStyleWord(true);
+		tfDescricao.setFont(new Font("Monospaced", Font.PLAIN, 13));
+		add(btnCadastrarTrabalho, "cell 8 14 8 2,grow");
 
 	}
 
