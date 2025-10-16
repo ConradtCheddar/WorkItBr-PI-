@@ -24,6 +24,7 @@ public class Usuario {
 		this.contratante = contratante;
 		this.admin = admin;
 		this.caminhoFoto = caminhoFoto;
+		this.github = github; // Corrigido: atribui o valor ao campo
 	}
 
 	public String getEmail() {

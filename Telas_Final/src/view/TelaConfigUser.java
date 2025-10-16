@@ -163,6 +163,7 @@ public class TelaConfigUser extends JPanel {
 		tfTelefone.setText(usuario.getTelefone());
 		tfCPF.setText(usuario.getCpfCnpj());
 		txtGithub.setText(usuario.getGithub());
+		System.out.println(usuario.getGithub());
 		if (usuario.getCaminhoFoto() != null) {
 			ImageIcon imgIcon = new ImageIcon(usuario.getCaminhoFoto());
 			imagemSelecionada = imgIcon.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(),
@@ -196,7 +197,7 @@ public class TelaConfigUser extends JPanel {
 	}
 	
 
-	public String getTxtGithub() {
+	public String getGithub() {
 		return txtGithub.getText();
 	}
 
@@ -339,6 +340,15 @@ public class TelaConfigUser extends JPanel {
 
 	public void setTfCPF(JTextField tfCPF) {
 		this.tfCPF = tfCPF;
+	}
+	
+
+	public JTextField getTxtGithub() {
+		return txtGithub;
+	}
+
+	public void setTxtGithub(JTextField txtGithub) {
+		this.txtGithub = txtGithub;
 	}
 
 	public Image getImagemSelecionada() {

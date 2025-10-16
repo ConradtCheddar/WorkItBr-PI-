@@ -112,6 +112,8 @@ public class DrawerMenu extends JPanel {
                             Usuario usuarioBanco = usuarioDAO.getUsuarioById(usuario.getIdUsuario());
                             if (usuarioBanco != null) {
                                 usuario = usuarioBanco; // usar versão atualizada do BD
+                                // Atualiza o usuário atual do Navegador para refletir o banco
+                                this.navegador.setCurrentUser(usuarioBanco);
                             }
                         } catch (Exception ex) {
                             ex.printStackTrace();

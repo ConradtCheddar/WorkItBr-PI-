@@ -52,9 +52,9 @@ public class ListaServicosController {
 					}
 					// Se não aceito -> VisServico
 					if (Boolean.FALSE.equals(s.getAceito())) {
-						VisServico vis = new VisServico(s);
-						VisServicoController visController = new VisServicoController(vis, model, navegador, s);
-						String panelName = "VIS_Servico_" + id;
+						VisServicoCnte vis = new VisServicoCnte(s);
+						VisServicoCnteController visController = new VisServicoCnteController(vis, model, navegador, s);
+						String panelName = "VIS_Servico_Cnte" + id;
 						navegador.adicionarPainel(panelName, vis);
 						navegador.navegarPara(panelName);
 					} else {
