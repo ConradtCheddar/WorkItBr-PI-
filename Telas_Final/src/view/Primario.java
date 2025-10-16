@@ -33,6 +33,7 @@ public class Primario extends JFrame {
 		this.wbb = wbb;
 		this.dm = dm;
 		setFocusTraversalPolicyProvider(true);
+		setMinimumSize(new Dimension(1200, 500));
 		setTitle("WorkITBr");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 700);
@@ -50,7 +51,6 @@ public class Primario extends JFrame {
 		System.out.println("[Primario] Construtor iniciado");
 		setLayout(new BorderLayout());
 
-		// contentPanel ocupa toda a área
 		contentPanel = new JPanel(new BorderLayout());
 		contentPanel.setBackground(new Color(0, 102, 204));
 		contentPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -62,7 +62,6 @@ public class Primario extends JFrame {
 		this.cPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		contentPanel.add(cPanel, BorderLayout.CENTER);
 
-		// Cria camada para o menu sobreposta
 		menuLayer = new JPanel(null);
 		menuLayer.setOpaque(false);
 		setGlassPane(menuLayer);
@@ -128,6 +127,20 @@ public class Primario extends JFrame {
 			return field.getBoolean(dm);
 		} catch (Exception e) {
 			return false;
+		}
+	}
+
+	public void fecharDrawerMenuSeAberto() {
+		if (getDrawerMenuOpenState(dm)) {
+			if (dm != null) {
+				try {
+					java.lang.reflect.Method closeMethod = DrawerMenu.class.getDeclaredMethod("closeMenu");
+					closeMethod.setAccessible(true);
+					closeMethod.invoke(dm);
+				} catch (Exception e) {
+					dm.toggleMenu();
+				}
+			}
 		}
 	}
 

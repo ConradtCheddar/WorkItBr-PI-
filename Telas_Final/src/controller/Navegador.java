@@ -27,6 +27,7 @@ public class Navegador {
 	}
 	
 	public void navegarPara(String nome) {
+		this.prim.fecharDrawerMenuSeAberto(); // Fecha o DrawerMenu se estiver aberto
 		this.prim.mostrarTela(nome);
 		if ("SERVICOS".equals(nome)) {
 			controller.ListaServicosController.atualizarTabelaSeExistir();

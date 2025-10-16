@@ -59,7 +59,6 @@ public class Main {
 		TelaContratante telacontratante = new TelaContratante();
 		ContratanteController contratanteController = new ContratanteController(telacontratante, usuarioDAO, navegador);
 
-		// tela do contratado
 		TelaContratado telacontratado = new TelaContratado();
 		ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador);
         telacontratado.adicionarOuvinte(contratadocontroller);

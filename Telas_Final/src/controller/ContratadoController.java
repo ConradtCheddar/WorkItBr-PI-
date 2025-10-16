@@ -78,6 +78,7 @@ public class ContratadoController extends ComponentAdapter {
                         final ServicoDAO sd = new ServicoDAO();
                         		
                         VisServicoAndamento vs = new VisServicoAndamento(servicoSelecionado);
+                        VisServicoAndamentoController vsc = new VisServicoAndamentoController(vs, sd, navegador, servicoSelecionado);
                         navegador.adicionarPainel("VISUALIZAR_SERVICO", vs);
                         navegador.navegarPara("VISUALIZAR_SERVICO");
                         

@@ -28,7 +28,7 @@ public class wbBarra extends JPanel {
 	JPanel wbPanel;
 	private JLabel lblBarra;
 	JLabel lblMenu;
-	JLabel lblNewLabel;
+	JLabel lblTitulo;
 
 	/**
 	 * Create the panel.
@@ -38,38 +38,33 @@ public class wbBarra extends JPanel {
 		setPreferredSize(new Dimension(900, 85));
 		setBackground(new Color(0, 102, 204));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill", "[grow][grow][grow]", "[grow]"));
+		setLayout(new MigLayout("fill", "[grow]", "[grow]"));
 
 		lblMenu = new JLabel();
 		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblMenu.setEnabled(true);
-		lblMenu.setVisible(true);
-		lblMenu.setPreferredSize(new Dimension(48, 40)); // altura menor
-		lblMenu.setMinimumSize(new Dimension(32, 32));
 
 		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 		Image img = menuIcon.getImage();
 		Image scaled = img.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		lblMenu.setIcon(new ImageIcon(scaled));
-		add(lblMenu, "flowx,cell 0 0,alignx left,growy");
+		add(lblMenu, "flowx,cell 0 0,grow");
 
-		lblNewLabel = new JLabel("WorkITBr");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setForeground(Color.WHITE);
-		add(lblNewLabel, "cell 1 0,grow");
+		lblTitulo = new JLabel("WorkITBr");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblTitulo.setForeground(Color.WHITE);
+		add(lblTitulo, "cell 1 0,grow");
 
 		setLblBarra(new JLabel());
 		getLblBarra().setHorizontalAlignment(SwingConstants.RIGHT);
 		getLblBarra().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		getLblBarra().setPreferredSize(new Dimension(96, 48));
-		getLblBarra().setMinimumSize(new Dimension(64, 40));
 		ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 		Image imgBarra = barraIcon.getImage();
 		Image scaledBarra = imgBarra.getScaledInstance(64, 40, Image.SCALE_SMOOTH);
 		getLblBarra().setIcon(new ImageIcon(scaledBarra));
-		add(getLblBarra(), "cell 2 0,alignx right,growy,gapright 15px");
+		add(getLblBarra(), "cell 2 0,grow");
 
 
 		ajustarIcones();
@@ -91,7 +86,7 @@ public class wbBarra extends JPanel {
 				int panelHeight = getHeight();
 				int fontSize = Math.max(15, panelHeight / 17);
 				int fontSize2 = Math.max(15, panelHeight / 40);
-				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 
 				ajustarFonte();
 
@@ -138,7 +133,7 @@ public class wbBarra extends JPanel {
 
 		float novoTamanho = Math.max(12f, w / 40f);
 
-		lblNewLabel.setFont(lblNewLabel.getFont().deriveFont(novoTamanho));
+		lblTitulo.setFont(lblTitulo.getFont().deriveFont(novoTamanho));
 		revalidate();
 		repaint();
 	}
