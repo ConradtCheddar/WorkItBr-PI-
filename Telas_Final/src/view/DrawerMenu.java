@@ -13,8 +13,8 @@ import controller.TelaConfigUserController;
 
 public class DrawerMenu extends JPanel {
     private static final int MENU_WIDTH = 250;
-    private static final int ANIMATION_STEP = 20;
-    private static final int ANIMATION_DELAY = 5;
+    private static final int ANIMATION_STEP = 20; // Mais rápido
+    private static final int ANIMATION_DELAY = 8; // Mantém fluidez
     private boolean isOpen = false;
     private boolean animating = false;
     private Timer animationTimer;
@@ -30,7 +30,7 @@ public class DrawerMenu extends JPanel {
     public DrawerMenu(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(Color.RED); // cor visível para depuração
+        setBackground(Color.DARK_GRAY); // cor visível para depuração
         setOpaque(true);
         // Começa fechado
         currentWidth = 0;
@@ -54,6 +54,17 @@ public class DrawerMenu extends JPanel {
 
     public void setNavegador(Navegador navegador) {
         this.navegador = navegador;
+        // Home button: fecha o menu após ação
+        JButton btnHome = (JButton) getComponent(0);
+        for (ActionListener al : btnHome.getActionListeners()) {
+            btnHome.removeActionListener(al);
+        }
+        btnHome.addActionListener(e -> {
+            if (this.navegador != null) {
+                this.navegador.navegarPara("HOME");
+            }
+            if (isOpen) toggleMenu();
+        });
         if (btnSettings != null) {
             for (ActionListener al : btnSettings.getActionListeners()) {
                 btnSettings.removeActionListener(al);
@@ -62,6 +73,7 @@ public class DrawerMenu extends JPanel {
                 if (this.navegador != null) {
                     this.navegador.navegarPara("TEMP");
                 }
+                if (isOpen) toggleMenu();
             });
         }
         if (btnLogout != null) {
@@ -72,6 +84,7 @@ public class DrawerMenu extends JPanel {
                 if (this.navegador != null) {
                     this.navegador.navegarPara("LOGIN");
                 }
+                if (isOpen) toggleMenu();
             });
         }
         if (btnTrabalhos != null) {
@@ -82,6 +95,7 @@ public class DrawerMenu extends JPanel {
                 if (this.navegador != null) {
                     this.navegador.navegarPara("SERVICOS");
                 }
+                if (isOpen) toggleMenu();
             });
         }
         if (btnProfile != null) {
@@ -117,6 +131,7 @@ public class DrawerMenu extends JPanel {
                         JOptionPane.showMessageDialog(this, "Nenhum usuário logado.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+                if (isOpen) toggleMenu();
             });
         }
     }
@@ -128,21 +143,22 @@ public class DrawerMenu extends JPanel {
     // Permite ajuste de largura para animação
     public void setMenuWidth(int width) {
         if (width < 0) width = 0;
-        System.out.println("[DEBUG] setMenuWidth: " + width);
         currentWidth = width;
         setPreferredSize(new Dimension(currentWidth, getParent() != null ? getParent().getHeight() : getPreferredSize().height));
         setMaximumSize(new Dimension(MENU_WIDTH, Integer.MAX_VALUE));
-        revalidate();
-        repaint();
+        setSize(currentWidth, getHeight()); // Atualiza tamanho imediatamente
+        revalidate(); // Garante que o layout dos botões seja recalculado
+        repaint();    // Redesenha o DrawerMenu
+        // Força repaint do menuLayer (GlassPane) se existir
+        java.awt.Container top = getTopLevelAncestor();
+        if (top instanceof JFrame) {
+            java.awt.Component glass = ((JFrame)top).getGlassPane();
+            if (glass != null) glass.repaint();
+        }
+        // Atualiza posição para ancorar à direita, se possível
         if (getParent() != null) {
-            getParent().revalidate();
-            getParent().repaint();
-            // Força revalidação do JFrame principal
-            java.awt.Container top = getTopLevelAncestor();
-            if (top != null) {
-                top.revalidate();
-                top.repaint();
-            }
+            int parentWidth = getParent().getWidth();
+            setLocation(parentWidth - currentWidth, 0);
         }
     }
     // Permite ajuste de altura ao redimensionar

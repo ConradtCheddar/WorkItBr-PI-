@@ -70,19 +70,30 @@ public class Primario extends JFrame {
 
 		dm.setOpaque(true);
 		dm.setVisible(true);
-		dm.setBounds(0, 0, 0, getHeight()); // começa fechado
+		// DrawerMenu começa fechado, posicionado à direita
+		dm.setBounds(getWidth(), 0, 0, getHeight());
 		menuLayer.add(dm);
 
-		// Atualiza tamanho do menu ao redimensionar
+		// Atualiza tamanho e posição do menu ao redimensionar
 		addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
 			public void componentResized(java.awt.event.ComponentEvent e) {
-				dm.setBounds(0, 0, dm.getPreferredSize().width, getHeight());
+				int menuWidth = dm.getPreferredSize().width;
+				if (menuWidth > 0) {
+					dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
+				} else {
+					dm.setBounds(getWidth(), 0, 0, getHeight());
+				}
 			}
 		});
 
 		dm.setOnStateChange(isOpen -> {
-			dm.setBounds(0, 0, dm.getPreferredSize().width, getHeight());
+			int menuWidth = dm.getPreferredSize().width;
+			if (isOpen && menuWidth > 0) {
+				dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
+			} else {
+				dm.setBounds(getWidth(), 0, 0, getHeight());
+			}
 			menuLayer.repaint();
 		});
 
