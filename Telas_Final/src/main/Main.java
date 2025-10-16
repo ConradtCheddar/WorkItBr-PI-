@@ -29,6 +29,7 @@ import view.wbBarra;
 
 public class Main {
 	public static void main(String[] args) {
+		System.out.println("NÃO MEXA NO CPANEL, SEU BURRO!");
 		// startup message removed (was a debug/accidental print)
 		try {
 			UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarkLaf());
