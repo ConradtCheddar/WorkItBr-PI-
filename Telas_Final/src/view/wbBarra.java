@@ -115,8 +115,21 @@ public class wbBarra extends JPanel {
 	}
 
 	public void setMenuClickListener(MouseListener listener) {
-		lblMenu.addMouseListener(listener);
-	}
+        for (MouseListener ml : getLblBarra().getMouseListeners()) {
+            getLblBarra().removeMouseListener(ml);
+        }
+        getLblBarra().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                System.out.println("[DEBUG] Clique detectado no lblBarra");
+                listener.mouseClicked(e);
+            }
+            @Override public void mousePressed(java.awt.event.MouseEvent e) { listener.mousePressed(e); }
+            @Override public void mouseReleased(java.awt.event.MouseEvent e) { listener.mouseReleased(e); }
+            @Override public void mouseEntered(java.awt.event.MouseEvent e) { listener.mouseEntered(e); }
+            @Override public void mouseExited(java.awt.event.MouseEvent e) { listener.mouseExited(e); }
+        });
+    }
 
 	public void ajustarFonte() {
 		int w = getWidth();

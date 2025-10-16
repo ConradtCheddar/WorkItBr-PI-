@@ -37,9 +37,8 @@ public class Main {
 		wbBarra wbb = new wbBarra();
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		DrawerMenu pm = new DrawerMenu(null, usuarioDAO);
+		DrawerMenu pm = new DrawerMenu(usuarioDAO);
 		Primario prim = new Primario(wbb, pm);
-		pm.setParentFrame(prim);
 
 		Navegador navegador = new Navegador(prim);
 		pm.setNavegador(navegador);

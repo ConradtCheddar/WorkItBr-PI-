@@ -17,7 +17,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.BadLocationException;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
@@ -52,7 +51,6 @@ public class TelaCadastro extends JPanel {
 		tfEmail.setColumns(10);
 		tfEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Email");
 		tfEmail.putClientProperty("JComponent.roundRect", true);
-		aplicarMascaraEmail(tfEmail);
 
 		tfTelefone = new JFormattedTextField();
 		add(tfTelefone, "cell 4 4 13 1,growx");
@@ -163,22 +161,6 @@ public class TelaCadastro extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	// Método para aplicar a máscara de Email (apenas validações simples)
-	private void aplicarMascaraEmail(JFormattedTextField field) {
-		// Não há uma máscara direta simples para email com MaskFormatter,
-		// então implementa-se uma validação personalizada para impedir caracteres
-		// inválidos
-		field.setDocument(new javax.swing.text.PlainDocument() {
-			@Override
-			public void insertString(int offset, String str, javax.swing.text.AttributeSet a)
-					throws javax.swing.BadLocationException {
-				if (str.matches("[a-zA-Z0-9@._-]*")) {
-					super.insertString(offset, str, a);
-				}
-			}
-		});
 	}
 
 	/**
