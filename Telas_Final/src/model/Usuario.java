@@ -11,8 +11,9 @@ public class Usuario {
 	private boolean admin;
 	private String caminhoFoto; // Added missing field
 	private int idUsuario;
+	private String github;
 
-	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, boolean contratado,
+	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, String github, boolean contratado,
 			boolean contratante, boolean admin, String caminhoFoto) {
 		this.email = email;
 		this.usuario = usuario;
@@ -102,6 +103,13 @@ public class Usuario {
 	}
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+	public String getGithub() {
+		return github;
+	}
+
+	public void setGithub(String github) {
+		this.github = github;
 	}
 	
 }

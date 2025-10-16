@@ -26,6 +26,7 @@ public class TelaConfigUserController {
             usuario.setEmail(view.getEmail());
             usuario.setTelefone(view.getTelefone());
             usuario.setCpfCnpj(view.getCpfCnpj());
+            usuario.setGithub(view.getTxtGithub());
             model.atualizarUsuario(usuario);
         });
 

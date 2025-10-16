@@ -13,6 +13,15 @@ import javax.swing.SwingConstants;
 import model.Servico;
 
 import javax.swing.JTextPane;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.io.File;
+import java.net.URL;
+import java.awt.image.BufferedImage;
+import model.Usuario;
+import model.UsuarioDAO;
+
+import javax.imageio.ImageIO;
 
 public class VisServicoAndamento extends JPanel {
 
@@ -26,6 +35,7 @@ public class VisServicoAndamento extends JPanel {
 	JLabel lblModalidade;
 	JLabel lblPreco;
 	private JLabel tpDesc;
+    private JLabel lblFoto;
 
 	/**
 	 * Create the panel.
@@ -38,7 +48,12 @@ public class VisServicoAndamento extends JPanel {
 		panel.setLayout(new CardLayout(0, 0));
 		
 		Perfil = new JPanel();
+		// configurar painel de perfil com espaço para foto
+		Perfil.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		panel.add(Perfil, "name_1709392782600");
+		lblFoto = new JLabel();
+		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+		Perfil.add(lblFoto, "cell 0 0,alignx center,aligny center");
 		
 		PanelInfo = new JPanel();
 		add(PanelInfo, "cell 4 0 7 7,grow");
@@ -68,6 +83,53 @@ public class VisServicoAndamento extends JPanel {
 		lblPreco.setText(Double.toString(s.getValor()));
 		tpDesc.setText(s.getDescricao());
 
+		// Carrega a foto do contratante (se disponível)
+		Usuario u = s.getContratante();
+		if (u == null && s.getIdContratante() != 0) {
+			UsuarioDAO udao = new UsuarioDAO();
+			u = udao.getUsuarioById(s.getIdContratante());
+		}
+		ImageIcon foto = loadUserImage(u, 150, 150);
+		lblFoto.setIcon(foto);
+
+	}
+	
+	private ImageIcon loadUserImage(Usuario u, int width, int height) {
+		try {
+			String caminho = null;
+			if (u != null) caminho = u.getCaminhoFoto();
+			if (caminho != null && !caminho.trim().isEmpty()) {
+				File f = new File(caminho);
+				if (f.exists()) {
+					Image img = ImageIO.read(f);
+					Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+					return new ImageIcon(scaled);
+				}
+				URL res = getClass().getResource(caminho.startsWith("/") ? caminho : "/" + caminho);
+				if (res != null) {
+					Image img = ImageIO.read(res);
+					Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+					return new ImageIcon(scaled);
+				}
+			}
+			URL fallback = getClass().getResource("/imagens/clickable_icon.png");
+			if (fallback == null) fallback = getClass().getResource("/imagens/Casa.png");
+			if (fallback != null) {
+				Image img = ImageIO.read(fallback);
+				Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				return new ImageIcon(scaled);
+			}
+			File alt = new File("imagens/clickable_icon.png");
+			if (alt.exists()) {
+				Image img = ImageIO.read(alt);
+				Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				return new ImageIcon(scaled);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		return new ImageIcon(bi);
 	}
 
 }

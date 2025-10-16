@@ -11,7 +11,12 @@ import model.Servico;
 import model.ServicoDAO;
 import view.TelaListaServicos;
 import view.VisServicoAndamento;
+import view.VisServico;
 import view.VisServicoCnte;
+import view.VisServicoCnteAceito;
+import controller.VisServicoController;
+import controller.VisServicoCnteController;
+import controller.VisServicoCnteAceitoController;
 
 public class ListaServicosController {
 	private final TelaListaServicos view;
@@ -39,13 +44,29 @@ public class ListaServicosController {
 				Object idValue = table.getValueAt(selectedRow, 0);
 				if (idValue != null) {
 					int id = (int) idValue;
-
+					
 					Servico s = this.model.buscarServicoPorId(id);
-					VisServicoCnte visServicoCnte = new VisServicoCnte(s);
-					VisServicoCnteController visServicoCnteController = new VisServicoCnteController(visServicoCnte,
-							model, navegador, s);
-					navegador.adicionarPainel("VIS_Servico_Cnte", visServicoCnte);
-					navegador.navegarPara("VIS_Servico_Cnte");
+					if (s == null) {
+						JOptionPane.showMessageDialog(null, "Serviço não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					// Se não aceito -> VisServico
+					if (Boolean.FALSE.equals(s.getAceito())) {
+						VisServico vis = new VisServico(s);
+						VisServicoController visController = new VisServicoController(vis, model, navegador, s);
+						String panelName = "VIS_Servico_" + id;
+						navegador.adicionarPainel(panelName, vis);
+						navegador.navegarPara(panelName);
+					} else {
+						// Aceito -> VisServicoCnteAceito
+						VisServicoCnteAceito visAceito = new VisServicoCnteAceito(s);
+						VisServicoCnteAceitoController aceitoController = new VisServicoCnteAceitoController(visAceito,
+								model, navegador, s);
+						String panelName = "VIS_Servico_Cnte_Aceito_" + id;
+						navegador.adicionarPainel(panelName, visAceito);
+						navegador.navegarPara(panelName);
+					}
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Nenhum servico selecionado", "Erro",
 							JOptionPane.ERROR_MESSAGE);
@@ -68,7 +89,7 @@ public class ListaServicosController {
 
 					if (this.model.buscarServicoPorId(id).getAceito().equals(true)) {
 						JOptionPane.showMessageDialog(null, "Imposivel deletar trabalhos aceitos", "Erro",
-								JOptionPane.ERROR_MESSAGE);
+							JOptionPane.ERROR_MESSAGE);
 					} else {
 						// Confirmar exclusão
 						int option = JOptionPane.showConfirmDialog(null,
@@ -131,7 +152,7 @@ public class ListaServicosController {
 					}
 					if(this.model.buscarServicoPorId(idServico).getAceito().equals(true)) {
 						JOptionPane.showMessageDialog(null, "Imposivel modificar trabalhos aceitos", "Erro",
-								JOptionPane.ERROR_MESSAGE);
+							JOptionPane.ERROR_MESSAGE);
 						failed++;
 					}else {
 						// Agora ler as colunas conhecidas:
@@ -148,8 +169,8 @@ public class ListaServicosController {
 						// tenta encontrar colunas por nome ao invés de índice fixo (mais robusto)
 						for (int c = 0; c < colCount; c++) {
 							String colName = modelTable.getColumnName(c).toLowerCase().replace("ç", "c").replace("ã", "a")
-									.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o")
-									.replace("ú", "u").replace(" ", "");
+								.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o")
+								.replace("ú", "u").replace(" ", "");
 							Object cell = modelTable.getValueAt(r, c);
 							if (colName.contains("nome")) {
 								nome = cell != null ? cell.toString() : null;
@@ -193,7 +214,6 @@ public class ListaServicosController {
 						else
 							failed++;
 					}
-					
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					failed++;

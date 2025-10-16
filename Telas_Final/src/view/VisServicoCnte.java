@@ -75,7 +75,7 @@ public class VisServicoCnte extends JPanel {
 
 	}
 	
-	public void voltarEditar(ActionListener actionListener) {
+	public void Editar(ActionListener actionListener) {
 		this.btnEditar.addActionListener(actionListener);
 	}
 

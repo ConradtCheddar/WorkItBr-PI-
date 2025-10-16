@@ -85,25 +85,19 @@ public class DrawerMenu extends JPanel {
                 btnProfile.removeActionListener(al);
             }
             btnProfile.addActionListener(e -> {
-                if (this.navegador != null) {
+                            if (this.navegador != null) {
                     Usuario usuario = this.navegador.getCurrentUser();
                     if (usuario != null) {
+                        // Recarrega os dados do usuário a partir do banco para garantir que
+                        // campos como `github` e `CaminhoFoto` estejam atualizados
                         try {
-                            java.lang.reflect.Field cPanelField = navegador.getClass().getDeclaredField("cPanel");
-                            cPanelField.setAccessible(true);
-                            javax.swing.JPanel cPanel = (javax.swing.JPanel) cPanelField.get(navegador);
-                            java.awt.Component toRemove = null;
-                            for (java.awt.Component comp : cPanel.getComponents()) {
-                                if ("CONFIG_USER".equals(cPanel.getClientProperty(comp))) {
-                                    toRemove = comp;
-                                    break;
-                                }
-                            }
-                            if (toRemove != null) {
-                                cPanel.remove(toRemove);
+                            Usuario usuarioBanco = usuarioDAO.getUsuarioById(usuario.getIdUsuario());
+                            if (usuarioBanco != null) {
+                                usuario = usuarioBanco; // usar versão atualizada do BD
                             }
                         } catch (Exception ex) {
-							ex.printStackTrace();
+                            // se falhar, simplesmente usa o objeto em memória
+                            ex.printStackTrace();
                         }
                         TelaConfigUser telaConfigUser = new TelaConfigUser();
                         new TelaConfigUserController(telaConfigUser, usuarioDAO, navegador, usuario);

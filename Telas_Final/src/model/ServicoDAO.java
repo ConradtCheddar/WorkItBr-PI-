@@ -66,6 +66,11 @@ public class ServicoDAO {
 			while (rs.next()) {
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
 						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBoolean("Aceito"), u);
+				// preencher ids relacionados para uso posterior
+				s.setIdServico(rs.getInt("ID_servico"));
+				s.setIdContratante(rs.getInt("id_contratante"));
+				// pode ser 0 ou NULL no banco -> checar
+				try { s.setIdContratado(rs.getInt("id_contratado")); } catch (Exception ex) { /* ignore */ }
 				listaServicos.add(s);
 
 			}
@@ -91,6 +96,9 @@ public class ServicoDAO {
 			while (rs.next()) {
 				Servico s = new Servico(rs.getString("Nome_servico"), rs.getDouble("Valor"), rs.getString("Modalidade"),
 						rs.getString("Descricao"), rs.getBoolean("Aceito"), null);
+				// preencher id do servico e contratante se existirem
+				s.setIdServico(rs.getInt("ID_servico"));
+				s.setIdContratante(rs.getInt("id_contratante"));
 				servicos.add(s);
 			}
 			rs.close();
@@ -113,6 +121,11 @@ public class ServicoDAO {
 			while (rs.next()) {
 				Servico s = new Servico(rs.getString("Nome_servico"), rs.getDouble("Valor"), rs.getString("Modalidade"),
 						rs.getString("Descricao"), rs.getBoolean("Aceito"), null);
+				// preencher ids para permitir visualizacao do contratado
+				s.setIdServico(rs.getInt("ID_servico"));
+				s.setIdContratante(rs.getInt("id_contratante"));
+				// id_contratado pode ser nulo -> rs.getInt retorna 0 se nulo
+				s.setIdContratado(rs.getInt("id_contratado"));
 				servicos.add(s);
 			}
 			rs.close();
@@ -136,10 +149,11 @@ public class ServicoDAO {
 			if (rs.next()) {
 				servico = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
 						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBoolean("Aceito"), null // contratante
-																												// não
-																												// carregado
-																												// aqui
+						// não carregado aqui
 				);
+				servico.setIdServico(rs.getInt("ID_servico"));
+				servico.setIdContratante(rs.getInt("id_contratante"));
+				servico.setIdContratado(rs.getInt("id_contratado"));
 			}
 			rs.close();
 			stmt.close();
@@ -152,7 +166,6 @@ public class ServicoDAO {
 
 	public void aceitarServico(Servico u) {
 		try {
-			System.out.println(u.getIdServico());
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
@@ -182,42 +195,42 @@ public class ServicoDAO {
 			JOptionPane.showMessageDialog(null, "Erro ao aceitar servico", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	public Servico configID(String nome) {
 		 try {
-		        Class.forName("com.mysql.cj.jdbc.Driver");
-		        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-		        String sql = "SELECT * FROM Servico WHERE Nome_servico = ?";
-		        var stmt = conn.prepareStatement(sql);
+			String sql = "SELECT * FROM Servico WHERE Nome_servico = ?";
+			var stmt = conn.prepareStatement(sql);
 
-		        stmt.setString(1, nome);
+			stmt.setString(1, nome);
 
-		        var rs = stmt.executeQuery();
+			var rs = stmt.executeQuery();
 
-		        if (rs.next()) {
-		        	Servico u = new Servico(
-		            		rs.getString("Nome_servico"),
+			if (rs.next()) {
+				Servico u = new Servico(
+							rs.getString("Nome_servico"),
 							rs.getDouble("Valor"),
 							rs.getString("Modalidade"),
 							rs.getString("Descricao"),
 							rs.getBoolean("Aceito"),
 							null
-		            );
-		            u.setIdServico(rs.getInt("ID_servico"));
-		            rs.close();
-		            stmt.close();
-		            conn.close();
-		            return u;
-		        }
+						);
+				u.setIdServico(rs.getInt("ID_servico"));
+				rs.close();
+				stmt.close();
+				conn.close();
+				return u;
+			}
 
-		        rs.close();
-		        stmt.close();
-		        conn.close();
-		    } catch (Exception ex) {
-		        ex.printStackTrace();
-		    }
-		    return null;
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
 
     public boolean atualizarServicoPorId(int idServico, Servico s) {
@@ -260,26 +273,25 @@ public class ServicoDAO {
     }
     
     public void deletarServico(int id) {
-    	try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-			
-			String sql = "Delete from Servico where ID_servico = ?";
-			var stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, id);
-			int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Linha deletada com sucesso.");
-            } else {
-                System.out.println("Nenhuma linha encontrada.");
-            }
-			
-    	} catch (Exception ex) {
+     try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+		
+		String sql = "Delete from Servico where ID_servico = ?";
+		var stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, id);
+		int rowsAffected = stmt.executeUpdate();
+            // opcional: informar no log ou UI; não usar System.out em produção
+            // rowsAffected disponibilizado para chamadas futuras se necessário
+		
+		stmt.close();
+		conn.close();
+		} catch (Exception ex) {
 	        ex.printStackTrace();
 	        JOptionPane.showMessageDialog(null, "Erro ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
 	    }
         
-    	
+    
     }
 
 }

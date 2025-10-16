@@ -43,7 +43,6 @@ public class ContratadoController extends ComponentAdapter {
                         double valorServico = servicoSelecionado.getValor();
                         int valorAceito = servicoSelecionado.getIdServico();
                         
-                        System.out.println(valorAceito);
                         final ServicoDAO sd = new ServicoDAO();
                         		
                         VisServico vs = new VisServico(servicoSelecionado);
@@ -76,7 +75,6 @@ public class ContratadoController extends ComponentAdapter {
                         double valorServico = servicoSelecionado.getValor();
                         int valorAceito = servicoSelecionado.getIdServico();
                         
-                        System.out.println(valorAceito);
                         final ServicoDAO sd = new ServicoDAO();
                         		
                         VisServicoAndamento vs = new VisServicoAndamento(servicoSelecionado);

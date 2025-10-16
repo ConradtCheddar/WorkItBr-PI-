@@ -44,6 +44,8 @@ public class TelaConfigUser extends JPanel {
 	private Image imagemSelecionada;
 	private JButton btnAlterarDados;
 	private JButton btnAlterarImagem;
+	private JLabel lblGithub;
+	private JTextField txtGithub;
 
 	/**
 	 * Create the panel.
@@ -54,9 +56,7 @@ public class TelaConfigUser extends JPanel {
 	public TelaConfigUser() {
 		setPreferredSize(new Dimension(900, 700));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0",
-				"[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]",
-				"[35px][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][35px]"));
 
 		JLabel lblNewLabel_1 = new JLabel("Nome");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -140,6 +140,14 @@ public class TelaConfigUser extends JPanel {
 
 		btnAlterarImagem = new JButton("Alterar Imagem");
 		add(btnAlterarImagem, "cell 15 11,growx");
+		
+		lblGithub = new JLabel("Github");
+		lblGithub.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblGithub, "cell 2 12");
+		
+		txtGithub = new JTextField();
+		txtGithub.setColumns(10);
+		add(txtGithub, "cell 2 13 5 1,growx");
 		btnAlterarDados = new JButton("Alterar Dados");
 		btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		add(btnAlterarDados, "cell 15 14,grow");
@@ -154,6 +162,7 @@ public class TelaConfigUser extends JPanel {
 		tfEmail.setText(usuario.getEmail());
 		tfTelefone.setText(usuario.getTelefone());
 		tfCPF.setText(usuario.getCpfCnpj());
+		txtGithub.setText(usuario.getGithub());
 		if (usuario.getCaminhoFoto() != null) {
 			ImageIcon imgIcon = new ImageIcon(usuario.getCaminhoFoto());
 			imagemSelecionada = imgIcon.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(),
@@ -184,6 +193,11 @@ public class TelaConfigUser extends JPanel {
 
 	public String getCpfCnpj() {
 		return tfCPF.getText();
+	}
+	
+
+	public String getTxtGithub() {
+		return txtGithub.getText();
 	}
 
 	// Register listeners for buttons

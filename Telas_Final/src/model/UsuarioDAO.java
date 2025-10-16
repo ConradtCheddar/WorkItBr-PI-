@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 public class UsuarioDAO {
 
@@ -113,15 +111,16 @@ public class UsuarioDAO {
 
 			if (rs.next()) {
 				Usuario u = new Usuario(
-					rs.getString("Email"),
-					rs.getString("Nome_Usuario"),
-					rs.getString("CPF_CNPJ"),
-					rs.getString("Telefone"),
-					rs.getString("Senha"),
-					rs.getBoolean("isContratado"),
-					rs.getBoolean("isContratante"),
-					rs.getBoolean("isAdmin"),
-					rs.getString("CaminhoFoto")
+						rs.getString("Email"),
+						rs.getString("Nome_Usuario"),
+						rs.getString("CPF_CNPJ"),
+						rs.getString("Telefone"),
+						rs.getString("Senha"),
+						rs.getString("github"),
+						rs.getBoolean("isContratado"),
+						rs.getBoolean("isContratante"),
+						rs.getBoolean("isAdmin"),
+						rs.getString("CaminhoFoto")
 				);
 				u.setIdUsuario(rs.getInt("idUsuario"));
 				rs.close();
@@ -157,6 +156,7 @@ public class UsuarioDAO {
 						rs.getString("CPF_CNPJ"),
 						rs.getString("Telefone"),
 						rs.getString("Senha"),
+						rs.getString("github"),
 						rs.getBoolean("isContratado"),
 						rs.getBoolean("isContratante"),
 						rs.getBoolean("isAdmin"),
@@ -183,7 +183,7 @@ public class UsuarioDAO {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-	        String sql = "UPDATE Usuarios SET Email = ?, Nome_Usuario = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, caminhofoto = ? WHERE idUsuario = ?";
+	        String sql = "UPDATE Usuarios SET Email = ?, Nome_Usuario = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, caminhofoto = ?, github =? WHERE idUsuario = ?";
 	        var stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, u.getEmail());
 	        stmt.setString(2, u.getUsuario());
@@ -191,7 +191,9 @@ public class UsuarioDAO {
 	        stmt.setString(4, u.getTelefone());
 	        stmt.setString(5, u.getSenha());
 	        stmt.setString(6, u. getCaminhoFoto());
-	        stmt.setInt(7, u.getIdUsuario());
+	        // Parâmetros corrigidos: 7 = github, 8 = idUsuario
+	        stmt.setString(7, u.getGithub());
+	        stmt.setInt(8, u.getIdUsuario());
 
 	        int rowsUpdated = stmt.executeUpdate();
 
@@ -209,6 +211,45 @@ public class UsuarioDAO {
 	    }
 	}
 	
-	
+	// Busca um usuário pelo id (usado para visualizar dados do contratado/contratante)
+    public Usuario getUsuarioById(int id) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+            String sql = "SELECT * FROM Usuarios WHERE idUsuario = ?";
+            var stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            var rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Usuario u = new Usuario(
+                        rs.getString("Email"),
+                        rs.getString("Nome_Usuario"),
+                        rs.getString("CPF_CNPJ"),
+                        rs.getString("Telefone"),
+                        rs.getString("Senha"),
+                        rs.getString("github"),
+                        rs.getBoolean("isContratado"),
+                        rs.getBoolean("isContratante"),
+                        rs.getBoolean("isAdmin"),
+                        rs.getString("CaminhoFoto")
+                );
+                u.setIdUsuario(rs.getInt("idUsuario"));
+                rs.close();
+                stmt.close();
+                conn.close();
+                return u;
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
 }

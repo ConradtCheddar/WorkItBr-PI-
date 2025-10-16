@@ -28,7 +28,7 @@ public class CadastroController {
 		    String senha1 = new String(this.view.getSenha().getPassword());
 		    String senha2Text = new String(this.view.getSenha2().getPassword());
 			
-			Usuario u = new Usuario(email, usuario, cpf, telefone, senha1, this.view.getRdbtnContratado().isSelected(), this.view.getRdbtnContratante().isSelected(), false, null);
+			Usuario u = new Usuario(email, usuario, cpf, telefone, senha1, null, this.view.getRdbtnContratado().isSelected(), this.view.getRdbtnContratante().isSelected(), false, null);
 
 			boolean sucesso = model.cadastrarU(u, senha2Text);
 			if (sucesso) {

@@ -24,7 +24,7 @@ public class VisServicoCnteAceito extends JPanel {
 	private JLabel lblTitulo;
 	private JLabel lblModalidade;
 	private JLabel lblPreco;
-	private JButton btnEditar, btnContratado;
+	private JButton btnVoltar, btnContratado;
 	private JLabel tpDesc;
 
 	/**
@@ -63,8 +63,8 @@ public class VisServicoCnteAceito extends JPanel {
 		tpDesc = new JLabel("");
 		PanelDesc.add(tpDesc, "cell 0 0");
 		
-		btnEditar = new JButton("Editar");
-		add(btnEditar, "cell 0 16 11 1,alignx center");
+		btnVoltar = new JButton("Voltar");
+		add(btnVoltar, "cell 0 16 11 1,alignx center");
 
 		lblTitulo.setText(s.getNome_Servico());
 		lblModalidade.setText(s.getModalidade());
@@ -74,8 +74,8 @@ public class VisServicoCnteAceito extends JPanel {
 
 	}
 	
-	public void voltarEditar(ActionListener actionListener) {
-		this.btnEditar.addActionListener(actionListener);
+	public void voltar(ActionListener actionListener) {
+		this.btnVoltar.addActionListener(actionListener);
 	}
 	public void contratante(ActionListener actionListener) {
 		this.btnContratado.addActionListener(actionListener);

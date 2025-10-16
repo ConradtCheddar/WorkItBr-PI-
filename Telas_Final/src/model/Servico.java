@@ -13,6 +13,7 @@ public class Servico {
 	private int idContratante;
 	private int idContratado;
 
+
 	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito,
 			Usuario contratante) {
 		this.id = id;
@@ -116,5 +117,9 @@ public class Servico {
 	public void setIdContratado(int idContratado) {
 		this.idContratado = idContratado;
 	}
+
+	
+	
+	
 
 }

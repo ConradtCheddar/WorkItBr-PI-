@@ -17,7 +17,7 @@ public class VisServicoCnteController {
 		this.navegador = navegador;
 		this.s= s;
 		
-		this.view.voltarEditar(e ->{
+		this.view.Editar(e ->{
 			navegador.navegarPara("SERVICOS");
 		});
 		
