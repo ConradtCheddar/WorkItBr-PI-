@@ -10,24 +10,21 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class Primario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JLayeredPane layeredPane;
 	private JPanel contentPanel;
 	private JPanel cPanel;
 	private DrawerMenu dm;
 	private static CardLayout cardLayout;
 	private JTextField textField;
 	private wbBarra wbb;
+	private JPanel menuLayer;
 
 	/**
 	 * Create the frame.
@@ -50,16 +47,14 @@ public class Primario extends JFrame {
 		setIconImages(icons);
 		UIManager.put("Button.arc", 999);
 
-		// Use BorderLayout for layeredPane to fill the frame
-		layeredPane = new JLayeredPane();
-		layeredPane.setLayout(null); // We'll manage layout manually for overlay
-		setContentPane(layeredPane);
+		System.out.println("[Primario] Construtor iniciado");
+		setLayout(new BorderLayout());
 
+		// contentPanel ocupa toda a área
 		contentPanel = new JPanel(new BorderLayout());
 		contentPanel.setBackground(new Color(0, 102, 204));
 		contentPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		// Remove setBounds and setPreferredSize
-		layeredPane.add(contentPanel, JLayeredPane.DEFAULT_LAYER);
+		add(contentPanel, BorderLayout.CENTER);
 
 		contentPanel.add(wbb, BorderLayout.NORTH);
 		this.cardLayout = new CardLayout();
@@ -67,41 +62,45 @@ public class Primario extends JFrame {
 		this.cPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		contentPanel.add(cPanel, BorderLayout.CENTER);
 
-		// Remove setBounds for DrawerMenu, set size dynamically
-		layeredPane.add(dm, JLayeredPane.PALETTE_LAYER);
-		dm.setVisible(false);
+		// Cria camada para o menu sobreposta
+		menuLayer = new JPanel(null);
+		menuLayer.setOpaque(false);
+		setGlassPane(menuLayer);
+		menuLayer.setVisible(true);
 
-		// Add resize listener to update contentPanel and DrawerMenu size
-		addComponentListener(new ComponentAdapter() {
+		dm.setOpaque(true);
+		dm.setVisible(true);
+		// DrawerMenu começa fechado, posicionado à direita
+		dm.setBounds(getWidth(), 0, 0, getHeight());
+		menuLayer.add(dm);
+
+		// Atualiza tamanho e posição do menu ao redimensionar
+		addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
-			public void componentResized(ComponentEvent e) {
-				int w = getWidth();
-				int h = getHeight();
-				contentPanel.setBounds(0, 0, w, h);
-				// Position DrawerMenu at the right edge
+			public void componentResized(java.awt.event.ComponentEvent e) {
 				int menuWidth = dm.getPreferredSize().width;
-				int x = dm.isVisible() && getDrawerMenuOpenState(dm) ? (w - menuWidth) : w;
-				dm.setBounds(x, 0, menuWidth, h);
-				layeredPane.revalidate();
-				layeredPane.repaint();
+				if (menuWidth > 0) {
+					dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
+				} else {
+					dm.setBounds(getWidth(), 0, 0, getHeight());
+				}
 			}
 		});
-		int w = getWidth();
-		int h = getHeight();
-		int menuWidth = dm.getPreferredSize().width;
-		int x = dm.isVisible() && getDrawerMenuOpenState(dm) ? (w - menuWidth) : w;
-		contentPanel.setBounds(0, 0, w, h);
-		dm.setBounds(x, 0, menuWidth, h);
+
+		dm.setOnStateChange(isOpen -> {
+			int menuWidth = dm.getPreferredSize().width;
+			if (isOpen && menuWidth > 0) {
+				dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
+			} else {
+				dm.setBounds(getWidth(), 0, 0, getHeight());
+			}
+			menuLayer.repaint();
+		});
 
 		wbb.setMenuClickListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				dm.toggleMenu();
-			}
-		});
-		wbb.barra(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
+				System.out.println("[Primario] Clique no menu detectado, chamando toggleMenu");
 				dm.toggleMenu();
 			}
 		});
@@ -130,5 +129,11 @@ public class Primario extends JFrame {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@Override
+	public void setVisible(boolean b) {
+		super.setVisible(b);
+		// Removido: dm.setParentFrame(this);
 	}
 }

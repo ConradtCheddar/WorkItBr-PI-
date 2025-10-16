@@ -1,27 +1,22 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import org.jdesktop.swingx.prompt.PromptSupport;
+import javax.swing.text.MaskFormatter;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
@@ -30,9 +25,9 @@ import net.miginfocom.swing.MigLayout;
 public class TelaCadastro extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField tfEmail;
-	private JTextField tfTelefone;
-	private JTextField tfCPF;
+	private JFormattedTextField tfEmail;
+	private JFormattedTextField tfTelefone;
+	private JFormattedTextField tfCPF;
 	private JTextField tfUsuario;
 	private JPasswordField senha;
 	private JPasswordField senha2;
@@ -51,23 +46,25 @@ public class TelaCadastro extends JPanel {
 				"[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]",
 				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
-		tfEmail = new JTextField();
+		tfEmail = new JFormattedTextField();
 		add(tfEmail, "cell 4 3 13 1,growx");
 		tfEmail.setColumns(10);
 		tfEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Email");
 		tfEmail.putClientProperty("JComponent.roundRect", true);
 
-		tfTelefone = new JTextField();
+		tfTelefone = new JFormattedTextField();
 		add(tfTelefone, "cell 4 4 13 1,growx");
 		tfTelefone.setColumns(10);
 		tfTelefone.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Telefone");
 		tfTelefone.putClientProperty("JComponent.roundRect", true);
+		aplicarMascaraTelefone(tfTelefone);
 
-		tfCPF = new JTextField();
+		tfCPF = new JFormattedTextField();
 		add(tfCPF, "cell 4 5 13 1,growx");
 		tfCPF.setColumns(10);
 		tfCPF.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "CPF-CNPJ");
 		tfCPF.putClientProperty("JComponent.roundRect", true);
+		aplicarMascaraCPF(tfCPF);
 
 		tfUsuario = new JTextField();
 		add(tfUsuario, "cell 4 7 13 1,growx");
@@ -102,7 +99,7 @@ public class TelaCadastro extends JPanel {
 		div = new ButtonGroup();
 		div.add(rdbtnContratante);
 		div.add(rdbtnContratado);
-		
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -118,19 +115,63 @@ public class TelaCadastro extends JPanel {
 				btnCadastrar.putClientProperty("JComponent.roundRect", true);
 			}
 		});
+		tfTelefone.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// Aqui você move o cursor para o primeiro caractere dentro do parêntese
+				tfTelefone.setCaretPosition(1); // Mover para o primeiro caractere dentro do parêntese
+			}
 
+			@Override
+			public void focusLost(FocusEvent e) {
+				// Você pode adicionar lógica aqui, caso precise de algo ao perder o foco
+			}
+		});
+		tfCPF.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// Aqui você move o cursor para o primeiro caractere dentro do parêntese
+				tfCPF.setCaretPosition(0); // Mover para o primeiro caractere dentro do parêntese
+			}
 
+			@Override
+			public void focusLost(FocusEvent e) {
+				// Você pode adicionar lógica aqui, caso precise de algo ao perder o foco
+			}
+		});
+	}
+
+	// Método para aplicar a máscara de CPF
+	private void aplicarMascaraCPF(JFormattedTextField field) {
+		try {
+			MaskFormatter mask = new MaskFormatter("###.###.###-##");
+			mask.setPlaceholderCharacter('_');
+			mask.install(field);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Método para aplicar a máscara de Telefone
+	private void aplicarMascaraTelefone(JFormattedTextField field) {
+		try {
+			MaskFormatter mask = new MaskFormatter("(##) #####-####");
+			mask.setPlaceholderCharacter('_');
+			mask.install(field);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
-	 * metodo para a funcionalidade do botão cadastrar
+	 * Metodo para a funcionalidade do botão cadastrar
 	 */
 	public void cadastrar(ActionListener actionlistener) {
 		this.btnCadastrar.addActionListener(actionlistener);
 	}
 
 	/**
-	 * metodo para limpar caixas de texto
+	 * Metodo para limpar caixas de texto
 	 */
 	public void limparCampos() {
 		tfEmail.setText("");
@@ -142,33 +183,29 @@ public class TelaCadastro extends JPanel {
 		div.clearSelection();
 	}
 
-	/**
-	 * getters & setters
-	 * 
-	 * @return
-	 */
+	// Getters & Setters
 
-	public JTextField getTfEmail() {
+	public JFormattedTextField getTfEmail() {
 		return tfEmail;
 	}
 
-	public void setTfEmail(JTextField tfEmail) {
+	public void setTfEmail(JFormattedTextField tfEmail) {
 		this.tfEmail = tfEmail;
 	}
 
-	public JTextField getTfTelefone() {
+	public JFormattedTextField getTfTelefone() {
 		return tfTelefone;
 	}
 
-	public void setTfTelefone(JTextField tfTelefone) {
+	public void setTfTelefone(JFormattedTextField tfTelefone) {
 		this.tfTelefone = tfTelefone;
 	}
 
-	public JTextField getTfCPF() {
+	public JFormattedTextField getTfCPF() {
 		return tfCPF;
 	}
 
-	public void setTfCPF(JTextField tfCPF) {
+	public void setTfCPF(JFormattedTextField tfCPF) {
 		this.tfCPF = tfCPF;
 	}
 
@@ -223,5 +260,4 @@ public class TelaCadastro extends JPanel {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 }
