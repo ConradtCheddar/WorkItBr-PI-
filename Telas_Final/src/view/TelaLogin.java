@@ -45,42 +45,50 @@ public class TelaLogin extends JPanel {
 
 	public TelaLogin() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]",
+				"[20px,grow][20px,grow 40][grow][grow 40][grow][grow 20][grow][grow]"));
+		requestFocusInWindow();
 
 		txtUsuario = new JTextField();
 		txtUsuario.setForeground(Color.BLACK);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		add(txtUsuario, "cell 4 5 13 1,growx");
+		add(txtUsuario, "cell 1 1 3 1,grow");
 		txtUsuario.setColumns(10);
 		txtUsuario.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
 		txtUsuario.putClientProperty("JComponent.roundRect", true);
 
 		passwordField = new JPasswordField();
+		passwordField.setFont(new Font("Dialog", Font.PLAIN, 12));
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
 		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
 		passwordField.putClientProperty("JComponent.roundRect", true);
-		add(passwordField, "flowy,cell 4 8 13 1,growx");
+		add(passwordField, "cell 1 3 3 1,grow");
 
 		btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnLogin.setFont(new Font("Dialog", Font.BOLD, 20));
 		btnLogin.setFocusTraversalPolicyProvider(true);
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(new Color(0, 102, 204));
 		btnLogin.putClientProperty(FlatClientProperties.STYLE, "arc:999;");
-		add(btnLogin, "cell 5 13 11 1,grow");
-		requestFocusInWindow();
+		add(btnLogin, "cell 2 5,grow");
 
 		JLabel lblntlg = new JLabel("Ainda não tem um Login?");
+		lblntlg.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblntlg.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(lblntlg, "cell 9 14,grow");
+		add(lblntlg, "flowx,cell 2 6,alignx center,aligny center");
 
 		lblCadastrese = new JLabel("Cadastre-se");
 		lblCadastrese.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		lblCadastrese.setForeground(new Color(0, 102, 204));
 		lblCadastrese.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		add(lblCadastrese, "cell 10 14,grow");
+		lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		add(lblCadastrese, "cell 2 6,growy");
 		lblCadastrese.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -94,7 +102,6 @@ public class TelaLogin extends JPanel {
 						"<html><a style='text-decoration: none; color: #0066cc;' href=''>Cadastre-se</a></html>");
 			}
 
-			
 		});
 
 		addComponentListener(new ComponentAdapter() {
@@ -147,15 +154,15 @@ public class TelaLogin extends JPanel {
 	/**
 	 * Metodo responsavel pelo funcionamento do botão "Cadastre-se"
 	 */
-	
+
 	public void cadastro(MouseListener actionListener) {
-	    this.lblCadastrese.addMouseListener(actionListener);
+		this.lblCadastrese.addMouseListener(actionListener);
 	}
 
 	/**
 	 * Metodo responsavel pelo funcionamento do redimencionamento do painel
 	 */
-	
+
 	/**
 	 * metodo responsavel pela limpeza do formulario
 	 */
@@ -163,6 +170,5 @@ public class TelaLogin extends JPanel {
 		txtUsuario.setText("");
 		passwordField.setText("");
 	}
-
 
 }
