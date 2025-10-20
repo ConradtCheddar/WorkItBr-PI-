@@ -49,7 +49,7 @@ public class wbBarra extends JPanel {
 		Image img = menuIcon.getImage();
 		Image scaled = img.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		lblMenu.setIcon(new ImageIcon(scaled));
-		add(lblMenu, "flowx,cell 0 0,grow");
+		add(lblMenu, "flowx,cell 0 0,alignx left,growy");
 
 		lblTitulo = new JLabel("WorkITBr");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -116,7 +116,6 @@ public class wbBarra extends JPanel {
         getLblBarra().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-                System.out.println("[DEBUG] Clique detectado no lblBarra");
                 listener.mouseClicked(e);
             }
             @Override public void mousePressed(java.awt.event.MouseEvent e) { listener.mousePressed(e); }
@@ -147,7 +146,7 @@ public class wbBarra extends JPanel {
 		int larguraCasa = Math.max(32, w / 45);
 		int alturaCasa = Math.max(32, Math.min(40, h * 2 / 3));
 
-		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
+		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Seta-retorno.png"));
 		Image img = menuIcon.getImage();
 		Image scaled = img.getScaledInstance(larguraCasa, alturaCasa, Image.SCALE_SMOOTH);
 

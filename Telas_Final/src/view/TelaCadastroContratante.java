@@ -36,52 +36,57 @@ public class TelaCadastroContratante extends JPanel {
 	private JTextField tfValor;
 	private JTextArea tfDescricao;
 	private JScrollPane scrollPane;
+	private JPanel panel;
 
 	/**
 	 * Create the panel.
 	 * 
 	 */
 	public TelaCadastroContratante() {
-		setPreferredSize(new Dimension(900, 700));
+		setPreferredSize(new Dimension(543, 388));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
-		
-				tfNome = new JTextField();
-				add(tfNome, "cell 2 2 10 1,grow");
-				tfNome.setColumns(25);
-				tfNome.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nome");
-				tfNome.putClientProperty("JComponent.roundRect", true);
+		setLayout(new MigLayout("fill, insets 30 20 20 20, gap 20, debug", "[grow][grow][grow,right]", "[grow][grow][grow][grow 20]"));
 
-		btnCadastrarTrabalho = new JButton("Cadastrar Trabalho");
-		btnCadastrarTrabalho.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCadastrarTrabalho.setForeground(Color.WHITE);
-		btnCadastrarTrabalho.setBackground(new Color(0, 102, 204));
-		btnCadastrarTrabalho.putClientProperty("JComponent.roundRect", true);
-		
-		tfModalidade = new JTextField();
-		add(tfModalidade, "cell 2 6 10 1,grow");
-		tfModalidade.setColumns(10);
-		tfModalidade.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Modalidade");
-		tfModalidade.putClientProperty("JComponent.roundRect", true);
-		
-		tfValor = new JTextField();
-		add(tfValor, "cell 2 10 10 1,grow");
-		tfValor.setColumns(10);
-		tfValor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Valor");
-		tfValor.putClientProperty("JComponent.roundRect", true);
-		
+		tfNome = new JTextField();
+		add(tfNome, "cell 0 0, grow, height 20:20:40");
+		tfNome.setColumns(25);
+		tfNome.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nome");
+		tfNome.putClientProperty("JComponent.roundRect", true);
+		tfNome.setSize(new Dimension(50, 50));
+
 		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 14 2 6 9,grow");
-		
-		tfDescricao = new JTextArea(); 
+		add(scrollPane, "cell 2 0 1 3,grow, width ::600");
+
+		tfDescricao = new JTextArea();
 		scrollPane.setViewportView(tfDescricao);
 		tfDescricao.setLineWrap(true);
 		tfDescricao.setWrapStyleWord(true);
 		tfDescricao.setFont(new Font("Monospaced", Font.PLAIN, 13));
-		add(btnCadastrarTrabalho, "cell 8 14 8 2,grow");
+
+		tfModalidade = new JTextField();
+		add(tfModalidade, "cell 0 1,grow, height 20:20:40");
+		tfModalidade.setColumns(10);
+		tfModalidade.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Modalidade");
+		tfModalidade.putClientProperty("JComponent.roundRect", true);
+
+		tfValor = new JTextField();
+		add(tfValor, "cell 0 2,grow, height 20:20:40");
+		tfValor.setColumns(10);
+		tfValor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Valor");
+		tfValor.putClientProperty("JComponent.roundRect", true);
+
+		panel = new JPanel();
+		add(panel, "cell 0 3 3 1,grow");
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow]"));
+		
+				btnCadastrarTrabalho = new JButton("Cadastrar Trabalho");
+				panel.add(btnCadastrarTrabalho, "cell 2 0,grow");
+				btnCadastrarTrabalho.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				btnCadastrarTrabalho.setForeground(Color.WHITE);
+				btnCadastrarTrabalho.setBackground(new Color(0, 102, 204));
+		btnCadastrarTrabalho.putClientProperty("JComponent.roundRect", true);
 
 	}
-
 
 	/**
 	 * metodo para a funcionalidade do botão cadastrar

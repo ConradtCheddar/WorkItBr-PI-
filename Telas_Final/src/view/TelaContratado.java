@@ -34,32 +34,40 @@ public class TelaContratado extends JPanel {
 	private JList listaDisponivel;
 	private JList listaAndamento;
 	private Runnable onShowCallback;
+	private JLabel lblDisponiveis;
+	private JLabel lblVoltar;
 
 	/**
 	 * Create the panel.
 	 */
 	public TelaContratado() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][][][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 20 20 20 20, gap 20", "[grow][grow]", "[grow 10][grow]"));
+		
+		lblVoltar = new JLabel("");
+		add(lblVoltar, "cell 0 0");
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		scrollPane.setBackground(Color.LIGHT_GRAY);
-		scrollPane.putClientProperty("FlatLaf.style", "arc: 20; background: #BFBFBF;");
-		
-		JLabel lblAndamento = new JLabel("Trabalhos em andamento");
-		lblAndamento.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblAndamento, "cell 3 1,grow");
-		add(scrollPane, "cell 2 2 3 18,grow");
+		add(scrollPane, "cell 0 1,grow");
 		
 		listaAndamento = new JList();
 		scrollPane.setViewportView(listaAndamento);
 		
+		JLabel lblAndamento = new JLabel("Trabalhos em andamento");
+		scrollPane.setColumnHeaderView(lblAndamento);
+		lblAndamento.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		add(scrollPane_1, "cell 6 2 15 18,grow");
+		add(scrollPane_1, "cell 1 1,grow");
 		
 		listaDisponivel = new JList();
 		scrollPane_1.setViewportView(listaDisponivel);
+		
+		lblDisponiveis = new JLabel("Trabalhos disponiveis");
+		lblDisponiveis.setHorizontalAlignment(SwingConstants.CENTER);
+		scrollPane_1.setColumnHeaderView(lblDisponiveis);
 		
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -69,6 +77,7 @@ public class TelaContratado extends JPanel {
 				int fontSize2 = Math.max(15, panelHeight / 27);
 				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
 				lblAndamento.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				lblDisponiveis.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 			}
 		});
 
