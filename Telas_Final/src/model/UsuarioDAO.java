@@ -8,9 +8,8 @@ import javax.swing.JOptionPane;
 public class UsuarioDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
-	static String Usuario = "root";
-	//static String Senha = "admin";
-	static String Senha = "aluno";
+	static String Usuario = "workitbr";
+	static String Senha = "1234";
 
 	public UsuarioDAO() {
 
