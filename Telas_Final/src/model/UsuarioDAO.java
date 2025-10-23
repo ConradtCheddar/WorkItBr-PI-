@@ -119,8 +119,7 @@ public class UsuarioDAO {
 						rs.getString("github"),
 						rs.getBoolean("isContratado"),
 						rs.getBoolean("isContratante"),
-						rs.getBoolean("isAdmin"),
-						rs.getString("CaminhoFoto")
+						rs.getBoolean("isAdmin")
 				);
 				u.setIdUsuario(rs.getInt("idUsuario"));
 				rs.close();
@@ -159,8 +158,7 @@ public class UsuarioDAO {
 						rs.getString("github"),
 						rs.getBoolean("isContratado"),
 						rs.getBoolean("isContratante"),
-						rs.getBoolean("isAdmin"),
-						rs.getString("CaminhoFoto")
+						rs.getBoolean("isAdmin")
 	            );
 	            u.setIdUsuario(rs.getInt("idUsuario"));
 	            rs.close();
@@ -233,8 +231,7 @@ public class UsuarioDAO {
                         rs.getString("github"),
                         rs.getBoolean("isContratado"),
                         rs.getBoolean("isContratante"),
-                        rs.getBoolean("isAdmin"),
-                        rs.getString("CaminhoFoto")
+                        rs.getBoolean("isAdmin")
                 );
                 u.setIdUsuario(rs.getInt("idUsuario"));
                 rs.close();

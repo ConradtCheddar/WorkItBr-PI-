@@ -18,6 +18,12 @@ public class VisServicoController {
 		this.s= s;
 		
 		this.view.aceitar(e ->{
+			// Verifica se há um usuário logado
+			if (navegador.getCurrentUser() == null) {
+				javax.swing.JOptionPane.showMessageDialog(null, "Erro: Nenhum usuário logado. Por favor, faça login novamente.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+				navegador.navegarPara("LOGIN");
+				return;
+			}
 			
 			Servico servico = this.model.configID(s.getNome_Servico());
 			

@@ -14,7 +14,7 @@ public class Usuario {
 	private String github;
 
 	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, String github, boolean contratado,
-			boolean contratante, boolean admin, String caminhoFoto) {
+			boolean contratante, boolean admin) {
 		this.email = email;
 		this.usuario = usuario;
 		this.cpfCnpj = cpfCnpj;

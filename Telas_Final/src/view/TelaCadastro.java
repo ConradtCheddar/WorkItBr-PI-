@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
@@ -34,8 +33,8 @@ public class TelaCadastro extends JPanel {
 	private JTextField tfUsuario;
 	private JPasswordField senha;
 	private JPasswordField senha2;
-	private JRadioButton rdbtnContratante;
-	private JRadioButton rdbtnContratado;
+	private ScalableRadioButton rdbtnContratante;
+	private ScalableRadioButton rdbtnContratado;
 	private JButton btnCadastrar;
 	private ButtonGroup div;
 	private JLabel lblTitulo;
@@ -123,14 +122,14 @@ public class TelaCadastro extends JPanel {
 		senha2.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirmar Senha");
 		senha2.putClientProperty("JComponent.roundRect", true);
 
-		rdbtnContratante = new JRadioButton("Contratante");
+		rdbtnContratante = new ScalableRadioButton("Contratante");
 		rdbtnContratante.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		rdbtnContratante.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(rdbtnContratante, "cell 1 7,grow");
+		add(rdbtnContratante, "cell 1 7,alignx center,growy");
 		div.add(rdbtnContratante);
 
-		rdbtnContratado = new JRadioButton("Contratado");
-		add(rdbtnContratado, "cell 3 7");
+		rdbtnContratado = new ScalableRadioButton("Contratado");
+		add(rdbtnContratado, "cell 3 7,alignx center,growy");
 		div.add(rdbtnContratado);
 		add(btnCadastrar, "cell 2 8,grow");
 
@@ -138,7 +137,9 @@ public class TelaCadastro extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
-				int fontSize2 = Math.max(15, panelHeight / 40);
+				int fontSize = Math.max(15, panelHeight / 40);
+				int fontSize2 = Math.max(15, panelHeight / 25);
+				int fontSize3 = Math.max(15, panelHeight / 20);
 				tfEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
@@ -147,6 +148,12 @@ public class TelaCadastro extends JPanel {
 				senha2.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				btnCadastrar.putClientProperty("JComponent.roundRect", true);
+				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSize3));
+				rdbtnContratante.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				rdbtnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				// updateIconSize() é chamado automaticamente quando setFont é chamado
+				rdbtnContratante.updateIconSize();
+				rdbtnContratado.updateIconSize();
 			}
 		});
 	}
@@ -243,19 +250,19 @@ public class TelaCadastro extends JPanel {
 		this.senha2 = senha2;
 	}
 
-	public JRadioButton getRdbtnContratante() {
+	public ScalableRadioButton getRdbtnContratante() {
 		return rdbtnContratante;
 	}
 
-	public void setRdbtnContratante(JRadioButton rdbtnContratante) {
+	public void setRdbtnContratante(ScalableRadioButton rdbtnContratante) {
 		this.rdbtnContratante = rdbtnContratante;
 	}
 
-	public JRadioButton getRdbtnContratado() {
+	public ScalableRadioButton getRdbtnContratado() {
 		return rdbtnContratado;
 	}
 
-	public void setRdbtnContratado(JRadioButton rdbtnContratado) {
+	public void setRdbtnContratado(ScalableRadioButton rdbtnContratado) {
 		this.rdbtnContratado = rdbtnContratado;
 	}
 

@@ -18,7 +18,12 @@ public class CadastroContratanteController {
 		this.navegador = navegador;
 		
 		this.view.cadastrar(e ->{
-			
+			// Verifica se há um usuário logado
+			if (navegador.getCurrentUser() == null) {
+				javax.swing.JOptionPane.showMessageDialog(null, "Erro: Nenhum usuário logado. Por favor, faça login novamente.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+				navegador.navegarPara("LOGIN");
+				return;
+			}
 			
 			String nome_Servico = this.view.getTfNome().getText();
 		    String modalidade = this.view.getTfModalidade().getText();
