@@ -22,12 +22,14 @@ public class ListaServicosController {
 	private final TelaListaServicos view;
 	private final ServicoDAO model;
 	private final Navegador navegador;
+	private final TelaFactory telaFactory;
 	private static ListaServicosController instanciaAtual;
 
-	public ListaServicosController(TelaListaServicos view, ServicoDAO model, Navegador navegador) {
+	public ListaServicosController(TelaListaServicos view, ServicoDAO model, Navegador navegador, TelaFactory telaFactory) {
 		this.view = view;
 		this.model = model;
 		this.navegador = navegador;
+		this.telaFactory = telaFactory;
 		instanciaAtual = this;
 
 		this.view.cadastrar(e -> {
@@ -50,20 +52,13 @@ public class ListaServicosController {
 						JOptionPane.showMessageDialog(null, "Serviço não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					// Se não aceito -> VisServico
+					// Se não aceito -> VisServicoCnte
 					if (Boolean.FALSE.equals(s.getAceito())) {
-						VisServicoCnte vis = new VisServicoCnte(s);
-						VisServicoCnteController visController = new VisServicoCnteController(vis, model, navegador, s);
-						String panelName = "VIS_Servico_Cnte" + id;
-						navegador.adicionarPainel(panelName, vis);
+						String panelName = telaFactory.criarVisServicoCnte(s);
 						navegador.navegarPara(panelName);
 					} else {
 						// Aceito -> VisServicoCnteAceito
-						VisServicoCnteAceito visAceito = new VisServicoCnteAceito(s);
-						VisServicoCnteAceitoController aceitoController = new VisServicoCnteAceitoController(visAceito,
-								model, navegador, s);
-						String panelName = "VIS_Servico_Cnte_Aceito_" + id;
-						navegador.adicionarPainel(panelName, visAceito);
+						String panelName = telaFactory.criarVisServicoCnteAceito(s);
 						navegador.navegarPara(panelName);
 					}
 					

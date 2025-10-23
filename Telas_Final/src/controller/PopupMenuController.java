@@ -9,10 +9,12 @@ import model.UsuarioDAO;
 public class PopupMenuController {
 	private final DrawerMenu view;
 	private final Navegador navegador;
+	private final TelaFactory telaFactory;
 	
-	public PopupMenuController(DrawerMenu view, Navegador navegador){
+	public PopupMenuController(DrawerMenu view, Navegador navegador, TelaFactory telaFactory){
 		this.view = view;
 		this.navegador = navegador;
+		this.telaFactory = telaFactory;
 		// Remover chamada a setConfigUserAction
 	}
 	

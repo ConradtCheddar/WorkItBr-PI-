@@ -25,6 +25,7 @@ public class Primario extends JFrame {
 	private JTextField textField;
 	private wbBarra wbb;
 	private JPanel menuLayer;
+	private java.util.Map<String, JPanel> painelMap = new java.util.HashMap<>();
 
 	/**
 	 * Create the frame.
@@ -106,13 +107,43 @@ public class Primario extends JFrame {
 	}
 
 	public void mostrarTela(String panelName) {
+		System.out.println("[Primario] mostrarTela(" + panelName + ") chamado");
 		this.cardLayout.show(this.cPanel, panelName);
 		this.cPanel.revalidate();
 		this.cPanel.repaint();
+		System.out.println("[Primario] CardLayout.show executado para: " + panelName);
 	}
 
 	public void adicionarTela(String panelName, JPanel tela) {
+		System.out.println("[Primario] Adicionando tela: " + panelName);
+		// Remove o painel existente se já estiver presente
+		if (painelMap.containsKey(panelName)) {
+			JPanel oldPanel = painelMap.get(panelName);
+			this.cPanel.remove(oldPanel);
+			System.out.println("[Primario] Removeu painel antigo: " + panelName);
+		}
+		// Adiciona o novo painel
 		this.cPanel.add(tela, panelName);
+		painelMap.put(panelName, tela);
+		System.out.println("[Primario] Tela " + panelName + " adicionada ao CardLayout");
+	}
+	
+	/**
+	 * Remove uma tela do CardLayout se existir
+	 * @param panelName Nome do painel a ser removido
+	 */
+	public void removerTela(String panelName) {
+		System.out.println("[Primario] Tentando remover painel: " + panelName);
+		if (painelMap.containsKey(panelName)) {
+			JPanel painel = painelMap.get(panelName);
+			this.cPanel.remove(painel);
+			painelMap.remove(panelName);
+			this.cPanel.revalidate();
+			this.cPanel.repaint();
+			System.out.println("[Primario] Painel " + panelName + " removido com sucesso");
+		} else {
+			System.out.println("[Primario] Painel " + panelName + " não encontrado no Map");
+		}
 	}
 
 	public void adicionarTelaWB(JPanel tela) {

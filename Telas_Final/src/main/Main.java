@@ -11,6 +11,7 @@ import controller.LoginController;
 import controller.Navegador;
 import controller.PopupController;
 import controller.PopupMenuController;
+import controller.TelaFactory;
 import controller.TempController;
 import model.ServicoDAO;
 import model.UsuarioDAO;
@@ -39,19 +40,27 @@ public class Main {
 		wbBarra wbb = new wbBarra();
 		
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		ServicoDAO servicoDAO = new ServicoDAO();
+		
 		DrawerMenu pm = new DrawerMenu(usuarioDAO);
 		Primario prim = new Primario(wbb, pm);
 
 		Navegador navegador = new Navegador(prim);
 		pm.setNavegador(navegador);
-		ServicoDAO servicoDAO = new ServicoDAO();
+		
+		// Criar TelaFactory para gerenciar telas dinâmicas
+		TelaFactory telaFactory = new TelaFactory(navegador, servicoDAO, usuarioDAO);
+		
+		// Injetar TelaFactory no DrawerMenu
+		pm.setTelaFactory(telaFactory);
+		
 		PopupController popup = new PopupController();
 
 		// tela de login
 		TelaLogin telalogin = new TelaLogin();
 		// tela de cadastro
 		TelaCadastro telacadastro = new TelaCadastro();
-		PopupMenuController popup2 = new PopupMenuController(pm, navegador);
+		PopupMenuController popup2 = new PopupMenuController(pm, navegador, telaFactory);
 		LoginController logincontroller = new LoginController(telalogin, usuarioDAO, navegador, telacadastro, popup2);
 		CadastroController cadastrocontroller = new CadastroController(telacadastro, usuarioDAO, navegador);
 
@@ -60,7 +69,7 @@ public class Main {
 		ContratanteController contratanteController = new ContratanteController(telacontratante, usuarioDAO, navegador);
 
 		TelaContratado telacontratado = new TelaContratado();
-		ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador);
+		ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador, servicoDAO, telaFactory);
         telacontratado.adicionarOuvinte(contratadocontroller);
 		
 		TelaCadastroContratante telacadastrocontratante = new TelaCadastroContratante();
@@ -72,7 +81,7 @@ public class Main {
 		TelaAdm telaadm = new TelaAdm();
 		
 		TelaListaServicos telaservicos = new TelaListaServicos();
-		ListaServicosController controller = new ListaServicosController(telaservicos, servicoDAO, navegador);
+		ListaServicosController controller = new ListaServicosController(telaservicos, servicoDAO, navegador, telaFactory);
 		telaservicos.setOnShow(() -> controller.atualizarTabelaServicosDoUsuario());
 
 
@@ -86,7 +95,7 @@ public class Main {
 		navegador.adicionarPainel("SERVICOS", telaservicos);
 		
 
-		navegador.navegarPara("CONTRATADO");
+		navegador.navegarPara("LOGIN");
 		prim.setVisible(true);
 		pm.setNavegador(navegador);
 

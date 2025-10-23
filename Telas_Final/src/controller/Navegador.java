@@ -26,9 +26,19 @@ public class Navegador {
 		
 	}
 	
+	/**
+	 * Remove um painel do CardLayout
+	 * @param nome Nome do painel a ser removido
+	 */
+	public void removerPainel(String nome) {
+		this.prim.removerTela(nome);
+	}
+	
 	public void navegarPara(String nome) {
+		System.out.println("[Navegador] navegarPara(" + nome + ") chamado");
 		this.prim.fecharDrawerMenuSeAberto(); // Fecha o DrawerMenu se estiver aberto
 		this.prim.mostrarTela(nome);
+		System.out.println("[Navegador] Tela " + nome + " mostrada");
 		if ("SERVICOS".equals(nome)) {
 			controller.ListaServicosController.atualizarTabelaSeExistir();
 		}
@@ -49,5 +59,11 @@ public class Navegador {
 		return this.currentUser;
 	}
 	
+	/**
+	 * Limpa o usuário atual (útil para logout)
+	 */
+	public void clearCurrentUser() {
+		this.currentUser = null;
+	}
 	
 }

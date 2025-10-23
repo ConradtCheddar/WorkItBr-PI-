@@ -22,11 +22,15 @@ public class ContratadoController extends ComponentAdapter {
 	private final TelaContratado view;
 	private final UsuarioDAO model;
 	private final Navegador navegador;
+	private final ServicoDAO servicoDAO;
+	private final TelaFactory telaFactory;
 
-	public ContratadoController(TelaContratado view, UsuarioDAO model, Navegador navegador){
+	public ContratadoController(TelaContratado view, UsuarioDAO model, Navegador navegador, ServicoDAO servicoDAO, TelaFactory telaFactory){
 		this.view = view;
 		this.model = model;
 		this.navegador = navegador;
+		this.servicoDAO = servicoDAO;
+		this.telaFactory = telaFactory;
 		
 		this.view.cliqueDuploNoJList(new MouseAdapter() {
 		    @Override

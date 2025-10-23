@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.Timer;
 import java.util.function.Consumer;
 import controller.Navegador;
+import controller.TelaFactory;
 import model.UsuarioDAO;
 import model.Usuario;
 import view.TelaConfigUser;
@@ -25,6 +26,7 @@ public class DrawerMenu extends JPanel {
     private JButton btnTrabalhos;
     private UsuarioDAO usuarioDAO;
     private Navegador navegador;
+    private TelaFactory telaFactory;
     private Consumer<Boolean> onStateChange; // callback para Primario
 
     public DrawerMenu(UsuarioDAO usuarioDAO) {
@@ -50,6 +52,13 @@ public class DrawerMenu extends JPanel {
         add(btnLogout);
         revalidate();
         repaint();
+    }
+    
+    /**
+     * Define a TelaFactory para criação de telas dinâmicas
+     */
+    public void setTelaFactory(TelaFactory telaFactory) {
+        this.telaFactory = telaFactory;
     }
 
     public void setNavegador(Navegador navegador) {
@@ -81,8 +90,24 @@ public class DrawerMenu extends JPanel {
                 btnLogout.removeActionListener(al);
             }
             btnLogout.addActionListener(e -> {
+                System.out.println("[DrawerMenu] Botão Logout clicado!");
                 if (this.navegador != null) {
+                    System.out.println("[DrawerMenu] Navegador não é null, processando logout...");
+                    // Limpa o usuário atual e remove telas dinâmicas
+                    this.navegador.clearCurrentUser();
+                    System.out.println("[DrawerMenu] Usuário atual limpo");
+                    if (telaFactory != null) {
+                        telaFactory.limparCache();
+                        System.out.println("[DrawerMenu] Cache da TelaFactory limpo");
+                    }
+                    // Remove telas de configuração que podem existir
+                    this.navegador.removerPainel("CONFIG_USER");
+                    System.out.println("[DrawerMenu] Painel CONFIG_USER removido");
+                    // Navega para LOGIN
                     this.navegador.navegarPara("LOGIN");
+                    System.out.println("[DrawerMenu] Navegando para LOGIN");
+                } else {
+                    System.out.println("[DrawerMenu] ERRO: Navegador é null!");
                 }
                 if (isOpen) toggleMenu();
             });
@@ -103,25 +128,25 @@ public class DrawerMenu extends JPanel {
                 btnProfile.removeActionListener(al);
             }
             btnProfile.addActionListener(e -> {
-                            if (this.navegador != null) {
+                if (this.navegador != null) {
                     Usuario usuario = this.navegador.getCurrentUser();
                     if (usuario != null) {
-                        // Recarrega os dados do usuário a partir do banco para garantir que
-                        // campos como `github` e `CaminhoFoto` estejam atualizados
-                        try {
+                        // Usa TelaFactory se disponível, senão cria manualmente
+                        if (telaFactory != null) {
+                            String panelName = telaFactory.criarTelaConfigUser(usuario);
+                            this.navegador.navegarPara(panelName);
+                        } else {
+                            // Fallback: criação manual (caso a factory não tenha sido injetada)
                             Usuario usuarioBanco = usuarioDAO.getUsuarioById(usuario.getIdUsuario());
                             if (usuarioBanco != null) {
-                                usuario = usuarioBanco; // usar versão atualizada do BD
-                                // Atualiza o usuário atual do Navegador para refletir o banco
                                 this.navegador.setCurrentUser(usuarioBanco);
+                                usuario = usuarioBanco;
                             }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+                            TelaConfigUser telaConfigUser = new TelaConfigUser();
+                            new TelaConfigUserController(telaConfigUser, usuarioDAO, navegador, usuario);
+                            this.navegador.adicionarPainel("CONFIG_USER", telaConfigUser);
+                            this.navegador.navegarPara("CONFIG_USER");
                         }
-                        TelaConfigUser telaConfigUser = new TelaConfigUser();
-                        new TelaConfigUserController(telaConfigUser, usuarioDAO, navegador, usuario);
-                        this.navegador.adicionarPainel("CONFIG_USER", telaConfigUser);
-                        this.navegador.navegarPara("CONFIG_USER");
                     } else {
                         JOptionPane.showMessageDialog(this, "Nenhum usuário logado.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
