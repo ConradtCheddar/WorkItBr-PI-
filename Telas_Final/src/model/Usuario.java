@@ -9,12 +9,13 @@ public class Usuario {
 	private boolean contratado;
 	private boolean contratante;
 	private boolean admin;
-	private String caminhoFoto; // Added missing field
 	private int idUsuario;
 	private String github;
+	private String imagem64;
+	private String caminhoFoto;
 
 	public Usuario(String email, String usuario, String cpfCnpj, String telefone, String senha, String github, boolean contratado,
-			boolean contratante, boolean admin, String caminhoFoto) {
+			boolean contratante, boolean admin) {
 		this.email = email;
 		this.usuario = usuario;
 		this.cpfCnpj = cpfCnpj;
@@ -23,7 +24,6 @@ public class Usuario {
 		this.contratado = contratado;
 		this.contratante = contratante;
 		this.admin = admin;
-		this.caminhoFoto = caminhoFoto;
 		this.github = github; // Corrigido: atribui o valor ao campo
 	}
 
@@ -91,14 +91,6 @@ public class Usuario {
 		this.admin = admin;
 	}
 
-	public String getCaminhoFoto() {
-		return caminhoFoto;
-	}
-
-	public void setCaminhoFoto(String caminhoFoto) {
-		this.caminhoFoto = caminhoFoto;
-	}
-	
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -112,5 +104,22 @@ public class Usuario {
 	public void setGithub(String github) {
 		this.github = github;
 	}
+
+	public String getImagem64() {
+		return imagem64;
+	}
+
+	public void setImagem64(String imagem64) {
+		this.imagem64 = imagem64;
+	}
+
+	public String getCaminhoFoto() {
+		return caminhoFoto;
+	}
+
+	public void setCaminhoFoto(String caminhoFoto) {
+		this.caminhoFoto = caminhoFoto;
+	}
+	
 	
 }

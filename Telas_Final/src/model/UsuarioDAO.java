@@ -1,7 +1,13 @@
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
@@ -14,6 +20,38 @@ public class UsuarioDAO {
 	public UsuarioDAO() {
 
 	}
+	
+	public Usuario code64(Usuario u) throws FileNotFoundException, IOException {
+		// Trocar CaminhoFoto por imagem64
+		String imagem64 = u.getImagem64();
+		File fotoFile = new File(u.getCaminhoFoto());
+		byte[] fotoContent = new byte[(int) fotoFile.length()];
+		try(FileInputStream fis = new FileInputStream(fotoFile)) {
+			fis.read(fotoContent);
+			}
+			imagem64 = Base64.getEncoder().encodeToString(fotoContent);
+			u.setImagem64(imagem64);
+			return u;
+	}
+	
+	public Usuario decode64(Usuario u) {
+		// Trocar CaminhoFoto por imagem64
+		String imagem64 = u.getImagem64();
+		if (imagem64 == null || imagem64.isEmpty()) {
+			// Não há imagem para decodificar
+			return u;
+		}
+		byte[] fotoContent = Base64.getDecoder().decode(imagem64);
+		String caminhofoto = System.getProperty("user.dir") + "/src/imagens/fotoPerfil.jpg";
+		try (FileOutputStream fos = new FileOutputStream(caminhofoto)) {
+			fos.write(fotoContent);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		u.setCaminhoFoto(caminhofoto);
+		return u;
+		}
+
 
 	public boolean cadastrarU(Usuario u, String senha2) {
 
@@ -118,9 +156,10 @@ public class UsuarioDAO {
 						rs.getString("github"),
 						rs.getBoolean("isContratado"),
 						rs.getBoolean("isContratante"),
-						rs.getBoolean("isAdmin"),
-						rs.getString("CaminhoFoto")
+						rs.getBoolean("isAdmin")
 				);
+				// Substituir rs.getString("CaminhoFoto") por rs.getString("imagem64")
+				u.setImagem64(rs.getString("imagem64"));
 				u.setIdUsuario(rs.getInt("idUsuario"));
 				rs.close();
 				stmt.close();
@@ -158,9 +197,10 @@ public class UsuarioDAO {
 						rs.getString("github"),
 						rs.getBoolean("isContratado"),
 						rs.getBoolean("isContratante"),
-						rs.getBoolean("isAdmin"),
-						rs.getString("CaminhoFoto")
+						rs.getBoolean("isAdmin")
 	            );
+	            // Substituir rs.getString("CaminhoFoto") por rs.getString("imagem64")
+	            u.setImagem64(rs.getString("imagem64"));
 	            u.setIdUsuario(rs.getInt("idUsuario"));
 	            rs.close();
 	            stmt.close();
@@ -182,17 +222,15 @@ public class UsuarioDAO {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-	        String sql = "UPDATE Usuarios SET Email = ?, Nome_Usuario = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, caminhofoto = ?, github =? WHERE idUsuario = ?";
+	        String sql = "UPDATE Usuarios SET Email = ?, Nome_Usuario = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, github =? WHERE idUsuario = ?";
 	        var stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, u.getEmail());
 	        stmt.setString(2, u.getUsuario());
 	        stmt.setString(3, u.getCpfCnpj());
 	        stmt.setString(4, u.getTelefone());
 	        stmt.setString(5, u.getSenha());
-	        stmt.setString(6, u. getCaminhoFoto());
-	        // Parâmetros corrigidos: 7 = github, 8 = idUsuario
-	        stmt.setString(7, u.getGithub());
-	        stmt.setInt(8, u.getIdUsuario());
+	        stmt.setString(6, u.getGithub());
+	        stmt.setInt(7, u.getIdUsuario());
 
 	        int rowsUpdated = stmt.executeUpdate();
 
@@ -232,9 +270,10 @@ public class UsuarioDAO {
                         rs.getString("github"),
                         rs.getBoolean("isContratado"),
                         rs.getBoolean("isContratante"),
-                        rs.getBoolean("isAdmin"),
-                        rs.getString("CaminhoFoto")
+                        rs.getBoolean("isAdmin")
                 );
+                // Substituir rs.getString("CaminhoFoto") por rs.getString("imagem64")
+                u.setImagem64(rs.getString("imagem64"));
                 u.setIdUsuario(rs.getInt("idUsuario"));
                 rs.close();
                 stmt.close();
