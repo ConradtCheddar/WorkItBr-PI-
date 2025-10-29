@@ -19,8 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.jdesktop.swingx.prompt.PromptSupport;
+
 import model.Usuario;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.SwingConstants;
 
 public class TelaConfigUser extends JPanel {
 
@@ -46,6 +49,8 @@ public class TelaConfigUser extends JPanel {
 	private JButton btnAlterarImagem;
 	private JLabel lblGithub;
 	private JTextField txtGithub;
+	private JLabel lblTitulo;
+	private JPanel fundo;
 
 	/**
 	 * Create the panel.
@@ -54,18 +59,21 @@ public class TelaConfigUser extends JPanel {
 	 */
 
 	public TelaConfigUser() {
-		setPreferredSize(new Dimension(900, 700));
+		setPreferredSize(new Dimension(837, 635));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][20px]", "[35px][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 20 20 20 20, gap 20", "[grow][grow][grow]",
+				"[][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
 
-		JLabel lblNewLabel_1 = new JLabel("Nome");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblNewLabel_1, "cell 2 2");
+		lblTitulo = new JLabel("Configurações");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		add(lblTitulo, "cell 0 0 3 1,grow");
 
-		JPanel fundo = new JPanel();
-		fundo.setPreferredSize(new Dimension(100, 100));
-		fundo.setBackground(Color.DARK_GRAY);
-		add(fundo, "cell 12 2 8 9,grow");
+		JLabel lblNome = new JLabel("Nome");
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblNome, "cell 0 1,alignx left");
+
+		fundo = new JPanel();
+		add(fundo, "cell 1 1 2 11,grow");
 		fundo.setLayout(null);
 
 		foto = new JPanel() {
@@ -77,8 +85,7 @@ public class TelaConfigUser extends JPanel {
 				}
 			}
 		};
-		foto.setBackground(new Color(0, 255, 0));
-		foto.setBounds(10, 11, 349, 281);
+		foto.setBounds(10, 11, 476, 390);
 		fundo.add(foto);
 
 		fundo.addComponentListener(new ComponentAdapter() {
@@ -98,64 +105,90 @@ public class TelaConfigUser extends JPanel {
 		});
 
 		tfNome = new JTextField();
-		add(tfNome, "cell 2 3 5 1,growx");
+		add(tfNome, "cell 0 2,grow");
 		tfNome.setColumns(10);
 		tfNome.putClientProperty("JComponent.roundRect", true);
 
-		JLabel lblNewLabel_1_2 = new JLabel("Senha");
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblNewLabel_1_2, "cell 2 4");
+		JLabel lblSenha = new JLabel("Senha");
+		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblSenha, "flowx,cell 0 3,alignx left");
 
 		tfSenha = new JTextField();
-		add(tfSenha, "cell 2 5 5 1,growx");
+		add(tfSenha, "cell 0 4,grow");
 		tfSenha.setColumns(10);
 		tfSenha.putClientProperty("JComponent.roundRect", true);
 
-		JLabel lblNewLabel_1_3 = new JLabel("Email");
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblNewLabel_1_3, "cell 2 6");
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblEmail, "cell 0 5,alignx left");
 
 		tfEmail = new JTextField();
-		add(tfEmail, "cell 2 7 5 1,growx");
+		add(tfEmail, "cell 0 6,grow");
 		tfEmail.setColumns(10);
 		tfEmail.putClientProperty("JComponent.roundRect", true);
 
-		JLabel lblNewLabel_1_4 = new JLabel("Telefone");
-		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblNewLabel_1_4, "cell 2 8");
+		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblTelefone, "cell 0 7,alignx left");
 
 		tfTelefone = new JTextField();
-		add(tfTelefone, "cell 2 9 5 1,growx");
+		add(tfTelefone, "cell 0 8,grow");
 		tfTelefone.setColumns(10);
 		tfTelefone.putClientProperty("JComponent.roundRect", true);
 
-		JLabel lblNewLabel_1_5 = new JLabel("CPF");
-		lblNewLabel_1_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblNewLabel_1_5, "cell 2 10");
+		JLabel lblCPF = new JLabel("CPF");
+		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(lblCPF, "cell 0 9,alignx left");
 
 		tfCPF = new JTextField();
-		add(tfCPF, "cell 2 11 5 1,growx");
+		add(tfCPF, "cell 0 10,grow");
 		tfCPF.setColumns(10);
 		tfCPF.putClientProperty("JComponent.roundRect", true);
 
-		btnAlterarImagem = new JButton("Alterar Imagem");
-		add(btnAlterarImagem, "cell 15 11,growx");
-		
 		lblGithub = new JLabel("Github");
 		lblGithub.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(lblGithub, "cell 2 12");
-		
+		add(lblGithub, "cell 0 11,alignx left");
+
 		txtGithub = new JTextField();
 		txtGithub.setColumns(10);
-		add(txtGithub, "cell 2 13 5 1,growx");
+		tfCPF.putClientProperty("JComponent.roundRect", true);
+		add(txtGithub, "cell 0 12,grow");
+
+		btnAlterarImagem = new JButton("Alterar Imagem");
+		add(btnAlterarImagem, "cell 1 12 2 1,grow");
 		btnAlterarDados = new JButton("Alterar Dados");
 		btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		add(btnAlterarDados, "cell 15 14,grow");
+		add(btnAlterarDados, "cell 0 14 3 1,grow");
 		btnAlterarDados.putClientProperty("JComponent.roundRect", true);
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSize = Math.max(15, panelHeight / 37);
+				int fontSizebutt = Math.max(15, panelHeight / 30);
+				int fontSize2 = Math.max(15, panelHeight / 23);
+				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
+				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSize2 + 5));
+				btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, fontSizebutt));
+				btnAlterarImagem.setFont(new Font("Tahoma", Font.PLAIN, fontSizebutt));
+				lblGithub.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				txtGithub.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				tfEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblSenha.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				tfSenha.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblNome.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				tfNome.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+			}
+		});
 
 	}
 
-	// Set all fields from Usuario (for controller to call)
 	public void setUserData(Usuario usuario) {
 		tfNome.setText(usuario.getUsuario());
 		tfSenha.setText(usuario.getSenha());
@@ -174,7 +207,6 @@ public class TelaConfigUser extends JPanel {
 		}
 	}
 
-	// Getters for all fields (for controller to read user input)
 	public String getNome() {
 		return tfNome.getText();
 	}
@@ -194,13 +226,11 @@ public class TelaConfigUser extends JPanel {
 	public String getCpfCnpj() {
 		return tfCPF.getText();
 	}
-	
 
 	public String getGithub() {
 		return txtGithub.getText();
 	}
 
-	// Register listeners for buttons
 	public void addAlterarDadosListener(ActionListener l) {
 		btnAlterarDados.addActionListener(l);
 	}
@@ -209,7 +239,6 @@ public class TelaConfigUser extends JPanel {
 		btnAlterarImagem.addActionListener(l);
 	}
 
-	// For image selection, expose a method to open file chooser and return path
 	public String selecionarImagem() {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagens", "jpg", "png", "jpeg", "gif");
@@ -340,7 +369,6 @@ public class TelaConfigUser extends JPanel {
 	public void setTfCPF(JTextField tfCPF) {
 		this.tfCPF = tfCPF;
 	}
-	
 
 	public JTextField getTxtGithub() {
 		return txtGithub;

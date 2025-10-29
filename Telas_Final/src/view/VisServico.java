@@ -38,9 +38,6 @@ public class VisServico extends JPanel {
 	private JLabel tpDesc;
     private JLabel lblFoto; // mostra a foto do contratante
 
-	/**
-	 * Create the panel.
-	 */
 	public VisServico(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
 		
@@ -49,7 +46,7 @@ public class VisServico extends JPanel {
 		panel.setLayout(new CardLayout(0, 0));
 		
 		Perfil = new JPanel();
-		// configurar painel de perfil com espaço para foto
+		// configurar painel de perfil com espao para foto
 		Perfil.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		panel.add(Perfil, "name_1709392782600");
 		lblFoto = new JLabel();
@@ -124,7 +121,7 @@ public class VisServico extends JPanel {
 					return new ImageIcon(scaled);
 				}
 			}
-			// fallback: usar imagem padrão do projeto (imagens/clickable_icon.png ou Casa.png)
+			// alternativa: usar imagem padrão do projeto (imagens/clickable_icon.png ou Casa.png)
 			URL fallback = getClass().getResource("/imagens/clickable_icon.png");
 			if (fallback == null) fallback = getClass().getResource("/imagens/Casa.png");
 			if (fallback != null) {

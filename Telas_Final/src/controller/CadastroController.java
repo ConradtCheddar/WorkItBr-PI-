@@ -32,7 +32,7 @@ public class CadastroController {
 
 			boolean sucesso = model.cadastrarU(u, senha2Text);
 			if (sucesso) {
-				navegador.navegarPara("LOGIN");
+				navegador.navegarPara("LOGIN", false);
 				this.view.limparCampos();
 			}
 			

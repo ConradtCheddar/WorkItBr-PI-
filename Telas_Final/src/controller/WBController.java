@@ -24,9 +24,9 @@ public class WBController {
         this.popup = popup;
         this.popup2 = popup2;
 
-        // initial back button state
+        // Estado inicial do botão voltar
         this.view.setBackEnabled(navegador.hasHistory());
-        // register listener so UI updates when history changes
+        // registra ouvinte para atualizar a UI quando o histórico mudar
         this.navegador.setOnHistoryChange(() -> SwingUtilities.invokeLater(() -> {
             this.view.setBackEnabled(navegador.hasHistory());
         }));
@@ -41,8 +41,10 @@ public class WBController {
         this.view.menu(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Ao clicar no ícone de voltar, delega ao Navegador para voltar à tela anterior
-                navegador.voltar();
+                // Navega para trás apenas se houver histórico
+                if (navegador.hasHistory()) {
+                    navegador.voltar();
+                }
             }
         });
     }

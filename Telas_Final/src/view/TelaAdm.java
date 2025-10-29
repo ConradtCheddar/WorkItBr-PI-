@@ -36,9 +36,6 @@ public class TelaAdm extends JPanel {
 	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
 	ImageIcon barraResized = new ImageIcon(scaledImage3);
 
-	/**
-	 * Create the panel.
-	 */
 	public TelaAdm() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][98.00,grow][grow][81.00][-56.00][65.00,grow][][]", "[35px][66.00,grow][grow][][][66]"));

@@ -88,7 +88,7 @@ public class VisContratado extends JPanel {
 		add(btnVoltar, "cell 0 16 11 1,alignx center");
 
 		lblNome.setText(u.getUsuario());
-		// Exibe github, com fallback caso não esteja preenchido no banco
+		// Exibe github, com alternativa caso não esteja preenchido no banco
 		String githubText = (u.getGithub() != null && !u.getGithub().isBlank()) ? u.getGithub() : "Não informado";
 		lblGithub.setText(githubText);
 		lblEmail.setText(u.getEmail());

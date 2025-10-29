@@ -29,9 +29,6 @@ public class TelaContratante extends JPanel {
 
 	private JTextField tfPesquisar;
 
-	/**
-	 * Create the panel.
-	 */
 	public TelaContratante() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0",

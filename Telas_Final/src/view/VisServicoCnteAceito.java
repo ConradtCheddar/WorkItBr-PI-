@@ -27,9 +27,6 @@ public class VisServicoCnteAceito extends JPanel {
 	private JButton btnVoltar, btnContratado;
 	private JLabel tpDesc;
 
-	/**
-	 * Create the panel.
-	 */
 	public VisServicoCnteAceito(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
 		
