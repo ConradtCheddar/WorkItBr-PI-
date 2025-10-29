@@ -33,6 +33,8 @@ public class LoginController {
 			Usuario u = dao.login(nome, senha);
 			
 			if (u != null) {
+				// Decodifica a imagem do usuário e salva no disco com seu ID
+				dao.decode64(u);
 				this.navegador.setCurrentUser(u);
 				popupMenuController.updateProfileAction();
 				if (u.isAdmin()) {

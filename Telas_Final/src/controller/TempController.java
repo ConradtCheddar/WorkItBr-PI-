@@ -19,6 +19,8 @@ public class TempController {
 		this.navegador = navegador;
 		
 		this.view.login(e ->{
+			// Limpa todas as imagens de perfil antes de retornar ao login
+			navegador.limparImagensPerfil();
 			navegador.navegarPara("LOGIN");
 		});
 		this.view.adm(e ->{

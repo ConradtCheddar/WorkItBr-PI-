@@ -7,6 +7,10 @@ public class BD {
 //	CREATE DATABASE IF NOT EXISTS WorkItBr_BD;
 //	USE WorkItBr_BD;
 //
+//	CREATE USER if not exists 'workitbr'@'localhost' IDENTIFIED BY '1234';
+//	GRANT ALL PRIVILEGES ON WorkItBr_BD.* TO 'workitbr'@'localhost';
+//	FLUSH PRIVILEGES;
+//
 //	CREATE TABLE IF NOT EXISTS Usuarios (
 //	    idUsuario INT PRIMARY KEY AUTO_INCREMENT,
 //	    Email VARCHAR(60) NOT NULL UNIQUE,
@@ -60,7 +64,6 @@ public class BD {
 //
 //	SELECT * FROM Usuarios;
 //	SELECT * FROM Servico;
-
 
 
 

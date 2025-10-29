@@ -25,6 +25,7 @@ public class Primario extends JFrame {
 	private JTextField textField;
 	private wbBarra wbb;
 	private JPanel menuLayer;
+	private controller.Navegador navegador; // Referência ao navegador para limpeza ao fechar
 	private java.util.Map<String, JPanel> painelMap = new java.util.HashMap<>();
 	private String currentPanelName;
 
@@ -173,5 +174,22 @@ public class Primario extends JFrame {
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
+	}
+	
+	/**
+	 * Configura o Navegador e adiciona WindowListener para limpar imagens ao fechar
+	 */
+	public void setNavegador(controller.Navegador navegador) {
+		this.navegador = navegador;
+		
+		// Adiciona listener para limpar imagens quando a janela for fechada
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				if (Primario.this.navegador != null) {
+					Primario.this.navegador.limparImagensPerfil();
+				}
+			}
+		});
 	}
 }
