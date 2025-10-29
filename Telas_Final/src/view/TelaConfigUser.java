@@ -151,7 +151,7 @@ public class TelaConfigUser extends JPanel {
 
 		txtGithub = new JTextField();
 		txtGithub.setColumns(10);
-		tfCPF.putClientProperty("JComponent.roundRect", true);
+		txtGithub.putClientProperty("JComponent.roundRect", true);
 		add(txtGithub, "cell 0 12,grow");
 
 		btnAlterarImagem = new JButton("Alterar Imagem");
