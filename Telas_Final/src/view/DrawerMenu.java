@@ -27,12 +27,12 @@ public class DrawerMenu extends JPanel {
     private UsuarioDAO usuarioDAO;
     private Navegador navegador;
     private TelaFactory telaFactory;
-    private Consumer<Boolean> onStateChange; // callback para Primario
+    private Consumer<Boolean> onStateChange; // retorno de chamada para Primario
 
     public DrawerMenu(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(Color.DARK_GRAY); // cor visível para depuração
+        setBackground(Color.DARK_GRAY);
         setOpaque(true);
         // Começa fechado
         currentWidth = 0;
@@ -54,9 +54,6 @@ public class DrawerMenu extends JPanel {
         repaint();
     }
     
-    /**
-     * Define a TelaFactory para criação de telas dinâmicas
-     */
     public void setTelaFactory(TelaFactory telaFactory) {
         this.telaFactory = telaFactory;
     }
@@ -98,8 +95,10 @@ public class DrawerMenu extends JPanel {
                     }
                     // Remove telas de configuração que podem existir
                     this.navegador.removerPainel("CONFIG_USER");
-                    // Navega para LOGIN
-                    this.navegador.navegarPara("LOGIN");
+                    // Limpa o histórico de navegação para desabilitar o botão voltar
+                    this.navegador.clearHistory();
+                    // Navega para LOGIN sem empilhar
+                    this.navegador.navegarPara("LOGIN", false);
                 }
                 if (isOpen) toggleMenu();
             });
@@ -128,7 +127,6 @@ public class DrawerMenu extends JPanel {
                             String panelName = telaFactory.criarTelaConfigUser(usuario);
                             this.navegador.navegarPara(panelName);
                         } else {
-                            // Fallback: criação manual (caso a factory não tenha sido injetada)
                             Usuario usuarioBanco = usuarioDAO.getUsuarioById(usuario.getIdUsuario());
                             if (usuarioBanco != null) {
                                 this.navegador.setCurrentUser(usuarioBanco);
@@ -142,6 +140,7 @@ public class DrawerMenu extends JPanel {
                     } else {
                         JOptionPane.showMessageDialog(this, "Nenhum usuário logado.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
+
                 }
                 if (isOpen) toggleMenu();
             });

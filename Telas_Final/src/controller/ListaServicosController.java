@@ -123,7 +123,7 @@ public class ListaServicosController {
 				}
 			}
 			if (idCol == -1) {
-				// se não encontrou id, tenta usar primeira coluna como fallback
+				// se não encontrou id, tenta usar primeira coluna como alternativa
 				idCol = 0;
 			}
 

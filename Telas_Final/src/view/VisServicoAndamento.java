@@ -44,9 +44,6 @@ public class VisServicoAndamento extends JPanel {
 	private JLabel lblFoto;
 	private JButton btnFinalizar;
 
-	/**
-	 * Create the panel.
-	 */
 	public VisServicoAndamento(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow]10[grow][grow][grow]"));
 
@@ -130,6 +127,7 @@ public class VisServicoAndamento extends JPanel {
 					return new ImageIcon(scaled);
 				}
 			}
+			// alternativa: usar imagem padrão do projeto (imagens/clickable_icon.png ou Casa.png)
 			URL fallback = getClass().getResource("/imagens/clickable_icon.png");
 			if (fallback == null)
 				fallback = getClass().getResource("/imagens/Casa.png");

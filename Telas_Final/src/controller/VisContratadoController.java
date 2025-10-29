@@ -36,7 +36,7 @@ public class VisContratadoController {
 			VisContratado tela = new VisContratado(contratado);
 			navegador.adicionarPainel(panelName, tela);
 			navegador.navegarPara(panelName);
-			// registra listener do botão Voltar para retornar à tela de serviço aceito (se houver)
+			// registra ouvinte do botão Voltar para retornar à tela de serviço aceito (se houver)
 			int idServicoLocal = s.getIdServico();
 			String prevPanelLocal = (idServicoLocal > 0) ? ("VIS_Servico_Cnte_Aceito_" + idServicoLocal) : "SERVICOS";
 			tela.voltar(ev -> {

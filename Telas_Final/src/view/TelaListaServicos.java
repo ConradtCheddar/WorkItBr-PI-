@@ -49,13 +49,12 @@ public class TelaListaServicos extends JPanel {
 		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 		
 		String colunas[]= {
-			"ID", "Nome", "valor", "modalidade", "foi aceito?", "descrição"
+			"ID", "Nome", "valor", "modalidade", "foi aceito?", "descrio"
 		};
 		Object dados[][]= new Object[0][6];
 		this.tableModel = new DefaultTableModel(dados,colunas) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				// Prevent editing the ID column
 				return column != 0;
 			}
 		};
@@ -68,7 +67,7 @@ public class TelaListaServicos extends JPanel {
 		scrollPane_1.setViewportView(tableServicos);
 		tableServicos.setForeground(new Color(255, 255, 255));
 		tableServicos.setModel(tableModel);
-		// Hide the ID column from the user
+		// Oculta a coluna ID do usuário
 		tableServicos.getColumnModel().getColumn(0).setMinWidth(0);
 		tableServicos.getColumnModel().getColumn(0).setMaxWidth(0);
 		tableServicos.getColumnModel().getColumn(0).setWidth(0);

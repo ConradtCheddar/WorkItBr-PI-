@@ -36,7 +36,8 @@ public class CadastroContratanteController {
 			boolean sucesso = dao.cadastrarS(s);
 			if (sucesso) {
 				this.view.limparCampos();
-				navegador.navegarPara("SERVICOS");
+				// Navigate to SERVICOS but do not push the cadastro_contratante screen onto history
+				navegador.navegarPara("SERVICOS", false);
 				
 			}
 		});

@@ -26,20 +26,19 @@ public class Primario extends JFrame {
 	private wbBarra wbb;
 	private JPanel menuLayer;
 	private java.util.Map<String, JPanel> painelMap = new java.util.HashMap<>();
-	// Track the currently visible panel name for navigation history
 	private String currentPanelName;
 
 	/**
-	 * Create the frame.
+	 * Cria o frame.
 	 */
 	public Primario(wbBarra wbb, DrawerMenu dm) {
 		this.wbb = wbb;
 		this.dm = dm;
 		setFocusTraversalPolicyProvider(true);
-		setMinimumSize(new Dimension(1200, 500));
+		setMinimumSize(new Dimension(1200, 900));
 		setTitle("WorkITBr");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 700);
+		setBounds(100, 100, 1200, 800);
 		setLocationRelativeTo(null);
 		List<Image> icons = new ArrayList<>();
 		icons.add(new ImageIcon(getClass().getResource("/imagens/w.png")).getImage());
@@ -67,16 +66,13 @@ public class Primario extends JFrame {
 		menuLayer = new JPanel(null);
 		menuLayer.setOpaque(false);
 		setGlassPane(menuLayer);
-		// keep glass pane invisible by default so it doesn't block mouse events
 		menuLayer.setVisible(false);
 
 		dm.setOpaque(true);
 		dm.setVisible(true);
-		// DrawerMenu começa fechado, posicionado à direita
 		dm.setBounds(getWidth(), 0, 0, getHeight());
 		menuLayer.add(dm);
 
-		// Atualiza tamanho e posição do menu ao redimensionar
 		addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
 			public void componentResized(java.awt.event.ComponentEvent e) {
@@ -93,11 +89,9 @@ public class Primario extends JFrame {
 			int menuWidth = dm.getPreferredSize().width;
 			if (isOpen && menuWidth > 0) {
 				dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
-				// ensure glass pane is visible while menu is open
 				menuLayer.setVisible(true);
 			} else {
 				dm.setBounds(getWidth(), 0, 0, getHeight());
-				// hide glass pane when menu is closed
 				menuLayer.setVisible(false);
 			}
 			menuLayer.repaint();
@@ -106,7 +100,6 @@ public class Primario extends JFrame {
 		wbb.setMenuClickListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				// menu click
 				dm.toggleMenu();
 			}
 		});
@@ -116,21 +109,9 @@ public class Primario extends JFrame {
 		this.cardLayout.show(this.cPanel, panelName);
 		this.cPanel.revalidate();
 		this.cPanel.repaint();
-		// Track the currently visible panel for navigation purposes
 		this.currentPanelName = panelName;
 	}
 
-	public void adicionarTela(String panelName, JPanel tela) {
-		// Remove o painel existente se já estiver presente
-		if (painelMap.containsKey(panelName)) {
-			JPanel oldPanel = painelMap.get(panelName);
-			this.cPanel.remove(oldPanel);
-		}
-		// Adiciona o novo painel
-		this.cPanel.add(tela, panelName);
-		painelMap.put(panelName, tela);
-	}
-	
 	/**
 	 * Remove uma tela do CardLayout se existir
 	 * @param panelName Nome do painel a ser removido
@@ -149,14 +130,22 @@ public class Primario extends JFrame {
 		this.wbb.add(tela);
 	}
 
-	/**
-	 * Exposes the currently visible panel name so the Navegador can build history.
-	 */
+	public void adicionarTela(String panelName, JPanel tela) {
+		if (panelName == null || tela == null) return;
+		if (painelMap.containsKey(panelName)) {
+			JPanel antigo = painelMap.get(panelName);
+			this.cPanel.remove(antigo);
+		}
+		painelMap.put(panelName, tela);
+		this.cPanel.add(tela, panelName);
+		this.cPanel.revalidate();
+		this.cPanel.repaint();
+	}
+
 	public String getCurrentPanelName() {
 		return this.currentPanelName;
 	}
 
-	// Helper method to check DrawerMenu open state
 	private boolean getDrawerMenuOpenState(DrawerMenu dm) {
 		try {
 			java.lang.reflect.Field field = DrawerMenu.class.getDeclaredField("isOpen");
@@ -184,6 +173,5 @@ public class Primario extends JFrame {
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		// Removido: dm.setParentFrame(this);
 	}
 }

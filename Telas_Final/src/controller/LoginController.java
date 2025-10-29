@@ -36,13 +36,13 @@ public class LoginController {
 				this.navegador.setCurrentUser(u);
 				popupMenuController.updateProfileAction();
 				if (u.isAdmin()) {
-					navegador.navegarPara("ADM");
+					navegador.navegarPara("ADM", false);
 				} else if (u.isContratado()) {
-					navegador.navegarPara("CONTRATADO");
+					navegador.navegarPara("CONTRATADO", false);
 				} else if (u.isContratante()) {
-					navegador.navegarPara("SERVICOS");
+					navegador.navegarPara("SERVICOS", false);
 				} else {
-					navegador.navegarPara("LOGIN");
+					navegador.navegarPara("LOGIN", false);
 				}
 			}else {
 				JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos", "Erro", JOptionPane.ERROR_MESSAGE);

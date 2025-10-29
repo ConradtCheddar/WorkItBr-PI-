@@ -31,7 +31,7 @@ import view.wbBarra;
 
 public class Main {
 	public static void main(String[] args) {
-		// startup
+		// Inicialização
 		try {
 			UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarkLaf());
 		} catch (Exception ex) {
@@ -54,12 +54,9 @@ public class Main {
 		
 		PopupController popup = new PopupController();
 
-		// tela de login
 		TelaLogin telalogin = new TelaLogin();
-		// tela de cadastro
 		TelaCadastro telacadastro = new TelaCadastro();
 		PopupMenuController popup2 = new PopupMenuController(pm, navegador, telaFactory);
-        // Bind wbBarra view to its controller so that lblVoltar will call navegador.voltar()
         WBController wbController = new WBController(wbb, usuarioDAO, navegador, popup, popup2);
 		LoginController logincontroller = new LoginController(telalogin, usuarioDAO, navegador, telacadastro, popup2);
 		CadastroController cadastrocontroller = new CadastroController(telacadastro, usuarioDAO, navegador);

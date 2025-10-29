@@ -28,9 +28,6 @@ public class VisServicoCnte extends JPanel {
 	private JButton btnEditar;
 	private JLabel tpDesc;
 
-	/**
-	 * Create the panel.
-	 */
 	public VisServicoCnte(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
 		

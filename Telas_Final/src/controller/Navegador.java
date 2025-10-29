@@ -14,9 +14,9 @@ import view.wbBarra;
 public class Navegador {
 	private Primario prim;
 	private Usuario currentUser;
-	// stack to hold navigation history (names of panels)
+	// pilha para armazenar o histórico de navegação (nomes dos painéis)
 	private final Deque<String> history = new ArrayDeque<>();
-	// optional listener to notify UI controllers when history changes
+	// ouvinte opcional para notificar controladores de UI quando o histórico mudar
 	private Runnable historyListener;
 
 	public Navegador(Primario prim) {
@@ -44,19 +44,42 @@ public class Navegador {
 		this.prim.removerTela(nome);
 	}
 
+	/**
+	 * Navega para uma tela. Por retrocompatibilidade empilha a tela atual no histórico.
+	 */
 	public void navegarPara(String nome) {
+		this.navegarPara(nome, true);
+	}
+
+	/**
+	 * Navega para uma tela. Se pushCurrent for true empilha a tela atual no histórico;
+	 * caso contrário não modifica o histórico (útil ao redirecionar após um fluxo concluído,
+	 * por exemplo: não permitir voltar para a tela de cadastro depois de completá-la).
+	 *
+	 * Também filtra automaticamente certos nomes de tela (ex.: CADASTRO*) para não
+	 * serem empilhados no histórico — assim o botão "voltar" nunca retornará a uma
+	 * tela de cadastro já concluída.
+	 */
+	public void navegarPara(String nome, boolean pushCurrent) {
 		this.prim.fecharDrawerMenuSeAberto(); // Fecha o DrawerMenu se estiver aberto
-		// Push current panel onto history before navigating, if present and different
+		// Empilha o painel atual no histórico antes de navegar, se presente e diferente
 		try {
 			String current = this.prim.getCurrentPanelName();
-			if (current != null && !current.equals(nome)) {
+			boolean shouldPush = pushCurrent;
+			// Não empilha telas de cadastro no histórico (assim o botão voltar não as retorna)
+			if (current != null) {
+				if (current.startsWith("CADASTRO") || current.equals("CADASTRO_CONTRATANTE")) {
+					shouldPush = false;
+				}
+			}
+			if (shouldPush && current != null && !current.equals(nome)) {
 				history.push(current);
-				// notify listener that history changed
+				// notifica o ouvinte de que o histórico mudou
 				if (historyListener != null)
 					historyListener.run();
 			}
 		} catch (Exception ex) {
-			// If prim doesn't track current panel for some reason, ignore
+			// Se o prim não rastrear o painel atual por algum motivo, ignora
 		}
 		this.prim.mostrarTela(nome);
 		if ("SERVICOS".equals(nome)) {
@@ -77,6 +100,14 @@ public class Navegador {
 		this.prim.mostrarTela(anterior);
 		if (historyListener != null)
 			historyListener.run();
+	}
+
+	/**
+	 * Limpa todo o histórico de navegação e notifica listener (usado no logout)
+	 */
+	public void clearHistory() {
+		history.clear();
+		if (historyListener != null) historyListener.run();
 	}
 
 	public void sair() {
