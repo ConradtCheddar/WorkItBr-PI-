@@ -16,7 +16,12 @@ public class TelaConfigUserController {
         this.navegador = navegador;
         this.usuario = usuario;
 
-        // Exibe os dados do usuário na tela
+        // Carrega a foto do banco (base64 -> imagem)
+        try {
+            model.decode64(usuario);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         this.view.setUserData(usuario);
 
         // Listener para alterar dados
@@ -35,7 +40,16 @@ public class TelaConfigUserController {
             String caminho = view.selecionarImagem();
             if (caminho != null) {
                 usuario.setCaminhoFoto(caminho);
-                model.atualizarUsuario(usuario);
+                try {
+                    // Converte e salva a imagem como base64
+                    model.code64(usuario);
+                    model.atualizarUsuario(usuario);
+                    // Atualiza a imagem exibida
+                    model.decode64(usuario);
+                    this.view.setUserData(usuario);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }

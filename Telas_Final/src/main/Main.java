@@ -46,6 +46,8 @@ public class Main {
 		Primario prim = new Primario(wbb, pm);
 
 		Navegador navegador = new Navegador(prim);
+		navegador.setUsuarioDAO(usuarioDAO); // Injeta o UsuarioDAO no Navegador
+		prim.setNavegador(navegador); // Configura o Navegador no Primario para limpeza ao fechar
 		pm.setNavegador(navegador);
 
 		TelaFactory telaFactory = new TelaFactory(navegador, servicoDAO, usuarioDAO);
@@ -91,8 +93,8 @@ public class Main {
 		navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
 		navegador.adicionarPainel("SERVICOS", telaservicos);
 		
-		
-		navegador.navegarPara("LOGIN");
+
+		navegador.navegarPara("login");
 		prim.setVisible(true);
 		pm.setNavegador(navegador);
 

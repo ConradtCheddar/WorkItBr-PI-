@@ -97,6 +97,8 @@ public class DrawerMenu extends JPanel {
                     this.navegador.removerPainel("CONFIG_USER");
                     // Limpa o histórico de navegação para desabilitar o botão voltar
                     this.navegador.clearHistory();
+                    // Limpa todas as imagens de perfil antes do logout
+                    this.navegador.limparImagensPerfil();
                     // Navega para LOGIN sem empilhar
                     this.navegador.navegarPara("LOGIN", false);
                 }
@@ -109,7 +111,15 @@ public class DrawerMenu extends JPanel {
             }
             btnTrabalhos.addActionListener(e -> {
                 if (this.navegador != null) {
-                    this.navegador.navegarPara("SERVICOS");
+                	Usuario u = this.navegador.getCurrentUser();
+                	if (u.isContratante()) {
+                		this.navegador.navegarPara("SERVICOS");
+                	}else if (u.isContratado()) {
+						this.navegador.navegarPara("CONTRATADO");
+					}else {
+						navegador.navegarPara("TEMP");
+					}
+                    
                 }
                 if (isOpen) toggleMenu();
             });
