@@ -50,10 +50,7 @@ public class wbBarra extends JPanel {
 		Image scaled = img.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		lblVoltar.setIcon(new ImageIcon(scaled));
 		lblVoltar.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4));
-		java.awt.Dimension hit = new java.awt.Dimension(36, 36);
-		lblVoltar.setPreferredSize(hit);
-		lblVoltar.setMinimumSize(hit);
-		lblVoltar.setMaximumSize(hit);
+		// Dimensões iniciais - serão ajustadas dinamicamente pelo ajustarIcones()
 		add(lblVoltar, "flowx,cell 0 0,alignx left,aligny center");
 
 		lblVoltar.addMouseListener(new MouseAdapter() {
@@ -206,6 +203,17 @@ public class wbBarra extends JPanel {
 
 		lblVoltar.setIcon(new ImageIcon(scaled));
 		lblBarra.setIcon(new ImageIcon(scaledBarra));
+		
+		// Redimensionar a área do lblVoltar dinamicamente
+		int padding = Math.max(4, w / 200); // Padding proporcional ao tamanho
+		lblVoltar.setBorder(javax.swing.BorderFactory.createEmptyBorder(padding, padding, padding, padding));
+		java.awt.Dimension hitArea = new java.awt.Dimension(
+			larguraCasa + (padding * 2), 
+			alturaCasa + (padding * 2)
+		);
+		lblVoltar.setPreferredSize(hitArea);
+		lblVoltar.setMinimumSize(hitArea);
+		lblVoltar.setMaximumSize(hitArea);
 	}
 
 	public JLabel getLblBarra() {

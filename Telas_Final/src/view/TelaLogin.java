@@ -5,10 +5,12 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.HierarchyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.swingx.prompt.PromptSupport;
@@ -48,7 +51,23 @@ public class TelaLogin extends JPanel {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]",
 				"[20px,grow][20px,grow 40][grow][grow 40][grow][grow 20][grow][grow]"));
-		requestFocusInWindow();
+		// Removida chamada direta que poderia forçar foco em um dos campos:
+		// requestFocusInWindow();
+		// Garante que o painel possa receber foco e, quando for exibido, limpa o foco
+		// global para evitar que o primeiro campo seja focado automaticamente.
+		setFocusable(true);
+		addHierarchyListener(e -> {
+			if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && isShowing()) {
+				// Executa no próximo ciclo do EDT para garantir que a janela esteja
+				// totalmente exibida antes de manipular o foco.
+				SwingUtilities.invokeLater(() -> {
+					// Limpa o foco global: nenhum componente terá foco inicial.
+					KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+					// Requisita foco no painel (opcional) para que o foco não caia em nenhum JTextField
+					requestFocusInWindow();
+				});
+			}
+		});
 		
 		lblTitulo = new JLabel("Login");
 		add(lblTitulo, "cell 2 0,alignx center,growy");
@@ -65,9 +84,14 @@ public class TelaLogin extends JPanel {
 		passwordField.setFont(new Font("Dialog", Font.PLAIN, 12));
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
-		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
+		// Corrige o placeholder do campo senha para 'Senha'
+		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
 		passwordField.putClientProperty("JComponent.roundRect", true);
 		add(passwordField, "cell 1 3 3 1,grow");
+
+		// Define os prompts imediatamente para garantir que os placeholders apareçam
+		PromptSupport.setPrompt("Senha", passwordField);
+		PromptSupport.setPrompt("Usuario", txtUsuario);
 
 		btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
@@ -125,8 +149,7 @@ public class TelaLogin extends JPanel {
 				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
 				btnLogin.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
 				lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				PromptSupport.setPrompt("Senha", passwordField);
-				PromptSupport.setPrompt("Usuario", txtUsuario);
+				// os prompts já foram configurados na inicialização
 				txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 				lblntlg.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 				passwordField.setFont(italicPlaceholderFont);

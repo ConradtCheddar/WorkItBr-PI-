@@ -26,7 +26,6 @@ public class Primario extends JFrame {
 	private wbBarra wbb;
 	private JPanel menuLayer;
 	private java.util.Map<String, JPanel> painelMap = new java.util.HashMap<>();
-	// Nome do painel atualmente visível (usado para histórico de navegação)
 	private String currentPanelName;
 
 	/**
@@ -67,16 +66,13 @@ public class Primario extends JFrame {
 		menuLayer = new JPanel(null);
 		menuLayer.setOpaque(false);
 		setGlassPane(menuLayer);
-		// Mantém o glass pane invisível por padrão para não bloquear eventos do mouse
 		menuLayer.setVisible(false);
 
 		dm.setOpaque(true);
 		dm.setVisible(true);
-		// DrawerMenu começa fechado, posicionado à direita
 		dm.setBounds(getWidth(), 0, 0, getHeight());
 		menuLayer.add(dm);
 
-		// Atualiza tamanho e posição do menu ao redimensionar
 		addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
 			public void componentResized(java.awt.event.ComponentEvent e) {
@@ -93,11 +89,9 @@ public class Primario extends JFrame {
 			int menuWidth = dm.getPreferredSize().width;
 			if (isOpen && menuWidth > 0) {
 				dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
-				// Garante que o glass pane fique visível enquanto o menu estiver aberto
 				menuLayer.setVisible(true);
 			} else {
 				dm.setBounds(getWidth(), 0, 0, getHeight());
-				// Esconde o glass pane quando o menu é fechado
 				menuLayer.setVisible(false);
 			}
 			menuLayer.repaint();
@@ -115,7 +109,6 @@ public class Primario extends JFrame {
 		this.cardLayout.show(this.cPanel, panelName);
 		this.cPanel.revalidate();
 		this.cPanel.repaint();
-		// Guarda o nome do painel atual para navegação
 		this.currentPanelName = panelName;
 	}
 
@@ -137,11 +130,8 @@ public class Primario extends JFrame {
 		this.wbb.add(tela);
 	}
 
-	// Novo método adicionado: permite ao Navegador registrar e adicionar
-	// painéis ao CardLayout por nome. O Navegador chama this.prim.adicionarTela(nome, tela).
 	public void adicionarTela(String panelName, JPanel tela) {
 		if (panelName == null || tela == null) return;
-		// Se já existir um painel com esse nome, remove o antigo e substitui
 		if (painelMap.containsKey(panelName)) {
 			JPanel antigo = painelMap.get(panelName);
 			this.cPanel.remove(antigo);
@@ -156,7 +146,6 @@ public class Primario extends JFrame {
 		return this.currentPanelName;
 	}
 
-	// Método auxiliar para verificar se o DrawerMenu está aberto
 	private boolean getDrawerMenuOpenState(DrawerMenu dm) {
 		try {
 			java.lang.reflect.Field field = DrawerMenu.class.getDeclaredField("isOpen");
@@ -184,6 +173,5 @@ public class Primario extends JFrame {
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		// Removido: dm.setParentFrame(this);
 	}
 }
