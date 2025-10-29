@@ -163,7 +163,6 @@ public class TelaConfigUser extends JPanel {
 		tfTelefone.setText(usuario.getTelefone());
 		tfCPF.setText(usuario.getCpfCnpj());
 		txtGithub.setText(usuario.getGithub());
-		System.out.println(usuario.getGithub());
 		if (usuario.getCaminhoFoto() != null) {
 			ImageIcon imgIcon = new ImageIcon(usuario.getCaminhoFoto());
 			imagemSelecionada = imgIcon.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(),

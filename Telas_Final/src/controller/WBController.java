@@ -3,6 +3,8 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.SwingUtilities;
+
 import model.Usuario;
 import model.UsuarioDAO;
 import view.TelaContratante;
@@ -21,6 +23,13 @@ public class WBController {
         this.navegador = navegador;
         this.popup = popup;
         this.popup2 = popup2;
+
+        // initial back button state
+        this.view.setBackEnabled(navegador.hasHistory());
+        // register listener so UI updates when history changes
+        this.navegador.setOnHistoryChange(() -> SwingUtilities.invokeLater(() -> {
+            this.view.setBackEnabled(navegador.hasHistory());
+        }));
         
         this.view.barra(new MouseAdapter() {
             @Override
@@ -28,13 +37,12 @@ public class WBController {
                 popup2.getView().toggleMenu();
             }
         });
-		
-
 
         this.view.menu(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                popup2.getView().toggleMenu();
+                // Ao clicar no ícone de voltar, delega ao Navegador para voltar à tela anterior
+                navegador.voltar();
             }
         });
     }

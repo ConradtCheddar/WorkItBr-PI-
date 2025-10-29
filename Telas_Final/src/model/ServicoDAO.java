@@ -13,8 +13,8 @@ public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "root";
-	//static String Senha = "admin";
-	static String Senha = "aluno";
+	static String Senha = "admin";
+	//static String Senha = "aluno";
 	public ServicoDAO() {
 
 	}

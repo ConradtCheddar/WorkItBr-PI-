@@ -13,6 +13,7 @@ import controller.PopupController;
 import controller.PopupMenuController;
 import controller.TelaFactory;
 import controller.TempController;
+import controller.WBController;
 import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.DrawerMenu;
@@ -30,8 +31,7 @@ import view.wbBarra;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("NÃO MEXA NO CPANEL, SEU BURRO!");
-		// startup message removed (was a debug/accidental print)
+		// startup
 		try {
 			UIManager.setLookAndFeel(new com.formdev.flatlaf.FlatDarkLaf());
 		} catch (Exception ex) {
@@ -47,11 +47,9 @@ public class Main {
 
 		Navegador navegador = new Navegador(prim);
 		pm.setNavegador(navegador);
-		
-		// Criar TelaFactory para gerenciar telas dinâmicas
+
 		TelaFactory telaFactory = new TelaFactory(navegador, servicoDAO, usuarioDAO);
-		
-		// Injetar TelaFactory no DrawerMenu
+
 		pm.setTelaFactory(telaFactory);
 		
 		PopupController popup = new PopupController();
@@ -61,6 +59,8 @@ public class Main {
 		// tela de cadastro
 		TelaCadastro telacadastro = new TelaCadastro();
 		PopupMenuController popup2 = new PopupMenuController(pm, navegador, telaFactory);
+        // Bind wbBarra view to its controller so that lblVoltar will call navegador.voltar()
+        WBController wbController = new WBController(wbb, usuarioDAO, navegador, popup, popup2);
 		LoginController logincontroller = new LoginController(telalogin, usuarioDAO, navegador, telacadastro, popup2);
 		CadastroController cadastrocontroller = new CadastroController(telacadastro, usuarioDAO, navegador);
 
@@ -94,7 +94,7 @@ public class Main {
 		navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
 		navegador.adicionarPainel("SERVICOS", telaservicos);
 		
-
+		
 		navegador.navegarPara("LOGIN");
 		prim.setVisible(true);
 		pm.setNavegador(navegador);

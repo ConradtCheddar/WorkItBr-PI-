@@ -10,6 +10,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -27,8 +29,10 @@ public class wbBarra extends JPanel {
 
 	JPanel wbPanel;
 	private JLabel lblBarra;
-	JLabel lblMenu;
+	JLabel lblVoltar;
 	JLabel lblTitulo;
+	// Track whether back is enabled so hover shows hand only when appropriate
+	private boolean backEnabled = true;
 
 	/**
 	 * Create the panel.
@@ -40,16 +44,66 @@ public class wbBarra extends JPanel {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill", "[grow]", "[grow]"));
 
-		lblMenu = new JLabel();
-		lblMenu.setHorizontalAlignment(SwingConstants.LEFT);
-		lblMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblMenu.setEnabled(true);
+		lblVoltar = new JLabel();
+		lblVoltar.setHorizontalAlignment(SwingConstants.LEFT);
+		lblVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblVoltar.setEnabled(true);
 
 		ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
 		Image img = menuIcon.getImage();
 		Image scaled = img.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-		lblMenu.setIcon(new ImageIcon(scaled));
-		add(lblMenu, "flowx,cell 0 0,alignx left,growy");
+		lblVoltar.setIcon(new ImageIcon(scaled));
+		// Increase clickable area and add a visible border for debugging/visualization
+		// subtle border and padding; lock min/max to avoid layout stretching
+		// keep a small internal padding but remove the visible border we used for debugging
+		lblVoltar.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4));
+		java.awt.Dimension hit = new java.awt.Dimension(36, 36);
+		lblVoltar.setPreferredSize(hit);
+		lblVoltar.setMinimumSize(hit);
+		lblVoltar.setMaximumSize(hit);
+		// place without grow so it won't stretch vertically
+		add(lblVoltar, "flowx,cell 0 0,alignx left,aligny center");
+
+		// Debug listener to confirm clicks reach lblVoltar (can be removed later)
+		// click listener: delegate click events to any external listener registered via menu()
+		lblVoltar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				if (backEnabled) lblVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblVoltar.setCursor(Cursor.getDefaultCursor());
+			}
+		});
+
+		// Add motion listener directly on the label so movement inside it also sets cursor
+		lblVoltar.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				if (backEnabled) lblVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+		});
+
+		// Panel-level mouse motion: robustly detect when pointer is over lblVoltar and set cursor
+		this.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				java.awt.Point p = e.getPoint();
+				java.awt.Rectangle r = lblVoltar.getBounds();
+				// Convert to panel coords if necessary (lblVoltar is child of this panel)
+				if (r.contains(p)) {
+					if (backEnabled) setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				} else {
+					setCursor(Cursor.getDefaultCursor());
+				}
+			}
+		});
 
 		lblTitulo = new JLabel("WorkITBr");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -106,24 +160,39 @@ public class wbBarra extends JPanel {
 	}
 
 	public void menu(MouseAdapter mouseAdapter) {
-		this.lblMenu.addMouseListener(mouseAdapter);
+		this.lblVoltar.addMouseListener(mouseAdapter);
 	}
 
 	public void setMenuClickListener(MouseListener listener) {
-        for (MouseListener ml : getLblBarra().getMouseListeners()) {
-            getLblBarra().removeMouseListener(ml);
-        }
-        getLblBarra().addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                listener.mouseClicked(e);
-            }
-            @Override public void mousePressed(java.awt.event.MouseEvent e) { listener.mousePressed(e); }
-            @Override public void mouseReleased(java.awt.event.MouseEvent e) { listener.mouseReleased(e); }
-            @Override public void mouseEntered(java.awt.event.MouseEvent e) { listener.mouseEntered(e); }
-            @Override public void mouseExited(java.awt.event.MouseEvent e) { listener.mouseExited(e); }
-        });
-    }
+		for (MouseListener ml : getLblBarra().getMouseListeners()) {
+			getLblBarra().removeMouseListener(ml);
+		}
+		getLblBarra().addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				listener.mouseClicked(e);
+			}
+			@Override public void mousePressed(java.awt.event.MouseEvent e) { listener.mousePressed(e); }
+			@Override public void mouseReleased(java.awt.event.MouseEvent e) { listener.mouseReleased(e); }
+			@Override public void mouseEntered(java.awt.event.MouseEvent e) { listener.mouseEntered(e); }
+			@Override public void mouseExited(java.awt.event.MouseEvent e) { listener.mouseExited(e); }
+		});
+	}
+
+	/**
+	 * Enable or disable the back button (lblVoltar). Disabled state gives a visual cue.
+	 */
+	public void setBackEnabled(boolean enabled) {
+		// Keep the component enabled so it continues to receive mouse events.
+		// Store state and update cursor hint; actual hover sets the hand cursor.
+		this.backEnabled = enabled;
+		this.lblVoltar.setCursor(enabled ? Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
+				: Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		 // Optionally change opacity / other visual hint here in the future
+		 this.lblVoltar.setVisible(true);
+		 this.lblVoltar.setOpaque(false);
+		 this.repaint();
+	 }
 
 	public void ajustarFonte() {
 		int w = getWidth();
@@ -154,7 +223,7 @@ public class wbBarra extends JPanel {
 		Image imgBarra = barraIcon.getImage();
 		Image scaledBarra = imgBarra.getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
 
-		lblMenu.setIcon(new ImageIcon(scaled));
+		lblVoltar.setIcon(new ImageIcon(scaled));
 		lblBarra.setIcon(new ImageIcon(scaledBarra));
 	}
 

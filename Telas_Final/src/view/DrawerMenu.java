@@ -90,24 +90,16 @@ public class DrawerMenu extends JPanel {
                 btnLogout.removeActionListener(al);
             }
             btnLogout.addActionListener(e -> {
-                System.out.println("[DrawerMenu] Botão Logout clicado!");
                 if (this.navegador != null) {
-                    System.out.println("[DrawerMenu] Navegador não é null, processando logout...");
                     // Limpa o usuário atual e remove telas dinâmicas
                     this.navegador.clearCurrentUser();
-                    System.out.println("[DrawerMenu] Usuário atual limpo");
                     if (telaFactory != null) {
                         telaFactory.limparCache();
-                        System.out.println("[DrawerMenu] Cache da TelaFactory limpo");
                     }
                     // Remove telas de configuração que podem existir
                     this.navegador.removerPainel("CONFIG_USER");
-                    System.out.println("[DrawerMenu] Painel CONFIG_USER removido");
                     // Navega para LOGIN
                     this.navegador.navegarPara("LOGIN");
-                    System.out.println("[DrawerMenu] Navegando para LOGIN");
-                } else {
-                    System.out.println("[DrawerMenu] ERRO: Navegador é null!");
                 }
                 if (isOpen) toggleMenu();
             });
@@ -214,7 +206,6 @@ public class DrawerMenu extends JPanel {
 
     public void toggleMenu() {
         if (animating) return;
-        System.out.println("[DEBUG] toggleMenu chamado. isOpen=" + isOpen + ", currentWidth=" + currentWidth);
         animating = true;
         final int start = currentWidth;
         final int end = isOpen ? 0 : MENU_WIDTH;
@@ -230,7 +221,6 @@ public class DrawerMenu extends JPanel {
                 animationTimer.stop();
                 isOpen = !isOpen;
                 animating = false;
-                System.out.println("[DEBUG] toggleMenu terminou. isOpen=" + isOpen + ", currentWidth=" + currentWidth);
                 if (onStateChange != null) onStateChange.accept(isOpen);
             }
         });

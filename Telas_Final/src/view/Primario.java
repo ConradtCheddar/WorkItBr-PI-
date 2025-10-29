@@ -26,6 +26,8 @@ public class Primario extends JFrame {
 	private wbBarra wbb;
 	private JPanel menuLayer;
 	private java.util.Map<String, JPanel> painelMap = new java.util.HashMap<>();
+	// Track the currently visible panel name for navigation history
+	private String currentPanelName;
 
 	/**
 	 * Create the frame.
@@ -49,7 +51,6 @@ public class Primario extends JFrame {
 		setIconImages(icons);
 		UIManager.put("Button.arc", 999);
 
-		System.out.println("[Primario] Construtor iniciado");
 		setLayout(new BorderLayout());
 
 		contentPanel = new JPanel(new BorderLayout());
@@ -66,7 +67,8 @@ public class Primario extends JFrame {
 		menuLayer = new JPanel(null);
 		menuLayer.setOpaque(false);
 		setGlassPane(menuLayer);
-		menuLayer.setVisible(true);
+		// keep glass pane invisible by default so it doesn't block mouse events
+		menuLayer.setVisible(false);
 
 		dm.setOpaque(true);
 		dm.setVisible(true);
@@ -91,8 +93,12 @@ public class Primario extends JFrame {
 			int menuWidth = dm.getPreferredSize().width;
 			if (isOpen && menuWidth > 0) {
 				dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
+				// ensure glass pane is visible while menu is open
+				menuLayer.setVisible(true);
 			} else {
 				dm.setBounds(getWidth(), 0, 0, getHeight());
+				// hide glass pane when menu is closed
+				menuLayer.setVisible(false);
 			}
 			menuLayer.repaint();
 		});
@@ -100,32 +106,29 @@ public class Primario extends JFrame {
 		wbb.setMenuClickListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent e) {
-				System.out.println("[Primario] Clique no menu detectado, chamando toggleMenu");
+				// menu click
 				dm.toggleMenu();
 			}
 		});
 	}
 
 	public void mostrarTela(String panelName) {
-		System.out.println("[Primario] mostrarTela(" + panelName + ") chamado");
 		this.cardLayout.show(this.cPanel, panelName);
 		this.cPanel.revalidate();
 		this.cPanel.repaint();
-		System.out.println("[Primario] CardLayout.show executado para: " + panelName);
+		// Track the currently visible panel for navigation purposes
+		this.currentPanelName = panelName;
 	}
 
 	public void adicionarTela(String panelName, JPanel tela) {
-		System.out.println("[Primario] Adicionando tela: " + panelName);
 		// Remove o painel existente se já estiver presente
 		if (painelMap.containsKey(panelName)) {
 			JPanel oldPanel = painelMap.get(panelName);
 			this.cPanel.remove(oldPanel);
-			System.out.println("[Primario] Removeu painel antigo: " + panelName);
 		}
 		// Adiciona o novo painel
 		this.cPanel.add(tela, panelName);
 		painelMap.put(panelName, tela);
-		System.out.println("[Primario] Tela " + panelName + " adicionada ao CardLayout");
 	}
 	
 	/**
@@ -133,21 +136,24 @@ public class Primario extends JFrame {
 	 * @param panelName Nome do painel a ser removido
 	 */
 	public void removerTela(String panelName) {
-		System.out.println("[Primario] Tentando remover painel: " + panelName);
 		if (painelMap.containsKey(panelName)) {
 			JPanel painel = painelMap.get(panelName);
 			this.cPanel.remove(painel);
 			painelMap.remove(panelName);
 			this.cPanel.revalidate();
 			this.cPanel.repaint();
-			System.out.println("[Primario] Painel " + panelName + " removido com sucesso");
-		} else {
-			System.out.println("[Primario] Painel " + panelName + " não encontrado no Map");
 		}
 	}
 
 	public void adicionarTelaWB(JPanel tela) {
 		this.wbb.add(tela);
+	}
+
+	/**
+	 * Exposes the currently visible panel name so the Navegador can build history.
+	 */
+	public String getCurrentPanelName() {
+		return this.currentPanelName;
 	}
 
 	// Helper method to check DrawerMenu open state
