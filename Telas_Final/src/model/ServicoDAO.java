@@ -62,7 +62,16 @@ public class ServicoDAO {
 			var rs = stmt.executeQuery();
 
 			ArrayList<Servico> listaServicos = new ArrayList<Servico>();
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {
+				// Carregar dados completos do contratante (já temos o objeto u, mas vamos garantir que tem foto)
+				if (u.getImagem64() != null && !u.getImagem64().isEmpty()) {
+					try {
+						usuarioDAO.decode64(u);
+					} catch (Exception ex) {
+						// Se falhar ao decodificar a foto, continua sem ela
+					}
+				}
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
 						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBoolean("Aceito"), u);
 				// preencher ids relacionados para uso posterior
@@ -92,12 +101,23 @@ public class ServicoDAO {
 			String sql = "SELECT * FROM Servico WHERE Aceito = false";
 			var stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {
+				// Carregar dados completos do contratante incluindo foto
+				int idContratante = rs.getInt("id_contratante");
+				Usuario contratante = usuarioDAO.getUsuarioById(idContratante);
+				if (contratante != null) {
+					try {
+						usuarioDAO.decode64(contratante);
+					} catch (Exception ex) {
+						// Se falhar ao decodificar a foto, continua sem ela
+					}
+				}
 				Servico s = new Servico(rs.getString("Nome_servico"), rs.getDouble("Valor"), rs.getString("Modalidade"),
-						rs.getString("Descricao"), rs.getBoolean("Aceito"), null);
+						rs.getString("Descricao"), rs.getBoolean("Aceito"), contratante);
 				// preencher id do servico e contratante se existirem
 				s.setIdServico(rs.getInt("ID_servico"));
-				s.setIdContratante(rs.getInt("id_contratante"));
+				s.setIdContratante(idContratante);
 				servicos.add(s);
 			}
 			rs.close();
@@ -117,12 +137,23 @@ public class ServicoDAO {
 			String sql = "SELECT * FROM Servico WHERE Aceito = true";
 			var stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {
+				// Carregar dados completos do contratante incluindo foto
+				int idContratante = rs.getInt("id_contratante");
+				Usuario contratante = usuarioDAO.getUsuarioById(idContratante);
+				if (contratante != null) {
+					try {
+						usuarioDAO.decode64(contratante);
+					} catch (Exception ex) {
+						// Se falhar ao decodificar a foto, continua sem ela
+					}
+				}
 				Servico s = new Servico(rs.getString("Nome_servico"), rs.getDouble("Valor"), rs.getString("Modalidade"),
-						rs.getString("Descricao"), rs.getBoolean("Aceito"), null);
+						rs.getString("Descricao"), rs.getBoolean("Aceito"), contratante);
 				// preencher ids para permitir visualizacao do contratado
 				s.setIdServico(rs.getInt("ID_servico"));
-				s.setIdContratante(rs.getInt("id_contratante"));
+				s.setIdContratante(idContratante);
 				// id_contratado pode ser nulo -> rs.getInt retorna 0 se nulo
 				s.setIdContratado(rs.getInt("id_contratado"));
 				servicos.add(s);
@@ -146,12 +177,22 @@ public class ServicoDAO {
 			stmt.setInt(1, idServico);
 			var rs = stmt.executeQuery();
 			if (rs.next()) {
+				// Carregar dados completos do contratante incluindo foto
+				int idContratante = rs.getInt("id_contratante");
+				UsuarioDAO usuarioDAO = new UsuarioDAO();
+				Usuario contratante = usuarioDAO.getUsuarioById(idContratante);
+				if (contratante != null) {
+					try {
+						usuarioDAO.decode64(contratante);
+					} catch (Exception ex) {
+						// Se falhar ao decodificar a foto, continua sem ela
+					}
+				}
 				servico = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBoolean("Aceito"), null // contratante
-						// não carregado aqui
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBoolean("Aceito"), contratante
 				);
 				servico.setIdServico(rs.getInt("ID_servico"));
-				servico.setIdContratante(rs.getInt("id_contratante"));
+				servico.setIdContratante(idContratante);
 				servico.setIdContratado(rs.getInt("id_contratado"));
 			}
 			rs.close();

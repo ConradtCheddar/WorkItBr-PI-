@@ -82,6 +82,8 @@ public class DrawerMenu extends JPanel {
             }
             btnLogout.addActionListener(e -> {
                 if (this.navegador != null) {
+                    // Limpa todas as imagens de perfil antes do logout
+                    this.navegador.limparImagensPerfil();
                     this.navegador.navegarPara("LOGIN");
                 }
                 if (isOpen) toggleMenu();
@@ -93,7 +95,15 @@ public class DrawerMenu extends JPanel {
             }
             btnTrabalhos.addActionListener(e -> {
                 if (this.navegador != null) {
-                    this.navegador.navegarPara("SERVICOS");
+                	Usuario u = this.navegador.getCurrentUser();
+                	if (u.isContratante()) {
+                		this.navegador.navegarPara("SERVICOS");
+                	}else if (u.isContratado()) {
+						this.navegador.navegarPara("CONTRATADO");
+					}else {
+						navegador.navegarPara("TEMP");
+					}
+                    
                 }
                 if (isOpen) toggleMenu();
             });

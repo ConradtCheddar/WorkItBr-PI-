@@ -42,7 +42,8 @@ public class UsuarioDAO {
 			return u;
 		}
 		byte[] fotoContent = Base64.getDecoder().decode(imagem64);
-		String caminhofoto = System.getProperty("user.dir") + "/src/imagens/fotoPerfil.jpg";
+		// Usa o ID do usuário no nome do arquivo para diferenciar entre usuários
+		String caminhofoto = System.getProperty("user.dir") + "/src/imagens/FotoPerfil_" + u.getIdUsuario() + ".jpg";
 		try (FileOutputStream fos = new FileOutputStream(caminhofoto)) {
 			fos.write(fotoContent);
 		} catch (Exception e) {
@@ -222,7 +223,7 @@ public class UsuarioDAO {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-	        String sql = "UPDATE Usuarios SET Email = ?, Nome_Usuario = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, github =? WHERE idUsuario = ?";
+	        String sql = "UPDATE Usuarios SET Email = ?, Nome_Usuario = ?, CPF_CNPJ = ?, Telefone = ?, Senha = ?, github = ?, imagem64 = ? WHERE idUsuario = ?";
 	        var stmt = conn.prepareStatement(sql);
 	        stmt.setString(1, u.getEmail());
 	        stmt.setString(2, u.getUsuario());
@@ -230,7 +231,8 @@ public class UsuarioDAO {
 	        stmt.setString(4, u.getTelefone());
 	        stmt.setString(5, u.getSenha());
 	        stmt.setString(6, u.getGithub());
-	        stmt.setInt(7, u.getIdUsuario());
+	        stmt.setString(7, u.getImagem64());
+	        stmt.setInt(8, u.getIdUsuario());
 
 	        int rowsUpdated = stmt.executeUpdate();
 

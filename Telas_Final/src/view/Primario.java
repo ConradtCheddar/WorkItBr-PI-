@@ -25,6 +25,7 @@ public class Primario extends JFrame {
 	private JTextField textField;
 	private wbBarra wbb;
 	private JPanel menuLayer;
+	private controller.Navegador navegador; // Referência ao navegador para limpeza ao fechar
 
 	/**
 	 * Create the frame.
@@ -148,5 +149,22 @@ public class Primario extends JFrame {
 	public void setVisible(boolean b) {
 		super.setVisible(b);
 		// Removido: dm.setParentFrame(this);
+	}
+	
+	/**
+	 * Configura o Navegador e adiciona WindowListener para limpar imagens ao fechar
+	 */
+	public void setNavegador(controller.Navegador navegador) {
+		this.navegador = navegador;
+		
+		// Adiciona listener para limpar imagens quando a janela for fechada
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				if (Primario.this.navegador != null) {
+					Primario.this.navegador.limparImagensPerfil();
+				}
+			}
+		});
 	}
 }

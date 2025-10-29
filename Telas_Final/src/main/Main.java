@@ -43,6 +43,8 @@ public class Main {
 		Primario prim = new Primario(wbb, pm);
 
 		Navegador navegador = new Navegador(prim);
+		navegador.setUsuarioDAO(usuarioDAO); // Injeta o UsuarioDAO no Navegador
+		prim.setNavegador(navegador); // Configura o Navegador no Primario para limpeza ao fechar
 		pm.setNavegador(navegador);
 		ServicoDAO servicoDAO = new ServicoDAO();
 		PopupController popup = new PopupController();
