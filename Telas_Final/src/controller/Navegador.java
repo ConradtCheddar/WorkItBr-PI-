@@ -16,6 +16,8 @@ public class Navegador {
 	private Primario prim;
 	private Usuario currentUser;
 	private UsuarioDAO usuarioDAO;
+	private Deque<String> history = new ArrayDeque<>();
+	private Runnable historyListener;
 	
 	public Navegador(Primario prim) {
 		this.prim = prim;
@@ -49,6 +51,15 @@ public class Navegador {
 	 * Navega para uma tela. Por retrocompatibilidade empilha a tela atual no histórico.
 	 */
 	public void navegarPara(String nome) {
+		navegarPara(nome, true);
+	}
+	
+	/**
+	 * Navega para uma tela com controle sobre empilhar no histórico.
+	 * @param nome Nome da tela para navegar
+	 * @param pushCurrent Se true, empilha a tela atual no histórico
+	 */
+	public void navegarPara(String nome, boolean pushCurrent) {
 		// Atualiza a imagem do perfil do usuário atual antes de navegar
 		if (currentUser != null && usuarioDAO != null) {
 			try {
@@ -129,6 +140,13 @@ public class Navegador {
 	}
 	public Usuario getCurrentUser() {
 		return this.currentUser;
+	}
+	
+	/**
+	 * Limpa o usuário atual (usado no logout)
+	 */
+	public void clearCurrentUser() {
+		this.currentUser = null;
 	}
 	
 	/**
