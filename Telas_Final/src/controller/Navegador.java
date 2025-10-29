@@ -70,6 +70,7 @@ public class Navegador {
 				e.printStackTrace();
 			}
 		}
+	}
 		
 	public void navegarPara(String nome, boolean pushCurrent) {
 		this.prim.fecharDrawerMenuSeAberto(); // Fecha o DrawerMenu se estiver aberto
