@@ -3,18 +3,11 @@ package main;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import controller.CadastroContratanteController;
-import controller.CadastroController;
 import controller.ContratadoController;
 import controller.ContratanteController;
 import controller.ListaServicosController;
 import controller.LoginController;
-import controller.Navegador;
 import controller.PopupController;
-import controller.PopupMenuController;
-import controller.TelaFactory;
-import controller.TempController;
-import controller.WBController;
 import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.DrawerMenu;
@@ -27,8 +20,6 @@ import view.TelaContratado;
 import view.TelaContratante;
 import view.TelaListaServicos;
 import view.TelaLogin;
-import view.Temp;
-import view.VisServicoCnte;
 import view.wbBarra;
 
 public class Main {
@@ -65,14 +56,14 @@ public class Main {
 				Thread.sleep(150);
 
 				splash.setProgress(45, "Configurando navegação...");
-				Navegador navegador = new Navegador(prim);
+				controller.Navegador navegador = new controller.Navegador(prim);
 				navegador.setUsuarioDAO(usuarioDAO);
 				prim.setNavegador(navegador);
 				pm.setNavegador(navegador);
 				Thread.sleep(100);
 
 				splash.setProgress(55, "Criando fábrica de telas...");
-				TelaFactory telaFactory = new TelaFactory(navegador, servicoDAO, usuarioDAO);
+				controller.TelaFactory telaFactory = new controller.TelaFactory(navegador, servicoDAO, usuarioDAO);
 				pm.setTelaFactory(telaFactory);
 				Thread.sleep(100);
 				
@@ -81,13 +72,13 @@ public class Main {
 
 				TelaLogin telalogin = new TelaLogin();
 				TelaCadastro telacadastro = new TelaCadastro();
-				PopupMenuController popup2 = new PopupMenuController(pm, navegador, telaFactory);
-				WBController wbController = new WBController(wbb, usuarioDAO, navegador, popup, popup2);
+				controller.PopupMenuController popup2 = new controller.PopupMenuController(pm, navegador, telaFactory);
+				controller.WBController wbController = new controller.WBController(wbb, usuarioDAO, navegador, popup, popup2);
 				Thread.sleep(150);
 
 				splash.setProgress(70, "Configurando tela de login...");
 				LoginController logincontroller = new LoginController(telalogin, usuarioDAO, navegador, telacadastro, popup2);
-				CadastroController cadastrocontroller = new CadastroController(telacadastro, usuarioDAO, navegador);
+				controller.CadastroController cadastrocontroller = new controller.CadastroController(telacadastro, usuarioDAO, navegador);
 				Thread.sleep(100);
 
 				splash.setProgress(75, "Configurando tela do contratante...");
@@ -103,10 +94,7 @@ public class Main {
 				
 				splash.setProgress(85, "Configurando cadastros...");
 				TelaCadastroContratante telacadastrocontratante = new TelaCadastroContratante();
-				CadastroContratanteController cadastrocontratantecontroller = new CadastroContratanteController(telacadastrocontratante, servicoDAO, navegador);
-				
-				Temp temp = new Temp();
-				TempController tempcontroller = new TempController(temp, usuarioDAO, navegador);
+				controller.CadastroContratanteController cadastrocontratantecontroller = new controller.CadastroContratanteController(telacadastrocontratante, servicoDAO, navegador);
 
 				TelaAdm telaadm = new TelaAdm();
 				Thread.sleep(100);
@@ -122,7 +110,6 @@ public class Main {
 				navegador.adicionarPainel("CADASTRO", telacadastro);
 				navegador.adicionarPainel("CONTRATANTE", telacontratante);
 				navegador.adicionarPainel("CONTRATADO", telacontratado);
-				navegador.adicionarPainel("TEMP", temp);
 				navegador.adicionarPainel("ADM", telaadm);
 				navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
 				navegador.adicionarPainel("SERVICOS", telaservicos);
@@ -130,23 +117,34 @@ public class Main {
 
 				splash.setProgress(98, "Finalizando...");
 				navegador.navegarPara("login");
-				Thread.sleep(200);
+				Thread.sleep(100);
+
+				splash.setProgress(100, "Preparando interface...");
 				
-				splash.setProgress(100, "Pronto!");
-				Thread.sleep(300);
+				// PRÉ-INICIALIZAÇÃO: Constrói tudo ANTES de mostrar
+				// Isso evita redimensionamentos visíveis
+				SwingUtilities.invokeAndWait(() -> {
+					// Força todos os layouts e cálculos de tamanho
+					prim.preinicializar();
+				});
 				
-				// Mostra a janela principal na EDT
+				Thread.sleep(300); // Aumentado para garantir renderização completa
+				
+				// Mostra a janela principal já completamente renderizada
 				SwingUtilities.invokeLater(() -> {
 					prim.setVisible(true);
-					// Força o layout completo antes de fechar o splash
-					prim.revalidate();
-					prim.repaint();
+					prim.toFront();
+					prim.requestFocus();
 					
-					// Aguarda um pouco para garantir que a janela foi renderizada
-					SwingUtilities.invokeLater(() -> {
-						splash.closeSplash();
-					});
+					// Habilita os listeners de resize SOMENTE após a janela estar visível
+					wbb.habilitarResizeListeners();
 				});
+				
+				// Aguarda a janela estar completamente visível
+				Thread.sleep(150);
+				
+				// Fecha a splash DEPOIS que a janela principal está pronta
+				splash.closeSplash(250);
 				
 			} catch (Exception e) {
 				e.printStackTrace();

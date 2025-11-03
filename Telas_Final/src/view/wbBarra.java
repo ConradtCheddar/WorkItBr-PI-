@@ -33,6 +33,7 @@ public class wbBarra extends JPanel {
 	JLabel lblTitulo;
 	private boolean backEnabled = true;
 	private boolean menuEnabled = true;
+	private boolean resizeListenersEnabled = false; // Flag para controlar listeners de resize
 
 	public wbBarra() {
 
@@ -110,6 +111,7 @@ public class wbBarra extends JPanel {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
+				if (!resizeListenersEnabled) return; // Ignora durante inicialização
 				ajustarIcones();
 				ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
 				Image imgbarra = barraIcon.getImage();
@@ -122,6 +124,7 @@ public class wbBarra extends JPanel {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
+				if (!resizeListenersEnabled) return; // Ignora durante inicialização
 				int panelHeight = getHeight();
 				int fontSize = Math.max(15, panelHeight / 17);
 				int fontSize2 = Math.max(15, panelHeight / 40);
@@ -132,6 +135,14 @@ public class wbBarra extends JPanel {
 			}
 		});
 
+	}
+	
+	/**
+	 * Ativa os listeners de redimensionamento após a inicialização completa.
+	 * Isso evita múltiplos redimensionamentos durante o carregamento inicial.
+	 */
+	public void habilitarResizeListeners() {
+		this.resizeListenersEnabled = true;
 	}
 
 	@Override

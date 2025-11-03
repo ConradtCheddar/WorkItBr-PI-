@@ -92,9 +92,17 @@ public class SplashScreen extends JWindow {
      * Fecha a tela de splash com um pequeno delay para suavizar a transição
      */
     public void closeSplash() {
+        closeSplash(300);
+    }
+    
+    /**
+     * Fecha a tela de splash com delay customizado
+     * @param delayMs Delay em milissegundos antes de fechar
+     */
+    public void closeSplash(int delayMs) {
         SwingUtilities.invokeLater(() -> {
             try {
-                Thread.sleep(300); // Delay suave antes de fechar
+                Thread.sleep(delayMs);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

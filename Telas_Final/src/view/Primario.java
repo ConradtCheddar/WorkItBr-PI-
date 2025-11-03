@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -203,5 +204,36 @@ public class Primario extends JFrame {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * Pré-inicializa a janela forçando todos os layouts e renderizações
+	 * antes de torná-la visível. Isso evita redimensionamentos visíveis.
+	 */
+	public void preinicializar() {
+		// Força o cálculo de todos os tamanhos e layouts
+		pack();
+		
+		// Restaura o tamanho desejado
+		setSize(1200, 800);
+		setLocationRelativeTo(null);
+		
+		// Força validação completa de todos os componentes
+		validate();
+		
+		// Força a renderização de todos os componentes
+		doLayout();
+		
+		// Força repaint completo
+		revalidate();
+		repaint();
+		
+		// Força a pintura imediata de todos os componentes
+		// Nota: getGraphics() pode ser null se não houver peer ainda
+		java.awt.Graphics g = getGraphics();
+		if (g != null) {
+			paintAll(g);
+			g.dispose();
+		}
 	}
 }
