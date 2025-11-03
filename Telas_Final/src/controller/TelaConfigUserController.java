@@ -1,7 +1,10 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
 import model.Usuario;
 import model.UsuarioDAO;
+import util.FieldValidator;
 import view.TelaConfigUser;
 
 public class TelaConfigUserController {
@@ -26,11 +29,44 @@ public class TelaConfigUserController {
 
         // Listener para alterar dados
         this.view.addAlterarDadosListener(e -> {
+            String email = view.getEmail().trim();
+            String telefone = view.getTelefone().trim();
+            String cpfCnpj = view.getCpfCnpj().trim();
+            
+            // Validar email
+            if (!FieldValidator.validarEmail(email)) {
+                JOptionPane.showMessageDialog(null, "Email inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Validar telefone
+            if (!FieldValidator.validarTelefone(telefone)) {
+                JOptionPane.showMessageDialog(null, "Telefone inválido! Deve ter 10 ou 11 dígitos.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Validar CPF ou CNPJ
+            String cpfLimpo = FieldValidator.removerFormatacao(cpfCnpj);
+            if (cpfLimpo.length() == 11) {
+                if (!FieldValidator.validarCPF(cpfCnpj)) {
+                    JOptionPane.showMessageDialog(null, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } else if (cpfLimpo.length() == 14) {
+                if (!FieldValidator.validarCNPJ(cpfCnpj)) {
+                    JOptionPane.showMessageDialog(null, "CNPJ inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "CPF/CNPJ inválido! Digite 11 dígitos para CPF ou 14 para CNPJ.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
             usuario.setUsuario(view.getNome());
             usuario.setSenha(view.getSenha());
-            usuario.setEmail(view.getEmail());
-            usuario.setTelefone(view.getTelefone());
-            usuario.setCpfCnpj(view.getCpfCnpj());
+            usuario.setEmail(email);
+            usuario.setTelefone(telefone);
+            usuario.setCpfCnpj(cpfCnpj);
             usuario.setGithub(view.getGithub());
             model.atualizarUsuario(usuario);
         });

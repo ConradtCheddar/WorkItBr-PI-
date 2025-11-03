@@ -6,10 +6,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/aluno/Desktop/WorkItBr-PI-/Telas_Final/com.miglayout.core_11.4.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aluno/Desktop/WorkItBr-PI-/Telas_Final/com.miglayout.swing_11.4.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aluno/Desktop/WorkItBr-PI-/Telas_Final/flatlaf-3.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aluno/Desktop/WorkItBr-PI-/Telas_Final/mysql-connector-j-9.4.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/aluno/Desktop/WorkItBr-PI-/Telas_Final/swingx-1.6.1.jar"/>
+	<classpathentry kind="lib" path="com.miglayout.core_11.4.2.jar"/>
+	<classpathentry kind="lib" path="com.miglayout.swing_11.4.2.jar"/>
+	<classpathentry kind="lib" path="flatlaf-3.6.1.jar"/>
+	<classpathentry kind="lib" path="mysql-connector-j-9.4.0.jar"/>
+	<classpathentry kind="lib" path="swingx-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -32,6 +32,7 @@ public class wbBarra extends JPanel {
 	JLabel lblVoltar;
 	JLabel lblTitulo;
 	private boolean backEnabled = true;
+	private boolean menuEnabled = true;
 
 	public wbBarra() {
 
@@ -102,7 +103,7 @@ public class wbBarra extends JPanel {
 		Image imgBarra = barraIcon.getImage();
 		Image scaledBarra = imgBarra.getScaledInstance(64, 40, Image.SCALE_SMOOTH);
 		getLblBarra().setIcon(new ImageIcon(scaledBarra));
-		add(getLblBarra(), "cell 2 0,grow");
+		add(getLblBarra(), "cell 2 0,alignx right,growy");
 
 
 		ajustarIcones();
@@ -167,10 +168,21 @@ public class wbBarra extends JPanel {
 		this.backEnabled = enabled;
 		this.lblVoltar.setCursor(enabled ? Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
 				: Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		 this.lblVoltar.setVisible(true);
-		 this.lblVoltar.setOpaque(false);
-		 this.repaint();
-	 }
+		// Aplica efeito visual de desabilitado (opacidade reduzida) igual ao menu
+		this.lblVoltar.setEnabled(enabled);
+		this.lblVoltar.setVisible(true);
+		this.lblVoltar.setOpaque(false);
+		this.repaint();
+	}
+
+	public void setMenuEnabled(boolean enabled) {
+		this.menuEnabled = enabled;
+		this.lblBarra.setCursor(enabled ? Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
+				: Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		// Aplica efeito visual de desabilitado (opacidade reduzida)
+		this.lblBarra.setEnabled(enabled);
+		this.repaint();
+	}
 
 	public void ajustarFonte() {
 		int w = getWidth();
@@ -222,6 +234,10 @@ public class wbBarra extends JPanel {
 
 	public void setLblBarra(JLabel lblBarra) {
 		this.lblBarra = lblBarra;
+	}
+
+	public JLabel getLblVoltar() {
+		return lblVoltar;
 	}
 
 }

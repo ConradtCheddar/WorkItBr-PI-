@@ -27,6 +27,23 @@ public class Navegador {
 	public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
 		this.usuarioDAO = usuarioDAO;
 	}
+	
+	/**
+	 * Define um listener para ser notificado quando o histórico de navegação mudar
+	 * @param listener Runnable a ser executado quando o histórico mudar
+	 */
+	public void setOnHistoryChange(Runnable listener) {
+		this.historyListener = listener;
+	}
+	
+	/**
+	 * Verifica se existe histórico de navegação
+	 * @return true se existe pelo menos uma tela no histórico, false caso contrário
+	 */
+	public boolean hasHistory() {
+		return !history.isEmpty();
+	}
+	
 	/**
 	 * metodo para adicionar um Jpanel
 	 * 
@@ -122,6 +139,13 @@ public class Navegador {
 	 */
 	public void clearHistory() {
 		history.clear();
+		if (historyListener != null) historyListener.run();
+	}
+
+	/**
+	 * Força a atualização do listener de histórico (usado após login para atualizar UI)
+	 */
+	public void notifyHistoryChange() {
 		if (historyListener != null) historyListener.run();
 	}
 

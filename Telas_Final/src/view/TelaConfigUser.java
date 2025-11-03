@@ -18,23 +18,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.AbstractDocument;
 
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 import model.Usuario;
 import net.miginfocom.swing.MigLayout;
+import util.FieldValidator;
+
 import javax.swing.SwingConstants;
 
 public class TelaConfigUser extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-	ImageIcon menuResized = new ImageIcon(scaledImage2);
-
-	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-	ImageIcon barraResized = new ImageIcon(scaledImage3);
 
 	private JTextField tfPesquisar;
 	private JPanel foto;
@@ -135,6 +131,8 @@ public class TelaConfigUser extends JPanel {
 		add(tfTelefone, "cell 0 8,grow");
 		tfTelefone.setColumns(10);
 		tfTelefone.putClientProperty("JComponent.roundRect", true);
+		// Aplicar formatação automática de telefone
+		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
 		JLabel lblCPF = new JLabel("CPF");
 		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -144,6 +142,8 @@ public class TelaConfigUser extends JPanel {
 		add(tfCPF, "cell 0 10,grow");
 		tfCPF.setColumns(10);
 		tfCPF.putClientProperty("JComponent.roundRect", true);
+		// Aplicar formatação automática de CPF
+		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
 
 		lblGithub = new JLabel("Github");
 		lblGithub.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -266,54 +266,6 @@ public class TelaConfigUser extends JPanel {
 	/**
 	 * getters e setters
 	 */
-	public ImageIcon getMenuIcon() {
-		return menuIcon;
-	}
-
-	public void setMenuIcon(ImageIcon menuIcon) {
-		this.menuIcon = menuIcon;
-	}
-
-	public Image getScaledImage2() {
-		return scaledImage2;
-	}
-
-	public void setScaledImage2(Image scaledImage2) {
-		this.scaledImage2 = scaledImage2;
-	}
-
-	public ImageIcon getMenuResized() {
-		return menuResized;
-	}
-
-	public void setMenuResized(ImageIcon menuResized) {
-		this.menuResized = menuResized;
-	}
-
-	public ImageIcon getBarraIcon() {
-		return barraIcon;
-	}
-
-	public void setBarraIcon(ImageIcon barraIcon) {
-		this.barraIcon = barraIcon;
-	}
-
-	public Image getScaledImage3() {
-		return scaledImage3;
-	}
-
-	public void setScaledImage3(Image scaledImage3) {
-		this.scaledImage3 = scaledImage3;
-	}
-
-	public ImageIcon getBarraResized() {
-		return barraResized;
-	}
-
-	public void setBarraResized(ImageIcon barraResized) {
-		this.barraResized = barraResized;
-	}
-
 	public JTextField getTfPesquisar() {
 		return tfPesquisar;
 	}

@@ -2,7 +2,9 @@ package controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import model.Usuario;
@@ -26,25 +28,64 @@ public class WBController {
 
         // Estado inicial do botão voltar
         this.view.setBackEnabled(navegador.hasHistory());
+        // Estado inicial do menu (desabilitado se não houver usuário logado)
+        this.view.setMenuEnabled(navegador.getCurrentUser() != null);
+        
         // registra ouvinte para atualizar a UI quando o histórico mudar
         this.navegador.setOnHistoryChange(() -> SwingUtilities.invokeLater(() -> {
             this.view.setBackEnabled(navegador.hasHistory());
+            // Atualiza também o estado do menu baseado no usuário logado
+            this.view.setMenuEnabled(navegador.getCurrentUser() != null);
         }));
         
-        this.view.barra(new MouseAdapter() {
+        // Remove TODOS os listeners antigos antes de adicionar o novo (para evitar duplicação)
+        for (MouseListener ml : this.view.getLblBarra().getMouseListeners()) {
+            this.view.getLblBarra().removeMouseListener(ml);
+        }
+        
+        // Configuração do menu (barra de 3 linhas)
+        this.view.getLblBarra().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                // Verifica se o usuário está logado antes de abrir o menu
+                if (navegador.getCurrentUser() == null) {
+                    JOptionPane.showMessageDialog(
+                        view,
+                        "Você precisa estar logado para acessar o menu.",
+                        "Acesso Negado",
+                        JOptionPane.WARNING_MESSAGE
+                    );
+                    return; // PARA AQUI - não abre o menu
+                }
+                // Só abre o menu se o usuário estiver logado
                 popup2.getView().toggleMenu();
             }
         });
 
-        this.view.menu(new MouseAdapter() {
+        // Remove TODOS os listeners antigos da seta antes de adicionar o novo
+        for (MouseListener ml : this.view.getLblVoltar().getMouseListeners()) {
+            // Mantém apenas os listeners internos da própria view (os primeiros adicionados)
+            if (ml.getClass().getName().contains("WBController")) {
+                this.view.getLblVoltar().removeMouseListener(ml);
+            }
+        }
+        
+        // Configuração da seta de voltar
+        this.view.getLblVoltar().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Navega para trás apenas se houver histórico
-                if (navegador.hasHistory()) {
-                    navegador.voltar();
+                // Verifica se há histórico antes de navegar
+                if (!navegador.hasHistory()) {
+                    JOptionPane.showMessageDialog(
+                        view,
+                        "Não há tela anterior para retornar.",
+                        "Aviso",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                    return; // PARA AQUI - não navega
                 }
+                // Só navega se houver histórico
+                navegador.voltar();
             }
         });
     }

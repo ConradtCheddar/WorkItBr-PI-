@@ -27,14 +27,6 @@ import javax.swing.JScrollPane;
 public class TelaAdm extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	
-	ImageIcon menuIcon = new ImageIcon(getClass().getResource("/imagens/Casa.png"));
-	Image scaledImage2 = menuIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-	ImageIcon menuResized = new ImageIcon(scaledImage2);
-	
-	ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-	Image scaledImage3 = barraIcon.getImage().getScaledInstance(24, 10, Image.SCALE_SMOOTH);
-	ImageIcon barraResized = new ImageIcon(scaledImage3);
 
 	public TelaAdm() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));

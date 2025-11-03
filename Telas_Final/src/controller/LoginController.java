@@ -37,6 +37,8 @@ public class LoginController {
 				dao.decode64(u);
 				this.navegador.setCurrentUser(u);
 				popupMenuController.updateProfileAction();
+				// Notifica a mudança para atualizar o estado do menu na barra
+				this.navegador.notifyHistoryChange();
 				if (u.isAdmin()) {
 					navegador.navegarPara("ADM", false);
 				} else if (u.isContratado()) {
