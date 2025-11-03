@@ -15,7 +15,16 @@ public class DrawerMenu extends JPanel {
     private static final int MENU_WIDTH = 250;
     private static final int MARGIN = 10; // Margem entre botões e borda
     private static final int BUTTON_HEIGHT = 50;
+    private static final int ANIMATION_DURATION = 300; // Duração da animação em ms
+    private static final int ANIMATION_FPS = 60; // Frames por segundo
+    
     private boolean isOpen = false;
+    private boolean isAnimating = false;
+    private Timer animationTimer;
+    private long animationStartTime;
+    private int targetX;
+    private int startX;
+    
     private JButton btnLogout;
     private JButton btnSettings;
     private JButton btnProfile;
@@ -178,10 +187,95 @@ public class DrawerMenu extends JPanel {
     }
 
     public void toggleMenu() {
+        if (isAnimating) return; // Previne múltiplas animações simultâneas
+        
         isOpen = !isOpen;
+        startAnimation();
+    }
+    
+    /**
+     * Inicia a animação de abertura/fechamento do menu
+     */
+    private void startAnimation() {
+        if (animationTimer != null && animationTimer.isRunning()) {
+            animationTimer.stop();
+        }
+        
+        isAnimating = true;
+        animationStartTime = System.currentTimeMillis();
+        
+        // Notifica que o menu está mudando de estado
         if (onStateChange != null) {
             onStateChange.accept(isOpen);
         }
+        
+        // Calcula posições inicial e final
+        Container parent = getParent();
+        if (parent != null) {
+            if (isOpen) {
+                // Abrindo: começa fora da tela (à direita) e vai para posição visível
+                startX = parent.getWidth();
+                targetX = parent.getWidth() - MENU_WIDTH;
+            } else {
+                // Fechando: começa na posição visível e vai para fora da tela
+                startX = parent.getWidth() - MENU_WIDTH;
+                targetX = parent.getWidth();
+            }
+            
+            // Configura o timer de animação
+            int delay = 1000 / ANIMATION_FPS;
+            animationTimer = new Timer(delay, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateAnimation();
+                }
+            });
+            animationTimer.start();
+        } else {
+            isAnimating = false;
+        }
+    }
+    
+    /**
+     * Atualiza a animação a cada frame
+     */
+    private void updateAnimation() {
+        long elapsed = System.currentTimeMillis() - animationStartTime;
+        float progress = Math.min(1.0f, (float) elapsed / ANIMATION_DURATION);
+        
+        // Usa função de easing para suavizar a animação (ease-out)
+        float easedProgress = easeOutCubic(progress);
+        
+        // Calcula a posição atual
+        int currentX = startX + (int) ((targetX - startX) * easedProgress);
+        
+        // Atualiza a posição do menu
+        Container parent = getParent();
+        if (parent != null) {
+            int y = 0;
+            int height = parent.getHeight();
+            setBounds(currentX, y, MENU_WIDTH, height);
+            parent.revalidate();
+            parent.repaint();
+        }
+        
+        // Verifica se a animação terminou
+        if (progress >= 1.0f) {
+            if (animationTimer != null) {
+                animationTimer.stop();
+            }
+            isAnimating = false;
+        }
+    }
+    
+    /**
+     * Função de easing cubic para suavizar a animação
+     * @param t progresso de 0 a 1
+     * @return valor suavizado
+     */
+    private float easeOutCubic(float t) {
+        float f = t - 1.0f;
+        return f * f * f + 1.0f;
     }
 
     private JButton createMenuButton(String text) {
@@ -238,6 +332,6 @@ public class DrawerMenu extends JPanel {
     }
     
     public boolean isAnimating() {
-        return false;
+        return isAnimating;
     }
 }

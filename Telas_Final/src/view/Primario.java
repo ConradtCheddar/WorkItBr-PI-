@@ -7,13 +7,13 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
 public class Primario extends JFrame {
@@ -66,19 +66,14 @@ public class Primario extends JFrame {
 		contentPanel.add(cPanel, BorderLayout.CENTER);
 
 		// Mudança: usar BorderLayout em vez de layout nulo
-		menuLayer = new JPanel(new BorderLayout());
+		menuLayer = new JPanel(null); // Usando null layout para posicionar manualmente
 		menuLayer.setOpaque(false);
 		setGlassPane(menuLayer);
 		menuLayer.setVisible(false);
 
-		// Painel wrapper para posicionar o menu à direita
-		JPanel menuWrapper = new JPanel(new BorderLayout());
-		menuWrapper.setOpaque(false);
-		
 		dm.setOpaque(true);
 		dm.setVisible(false); // Começa invisível
-		menuWrapper.add(dm, BorderLayout.EAST);
-		menuLayer.add(menuWrapper, BorderLayout.CENTER);
+		menuLayer.add(dm);
 
 		// Adiciona listener para fechar o menu ao clicar fora dele
 		menuLayer.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -94,6 +89,14 @@ public class Primario extends JFrame {
 		addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
 			public void componentResized(java.awt.event.ComponentEvent e) {
+				// Atualiza a posição do menu ao redimensionar a janela
+				if (dm.isOpen() && !dm.isAnimating()) {
+					int menuWidth = 250;
+					int x = getWidth() - menuWidth;
+					int y = 0;
+					int height = getHeight();
+					dm.setBounds(x, y, menuWidth, height);
+				}
 				menuLayer.revalidate();
 				menuLayer.repaint();
 			}
@@ -104,8 +107,15 @@ public class Primario extends JFrame {
 				dm.setVisible(true);
 				menuLayer.setVisible(true);
 			} else {
-				dm.setVisible(false);
-				menuLayer.setVisible(false);
+				// Aguarda o fim da animação para esconder
+				Timer hideTimer = new Timer(320, e -> {
+					if (!dm.isOpen()) {
+						dm.setVisible(false);
+						menuLayer.setVisible(false);
+					}
+				});
+				hideTimer.setRepeats(false);
+				hideTimer.start();
 			}
 			menuLayer.revalidate();
 			menuLayer.repaint();

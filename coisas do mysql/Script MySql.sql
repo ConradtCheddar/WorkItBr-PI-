@@ -50,5 +50,18 @@ AND NOT EXISTS (
     SELECT 1 FROM Servico WHERE Nome_servico = 'teste1'
 );
 
+INSERT INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, github, isContratado, isAdmin, isContratante, imagem64)
+SELECT '1', 'joao.contratante@workit.com', '11111111111', '11987654321', '1', NULL, FALSE, FALSE, TRUE, ""
+WHERE NOT EXISTS (
+    SELECT 1 FROM Usuarios WHERE Email = 'joao.contratante@workit.com'
+);
+
+INSERT INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, github, isContratado, isAdmin, isContratante, imagem64)
+SELECT '2', 'maria.dev@workit.com', '22222222222', '21988887777', '2', 'github.com/mariadev', TRUE, FALSE, FALSE, ""
+WHERE NOT EXISTS (
+    SELECT 1 FROM Usuarios WHERE Email = 'maria.dev@workit.com'
+);
+
+
 SELECT * FROM Usuarios;
 SELECT * FROM Servico;
