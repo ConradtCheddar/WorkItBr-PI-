@@ -1,48 +1,37 @@
 package view;
 
-import javax.swing.JPanel;
-import net.miginfocom.swing.MigLayout;
-import java.awt.CardLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
-import org.jdesktop.swingx.prompt.PromptSupport;
-
-import model.Servico;
-
-import javax.swing.JTextPane;
-import javax.swing.ImageIcon;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
-import java.awt.image.BufferedImage;
-import model.Usuario;
-import model.UsuarioDAO;
 
 import javax.imageio.ImageIO;
-import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import model.Servico;
+import model.Usuario;
+import model.UsuarioDAO;
+import net.miginfocom.swing.MigLayout;
 
 public class VisServicoAndamento extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	JPanel panel;
-	JPanel Perfil;
-	JPanel PanelInfo;
-	JPanel PanelDesc;
-	JLabel lblTitulo;
-	JLabel lblModalidade;
-	JLabel lblPreco;
-	private JLabel tpDesc;
-	private JLabel lblFoto;
-	private JButton btnFinalizar;
+	private JPanel panel,Perfil,PanelInfo,PanelDesc;
+	private JLabel lblTitulo,lblModalidade,lblPreco,tpDesc,lblFoto,lblNome_Arquivo;
+	private JButton btnFinalizar,btnArquivos;
+	private JFileChooser fileChooser;
+	private File ArquivoSelecionado;
 
 	public VisServicoAndamento(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow]10[grow][grow][grow]"));
@@ -93,6 +82,12 @@ public class VisServicoAndamento extends JPanel {
 
 		btnFinalizar = new JButton("Finalizar trabalho");
 		add(btnFinalizar, "cell 0 3,alignx center");
+		
+		btnArquivos = new JButton("Adicionar arquivos");
+		add(btnArquivos, "cell 2 3,alignx center");
+		
+		lblNome_Arquivo = new JLabel("");
+		add(lblNome_Arquivo, "cell 4 3");
 		
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -149,8 +144,33 @@ public class VisServicoAndamento extends JPanel {
 		return new ImageIcon(bi);
 	}
 	
+	public String selecionarArquivo() {
+		JFileChooser fileChooser = new JFileChooser();
+		int result = fileChooser.showOpenDialog(null);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			String caminho = selectedFile.getAbsolutePath();
+			File file = new File(selectedFile.getAbsolutePath());
+			lblNome_Arquivo.setText(file.getName());
+			return caminho;
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Adiciona ActionListener ao botão finalizar
+	 * @param actionlistener
+	 */
 	public void finalizar(ActionListener actionlistener) {
 		this.btnFinalizar.addActionListener(actionlistener);
+	}
+	/**
+	 * Adiciona ActionListener ao botão adicionar arquivos
+	 * @param actionlistener
+	 */
+	public void Adicionar(ActionListener actionlistener) {
+		this.btnArquivos.addActionListener(actionlistener);
 	}
 
 }
