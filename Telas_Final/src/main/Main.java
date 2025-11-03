@@ -4,7 +4,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import controller.ContratadoController;
-import controller.ContratanteController;
 import controller.ListaServicosController;
 import controller.LoginController;
 import controller.PopupController;
@@ -17,7 +16,6 @@ import view.TelaAdm;
 import view.TelaCadastro;
 import view.TelaCadastroContratante;
 import view.TelaContratado;
-import view.TelaContratante;
 import view.TelaListaServicos;
 import view.TelaLogin;
 import view.wbBarra;
@@ -81,11 +79,6 @@ public class Main {
 				controller.CadastroController cadastrocontroller = new controller.CadastroController(telacadastro, usuarioDAO, navegador);
 				Thread.sleep(100);
 
-				splash.setProgress(75, "Configurando tela do contratante...");
-				TelaContratante telacontratante = new TelaContratante();
-				ContratanteController contratanteController = new ContratanteController(telacontratante, usuarioDAO, navegador);
-				Thread.sleep(100);
-
 				splash.setProgress(80, "Configurando tela do contratado...");
 				TelaContratado telacontratado = new TelaContratado();
 				ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador, servicoDAO, telaFactory);
@@ -108,7 +101,6 @@ public class Main {
 				splash.setProgress(95, "Registrando telas...");
 				navegador.adicionarPainel("LOGIN", telalogin);
 				navegador.adicionarPainel("CADASTRO", telacadastro);
-				navegador.adicionarPainel("CONTRATANTE", telacontratante);
 				navegador.adicionarPainel("CONTRATADO", telacontratado);
 				navegador.adicionarPainel("ADM", telaadm);
 				navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
@@ -116,7 +108,7 @@ public class Main {
 				Thread.sleep(100);
 
 				splash.setProgress(98, "Finalizando...");
-				navegador.navegarPara("login");
+				navegador.navegarPara("LOGIN");
 				Thread.sleep(100);
 
 				splash.setProgress(100, "Preparando interface...");

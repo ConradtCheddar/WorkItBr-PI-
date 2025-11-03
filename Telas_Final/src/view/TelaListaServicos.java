@@ -44,12 +44,12 @@ public class TelaListaServicos extends JPanel {
 	 * 
 	 */
 	public TelaListaServicos() {
-		setPreferredSize(new Dimension(900, 700));
+		setPreferredSize(new Dimension(597, 364));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 0", "[20px][grow][grow][][grow][grow][grow][][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", "[35px][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
+		setLayout(new MigLayout("fill, insets 20 20 20 40, gap 40", "[grow][200]", "[grow][grow][grow][grow]"));
 		
 		String colunas[]= {
-			"ID", "Nome", "valor", "modalidade", "foi aceito?", "descrio"
+			"ID", "Nome", "Valor", "Modalidade", "Aceito?", "Descrição"
 		};
 		Object dados[][]= new Object[0][6];
 		this.tableModel = new DefaultTableModel(dados,colunas) {
@@ -62,7 +62,7 @@ public class TelaListaServicos extends JPanel {
 		this.tableData = this.getItems();
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		add(scrollPane_1, "cell 2 2 11 13,grow");
+		add(scrollPane_1, "cell 0 0 1 4,grow");
 		
 		scrollPane_1.setViewportView(tableServicos);
 		tableServicos.setForeground(new Color(255, 255, 255));
@@ -73,23 +73,24 @@ public class TelaListaServicos extends JPanel {
 		tableServicos.getColumnModel().getColumn(0).setWidth(0);
 		
 		btnVisualizar = new JButton("Visualizar");
-		add(btnVisualizar, "cell 19 4,grow");
-		
-		btnEditar = new JButton("Editar");
-		add(btnEditar, "cell 19 6,grow");
+		add(btnVisualizar, "cell 1 0,growx,height 20:40:60");
 		
 		btnDeletar = new JButton("Deletar");
-		add(btnDeletar, "cell 19 8,grow");
+		add(btnDeletar, "cell 1 1,growx,height 20:40:60");
 		
 		btnCadastrar = new JButton("Cadastrar");
-		add(btnCadastrar, "cell 19 10,grow");
+		add(btnCadastrar, "cell 1 2,growx,height 20:40:60");
+		
+		btnEditar = new JButton("Editar");
+		add(btnEditar, "cell 1 3,growx,height 20:40:60");
 	}
 
 	public void atualizarTable(ArrayList<Servico> lista) {
 		this.tableModel.setRowCount(0); // Clear table before adding new rows
 		for(int i =0; i<lista.size(); i++) {
 			Servico s = lista.get(i);
-			Object[] newRowData = {s.getId(), s.getNome_Servico(), s.getValor(), s.getModalidade(), s.getAceito(), s.getDescricao()};
+			String aceitoTexto = Boolean.TRUE.equals(s.getAceito()) ? "Sim" : "Não";
+			Object[] newRowData = {s.getId(), s.getNome_Servico(), s.getValor(), s.getModalidade(), aceitoTexto, s.getDescricao()};
 			this.tableModel.addRow(newRowData);
 		}
 			

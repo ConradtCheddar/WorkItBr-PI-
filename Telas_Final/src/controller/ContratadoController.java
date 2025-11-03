@@ -4,7 +4,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -12,11 +11,10 @@ import javax.swing.JOptionPane;
 import model.Servico;
 import model.ServicoDAO;
 import model.UsuarioDAO;
+import view.ServicoListCellRenderer;
 import view.TelaContratado;
-import view.TelaContratante;
 import view.VisServico;
 import view.VisServicoAndamento;
-import view.ServicoListCellRenderer;
 
 public class ContratadoController extends ComponentAdapter {
 	private final TelaContratado view;

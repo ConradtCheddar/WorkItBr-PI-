@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -7,9 +8,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import model.Usuario;
 import model.UsuarioDAO;
-import view.TelaContratante;
 import view.wbBarra;
 
 public class WBController {
@@ -74,8 +73,10 @@ public class WBController {
         this.view.getLblVoltar().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println("[WBController] Seta de voltar clicada!");
                 // Verifica se há histórico antes de navegar
                 if (!navegador.hasHistory()) {
+                    System.out.println("[WBController] Não há histórico para voltar");
                     JOptionPane.showMessageDialog(
                         view,
                         "Não há tela anterior para retornar.",
@@ -85,7 +86,20 @@ public class WBController {
                     return; // PARA AQUI - não navega
                 }
                 // Só navega se houver histórico
+                System.out.println("[WBController] Chamando navegador.voltar()");
                 navegador.voltar();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (navegador.hasHistory()) {
+                    view.getLblVoltar().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                }
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                view.getLblVoltar().setCursor(Cursor.getDefaultCursor());
             }
         });
     }

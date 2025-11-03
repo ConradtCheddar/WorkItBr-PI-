@@ -101,20 +101,43 @@ public class Navegador {
 		try {
 			String current = this.prim.getCurrentPanelName();
 			boolean shouldPush = pushCurrent;
+			
+			// Normaliza os nomes para maiúsculas para comparação consistente
+			String currentUpper = (current != null) ? current.toUpperCase() : null;
+			String nomeUpper = (nome != null) ? nome.toUpperCase() : null;
+			
+			System.out.println("[Navegador] Navegando de '" + current + "' para '" + nome + "'");
+			System.out.println("[Navegador] pushCurrent inicial: " + pushCurrent);
+			
 			// Não empilha telas de cadastro no histórico (assim o botão voltar não as retorna)
-			if (current != null) {
-				if (current.startsWith("CADASTRO") || current.equals("CADASTRO_CONTRATANTE")) {
+			// MAS: se a tela ATUAL for CADASTRO e estamos indo para outra tela, não empilha
+			if (currentUpper != null) {
+				if (currentUpper.startsWith("CADASTRO") || currentUpper.equals("CADASTRO_CONTRATANTE")) {
 					shouldPush = false;
+					System.out.println("[Navegador] Tela atual é CADASTRO, shouldPush = false");
 				}
 			}
-			if (shouldPush && current != null && !current.equals(nome)) {
+			
+			// SEMPRE empilha LOGIN quando está navegando para uma tela de CADASTRO
+			// (garante que o botão voltar funcione de CADASTRO para LOGIN)
+			if (currentUpper != null && currentUpper.equals("LOGIN") && 
+			    (nomeUpper.startsWith("CADASTRO") || nomeUpper.equals("CADASTRO_CONTRATANTE"))) {
+				shouldPush = true;
+				System.out.println("[Navegador] De LOGIN para CADASTRO, forçando shouldPush = true");
+			}
+			
+			if (shouldPush && current != null && !currentUpper.equals(nomeUpper)) {
 				history.push(current);
+				System.out.println("[Navegador] Empilhado '" + current + "' no histórico. Tamanho do histórico: " + history.size());
 				// notifica o ouvinte de que o histórico mudou
 				if (historyListener != null)
 					historyListener.run();
+			} else {
+				System.out.println("[Navegador] NÃO empilhou. shouldPush=" + shouldPush + ", current=" + current + ", equals=" + (currentUpper != null && currentUpper.equals(nomeUpper)));
 			}
 		} catch (Exception ex) {
-			// Se o prim não rastrear o painel atual por algum motivo, ignora
+			System.err.println("[Navegador] Erro ao empilhar histórico: " + ex.getMessage());
+			ex.printStackTrace();
 		}
 		this.prim.mostrarTela(nome);
 		if ("SERVICOS".equals(nome)) {
@@ -127,10 +150,13 @@ public class Navegador {
 	 * histórico, não faz nada.
 	 */
 	public void voltar() {
+		System.out.println("[Navegador] Método voltar() chamado. Tamanho do histórico: " + history.size());
 		if (history.isEmpty()) {
+			System.out.println("[Navegador] Histórico vazio, não há para onde voltar");
 			return;
 		}
 		String anterior = history.pop();
+		System.out.println("[Navegador] Voltando para: '" + anterior + "'. Novo tamanho do histórico: " + history.size());
 		this.prim.fecharDrawerMenuSeAberto();
 		this.prim.mostrarTela(anterior);
 		if (historyListener != null)

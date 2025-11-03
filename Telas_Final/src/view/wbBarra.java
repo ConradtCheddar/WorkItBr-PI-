@@ -55,21 +55,8 @@ public class wbBarra extends JPanel {
 		// Dimensões iniciais - serão ajustadas dinamicamente pelo ajustarIcones()
 		add(lblVoltar, "flowx,cell 0 0,alignx left,aligny center");
 
-		lblVoltar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				if (backEnabled) lblVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblVoltar.setCursor(Cursor.getDefaultCursor());
-			}
-		});
+		// Removido o MouseListener vazio que estava bloqueando o clique
+		// O listener funcional será adicionado pelo WBController
 
 		lblVoltar.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
