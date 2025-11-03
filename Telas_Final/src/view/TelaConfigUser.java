@@ -78,6 +78,24 @@ public class TelaConfigUser extends JPanel {
 				super.paintComponent(g);
 				if (imagemSelecionada != null) {
 					g.drawImage(imagemSelecionada, 0, 0, getWidth(), getHeight(), this);
+				} else {
+					// Desenha "???" no centro quando não há imagem
+					g.setColor(Color.GRAY);
+					int panelWidth = getWidth();
+					int panelHeight = getHeight();
+					int fontSize = Math.min(panelWidth, panelHeight) / 3;
+					Font questionFont = new Font("Tahoma", Font.BOLD, fontSize);
+					g.setFont(questionFont);
+					
+					String text = "???";
+					java.awt.FontMetrics fm = g.getFontMetrics();
+					int textWidth = fm.stringWidth(text);
+					int textHeight = fm.getAscent();
+					
+					int x = (panelWidth - textWidth) / 2;
+					int y = (panelHeight + textHeight) / 2 - fm.getDescent();
+					
+					g.drawString(text, x, y);
 				}
 			}
 		};
