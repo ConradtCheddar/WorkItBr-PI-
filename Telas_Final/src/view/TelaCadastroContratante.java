@@ -109,10 +109,9 @@ public class TelaCadastroContratante extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 37);
-				int fontSize2 = Math.max(15, panelHeight / 23);
-				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSize2 + 5));
+				int fontSizeTitulo = Math.max(16, panelHeight / 20);
+				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
+
 			}
 		});
 

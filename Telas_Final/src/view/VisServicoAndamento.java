@@ -12,12 +12,17 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
 
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 import model.Servico;
 
 import javax.swing.JTextPane;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.io.File;
@@ -33,46 +38,91 @@ public class VisServicoAndamento extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	JPanel panel;
-	JPanel Perfil;
-	JPanel PanelInfo;
-	JPanel PanelDesc;
-	JLabel lblTitulo;
-	JLabel lblModalidade;
-	JLabel lblPreco;
-	private JLabel tpDesc;
+	private JPanel Perfil;
+	private JPanel PanelInfo;
+	private JPanel PanelDesc;
+	private JTextArea taTitulo;
+	private JTextArea taModalidade;
+	private JTextArea taPreco;
+	private JTextArea tpDesc;
 	private JLabel lblFoto;
 	private JButton btnFinalizar;
 
 	public VisServicoAndamento(Servico s) {
-		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow]", "[grow]10[grow][grow][grow]"));
+		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
 
 		Perfil = new JPanel();
+		Perfil.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante"));
 		Perfil.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		add(Perfil, "cell 0 0,grow");
+		
 		lblFoto = new JLabel();
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
-		Perfil.add(lblFoto, "cell 0 0");
+		Perfil.add(lblFoto, "cell 0 0,alignx center,aligny center");
 
 		PanelInfo = new JPanel();
-		add(PanelInfo, "cell 1 0 5 1,grow");
+		PanelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Serviço"));
+		add(PanelInfo, "cell 1 0,grow");
 		PanelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 
-		lblTitulo = new JLabel("Titulo");
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblTitulo, "cell 0 0,grow");
+		taTitulo = new JTextArea("Titulo");
+		taTitulo.setEditable(false);
+		taTitulo.setFocusable(false);
+		taTitulo.setLineWrap(true);
+		taTitulo.setWrapStyleWord(true);
+		taTitulo.setRows(1);
+		taTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		taTitulo.setBackground(PanelInfo.getBackground());
+		taTitulo.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		PanelInfo.add(taTitulo, "cell 0 0,grow");
 
-		lblModalidade = new JLabel("Modalidade");
-		lblModalidade.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblModalidade, "cell 0 1,grow");
+		taModalidade = new JTextArea("Modalidade");
+		taModalidade.setEditable(false);
+		taModalidade.setFocusable(false);
+		taModalidade.setLineWrap(true);
+		taModalidade.setWrapStyleWord(true);
+		taModalidade.setRows(1);
+		taModalidade.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		taModalidade.setBackground(PanelInfo.getBackground());
+		taModalidade.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		PanelInfo.add(taModalidade, "cell 0 1,grow");
 
-		lblPreco = new JLabel("Preco");
-		lblPreco.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblPreco, "cell 0 2, grow");
+		taPreco = new JTextArea("Preco");
+		taPreco.setEditable(false);
+		taPreco.setFocusable(false);
+		taPreco.setLineWrap(true);
+		taPreco.setWrapStyleWord(true);
+		taPreco.setRows(1);
+		taPreco.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		taPreco.setBackground(PanelInfo.getBackground());
+		taPreco.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		PanelInfo.add(taPreco, "cell 0 2,grow");
 
-		lblTitulo.setText(s.getNome_Servico());
-		lblModalidade.setText(s.getModalidade());
-		lblPreco.setText(Double.toString(s.getValor()));
+		PanelDesc = new JPanel();
+		PanelDesc.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Descrição"));
+		add(PanelDesc, "cell 0 1 2 1,grow");
+		PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
+
+		tpDesc = new JTextArea();
+		tpDesc.setEditable(false);
+		tpDesc.setFocusable(false);
+		tpDesc.setLineWrap(true);
+		tpDesc.setWrapStyleWord(true);
+		tpDesc.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tpDesc.setBackground(PanelDesc.getBackground());
+		tpDesc.setText(s.getDescricao());
+		
+		JScrollPane scrollPane = new JScrollPane(tpDesc);
+		scrollPane.setBorder(null);
+		PanelDesc.add(scrollPane, "cell 0 0,grow");
+
+		btnFinalizar = new JButton("Finalizar trabalho");
+		btnFinalizar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		add(btnFinalizar, "cell 0 2 2 1,alignx center");
+
+		taTitulo.setText(s.getNome_Servico());
+		taModalidade.setText(s.getModalidade());
+		taPreco.setText(String.format("R$ %.2f", s.getValor()));
 
 		// Carrega a foto do contratante (se disponível)
 		Usuario u = s.getContratante();
@@ -82,27 +132,22 @@ public class VisServicoAndamento extends JPanel {
 		}
 		ImageIcon foto = loadUserImage(u, 150, 150);
 		lblFoto.setIcon(foto);
-
-		PanelDesc = new JPanel();
-		add(PanelDesc, "cell 0 1 6 2,grow");
-		PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
-
-		tpDesc = new JLabel("");
-		PanelDesc.add(tpDesc, "cell 0 0");
-		tpDesc.setText(s.getDescricao());
-
-		btnFinalizar = new JButton("Finalizar trabalho");
-		add(btnFinalizar, "cell 0 3,alignx center");
 		
+		// Dynamic font sizing
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 37);
-				int fontSize2 = Math.max(15, panelHeight / 23);
-				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
-				btnFinalizar.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				int fontSizeTitulo = Math.max(16, panelHeight / 30);
+				int fontSizeInfo = Math.max(14, panelHeight / 35);
+				int fontSizeDesc = Math.max(12, panelHeight / 40);
+				int fontSizeBotao = Math.max(14, panelHeight / 35);
 				
+				taTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
+				taModalidade.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
+				taPreco.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
+				tpDesc.setFont(new Font("Tahoma", Font.PLAIN, fontSizeDesc));
+				btnFinalizar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
 			}
 		});
 

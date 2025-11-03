@@ -13,6 +13,8 @@ import javax.swing.SwingConstants;
 import model.Servico;
 
 import javax.swing.JTextPane;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.io.File;
@@ -22,69 +24,105 @@ import model.Usuario;
 import model.UsuarioDAO;
 
 import javax.imageio.ImageIO;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class VisServico extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	JPanel panel;
-	JPanel Perfil;
-	JPanel PanelInfo;
-	JPanel PanelDesc;
-	JLabel lblTitulo;
-	JLabel lblModalidade;
-	JLabel lblPreco;
-	JButton btnAceitar;
-	private JLabel tpDesc;
-    private JLabel lblFoto; // mostra a foto do contratante
+	private JPanel panel;
+	private JPanel panelPerfil;
+	private JPanel panelInfo;
+	private JPanel panelDesc;
+	private JTextArea taTitulo;
+	private JTextArea taModalidade;
+	private JTextArea taPreco;
+	private JButton btnAceitar;
+	private JTextArea taDesc;
+	private JLabel lblFoto; // mostra a foto do contratante
+	private JPanel panelBotoes;
 
 	public VisServico(Servico s) {
-		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
+		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
 		
 		panel = new JPanel();
-		add(panel, "cell 0 0 4 6,grow");
+		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante"));
+		add(panel, "cell 0 0,grow");
 		panel.setLayout(new CardLayout(0, 0));
 		
-		Perfil = new JPanel();
-		// configurar painel de perfil com espao para foto
-		Perfil.setLayout(new MigLayout("", "[grow]", "[grow]"));
-		panel.add(Perfil, "name_1709392782600");
+		panelPerfil = new JPanel();
+		// configurar painel de perfil com espaço para foto
+		panelPerfil.setLayout(new MigLayout("", "[grow]", "[grow]"));
+		panel.add(panelPerfil, "name_1709392782600");
 		lblFoto = new JLabel();
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
-		Perfil.add(lblFoto, "cell 0 0,alignx center,aligny center");
+		panelPerfil.add(lblFoto, "cell 0 0,alignx center,aligny center");
 		
-		PanelInfo = new JPanel();
-		add(PanelInfo, "cell 4 0 6 7,grow");
-		PanelInfo.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][][grow][grow][][grow][grow][grow][grow][grow]"));
+		panelInfo = new JPanel();
+		panelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Serviço"));
+		add(panelInfo, "cell 1 0,grow");
+		panelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 		
-		lblTitulo = new JLabel("Titulo");
-		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblTitulo, "cell 0 0 9 2,grow");
+		taTitulo = new JTextArea("Título");
+		taTitulo.setEditable(false);
+		taTitulo.setFocusable(false);
+		taTitulo.setLineWrap(true);
+		taTitulo.setWrapStyleWord(true);
+		taTitulo.setRows(1);
+		taTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		taTitulo.setBackground(panelInfo.getBackground());
+		taTitulo.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		panelInfo.add(taTitulo, "cell 0 0,grow");
 		
-		lblModalidade = new JLabel("Modalidade");
-		lblModalidade.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblModalidade, "cell 0 2 9 3,grow");
+		taModalidade = new JTextArea("Modalidade");
+		taModalidade.setEditable(false);
+		taModalidade.setFocusable(false);
+		taModalidade.setLineWrap(true);
+		taModalidade.setWrapStyleWord(true);
+		taModalidade.setRows(1);
+		taModalidade.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		taModalidade.setBackground(panelInfo.getBackground());
+		taModalidade.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		panelInfo.add(taModalidade, "cell 0 1,grow");
 		
-		lblPreco = new JLabel("Preco");
-		lblPreco.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblPreco, "cell 0 5 9 3,grow");
+		taPreco = new JTextArea("Preço");
+		taPreco.setEditable(false);
+		taPreco.setFocusable(false);
+		taPreco.setLineWrap(true);
+		taPreco.setWrapStyleWord(true);
+		taPreco.setRows(1);
+		taPreco.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		taPreco.setBackground(panelInfo.getBackground());
+		taPreco.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		panelInfo.add(taPreco, "cell 0 2,grow");
 		
-		PanelDesc = new JPanel();
-		add(PanelDesc, "cell 0 8 10 8,grow");
-		PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
+		panelDesc = new JPanel();
+		panelDesc.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Descrição"));
+		add(panelDesc, "cell 0 1 2 1,grow");
+		panelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
-		tpDesc = new JLabel("");
-		PanelDesc.add(tpDesc, "cell 0 0");
+		taDesc = new JTextArea();
+		taDesc.setEditable(false);
+		taDesc.setFocusable(false);
+		taDesc.setLineWrap(true);
+		taDesc.setWrapStyleWord(true);
+		taDesc.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		taDesc.setBackground(panelDesc.getBackground());
+		taDesc.setText(s.getDescricao());
 		
-		btnAceitar = new JButton("Aceitar");
-		add(btnAceitar, "cell 0 16 11 1,alignx center");
+		JScrollPane scrollPane = new JScrollPane(taDesc);
+		scrollPane.setBorder(null);
+		panelDesc.add(scrollPane, "cell 0 0,grow");
 
-		lblTitulo.setText(s.getNome_Servico());
-		lblModalidade.setText(s.getModalidade());
-		lblPreco.setText(Double.toString(s.getValor()));
-		tpDesc.setText(s.getDescricao());
+		taTitulo.setText(s.getNome_Servico());
+		taModalidade.setText(s.getModalidade());
+		taPreco.setText(String.format("R$ %.2f", s.getValor()));
 		
-
 		// Carrega a foto do contratante (se disponível). Se o objeto Usuario não estiver presente,
 		// tenta recuperar pelo idContratante via UsuarioDAO.
 		Usuario u = s.getContratante();
@@ -95,7 +133,30 @@ public class VisServico extends JPanel {
 		ImageIcon foto = loadUserImage(u, 150, 150);
 		lblFoto.setIcon(foto);
 		
-
+		panelBotoes = new JPanel();
+		add(panelBotoes, "cell 0 2 2 1,grow");
+		
+		btnAceitar = new JButton("Aceitar");
+		btnAceitar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelBotoes.add(btnAceitar);
+		
+		// Dynamic font sizing
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSizeTitulo = Math.max(16, panelHeight / 30);
+				int fontSizeInfo = Math.max(14, panelHeight / 35);
+				int fontSizeDesc = Math.max(12, panelHeight / 40);
+				int fontSizeBotao = Math.max(14, panelHeight / 35);
+				
+				taTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
+				taModalidade.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
+				taPreco.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
+				taDesc.setFont(new Font("Tahoma", Font.PLAIN, fontSizeDesc));
+				btnAceitar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
+			}
+		});
 	}
 	
 	/**

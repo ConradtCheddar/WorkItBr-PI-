@@ -73,11 +73,9 @@ public class TelaContratado extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 37);
-				int fontSize2 = Math.max(15, panelHeight / 27);
-				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
-				lblAndamento.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				lblDisponiveis.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				int fontSizeLabel = Math.max(14, panelHeight / 25);
+				lblAndamento.setFont(new Font("Tahoma", Font.PLAIN, fontSizeLabel));
+				lblDisponiveis.setFont(new Font("Tahoma", Font.PLAIN, fontSizeLabel));
 			}
 		});
 

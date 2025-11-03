@@ -13,9 +13,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
 
 import model.Usuario;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class VisContratado extends JPanel {
 
@@ -24,10 +31,10 @@ public class VisContratado extends JPanel {
 	private JPanel panel;
 	private JPanel Perfil;
 	private JPanel PanelInfo;
-	private JLabel lblNome;
-	private JLabel lblGithub;
-	private JLabel lblEmail;
-	private JLabel lblTelefone;
+	private JTextArea taNome;
+	private JTextArea taGithub;
+	private JTextArea taEmail;
+	private JTextArea taTelefone;
 	private JButton btnVoltar;
     private Image imagemSelecionada;
     private Image imagemOriginal;
@@ -35,11 +42,12 @@ public class VisContratado extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public VisContratado(Usuario u) {
-		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
+    public VisContratado(Usuario u) {
+		setLayout(new MigLayout("fill, insets 20 20 20 20, gap 20", "[grow][grow][grow]", "[grow][grow][grow]"));
 		
 		panel = new JPanel();
-		add(panel, "cell 0 0 4 6,grow");
+		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Perfil"));
+		add(panel, "cell 0 0 1 2,grow");
 		panel.setLayout(new CardLayout(0, 0));
 		
 		// painel Perfil renderiza a foto do usuário quando disponível
@@ -52,7 +60,7 @@ public class VisContratado extends JPanel {
 				}
 			}
 		};
-		panel.add(Perfil, "name_1709392782600");
+		panel.add(Perfil, "name_12377154952900");
 		// Redimensiona a imagem quando o painel mudar de tamanho
 		Perfil.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -65,34 +73,81 @@ public class VisContratado extends JPanel {
 		});
 		
 		PanelInfo = new JPanel();
-		add(PanelInfo, "cell 4 0 6 15,grow");
-		PanelInfo.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][][grow][grow][][grow][grow][grow][grow][grow]"));
+		PanelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Contratado"));
+		add(PanelInfo, "cell 1 0 2 2,grow");
+		PanelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow]"));
 		
-		lblNome = new JLabel("Nome");
-		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblNome, "cell 0 0 9 2,grow");
+		taNome = new JTextArea("Nome");
+		taNome.setEditable(false);
+		taNome.setFocusable(false);
+		taNome.setLineWrap(true);
+		taNome.setWrapStyleWord(true);
+		taNome.setRows(1);
+		taNome.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		taNome.setBackground(PanelInfo.getBackground());
+		taNome.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		PanelInfo.add(taNome, "cell 0 0,grow");
 		
-		lblGithub = new JLabel("Github");
-		lblGithub.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblGithub, "cell 0 2 9 3,grow");
+		taGithub = new JTextArea("Github");
+		taGithub.setEditable(false);
+		taGithub.setFocusable(false);
+		taGithub.setLineWrap(true);
+		taGithub.setWrapStyleWord(true);
+		taGithub.setRows(1);
+		taGithub.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		taGithub.setBackground(PanelInfo.getBackground());
+		taGithub.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		PanelInfo.add(taGithub, "cell 0 1,grow");
 		
-		lblEmail = new JLabel("Email");
-		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblEmail, "cell 0 5 9 3,grow");
+		taEmail = new JTextArea("Email");
+		taEmail.setEditable(false);
+		taEmail.setFocusable(false);
+		taEmail.setLineWrap(true);
+		taEmail.setWrapStyleWord(true);
+		taEmail.setRows(1);
+		taEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		taEmail.setBackground(PanelInfo.getBackground());
+		taEmail.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		PanelInfo.add(taEmail, "cell 0 2,grow");
 		
-		lblTelefone = new JLabel("Telefone");
-		lblTelefone.setHorizontalAlignment(SwingConstants.CENTER);
-		PanelInfo.add(lblTelefone, "cell 0 8 9 3,grow");
-		
-		btnVoltar = new JButton("Voltar");
-		add(btnVoltar, "cell 0 16 11 1,alignx center");
+		taTelefone = new JTextArea("Telefone");
+		taTelefone.setEditable(false);
+		taTelefone.setFocusable(false);
+		taTelefone.setLineWrap(true);
+		taTelefone.setWrapStyleWord(true);
+		taTelefone.setRows(1);
+		taTelefone.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		taTelefone.setBackground(PanelInfo.getBackground());
+		taTelefone.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+		PanelInfo.add(taTelefone, "cell 0 3,grow");
 
-		lblNome.setText(u.getUsuario());
+		taNome.setText(u.getUsuario());
 		// Exibe github, com alternativa caso não esteja preenchido no banco
 		String githubText = (u.getGithub() != null && !u.getGithub().isBlank()) ? u.getGithub() : "Não informado";
-		lblGithub.setText(githubText);
-		lblEmail.setText(u.getEmail());
-		lblTelefone.setText(u.getTelefone());
+		taGithub.setText(githubText);
+		taEmail.setText(u.getEmail());
+		taTelefone.setText(u.getTelefone());
+		
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		add(btnVoltar, "cell 1 2, height 20:40:80, grow");
+		
+		// Dynamic font sizing
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int panelHeight = getHeight();
+				int fontSizeNome = Math.max(16, panelHeight / 30);
+				int fontSizeInfo = Math.max(14, panelHeight / 35);
+				int fontSizeBotao = Math.max(14, panelHeight / 35);
+				
+				taNome.setFont(new Font("Tahoma", Font.PLAIN, fontSizeNome));
+				taGithub.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
+				taEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
+				taTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
+				btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
+			}
+		});
 		
 		// Carrega a imagem do usuário caso exista caminho
 		if (u != null && u.getCaminhoFoto() != null && !u.getCaminhoFoto().isBlank()) {

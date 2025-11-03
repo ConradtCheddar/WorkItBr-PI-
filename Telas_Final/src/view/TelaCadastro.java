@@ -55,7 +55,7 @@ public class TelaCadastro extends JPanel {
 		btnCadastrar.putClientProperty("JComponent.roundRect", true);
 
 		lblTitulo = new JLabel("Cadastro");
-		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblTitulo, "cell 2 0,grow");
 
@@ -138,20 +138,20 @@ public class TelaCadastro extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 40);
-				int fontSize2 = Math.max(15, panelHeight / 25);
-				int fontSize3 = Math.max(15, panelHeight / 20);
-				tfEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				tfUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				senha.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				senha2.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				int fontSizeTexto = Math.max(12, panelHeight / 35);
+				int fontSizeBotao = Math.max(14, panelHeight / 25);
+				int fontSizeTitulo = Math.max(16, panelHeight / 20);
+				tfEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
+				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
+				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
+				tfUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
+				senha.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
+				senha2.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
+				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
 				btnCadastrar.putClientProperty("JComponent.roundRect", true);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSize3));
-				rdbtnContratante.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
-				rdbtnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
+				rdbtnContratante.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
+				rdbtnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
 				// updateIconSize() é chamado automaticamente quando setFont é chamado
 				rdbtnContratante.updateIconSize();
 				rdbtnContratado.updateIconSize();

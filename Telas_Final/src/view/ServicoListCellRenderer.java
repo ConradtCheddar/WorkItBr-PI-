@@ -17,9 +17,9 @@ public class ServicoListCellRenderer extends JPanel implements ListCellRenderer<
 
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         topPanel.setOpaque(false);
-        lblTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
         lblTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-        lblModalidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblModalidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lblModalidade.setForeground(Color.WHITE);
         lblModalidade.setAlignmentX(Component.LEFT_ALIGNMENT);
         topPanel.add(lblTitle);
@@ -31,7 +31,7 @@ public class ServicoListCellRenderer extends JPanel implements ListCellRenderer<
         centerPanel.setOpaque(false);
         centerPanel.add(topPanel);
         centerPanel.add(Box.createVerticalStrut(4));
-        lblDesc.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblDesc.setFont(new Font("Tahoma", Font.PLAIN, 14));
         lblDesc.setForeground(Color.WHITE);
         lblDesc.setAlignmentX(Component.LEFT_ALIGNMENT);
         centerPanel.add(lblDesc);
@@ -40,7 +40,7 @@ public class ServicoListCellRenderer extends JPanel implements ListCellRenderer<
         add(centerPanel, BorderLayout.CENTER);
         lblValue.setForeground(Color.WHITE);
 
-        lblValue.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblValue.setFont(new Font("Tahoma", Font.BOLD, 16));
         lblValue.setHorizontalAlignment(SwingConstants.RIGHT);
         add(lblValue, BorderLayout.EAST);
 

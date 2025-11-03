@@ -87,7 +87,7 @@ public class TelaLogin extends JPanel {
 			"background: null");
 
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		passwordField.setFont(new Font("Dialog", Font.PLAIN, 12));
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
 		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
@@ -109,7 +109,7 @@ public class TelaLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnLogin.setFont(new Font("Dialog", Font.BOLD, 20));
 		btnLogin.setFocusTraversalPolicyProvider(true);
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(new Color(0, 102, 204));
@@ -117,7 +117,7 @@ public class TelaLogin extends JPanel {
 		add(btnLogin, "cell 2 5,grow");
 
 		JLabel lblntlg = new JLabel("Ainda não tem um Login?");
-		lblntlg.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblntlg.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblntlg.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblntlg, "flowx,cell 2 6,alignx center,aligny center");
 
@@ -126,7 +126,7 @@ public class TelaLogin extends JPanel {
 
 		lblCadastrese.setForeground(new Color(0, 102, 204));
 		lblCadastrese.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		add(lblCadastrese, "cell 2 6,growy");
 		lblCadastrese.addMouseListener(new MouseAdapter() {
 			@Override
@@ -155,17 +155,16 @@ public class TelaLogin extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
-				int fontSizeTexto = Math.max(12, panelHeight / 35);
-				int fontSizeBotao = Math.max(14, panelHeight / 25);
-				int fontSizeTitulo = Math.max(16, panelHeight / 20);
-				Font textoFont = new Font("Tahoma", Font.PLAIN, fontSizeTexto);
-				btnLogin.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-				lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
+				int fontSize = Math.max(15, panelHeight / 37);
+				int fontSize2 = Math.max(15, panelHeight / 23);
+				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
+				btnLogin.setFont(new Font("Tahoma", Font.PLAIN, fontSize2));
+				lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
 				// os prompts já foram configurados na inicialização
-				txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				lblntlg.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				passwordField.setFont(textoFont);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
+				txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				lblntlg.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				passwordField.setFont(italicPlaceholderFont);
+				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSize2 + 5));
 			}
 		});
 	}

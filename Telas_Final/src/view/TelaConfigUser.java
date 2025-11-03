@@ -65,7 +65,7 @@ public class TelaConfigUser extends JPanel {
 		add(lblTitulo, "cell 0 0 3 1,grow");
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblNome, "cell 0 1,alignx left");
 
 		fundo = new JPanel();
@@ -128,7 +128,7 @@ public class TelaConfigUser extends JPanel {
 			"background: null");
 
 		JLabel lblSenha = new JLabel("Senha");
-		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblSenha, "flowx,cell 0 3,alignx left");
 
 		tfSenha = new JTextField();
@@ -141,7 +141,7 @@ public class TelaConfigUser extends JPanel {
 			"background: null");
 
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblEmail, "cell 0 5,alignx left");
 
 		tfEmail = new JTextField();
@@ -154,7 +154,7 @@ public class TelaConfigUser extends JPanel {
 			"background: null");
 
 		JLabel lblTelefone = new JLabel("Telefone");
-		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblTelefone, "cell 0 7,alignx left");
 
 		tfTelefone = new JTextField();
@@ -199,7 +199,7 @@ public class TelaConfigUser extends JPanel {
 		btnAlterarImagem = new JButton("Alterar Imagem");
 		add(btnAlterarImagem, "cell 1 12 2 1,grow");
 		btnAlterarDados = new JButton("Alterar Dados");
-		btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(btnAlterarDados, "cell 0 14 3 1,grow");
 		btnAlterarDados.putClientProperty("JComponent.roundRect", true);
 
@@ -207,25 +207,25 @@ public class TelaConfigUser extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 37);
-				int fontSizebutt = Math.max(15, panelHeight / 30);
-				int fontSize2 = Math.max(15, panelHeight / 23);
-				Font italicPlaceholderFont = new Font("Tahoma", Font.PLAIN, fontSize);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSize2 + 5));
-				btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, fontSizebutt));
-				btnAlterarImagem.setFont(new Font("Tahoma", Font.PLAIN, fontSizebutt));
-				lblGithub.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				txtGithub.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				lblCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				lblEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				lblSenha.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfSenha.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				lblNome.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
-				tfNome.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				int fontSizeTexto = Math.max(12, panelHeight / 35);
+				int fontSizeBotao = Math.max(14, panelHeight / 25);
+				int fontSizeTitulo = Math.max(16, panelHeight / 20);
+				Font textoFont = new Font("Tahoma", Font.PLAIN, fontSizeTexto);
+				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
+				btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
+				btnAlterarImagem.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
+				lblGithub.setFont(textoFont);
+				txtGithub.setFont(textoFont);
+				lblCPF.setFont(textoFont);
+				tfCPF.setFont(textoFont);
+				lblTelefone.setFont(textoFont);
+				tfTelefone.setFont(textoFont);
+				lblEmail.setFont(textoFont);
+				tfEmail.setFont(textoFont);
+				lblSenha.setFont(textoFont);
+				tfSenha.setFont(textoFont);
+				lblNome.setFont(textoFont);
+				tfNome.setFont(textoFont);
 			}
 		});
 

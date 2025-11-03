@@ -113,9 +113,8 @@ public class wbBarra extends JPanel {
 			public void componentResized(ComponentEvent e) {
 				if (!resizeListenersEnabled) return; // Ignora durante inicialização
 				int panelHeight = getHeight();
-				int fontSize = Math.max(15, panelHeight / 17);
-				int fontSize2 = Math.max(15, panelHeight / 40);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSize));
+				int fontSizeTitulo = Math.max(18, panelHeight / 3);
+				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
 
 				ajustarFonte();
 
