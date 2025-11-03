@@ -3,7 +3,6 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.Timer;
 import java.util.function.Consumer;
 import controller.Navegador;
 import controller.TelaFactory;
@@ -14,44 +13,64 @@ import controller.TelaConfigUserController;
 
 public class DrawerMenu extends JPanel {
     private static final int MENU_WIDTH = 250;
-    private static final int ANIMATION_STEP = 20; // Mais rápido
-    private static final int ANIMATION_DELAY = 8; // Mantém fluidez
+    private static final int MARGIN = 10; // Margem entre botões e borda
+    private static final int BUTTON_HEIGHT = 50;
     private boolean isOpen = false;
-    private boolean animating = false;
-    private Timer animationTimer;
-    private int currentWidth = 0;
     private JButton btnLogout;
     private JButton btnSettings;
     private JButton btnProfile;
     private JButton btnTrabalhos;
+    private JButton btnHome;
     private UsuarioDAO usuarioDAO;
     private Navegador navegador;
     private TelaFactory telaFactory;
-    private Consumer<Boolean> onStateChange; // retorno de chamada para Primario
+    private Consumer<Boolean> onStateChange;
+    private JPanel topPanel;
+    private JPanel bottomPanel;
 
     public DrawerMenu(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BorderLayout());
         setBackground(Color.DARK_GRAY);
         setOpaque(true);
-        // Começa fechado
-        currentWidth = 0;
-        setPreferredSize(new Dimension(currentWidth, 0));
-        setMaximumSize(new Dimension(MENU_WIDTH, Integer.MAX_VALUE));
-        setMinimumSize(new Dimension(0, 0));
-        setVisible(true);
-        isOpen = false;
-        add(createMenuButton("Home"));
+        setPreferredSize(new Dimension(MENU_WIDTH, 0));
+        
+        // Painel superior com os botões principais
+        topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setBackground(Color.DARK_GRAY);
+        topPanel.setOpaque(true);
+        topPanel.setBorder(BorderFactory.createEmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
+        
+        // Painel inferior para o botão de logout
+        bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.setBackground(Color.DARK_GRAY);
+        bottomPanel.setOpaque(true);
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
+        
+        // Adiciona botões ao painel superior
+        btnHome = createMenuButton("Home");
+        topPanel.add(btnHome);
+        topPanel.add(Box.createVerticalStrut(5));
         btnProfile = createMenuButton("Profile");
-        add(btnProfile);
+        topPanel.add(btnProfile);
+        topPanel.add(Box.createVerticalStrut(5));
         btnTrabalhos = createMenuButton("Trabalhos");
-        add(btnTrabalhos);
+        topPanel.add(btnTrabalhos);
+        topPanel.add(Box.createVerticalStrut(5));
         btnSettings = createMenuButton("Settings");
-        add(btnSettings);
+        topPanel.add(btnSettings);
+        
+        // Adiciona botão de logout ao painel inferior
         btnLogout = createMenuButton("Logout");
-        add(btnLogout);
-        revalidate();
-        repaint();
+        bottomPanel.add(btnLogout);
+        
+        // Adiciona os painéis ao DrawerMenu
+        add(topPanel, BorderLayout.NORTH);
+        add(bottomPanel, BorderLayout.SOUTH);
+        
+        isOpen = false;
     }
     
     public void setTelaFactory(TelaFactory telaFactory) {
@@ -60,17 +79,19 @@ public class DrawerMenu extends JPanel {
 
     public void setNavegador(Navegador navegador) {
         this.navegador = navegador;
-        // Home button: fecha o menu após ação
-        JButton btnHome = (JButton) getComponent(0);
-        for (ActionListener al : btnHome.getActionListeners()) {
-            btnHome.removeActionListener(al);
-        }
-        btnHome.addActionListener(e -> {
-            if (this.navegador != null) {
-                this.navegador.navegarPara("HOME");
+        // Home button
+        if (btnHome != null) {
+            for (ActionListener al : btnHome.getActionListeners()) {
+                btnHome.removeActionListener(al);
             }
-            if (isOpen) toggleMenu();
-        });
+            btnHome.addActionListener(e -> {
+                if (this.navegador != null) {
+                    this.navegador.navegarPara("HOME");
+                }
+                if (isOpen) toggleMenu();
+            });
+        }
+        // Settings button
         if (btnSettings != null) {
             for (ActionListener al : btnSettings.getActionListeners()) {
                 btnSettings.removeActionListener(al);
@@ -82,29 +103,26 @@ public class DrawerMenu extends JPanel {
                 if (isOpen) toggleMenu();
             });
         }
+        // Logout button
         if (btnLogout != null) {
             for (ActionListener al : btnLogout.getActionListeners()) {
                 btnLogout.removeActionListener(al);
             }
             btnLogout.addActionListener(e -> {
                 if (this.navegador != null) {
-                    // Limpa o usuário atual e remove telas dinâmicas
                     this.navegador.clearCurrentUser();
                     if (telaFactory != null) {
                         telaFactory.limparCache();
                     }
-                    // Remove telas de configuração que podem existir
                     this.navegador.removerPainel("CONFIG_USER");
-                    // Limpa o histórico de navegação para desabilitar o botão voltar
                     this.navegador.clearHistory();
-                    // Limpa todas as imagens de perfil antes do logout
                     this.navegador.limparImagensPerfil();
-                    // Navega para LOGIN sem empilhar
                     this.navegador.navegarPara("LOGIN", false);
                 }
                 if (isOpen) toggleMenu();
             });
         }
+        // Trabalhos button
         if (btnTrabalhos != null) {
             for (ActionListener al : btnTrabalhos.getActionListeners()) {
                 btnTrabalhos.removeActionListener(al);
@@ -119,11 +137,11 @@ public class DrawerMenu extends JPanel {
 					}else {
 						navegador.navegarPara("TEMP");
 					}
-                    
                 }
                 if (isOpen) toggleMenu();
             });
         }
+        // Profile button
         if (btnProfile != null) {
             for (ActionListener al : btnProfile.getActionListeners()) {
                 btnProfile.removeActionListener(al);
@@ -132,7 +150,6 @@ public class DrawerMenu extends JPanel {
                 if (this.navegador != null) {
                     Usuario usuario = this.navegador.getCurrentUser();
                     if (usuario != null) {
-                        // Usa TelaFactory se disponível, senão cria manualmente
                         if (telaFactory != null) {
                             String panelName = telaFactory.criarTelaConfigUser(usuario);
                             this.navegador.navegarPara(panelName);
@@ -150,7 +167,6 @@ public class DrawerMenu extends JPanel {
                     } else {
                         JOptionPane.showMessageDialog(this, "Nenhum usuário logado.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
-
                 }
                 if (isOpen) toggleMenu();
             });
@@ -161,96 +177,67 @@ public class DrawerMenu extends JPanel {
         this.onStateChange = callback;
     }
 
-    // Permite ajuste de largura para animação
-    public void setMenuWidth(int width) {
-        if (width < 0) width = 0;
-        currentWidth = width;
-        setPreferredSize(new Dimension(currentWidth, getParent() != null ? getParent().getHeight() : getPreferredSize().height));
-        setMaximumSize(new Dimension(MENU_WIDTH, Integer.MAX_VALUE));
-        setSize(currentWidth, getHeight()); // Atualiza tamanho imediatamente
-        revalidate(); // Garante que o layout dos botões seja recalculado
-        repaint();    // Redesenha o DrawerMenu
-        // Força repaint do menuLayer (GlassPane) se existir
-        java.awt.Container top = getTopLevelAncestor();
-        if (top instanceof JFrame) {
-            java.awt.Component glass = ((JFrame)top).getGlassPane();
-            if (glass != null) glass.repaint();
-        }
-        // Atualiza posição para ancorar à direita, se possível
-        if (getParent() != null) {
-            int parentWidth = getParent().getWidth();
-            setLocation(parentWidth - currentWidth, 0);
-        }
-    }
-    // Permite ajuste de altura ao redimensionar
-    public void setMenuHeight(int height) {
-        setPreferredSize(new Dimension(getPreferredSize().width, height));
-        setMaximumSize(new Dimension(getMaximumSize().width, height));
-        revalidate();
-        repaint();
-        if (getParent() != null) {
-            getParent().revalidate();
-            getParent().repaint();
-        }
-    }
-    // Permite ajuste de posição (não faz nada, pois OverlayLayout cuida disso)
-    public void setMenuLocation(int x, int y) {
-        // Não faz nada
-    }
-
-    @Override
-    public void setBounds(int x, int y, int width, int height) {
-        super.setBounds(x, y, width, height);
-    }
-
-    @Override
-    public Dimension getMinimumSize() {
-        return new Dimension(0, 0);
-    }
-
-    @Override
-    public Dimension getMaximumSize() {
-        return new Dimension(MENU_WIDTH, Integer.MAX_VALUE);
-    }
-
     public void toggleMenu() {
-        if (animating) return;
-        animating = true;
-        final int start = currentWidth;
-        final int end = isOpen ? 0 : MENU_WIDTH;
-        final int direction = (end > start) ? 1 : -1;
-        animationTimer = new Timer(ANIMATION_DELAY, null);
-        animationTimer.addActionListener(e -> {
-            int next = currentWidth + direction * ANIMATION_STEP;
-            if ((direction > 0 && next >= end) || (direction < 0 && next <= end)) {
-                next = end;
-            }
-            setMenuWidth(next);
-            if (next == end) {
-                animationTimer.stop();
-                isOpen = !isOpen;
-                animating = false;
-                if (onStateChange != null) onStateChange.accept(isOpen);
-            }
-        });
-        animationTimer.start();
+        isOpen = !isOpen;
+        if (onStateChange != null) {
+            onStateChange.accept(isOpen);
+        }
     }
 
     private JButton createMenuButton(String text) {
-        JButton button = new JButton(text);
+        JButton button = new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                // Desenha o fundo arredondado
+                if (getModel().isPressed()) {
+                    g2.setColor(getBackground().darker());
+                } else if (getModel().isRollover()) {
+                    g2.setColor(getBackground().brighter());
+                } else {
+                    g2.setColor(getBackground());
+                }
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                
+                // Desenha o texto
+                g2.setColor(getForeground());
+                FontMetrics fm = g2.getFontMetrics();
+                int textWidth = fm.stringWidth(getText());
+                int textHeight = fm.getAscent();
+                int x = (getWidth() - textWidth) / 2;
+                int y = (getHeight() + textHeight) / 2 - 2;
+                g2.drawString(getText(), x, y);
+                
+                g2.dispose();
+            }
+            
+            @Override
+            protected void paintBorder(Graphics g) {
+                // Não desenha borda padrão
+            }
+        };
+        
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setBackground(Color.GRAY);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
-        button.setMaximumSize(new Dimension(MENU_WIDTH, 50));
-        button.setPreferredSize(new Dimension(MENU_WIDTH, 50));
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setOpaque(false);
+        int buttonWidth = MENU_WIDTH - (2 * MARGIN);
+        button.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        button.setPreferredSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+        button.setMinimumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
         return button;
     }
 
     public boolean isOpen() {
         return isOpen;
     }
+    
     public boolean isAnimating() {
-        return animating;
+        return false;
     }
 }

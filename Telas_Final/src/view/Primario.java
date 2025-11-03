@@ -64,37 +64,49 @@ public class Primario extends JFrame {
 		this.cPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		contentPanel.add(cPanel, BorderLayout.CENTER);
 
-		menuLayer = new JPanel(null);
+		// Mudança: usar BorderLayout em vez de layout nulo
+		menuLayer = new JPanel(new BorderLayout());
 		menuLayer.setOpaque(false);
 		setGlassPane(menuLayer);
 		menuLayer.setVisible(false);
 
+		// Painel wrapper para posicionar o menu à direita
+		JPanel menuWrapper = new JPanel(new BorderLayout());
+		menuWrapper.setOpaque(false);
+		
 		dm.setOpaque(true);
-		dm.setVisible(true);
-		dm.setBounds(getWidth(), 0, 0, getHeight());
-		menuLayer.add(dm);
+		dm.setVisible(false); // Começa invisível
+		menuWrapper.add(dm, BorderLayout.EAST);
+		menuLayer.add(menuWrapper, BorderLayout.CENTER);
 
-		addComponentListener(new java.awt.event.ComponentAdapter() {
+		// Adiciona listener para fechar o menu ao clicar fora dele
+		menuLayer.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
-			public void componentResized(java.awt.event.ComponentEvent e) {
-				int menuWidth = dm.getPreferredSize().width;
-				if (menuWidth > 0) {
-					dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
-				} else {
-					dm.setBounds(getWidth(), 0, 0, getHeight());
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				// Verifica se o clique foi fora do DrawerMenu
+				if (dm.isOpen() && !dm.getBounds().contains(e.getPoint())) {
+					dm.toggleMenu();
 				}
 			}
 		});
 
+		addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
+			public void componentResized(java.awt.event.ComponentEvent e) {
+				menuLayer.revalidate();
+				menuLayer.repaint();
+			}
+		});
+
 		dm.setOnStateChange(isOpen -> {
-			int menuWidth = dm.getPreferredSize().width;
-			if (isOpen && menuWidth > 0) {
-				dm.setBounds(getWidth() - menuWidth, 0, menuWidth, getHeight());
+			if (isOpen) {
+				dm.setVisible(true);
 				menuLayer.setVisible(true);
 			} else {
-				dm.setBounds(getWidth(), 0, 0, getHeight());
+				dm.setVisible(false);
 				menuLayer.setVisible(false);
 			}
+			menuLayer.revalidate();
 			menuLayer.repaint();
 		});
 
