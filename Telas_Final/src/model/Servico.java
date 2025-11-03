@@ -12,6 +12,8 @@ public class Servico {
 	private int idServico;
 	private int idContratante;
 	private int idContratado;
+	private byte[] arquivo;
+	private boolean finalizado;
 
 
 	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito,
@@ -117,6 +119,23 @@ public class Servico {
 	public void setIdContratado(int idContratado) {
 		this.idContratado = idContratado;
 	}
+
+	public byte[] getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(byte[] arquivo) {
+		this.arquivo = arquivo;
+	}
+
+	public boolean isFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(boolean finalizado) {
+		this.finalizado = finalizado;
+	}
+	
 
 	
 	
