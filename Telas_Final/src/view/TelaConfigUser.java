@@ -104,6 +104,10 @@ public class TelaConfigUser extends JPanel {
 		add(tfNome, "cell 0 2,grow");
 		tfNome.setColumns(10);
 		tfNome.putClientProperty("JComponent.roundRect", true);
+		tfNome.setOpaque(false);
+		tfNome.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		JLabel lblSenha = new JLabel("Senha");
 		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -113,6 +117,10 @@ public class TelaConfigUser extends JPanel {
 		add(tfSenha, "cell 0 4,grow");
 		tfSenha.setColumns(10);
 		tfSenha.putClientProperty("JComponent.roundRect", true);
+		tfSenha.setOpaque(false);
+		tfSenha.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -122,6 +130,10 @@ public class TelaConfigUser extends JPanel {
 		add(tfEmail, "cell 0 6,grow");
 		tfEmail.setColumns(10);
 		tfEmail.putClientProperty("JComponent.roundRect", true);
+		tfEmail.setOpaque(false);
+		tfEmail.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		JLabel lblTelefone = new JLabel("Telefone");
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -131,6 +143,10 @@ public class TelaConfigUser extends JPanel {
 		add(tfTelefone, "cell 0 8,grow");
 		tfTelefone.setColumns(10);
 		tfTelefone.putClientProperty("JComponent.roundRect", true);
+		tfTelefone.setOpaque(false);
+		tfTelefone.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 		// Aplicar formatação automática de telefone
 		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
@@ -142,6 +158,10 @@ public class TelaConfigUser extends JPanel {
 		add(tfCPF, "cell 0 10,grow");
 		tfCPF.setColumns(10);
 		tfCPF.putClientProperty("JComponent.roundRect", true);
+		tfCPF.setOpaque(false);
+		tfCPF.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 		// Aplicar formatação automática de CPF
 		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
 
@@ -152,6 +172,10 @@ public class TelaConfigUser extends JPanel {
 		txtGithub = new JTextField();
 		txtGithub.setColumns(10);
 		txtGithub.putClientProperty("JComponent.roundRect", true);
+		txtGithub.setOpaque(false);
+		txtGithub.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 		add(txtGithub, "cell 0 12,grow");
 
 		btnAlterarImagem = new JButton("Alterar Imagem");

@@ -40,6 +40,10 @@ public class TelaContratante extends JPanel {
 		tfPesquisar.setColumns(10);
 		tfPesquisar.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Pesquisar...");
 		tfPesquisar.putClientProperty("JComponent.roundRect", true);
+		tfPesquisar.setOpaque(false);
+		tfPesquisar.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);

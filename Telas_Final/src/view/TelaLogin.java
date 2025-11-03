@@ -79,14 +79,25 @@ public class TelaLogin extends JPanel {
 		txtUsuario.setColumns(10);
 		txtUsuario.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
 		txtUsuario.putClientProperty("JComponent.roundRect", true);
+		txtUsuario.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON, false);
+		txtUsuario.setOpaque(false);
+		// Usa @background para referenciar a cor definida em setBackground
+		txtUsuario.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Dialog", Font.PLAIN, 12));
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
-		// Corrige o placeholder do campo senha para 'Senha'
 		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
 		passwordField.putClientProperty("JComponent.roundRect", true);
+		passwordField.putClientProperty(FlatClientProperties.TEXT_FIELD_SHOW_CLEAR_BUTTON, false);
+		passwordField.setOpaque(false);
+		// Usa @background para referenciar a cor definida em setBackground
+		passwordField.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 		add(passwordField, "cell 1 3 3 1,grow");
 
 		// Define os prompts imediatamente para garantir que os placeholders apareçam

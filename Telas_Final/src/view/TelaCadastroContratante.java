@@ -59,6 +59,10 @@ public class TelaCadastroContratante extends JPanel {
 		tfNome.setColumns(25);
 		tfNome.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nome");
 		tfNome.putClientProperty("JComponent.roundRect", true);
+		tfNome.setOpaque(false);
+		tfNome.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 		tfNome.setSize(new Dimension(50, 50));
 
 		scrollPane = new JScrollPane();
@@ -75,12 +79,20 @@ public class TelaCadastroContratante extends JPanel {
 		tfModalidade.setColumns(10);
 		tfModalidade.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Modalidade");
 		tfModalidade.putClientProperty("JComponent.roundRect", true);
+		tfModalidade.setOpaque(false);
+		tfModalidade.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		tfValor = new JTextField();
 		add(tfValor, "cell 0 3,height 20:20:40,grow");
 		tfValor.setColumns(10);
 		tfValor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Valor");
 		tfValor.putClientProperty("JComponent.roundRect", true);
+		tfValor.setOpaque(false);
+		tfValor.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		panel = new JPanel();
 		add(panel, "cell 0 4 4 1,grow");

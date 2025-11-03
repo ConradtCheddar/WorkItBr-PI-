@@ -64,12 +64,20 @@ public class TelaCadastro extends JPanel {
 		tfEmail.setColumns(10);
 		tfEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Email");
 		tfEmail.putClientProperty("JComponent.roundRect", true);
+		tfEmail.setOpaque(false);
+		tfEmail.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		tfTelefone = new JTextField();
 		add(tfTelefone, "cell 1 2 3 1,growx");
 		tfTelefone.setColumns(10);
 		tfTelefone.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Telefone");
 		tfTelefone.putClientProperty("JComponent.roundRect", true);
+		tfTelefone.setOpaque(false);
+		tfTelefone.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 		// Aplicar formatação automática de telefone
 		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
@@ -78,6 +86,10 @@ public class TelaCadastro extends JPanel {
 		tfCPF.setColumns(10);
 		tfCPF.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "CPF ou CNPJ");
 		tfCPF.putClientProperty("JComponent.roundRect", true);
+		tfCPF.setOpaque(false);
+		tfCPF.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 		// Aplicar formatação automática de CPF
 		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
 
@@ -86,18 +98,30 @@ public class TelaCadastro extends JPanel {
 		tfUsuario.setColumns(10);
 		tfUsuario.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
 		tfUsuario.putClientProperty("JComponent.roundRect", true);
+		tfUsuario.setOpaque(false);
+		tfUsuario.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		senha = new JPasswordField();
 		add(senha, "cell 1 5 3 1,growx");
 		senha.setColumns(10);
 		senha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
 		senha.putClientProperty("JComponent.roundRect", true);
+		senha.setOpaque(false);
+		senha.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		senha2 = new JPasswordField();
 		add(senha2, "cell 1 6 3 1,growx");
 		senha2.setColumns(10);
 		senha2.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirmar Senha");
 		senha2.putClientProperty("JComponent.roundRect", true);
+		senha2.setOpaque(false);
+		senha2.putClientProperty(FlatClientProperties.STYLE, 
+			"focusedBackground: null;" +
+			"background: null");
 
 		rdbtnContratante = new ScalableRadioButton("Contratante");
 		rdbtnContratante.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
