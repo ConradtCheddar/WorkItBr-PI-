@@ -16,7 +16,10 @@ public class Navegador {
 	private Primario prim;
 	private Usuario currentUser;
 	private UsuarioDAO usuarioDAO;
-	private Deque<String> history = new ArrayDeque<>();
+	
+	// pilha para armazenar o histórico de navegação (nomes dos painéis)
+	private final Deque<String> history = new ArrayDeque<>();
+	// ouvinte opcional para notificar controladores de UI quando o histórico mudar
 	private Runnable historyListener;
 	
 	public Navegador(Primario prim) {

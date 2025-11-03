@@ -12,8 +12,8 @@ import javax.swing.JOptionPane;
 public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
-	static String Usuario = "root";
-	static String Senha = "root";
+	static String Usuario = "workitbr";
+	static String Senha = "1234";
 	public ServicoDAO() {
 
 	}
