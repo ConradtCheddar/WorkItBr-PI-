@@ -220,6 +220,30 @@ public class DrawerMenu extends JPanel {
 	}
 
 	/**
+	 * Fecha o menu de forma segura (iniciando animação de fechamento se necessário).
+	 */
+	public void closeMenu() {
+		// Se já estiver fechado e não estiver animando, nada a fazer
+		if (!isOpen && !isAnimating)
+			return;
+		// Se estiver animando, pare a animação e force estado fechado
+		if (isAnimating) {
+			if (animationTimer != null && animationTimer.isRunning()) {
+				animationTimer.stop();
+			}
+			isAnimating = false;
+		}
+		// Se estiver aberto, inicie a animação de fechamento
+		if (isOpen) {
+			isOpen = false;
+			startAnimation();
+		} else {
+			// garantir que esteja invisível
+			setVisible(false);
+		}
+	}
+
+	/**
 	 * Inicia a animação de abertura/fechamento do menu
 	 */
 	private void startAnimation() {

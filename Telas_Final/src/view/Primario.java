@@ -175,25 +175,22 @@ public class Primario extends JFrame {
 	}
 
 	private boolean getDrawerMenuOpenState(DrawerMenu dm) {
+		// Use public API on DrawerMenu to determine open state
+		if (dm == null) return false;
 		try {
-			java.lang.reflect.Field field = DrawerMenu.class.getDeclaredField("isOpen");
-			field.setAccessible(true);
-			return field.getBoolean(dm);
+			return dm.isOpen();
 		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	public void fecharDrawerMenuSeAberto() {
-		if (getDrawerMenuOpenState(dm)) {
-			if (dm != null) {
-				try {
-					java.lang.reflect.Method closeMethod = DrawerMenu.class.getDeclaredMethod("closeMenu");
-					closeMethod.setAccessible(true);
-					closeMethod.invoke(dm);
-				} catch (Exception e) {
-					dm.toggleMenu();
-				}
+		if (getDrawerMenuOpenState(dm) && dm != null) {
+			try {
+				dm.closeMenu();
+			} catch (Exception e) {
+				// fallback
+				dm.toggleMenu();
 			}
 		}
 	}

@@ -82,14 +82,15 @@ public class ListaServicosController {
 				if (idValue != null) {
 					int id = (int) idValue;
 
-					if (this.model.buscarServicoPorId(id).getAceito().equals(true)) {
+					model.Servico servicoTmp = this.model.buscarServicoPorId(id);
+					if (servicoTmp != null && Boolean.TRUE.equals(servicoTmp.getAceito())) {
 						JOptionPane.showMessageDialog(null, "Imposivel deletar trabalhos aceitos", "Erro",
 							JOptionPane.ERROR_MESSAGE);
 					} else {
 						// Confirmar exclusão
 						int option = JOptionPane.showConfirmDialog(null,
-								"Tem certeza que deseja deletar este trabalho?", "Confirmar Exclusão",
-								JOptionPane.YES_NO_OPTION);
+							"Tem certeza que deseja deletar este trabalho?", "Confirmar Exclusão",
+							JOptionPane.YES_NO_OPTION);
 
 						if (option == JOptionPane.YES_OPTION) {
 							// Deletar a linha do banco de dados e da JTable
@@ -145,11 +146,12 @@ public class ListaServicosController {
 					} else {
 						idServico = Integer.parseInt(idObj.toString().trim());
 					}
-					if(this.model.buscarServicoPorId(idServico).getAceito().equals(true)) {
+					model.Servico servTmp = this.model.buscarServicoPorId(idServico);
+					if (servTmp != null && Boolean.TRUE.equals(servTmp.getAceito())) {
 						JOptionPane.showMessageDialog(null, "Imposivel modificar trabalhos aceitos", "Erro",
 							JOptionPane.ERROR_MESSAGE);
 						failed++;
-					}else {
+					} else {
 						// Agora ler as colunas conhecidas:
 						// ajuste os índices abaixo conforme sua ordem de colunas.
 						// Aqui assumimos (exemplo): [id, Nome_servico, Valor, Modalidade, Descricao,
