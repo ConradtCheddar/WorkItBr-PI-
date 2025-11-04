@@ -95,7 +95,20 @@ public class DrawerMenu extends JPanel {
 			}
 			btnHome.addActionListener(e -> {
 				if (this.navegador != null) {
-					this.navegador.navegarPara("HOME");
+					Usuario u = this.navegador.getCurrentUser();
+					if (u != null) {
+						// Redireciona para a tela principal baseada no tipo de usuário
+						if (u.isAdmin()) {
+							this.navegador.navegarPara("ADM");
+						} else if (u.isContratante()) {
+							this.navegador.navegarPara("SERVICOS");
+						} else if (u.isContratado()) {
+							this.navegador.navegarPara("CONTRATADO");
+						} else {
+							// Fallback para login se não tiver tipo definido
+							this.navegador.navegarPara("LOGIN");
+						}
+					}
 				}
 				if (isOpen)
 					toggleMenu();
@@ -142,11 +155,17 @@ public class DrawerMenu extends JPanel {
 			btnTrabalhos.addActionListener(e -> {
 				if (this.navegador != null) {
 					Usuario u = this.navegador.getCurrentUser();
-					if (u.isContratante()) {
-						this.navegador.navegarPara("SERVICOS");
-					} else if (u.isContratado()) {
-						this.navegador.navegarPara("CONTRATADO");
+					// SAFETY: check for null user to avoid NPE when no one is logged in
+					if (u != null) {
+						if (u.isContratante()) {
+							this.navegador.navegarPara("SERVICOS");
+						} else if (u.isContratado()) {
+							this.navegador.navegarPara("CONTRATADO");
+						} else {
+							navegador.navegarPara("TEMP");
+						}
 					} else {
+						// Sem usuário logado: fallback para tela temporária (ou login)
 						navegador.navegarPara("TEMP");
 					}
 				}

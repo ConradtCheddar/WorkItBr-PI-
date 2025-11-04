@@ -25,10 +25,22 @@ public class VisServicoController {
 				return;
 			}
 			
-			Servico servico = this.model.configID(s.getNome_Servico());
+			Servico servico = null;
+			// Prefer using id when available to avoid ambiguity by name
+			if (s != null && s.getIdServico() > 0) {
+				servico = this.model.buscarServicoPorId(s.getIdServico());
+			} else if (s != null && s.getNome_Servico() != null) {
+				servico = this.model.buscarServicoPorNome(s.getNome_Servico());
+			}
+			
+			// Validação: verifica se o serviço foi encontrado
+			if (servico == null) {
+				javax.swing.JOptionPane.showMessageDialog(null, "Erro: Serviço não encontrado no banco de dados.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+				navegador.navegarPara("CONTRATADO");
+				return;
+			}
 			
 			s.setIdServico(servico.getIdServico());
-			
 			s.setIdContratado(navegador.getCurrentUser().getIdUsuario());
 			
 			this.model.aceitarServico(s);

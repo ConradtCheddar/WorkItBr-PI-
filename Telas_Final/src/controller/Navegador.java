@@ -97,48 +97,52 @@ public class Navegador {
 		}
 		
 		this.prim.fecharDrawerMenuSeAberto(); // Fecha o DrawerMenu se estiver aberto
-		// Empilha o painel atual no histórico antes de navegar, se presente e diferente
+		
+		// Empilha o painel atual no histórico antes de navegar, se solicitado
 		try {
 			String current = this.prim.getCurrentPanelName();
-			boolean shouldPush = pushCurrent;
 			
 			// Normaliza os nomes para maiúsculas para comparação consistente
 			String currentUpper = (current != null) ? current.toUpperCase() : null;
 			String nomeUpper = (nome != null) ? nome.toUpperCase() : null;
 			
 			System.out.println("[Navegador] Navegando de '" + current + "' para '" + nome + "'");
-			System.out.println("[Navegador] pushCurrent inicial: " + pushCurrent);
+			System.out.println("[Navegador] pushCurrent: " + pushCurrent);
 			
-			// Não empilha telas de cadastro no histórico (assim o botão voltar não as retorna)
-			// MAS: se a tela ATUAL for CADASTRO e estamos indo para outra tela, não empilha
-			if (currentUpper != null) {
-				if (currentUpper.startsWith("CADASTRO") || currentUpper.equals("CADASTRO_CONTRATANTE")) {
-					shouldPush = false;
-					System.out.println("[Navegador] Tela atual é CADASTRO, shouldPush = false");
-				}
+			// Regra 1: Não empilha se a tela atual for igual à tela de destino
+			if (currentUpper != null && currentUpper.equals(nomeUpper)) {
+				System.out.println("[Navegador] Mesma tela, não empilha");
+				this.prim.mostrarTela(nome);
+				return;
 			}
 			
-			// SEMPRE empilha LOGIN quando está navegando para uma tela de CADASTRO
-			// (garante que o botão voltar funcione de CADASTRO para LOGIN)
-			if (currentUpper != null && currentUpper.equals("LOGIN") && 
+			// Regra 2: SEMPRE empilha LOGIN quando navegando para telas de CADASTRO
+			// (permite voltar de CADASTRO para LOGIN)
+			if (currentUpper != null && currentUpper.equals("LOGIN") && nomeUpper != null &&
 			    (nomeUpper.startsWith("CADASTRO") || nomeUpper.equals("CADASTRO_CONTRATANTE"))) {
-				shouldPush = true;
-				System.out.println("[Navegador] De LOGIN para CADASTRO, forçando shouldPush = true");
-			}
-			
-			if (shouldPush && current != null && !currentUpper.equals(nomeUpper)) {
 				history.push(current);
-				System.out.println("[Navegador] Empilhado '" + current + "' no histórico. Tamanho do histórico: " + history.size());
-				// notifica o ouvinte de que o histórico mudou
-				if (historyListener != null)
-					historyListener.run();
+				System.out.println("[Navegador] De LOGIN para CADASTRO, empilhado. Histórico: " + history.size());
+				if (historyListener != null) historyListener.run();
+			}
+			// Regra 3: NUNCA empilha telas de cadastro quando saindo delas
+			// (evita voltar para cadastro acidentalmente)
+			else if (currentUpper != null && 
+			         (currentUpper.startsWith("CADASTRO") || currentUpper.equals("CADASTRO_CONTRATANTE"))) {
+				System.out.println("[Navegador] Saindo de CADASTRO, não empilha");
+			}
+			// Regra 4: Empilha normalmente se pushCurrent for true e não for tela duplicada
+			else if (pushCurrent && current != null) {
+				history.push(current);
+				System.out.println("[Navegador] Empilhado '" + current + "'. Histórico: " + history.size());
+				if (historyListener != null) historyListener.run();
 			} else {
-				System.out.println("[Navegador] NÃO empilhou. shouldPush=" + shouldPush + ", current=" + current + ", equals=" + (currentUpper != null && currentUpper.equals(nomeUpper)));
+				System.out.println("[Navegador] Não empilhou. pushCurrent=" + pushCurrent);
 			}
 		} catch (Exception ex) {
 			System.err.println("[Navegador] Erro ao empilhar histórico: " + ex.getMessage());
 			ex.printStackTrace();
 		}
+		
 		this.prim.mostrarTela(nome);
 		if ("SERVICOS".equals(nome)) {
 			controller.ListaServicosController.atualizarTabelaSeExistir();
@@ -228,6 +232,24 @@ public class Navegador {
 			this.currentUser = null;
 		} catch (Exception e) {
 			System.err.println("[Navegador] Erro ao limpar imagens de perfil: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Remove todos os painéis cujo nome comece com o prefixo informado.
+	 * Usado por TelaFactory.limparCachePorPrefixo para remover painéis dinâmicos.
+	 */
+	public void removerPainelPorPrefixo(String prefixo) {
+		try {
+			java.util.Set<String> names = this.prim.getPainelNames();
+			for (String name : names) {
+				if (name != null && name.startsWith(prefixo)) {
+					this.removerPainel(name);
+				}
+			}
+		} catch (Exception e) {
+			System.err.println("[Navegador] Erro ao remover painéis por prefixo: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

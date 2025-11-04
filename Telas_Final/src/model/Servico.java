@@ -1,7 +1,7 @@
 package model;
 
 public class Servico {
-	private Integer id;
+	// Campo 'id' removido - usar apenas idServico para evitar confusão
 	private String nome_Servico;
 	private Double valor;
 	private String modalidade;
@@ -13,10 +13,9 @@ public class Servico {
 	private int idContratante;
 	private int idContratado;
 
-
 	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito,
 			Usuario contratante) {
-		this.id = id;
+		this.idServico = (id != null) ? id : 0; // Usar idServico em vez de id
 		this.nome_Servico = nome_Servico;
 		this.valor = valor;
 		this.modalidade = modalidade;
@@ -30,12 +29,14 @@ public class Servico {
 		this(null, nome_Servico, valor, modalidade, descricao, aceito, contratante);
 	}
 
+	// Método getId() agora retorna idServico
 	public Integer getId() {
-		return id;
+		return idServico;
 	}
 
+	// Método setId() agora define idServico
 	public void setId(Integer id) {
-		this.id = id;
+		this.idServico = (id != null) ? id : 0;
 	}
 
 	public String getNome_Servico() {

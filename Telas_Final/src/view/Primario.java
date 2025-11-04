@@ -22,7 +22,7 @@ public class Primario extends JFrame {
 	private JPanel contentPanel;
 	private JPanel cPanel;
 	private DrawerMenu dm;
-	private static CardLayout cardLayout;
+	private CardLayout cardLayout;
 	private JTextField textField;
 	private wbBarra wbb;
 	private JPanel menuLayer;
@@ -168,6 +168,10 @@ public class Primario extends JFrame {
 
 	public String getCurrentPanelName() {
 		return this.currentPanelName;
+	}
+
+	public java.util.Set<String> getPainelNames() {
+		return new java.util.HashSet<>(painelMap.keySet());
 	}
 
 	private boolean getDrawerMenuOpenState(DrawerMenu dm) {

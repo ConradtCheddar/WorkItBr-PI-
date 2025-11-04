@@ -24,7 +24,14 @@ public class UsuarioDAO {
 	public Usuario code64(Usuario u) throws FileNotFoundException, IOException {
 		// Trocar CaminhoFoto por imagem64
 		String imagem64 = u.getImagem64();
-		File fotoFile = new File(u.getCaminhoFoto());
+		String caminho = u.getCaminhoFoto();
+		if (caminho == null || caminho.isEmpty()) {
+			throw new FileNotFoundException("Caminho da foto não informado para usuário id=" + u.getIdUsuario());
+		}
+		File fotoFile = new File(caminho);
+		if (!fotoFile.exists() || !fotoFile.isFile()) {
+			throw new FileNotFoundException("Arquivo de foto não encontrado: " + caminho);
+		}
 		byte[] fotoContent = new byte[(int) fotoFile.length()];
 		try(FileInputStream fis = new FileInputStream(fotoFile)) {
 			fis.read(fotoContent);

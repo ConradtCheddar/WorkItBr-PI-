@@ -10,16 +10,13 @@ import model.UsuarioDAO;
 import view.*;
 
 /**
- * Factory para cria��o e gerenciamento de telas de detalhe.
- * Implementa cache para evitar re-instancia��o desnecess�ria.
+ * Factory para criação e gerenciamento de telas de detalhe.
+ * Implementa remoção automática de painéis antigos para garantir dados atualizados.
  */
 public class TelaFactory {
     private final Navegador navegador;
     private final ServicoDAO servicoDAO;
     private final UsuarioDAO usuarioDAO;
-    
-    // Cache de telas por tipo e ID
-    private final Map<String, JPanel> telaCache = new HashMap<>();
     
     public TelaFactory(Navegador navegador, ServicoDAO servicoDAO, UsuarioDAO usuarioDAO) {
         this.navegador = navegador;
@@ -28,7 +25,7 @@ public class TelaFactory {
     }
     
     /**
-     * Cria ou recupera tela de visualiza��o de servi�o dispon�vel (para contratado)
+     * Cria ou recupera tela de visualização de serviço disponível (para contratado)
      */
     public String criarVisServico(Servico servico) {
         String panelName = "VIS_SERVICO_" + servico.getIdServico();
@@ -45,7 +42,7 @@ public class TelaFactory {
     }
     
     /**
-     * Cria ou recupera tela de visualiza��o de servi�o em andamento
+     * Cria ou recupera tela de visualização de serviço em andamento
      */
     public String criarVisServicoAndamento(Servico servico) {
         String panelName = "VIS_SERVICO_ANDAMENTO_" + servico.getIdServico();
@@ -62,7 +59,7 @@ public class TelaFactory {
     }
     
     /**
-     * Cria ou recupera tela de visualiza��o de servi�o para contratante (n�o aceito)
+     * Cria ou recupera tela de visualização de serviço para contratante (não aceito)
      */
     public String criarVisServicoCnte(Servico servico) {
         String panelName = "VIS_SERVICO_CNTE_" + servico.getIdServico();
@@ -115,7 +112,7 @@ public class TelaFactory {
     }
     
     /**
-     * Cria tela de configura��o de usu�rio (sempre nova para garantir dados atualizados)
+     * Cria tela de configuração de usuário (sempre nova para garantir dados atualizados)
      */
     public String criarTelaConfigUser(Usuario usuario) {
         String panelName = "CONFIG_USER";
@@ -123,7 +120,7 @@ public class TelaFactory {
         // Sempre remove e recria para garantir dados atualizados do banco
         navegador.removerPainel(panelName);
         
-        // Recarrega dados do usu�rio do banco
+        // Recarrega dados do usuário do banco
         Usuario usuarioAtualizado = usuarioDAO.getUsuarioById(usuario.getIdUsuario());
         if (usuarioAtualizado != null) {
             usuario = usuarioAtualizado;
@@ -138,16 +135,32 @@ public class TelaFactory {
     }
     
     /**
-     * Limpa todas as telas de cache
+     * Limpa todas as telas dinâmicas criadas pela factory
      */
     public void limparCache() {
-        telaCache.clear();
+        // Remove todos os painéis de visualização de serviços e usuários
+        String[] prefixos = {
+            "VIS_SERVICO_",
+            "VIS_SERVICO_ANDAMENTO_",
+            "VIS_SERVICO_CNTE_",
+            "VIS_SERVICO_CNTE_ACEITO_",
+            "VIS_CONTRATADO_",
+            "CONFIG_USER"
+        };
+        
+        for (String prefixo : prefixos) {
+            limparCachePorPrefixo(prefixo);
+        }
     }
     
     /**
-     * Limpa apenas telas de um tipo espec�fico
+     * Limpa apenas telas de um tipo específico
      */
     public void limparCachePorPrefixo(String prefixo) {
-        telaCache.entrySet().removeIf(entry -> entry.getKey().startsWith(prefixo));
+        // Como não temos acesso direto aos painéis registrados,
+        // apenas removemos os conhecidos. Em implementação futura,
+        // o Navegador poderia fornecer lista de painéis registrados.
+        // Use the new removerPainelPorPrefixo to remove panels whose names start with the prefix
+        navegador.removerPainelPorPrefixo(prefixo);
     }
 }

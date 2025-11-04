@@ -234,6 +234,7 @@ public class ListaServicosController {
 		if (navegador.getCurrentUser() != null) {
 			ServicoDAO dao = new ServicoDAO();
 			ArrayList<Servico> lista = dao.buscarTodosServicosPorUsuario(navegador.getCurrentUser());
+			if (lista == null) lista = new ArrayList<>(); // avoid NPE when DAO returns null
 			this.view.atualizarTable(lista);
 		}
 	}
