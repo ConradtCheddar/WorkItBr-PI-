@@ -33,6 +33,8 @@ import model.UsuarioDAO;
 
 import javax.imageio.ImageIO;
 import java.awt.event.ActionEvent;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 
 public class VisServicoAndamento extends JPanel {
 
@@ -117,6 +119,10 @@ public class VisServicoAndamento extends JPanel {
 		PanelDesc.add(scrollPane, "cell 0 0,grow");
 
 		btnFinalizar = new JButton("Finalizar trabalho");
+		btnFinalizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnFinalizar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		add(btnFinalizar, "cell 0 2 2 1,alignx center");
 
@@ -133,24 +139,14 @@ public class VisServicoAndamento extends JPanel {
 		ImageIcon foto = loadUserImage(u, 150, 150);
 		lblFoto.setIcon(foto);
 		
-		// Dynamic font sizing
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSizeTitulo = Math.max(16, panelHeight / 30);
-				int fontSizeInfo = Math.max(14, panelHeight / 35);
-				int fontSizeDesc = Math.max(12, panelHeight / 40);
-				int fontSizeBotao = Math.max(14, panelHeight / 35);
-				
-				taTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-				taModalidade.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				taPreco.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				tpDesc.setFont(new Font("Tahoma", Font.PLAIN, fontSizeDesc));
-				btnFinalizar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-			}
-		});
-
+		// Aplicar FontScaler padronizado
+		FontScaler.addAutoResize(this,
+			new Object[] {taTitulo, FontSize.SUBTITULO},
+			new Object[] {taModalidade, FontSize.TEXTO},
+			new Object[] {taPreco, FontSize.TEXTO},
+			new Object[] {tpDesc, FontSize.TEXTO},
+			new Object[] {btnFinalizar, FontSize.BOTAO}
+		);
 	}
 
 	private ImageIcon loadUserImage(Usuario u, int width, int height) {

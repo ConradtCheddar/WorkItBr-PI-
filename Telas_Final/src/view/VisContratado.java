@@ -23,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 
 public class VisContratado extends JPanel {
 
@@ -129,25 +131,21 @@ public class VisContratado extends JPanel {
 		taTelefone.setText(u.getTelefone());
 		
 		btnVoltar = new JButton("Voltar");
-		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(btnVoltar, "cell 1 2, height 20:40:80, grow");
-		
-		// Dynamic font sizing
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSizeNome = Math.max(16, panelHeight / 30);
-				int fontSizeInfo = Math.max(14, panelHeight / 35);
-				int fontSizeBotao = Math.max(14, panelHeight / 35);
-				
-				taNome.setFont(new Font("Tahoma", Font.PLAIN, fontSizeNome));
-				taGithub.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				taEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				taTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		add(btnVoltar, "cell 0 2 3 1,alignx center,aligny center");
+		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		// Aplicar FontScaler padronizado
+		FontScaler.addAutoResize(this,
+			new Object[] {taNome, FontSize.SUBTITULO},
+			new Object[] {taGithub, FontSize.TEXTO},
+			new Object[] {taEmail, FontSize.TEXTO},
+			new Object[] {taTelefone, FontSize.TEXTO},
+			new Object[] {btnVoltar, FontSize.BOTAO}
+		);
 		
 		// Carrega a imagem do usuário caso exista caminho
 		if (u != null && u.getCaminhoFoto() != null && !u.getCaminhoFoto().isBlank()) {

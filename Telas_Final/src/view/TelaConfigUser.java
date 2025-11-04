@@ -25,6 +25,8 @@ import org.jdesktop.swingx.prompt.PromptSupport;
 import model.Usuario;
 import net.miginfocom.swing.MigLayout;
 import util.FieldValidator;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 
 import javax.swing.SwingConstants;
 
@@ -47,6 +49,11 @@ public class TelaConfigUser extends JPanel {
 	private JTextField txtGithub;
 	private JLabel lblTitulo;
 	private JPanel fundo;
+	private JLabel lblNome;
+	private JLabel lblSenha;
+	private JLabel lblEmail;
+	private JLabel lblTelefone;
+	private JLabel lblCPF;
 
 	/**
 	 * Create the panel.
@@ -64,7 +71,7 @@ public class TelaConfigUser extends JPanel {
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblTitulo, "cell 0 0 3 1,grow");
 
-		JLabel lblNome = new JLabel("Nome");
+		lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblNome, "cell 0 1,alignx left");
 
@@ -127,7 +134,7 @@ public class TelaConfigUser extends JPanel {
 			"focusedBackground: null;" +
 			"background: null");
 
-		JLabel lblSenha = new JLabel("Senha");
+		lblSenha = new JLabel("Senha");
 		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblSenha, "flowx,cell 0 3,alignx left");
 
@@ -140,7 +147,7 @@ public class TelaConfigUser extends JPanel {
 			"focusedBackground: null;" +
 			"background: null");
 
-		JLabel lblEmail = new JLabel("Email");
+		lblEmail = new JLabel("Email");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblEmail, "cell 0 5,alignx left");
 
@@ -153,7 +160,7 @@ public class TelaConfigUser extends JPanel {
 			"focusedBackground: null;" +
 			"background: null");
 
-		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblTelefone, "cell 0 7,alignx left");
 
@@ -168,7 +175,7 @@ public class TelaConfigUser extends JPanel {
 		// Aplicar formatação automática de telefone
 		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
-		JLabel lblCPF = new JLabel("CPF");
+		lblCPF = new JLabel("CPF");
 		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(lblCPF, "cell 0 9,alignx left");
 
@@ -203,32 +210,23 @@ public class TelaConfigUser extends JPanel {
 		add(btnAlterarDados, "cell 0 14 3 1,grow");
 		btnAlterarDados.putClientProperty("JComponent.roundRect", true);
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSizeTexto = Math.max(12, panelHeight / 35);
-				int fontSizeBotao = Math.max(14, panelHeight / 25);
-				int fontSizeTitulo = Math.max(16, panelHeight / 20);
-				Font textoFont = new Font("Tahoma", Font.PLAIN, fontSizeTexto);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-				btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-				btnAlterarImagem.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-				lblGithub.setFont(textoFont);
-				txtGithub.setFont(textoFont);
-				lblCPF.setFont(textoFont);
-				tfCPF.setFont(textoFont);
-				lblTelefone.setFont(textoFont);
-				tfTelefone.setFont(textoFont);
-				lblEmail.setFont(textoFont);
-				tfEmail.setFont(textoFont);
-				lblSenha.setFont(textoFont);
-				tfSenha.setFont(textoFont);
-				lblNome.setFont(textoFont);
-				tfNome.setFont(textoFont);
-			}
-		});
-
+		FontScaler.addAutoResize(this,
+			new Object[] {lblTitulo, FontSize.TITULO},
+			new Object[] {lblNome, FontSize.TEXTO},
+			new Object[] {lblSenha, FontSize.TEXTO},
+			new Object[] {lblEmail, FontSize.TEXTO},
+			new Object[] {lblTelefone, FontSize.TEXTO},
+			new Object[] {lblCPF, FontSize.TEXTO},
+			new Object[] {lblGithub, FontSize.TEXTO},
+			new Object[] {tfNome, FontSize.TEXTO},
+			new Object[] {tfSenha, FontSize.TEXTO},
+			new Object[] {tfEmail, FontSize.TEXTO},
+			new Object[] {tfTelefone, FontSize.TEXTO},
+			new Object[] {tfCPF, FontSize.TEXTO},
+			new Object[] {txtGithub, FontSize.TEXTO},
+			new Object[] {btnAlterarDados, FontSize.BOTAO},
+			new Object[] {btnAlterarImagem, FontSize.BOTAO}
+		);
 	}
 
 	public void setUserData(Usuario usuario) {

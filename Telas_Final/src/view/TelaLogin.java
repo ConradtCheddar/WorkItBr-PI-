@@ -32,6 +32,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 import model.Usuario;
 import model.UsuarioDAO;
 import net.miginfocom.swing.MigLayout;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 
 public class TelaLogin extends JPanel {
 
@@ -42,6 +44,7 @@ public class TelaLogin extends JPanel {
 	private JButton btnLogin;
 	private JLabel lblCadastrese;
 	private JLabel lblTitulo;
+	private JLabel lblntlg;
 
 	/**
 	 * Declaração dos elementos da tela
@@ -116,7 +119,7 @@ public class TelaLogin extends JPanel {
 		btnLogin.putClientProperty(FlatClientProperties.STYLE, "arc:999;");
 		add(btnLogin, "cell 2 5,grow");
 
-		JLabel lblntlg = new JLabel("Ainda não tem um Login?");
+		lblntlg = new JLabel("Ainda não tem um Login?");
 		lblntlg.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblntlg.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblntlg, "flowx,cell 2 6,alignx center,aligny center");
@@ -143,31 +146,14 @@ public class TelaLogin extends JPanel {
 
 		});
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSize1 = Math.max(15, panelHeight / 17);
-			}
-		});
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSizeTexto = Math.max(12, panelHeight / 35);
-				int fontSizeBotao = Math.max(14, panelHeight / 25);
-				int fontSizeTitulo = Math.max(16, panelHeight / 20);
-				Font textoFont = new Font("Tahoma", Font.PLAIN, fontSizeTexto);
-				btnLogin.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-				lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				// os prompts já foram configurados na inicialização
-				txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				lblntlg.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				passwordField.setFont(textoFont);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-			}
-		});
+		FontScaler.addAutoResize(this,
+			new Object[] {lblTitulo, FontSize.TITULO},
+			new Object[] {txtUsuario, FontSize.TEXTO},
+			new Object[] {passwordField, FontSize.TEXTO},
+			new Object[] {btnLogin, FontSize.BOTAO},
+			new Object[] {lblCadastrese, FontSize.TEXTO},
+			new Object[] {lblntlg, FontSize.TEXTO}
+		);
 	}
 
 	/**

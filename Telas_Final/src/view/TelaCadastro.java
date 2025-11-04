@@ -18,6 +18,8 @@ import com.formdev.flatlaf.FlatClientProperties;
 
 import net.miginfocom.swing.MigLayout;
 import util.FieldValidator;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -134,25 +136,23 @@ public class TelaCadastro extends JPanel {
 		div.add(rdbtnContratado);
 		add(btnCadastrar, "cell 2 8,grow");
 
+		FontScaler.addAutoResize(this,
+			new Object[] {lblTitulo, FontSize.TITULO},
+			new Object[] {tfEmail, FontSize.TEXTO},
+			new Object[] {tfTelefone, FontSize.TEXTO},
+			new Object[] {tfCPF, FontSize.TEXTO},
+			new Object[] {tfUsuario, FontSize.TEXTO},
+			new Object[] {senha, FontSize.TEXTO},
+			new Object[] {senha2, FontSize.TEXTO},
+			new Object[] {btnCadastrar, FontSize.BOTAO},
+			new Object[] {rdbtnContratante, FontSize.TEXTO},
+			new Object[] {rdbtnContratado, FontSize.TEXTO}
+		);
+		
+		// Atualizar ícones dos radio buttons quando redimensionar
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSizeTexto = Math.max(12, panelHeight / 35);
-				int fontSizeBotao = Math.max(14, panelHeight / 25);
-				int fontSizeTitulo = Math.max(16, panelHeight / 20);
-				tfEmail.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				tfTelefone.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				tfCPF.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				tfUsuario.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				senha.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				senha2.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-				btnCadastrar.putClientProperty("JComponent.roundRect", true);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-				rdbtnContratante.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				rdbtnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTexto));
-				// updateIconSize() é chamado automaticamente quando setFont é chamado
 				rdbtnContratante.updateIconSize();
 				rdbtnContratado.updateIconSize();
 			}

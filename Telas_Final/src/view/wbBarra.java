@@ -22,6 +22,8 @@ import javax.swing.border.EmptyBorder;
 
 import controller.PopupController;
 import net.miginfocom.swing.MigLayout;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 
 public class wbBarra extends JPanel {
 
@@ -40,7 +42,9 @@ public class wbBarra extends JPanel {
 		setPreferredSize(new Dimension(900, 85));
 		setBackground(new Color(0, 102, 204));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill", "[grow]", "[grow]"));
+		// Corrigido: Define 3 colunas - [esquerda fixa][centro que cresce][direita fixa]
+		// Isso garante centralização do título desde a inicialização
+		setLayout(new MigLayout("fill", "[80:80:80][grow,fill][80:80:80]", "[grow]"));
 
 		lblVoltar = new JLabel();
 		lblVoltar.setHorizontalAlignment(SwingConstants.LEFT);
@@ -53,7 +57,7 @@ public class wbBarra extends JPanel {
 		lblVoltar.setIcon(new ImageIcon(scaled));
 		lblVoltar.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4));
 		// Dimensões iniciais - serão ajustadas dinamicamente pelo ajustarIcones()
-		add(lblVoltar, "flowx,cell 0 0,alignx left,aligny center");
+		add(lblVoltar, "cell 0 0,alignx left,aligny center");
 
 		// Removido o MouseListener vazio que estava bloqueando o clique
 		// O listener funcional será adicionado pelo WBController
@@ -61,7 +65,9 @@ public class wbBarra extends JPanel {
 		lblVoltar.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				if (backEnabled) lblVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				if (backEnabled && lblVoltar.isVisible()) {
+					lblVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				}
 			}
 		});
 
@@ -71,7 +77,9 @@ public class wbBarra extends JPanel {
 				java.awt.Point p = e.getPoint();
 				java.awt.Rectangle r = lblVoltar.getBounds();
 				if (r.contains(p)) {
-					if (backEnabled) setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					if (backEnabled && lblVoltar.isVisible()) {
+						setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					}
 				} else {
 					setCursor(Cursor.getDefaultCursor());
 				}
@@ -82,7 +90,7 @@ public class wbBarra extends JPanel {
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblTitulo.setForeground(Color.WHITE);
-		add(lblTitulo, "cell 1 0,grow");
+		add(lblTitulo, "cell 1 0,growx,aligny center");
 
 		setLblBarra(new JLabel());
 		getLblBarra().setHorizontalAlignment(SwingConstants.RIGHT);
@@ -91,7 +99,7 @@ public class wbBarra extends JPanel {
 		Image imgBarra = barraIcon.getImage();
 		Image scaledBarra = imgBarra.getScaledInstance(64, 40, Image.SCALE_SMOOTH);
 		getLblBarra().setIcon(new ImageIcon(scaledBarra));
-		add(getLblBarra(), "cell 2 0,alignx right,growy");
+		add(getLblBarra(), "cell 2 0,alignx right,aligny center");
 
 
 		ajustarIcones();
@@ -108,19 +116,18 @@ public class wbBarra extends JPanel {
 			}
 		});
 
+		// Aplicar FontScaler padronizado para o título
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				if (!resizeListenersEnabled) return; // Ignora durante inicialização
+				// Usar FontSize.TITULO com cálculo customizado para barra
 				int panelHeight = getHeight();
 				int fontSizeTitulo = Math.max(18, panelHeight / 3);
 				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-
 				ajustarFonte();
-
 			}
 		});
-
 	}
 	
 	/**
@@ -163,22 +170,20 @@ public class wbBarra extends JPanel {
 
 	public void setBackEnabled(boolean enabled) {
 		this.backEnabled = enabled;
-		this.lblVoltar.setCursor(enabled ? Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
-				: Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		// Aplica efeito visual de desabilitado (opacidade reduzida) igual ao menu
-		this.lblVoltar.setEnabled(enabled);
-		this.lblVoltar.setVisible(true);
-		this.lblVoltar.setOpaque(false);
-		this.repaint();
+		// Remove a aparência "apagadinha" e usa apenas visibilidade
+		this.lblVoltar.setVisible(enabled);
+		if (enabled) {
+			this.lblVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
 	}
 
 	public void setMenuEnabled(boolean enabled) {
 		this.menuEnabled = enabled;
-		this.lblBarra.setCursor(enabled ? Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
-				: Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		// Aplica efeito visual de desabilitado (opacidade reduzida)
-		this.lblBarra.setEnabled(enabled);
-		this.repaint();
+		// Remove a aparência "apagadinha" e usa apenas visibilidade
+		this.lblBarra.setVisible(enabled);
+		if (enabled) {
+			this.lblBarra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
 	}
 
 	public void ajustarFonte() {

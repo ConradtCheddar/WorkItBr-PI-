@@ -21,6 +21,8 @@ import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 
 public class VisServicoCnteAceito extends JPanel {
 
@@ -36,11 +38,11 @@ public class VisServicoCnteAceito extends JPanel {
 	private JTextArea tpDesc;
 
 	public VisServicoCnteAceito(Servico s) {
-		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
+		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
 		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Visualizar Contratado"));
-		add(panel, "cell 0 0 4 6,grow");
+		add(panel, "cell 0 0,grow");
 		panel.setLayout(new CardLayout(0, 0));
 		
 		btnContratado = new JButton("<html>Visualizar<br>Contratado</html>");
@@ -48,8 +50,8 @@ public class VisServicoCnteAceito extends JPanel {
 		
 		PanelInfo = new JPanel();
 		PanelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Serviço"));
-		add(PanelInfo, "cell 4 0 6 7,grow");
-		PanelInfo.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][][grow][grow][][grow][grow][grow][grow][grow]"));
+		add(PanelInfo, "cell 1 0,grow");
+		PanelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 		
 		taTitulo = new JTextArea("Titulo");
 		taTitulo.setEditable(false);
@@ -60,7 +62,7 @@ public class VisServicoCnteAceito extends JPanel {
 		taTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		taTitulo.setBackground(PanelInfo.getBackground());
 		taTitulo.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
-		PanelInfo.add(taTitulo, "cell 0 0 9 2,grow");
+		PanelInfo.add(taTitulo, "cell 0 0,grow");
 		
 		taModalidade = new JTextArea("Modalidade");
 		taModalidade.setEditable(false);
@@ -71,7 +73,7 @@ public class VisServicoCnteAceito extends JPanel {
 		taModalidade.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		taModalidade.setBackground(PanelInfo.getBackground());
 		taModalidade.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
-		PanelInfo.add(taModalidade, "cell 0 2 9 3,grow");
+		PanelInfo.add(taModalidade, "cell 0 1,grow");
 		
 		taPreco = new JTextArea("Preco");
 		taPreco.setEditable(false);
@@ -82,11 +84,11 @@ public class VisServicoCnteAceito extends JPanel {
 		taPreco.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		taPreco.setBackground(PanelInfo.getBackground());
 		taPreco.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
-		PanelInfo.add(taPreco, "cell 0 5 9 3,grow");
+		PanelInfo.add(taPreco, "cell 0 2,grow");
 		
 	PanelDesc = new JPanel();
 	PanelDesc.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Descrição"));
-	add(PanelDesc, "cell 0 8 10 8,grow");
+	add(PanelDesc, "cell 0 1 2 1,grow");
 	PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
 	
 	tpDesc = new JTextArea();
@@ -104,32 +106,22 @@ public class VisServicoCnteAceito extends JPanel {
 		
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(btnVoltar, "cell 0 16 11 1,alignx center");
+		add(btnVoltar, "cell 0 2 2 1,alignx center");
 
 		taTitulo.setText(s.getNome_Servico());
 		taModalidade.setText(s.getModalidade());
 		taPreco.setText(String.format("R$ %.2f", s.getValor()));
 		tpDesc.setText(s.getDescricao());
 		
-		// Dynamic font sizing
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSizeTitulo = Math.max(16, panelHeight / 30);
-				int fontSizeInfo = Math.max(14, panelHeight / 35);
-				int fontSizeDesc = Math.max(12, panelHeight / 40);
-				int fontSizeBotao = Math.max(14, panelHeight / 35);
-				
-				taTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-				taModalidade.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				taPreco.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				tpDesc.setFont(new Font("Tahoma", Font.PLAIN, fontSizeDesc));
-				btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-				btnContratado.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-			}
-		});
-
+		// Aplicar FontScaler padronizado
+		FontScaler.addAutoResize(this,
+			new Object[] {taTitulo, FontSize.SUBTITULO},
+			new Object[] {taModalidade, FontSize.TEXTO},
+			new Object[] {taPreco, FontSize.TEXTO},
+			new Object[] {tpDesc, FontSize.TEXTO},
+			new Object[] {btnVoltar, FontSize.BOTAO},
+			new Object[] {btnContratado, FontSize.BOTAO}
+		);
 	}
 	
 	public void voltar(ActionListener actionListener) {

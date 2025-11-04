@@ -24,6 +24,9 @@ import javax.swing.border.EmptyBorder;
 import org.jdesktop.swingx.prompt.PromptSupport;
 
 import net.miginfocom.swing.MigLayout;
+import util.FontScaler;
+import util.FontScaler.FontSize;
+
 import javax.swing.JList;
 
 public class TelaContratado extends JPanel {
@@ -36,6 +39,7 @@ public class TelaContratado extends JPanel {
 	private Runnable onShowCallback;
 	private JLabel lblDisponiveis;
 	private JLabel lblVoltar;
+	private JLabel lblAndamento;
 
 	/**
 	 * Create the panel.
@@ -55,7 +59,7 @@ public class TelaContratado extends JPanel {
 		listaAndamento = new JList();
 		scrollPane.setViewportView(listaAndamento);
 		
-		JLabel lblAndamento = new JLabel("Trabalhos em andamento");
+		lblAndamento = new JLabel("Trabalhos em andamento");
 		scrollPane.setColumnHeaderView(lblAndamento);
 		lblAndamento.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -69,17 +73,10 @@ public class TelaContratado extends JPanel {
 		lblDisponiveis.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane_1.setColumnHeaderView(lblDisponiveis);
 		
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSizeLabel = Math.max(14, panelHeight / 25);
-				lblAndamento.setFont(new Font("Tahoma", Font.PLAIN, fontSizeLabel));
-				lblDisponiveis.setFont(new Font("Tahoma", Font.PLAIN, fontSizeLabel));
-			}
-		});
-
-
+		FontScaler.addAutoResize(this,
+			new Object[] {lblAndamento, FontSize.SUBTITULO},
+			new Object[] {lblDisponiveis, FontSize.SUBTITULO}
+		);
 	}
 
 	public JList getListaDisponivel() {

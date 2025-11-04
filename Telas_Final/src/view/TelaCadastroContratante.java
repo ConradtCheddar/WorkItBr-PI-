@@ -48,11 +48,11 @@ public class TelaCadastroContratante extends JPanel {
 	public TelaCadastroContratante() {
 		setPreferredSize(new Dimension(543, 388));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 30 20 20 20, gap 20", "[grow][][grow][grow,right]", "[grow][grow][grow][grow][grow 20]"));
+		setLayout(new MigLayout("fill, insets 30 20 20 20, gap 20", "[grow][grow,right]", "[grow 1][grow][grow][grow][grow 20]"));
 		
 		lblTitulo = new JLabel("Cadastrar Trabalho");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		add(lblTitulo, "cell 0 0 4 1,growx,aligny center");
+		add(lblTitulo, "cell 0 0 2 1,growx,aligny center");
 
 		tfNome = new JTextField();
 		add(tfNome, "cell 0 1,height 20:20:40,grow");
@@ -66,7 +66,7 @@ public class TelaCadastroContratante extends JPanel {
 		tfNome.setSize(new Dimension(50, 50));
 
 		scrollPane = new JScrollPane();
-		add(scrollPane, "cell 3 1 1 3,wmax 600,grow");
+		add(scrollPane, "cell 1 1 1 3,wmax 600,grow");
 
 		tfDescricao = new JTextArea();
 		scrollPane.setViewportView(tfDescricao);
@@ -95,7 +95,7 @@ public class TelaCadastroContratante extends JPanel {
 			"background: null");
 
 		panel = new JPanel();
-		add(panel, "cell 0 4 4 1,grow");
+		add(panel, "cell 0 4 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow]"));
 		
 				btnCadastrarTrabalho = new JButton("Cadastrar Trabalho");

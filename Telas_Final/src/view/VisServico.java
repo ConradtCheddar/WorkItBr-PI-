@@ -30,6 +30,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 
 public class VisServico extends JPanel {
 
@@ -134,29 +136,20 @@ public class VisServico extends JPanel {
 		lblFoto.setIcon(foto);
 		
 		panelBotoes = new JPanel();
-		add(panelBotoes, "cell 0 2 2 1,grow");
+		add(panelBotoes, "cell 0 2 2 1,growx");
 		
 		btnAceitar = new JButton("Aceitar");
 		btnAceitar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelBotoes.add(btnAceitar);
 		
-		// Dynamic font sizing
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int panelHeight = getHeight();
-				int fontSizeTitulo = Math.max(16, panelHeight / 30);
-				int fontSizeInfo = Math.max(14, panelHeight / 35);
-				int fontSizeDesc = Math.max(12, panelHeight / 40);
-				int fontSizeBotao = Math.max(14, panelHeight / 35);
-				
-				taTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-				taModalidade.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				taPreco.setFont(new Font("Tahoma", Font.PLAIN, fontSizeInfo));
-				taDesc.setFont(new Font("Tahoma", Font.PLAIN, fontSizeDesc));
-				btnAceitar.setFont(new Font("Tahoma", Font.PLAIN, fontSizeBotao));
-			}
-		});
+		// Aplicar FontScaler padronizado
+		FontScaler.addAutoResize(this,
+			new Object[] {taTitulo, FontSize.SUBTITULO},
+			new Object[] {taModalidade, FontSize.TEXTO},
+			new Object[] {taPreco, FontSize.TEXTO},
+			new Object[] {taDesc, FontSize.TEXTO},
+			new Object[] {btnAceitar, FontSize.BOTAO}
+		);
 	}
 	
 	/**
