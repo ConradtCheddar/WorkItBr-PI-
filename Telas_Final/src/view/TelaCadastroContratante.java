@@ -29,21 +29,42 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
+/**
+ * Tela de cadastro de novo trabalho/serviço pelo contratante.
+ * <p>
+ * Responsável por: coletar informações do serviço (nome, modalidade, valor, descrição),
+ * validar dados inseridos, fornecer área de texto multilinha para descrição,
+ * aplicar formatação e estilos visuais, e integrar-se com o controller para
+ * processar o cadastro no banco de dados.
+ * </p>
+ */
 public class TelaCadastroContratante extends JPanel {
 
+	// Identificador de versão para serialização (compatibilidade entre versões)
 	private static final long serialVersionUID = 1L;
+	// Campo de texto para nome do trabalho/serviço
 	private JTextField tfNome;
+	// Botão que executa a ação de cadastro
 	private JButton btnCadastrarTrabalho;
+	// Campo de texto para modalidade do serviço (presencial, remoto, híbrido)
 	private JTextField tfModalidade;
+	// Campo de texto para valor/preço do serviço
 	private JTextField tfValor;
+	// Área de texto multilinha para descrição detalhada do serviço
 	private JTextArea tfDescricao;
+	// Scroll pane que envolve a área de descrição
 	private JScrollPane scrollPane;
+	// Painel container para o botão de cadastro
 	private JPanel panel;
+	// Label que exibe o título da tela
 	private JLabel lblTitulo;
 
 	/**
-	 * Create the panel.
-	 * 
+	 * Construtor que cria e configura a tela de cadastro de trabalho.
+	 * <p>
+	 * Inicializa todos os campos, configura propriedades visuais,
+	 * organiza o layout, e aplica redimensionamento de título.
+	 * </p>
 	 */
 	public TelaCadastroContratante() {
 		setPreferredSize(new Dimension(543, 388));
@@ -118,14 +139,22 @@ public class TelaCadastroContratante extends JPanel {
 	}
 
 	/**
-	 * metodo para a funcionalidade do botão cadastrar
+	 * Adiciona um listener ao botão cadastrar para processar a ação de cadastro.
+	 * <p>
+	 * O controller deve implementar a validação dos dados e inserção no banco.
+	 * </p>
+	 * 
+	 * @param actionlistener listener que processará o evento de clique
 	 */
 	public void cadastrar(ActionListener actionlistener) {
 		this.btnCadastrarTrabalho.addActionListener(actionlistener);
 	}
 
 	/**
-	 * metodo para limpar caixas de texto
+	 * Limpa todos os campos de texto.
+	 * <p>
+	 * Útil após cadastro bem-sucedido ou para resetar o formulário.
+	 * </p>
 	 */
 	public void limparCampos() {
 		tfNome.setText("");
@@ -134,53 +163,85 @@ public class TelaCadastroContratante extends JPanel {
 		tfDescricao.setText("");
 	}
 
+	// ==================== Getters & Setters ====================
+
 	/**
-	 * getters & setters
-	 * 
-	 * @return
+	 * Retorna o campo de texto de nome.
+	 * @return JTextField do nome
 	 */
 	public JTextField getTfNome() {
 		return tfNome;
 	}
 
+	/**
+	 * Define o campo de texto de nome.
+	 * @param tfNome novo JTextField para nome
+	 */
 	public void setTfNome(JTextField tfNome) {
 		this.tfNome = tfNome;
 	}
 
+	/**
+	 * Retorna o botão de cadastrar trabalho.
+	 * @return JButton de cadastro
+	 */
 	public JButton getBtnCadastrarTrabalho() {
 		return btnCadastrarTrabalho;
 	}
 
+	/**
+	 * Define o botão de cadastrar trabalho.
+	 * @param btnCadastrarTrabalho novo JButton para cadastro
+	 */
 	public void setBtnCadastrarTrabalho(JButton btnCadastrarTrabalho) {
 		this.btnCadastrarTrabalho = btnCadastrarTrabalho;
 	}
 
+	/**
+	 * Retorna o campo de texto de modalidade.
+	 * @return JTextField da modalidade
+	 */
 	public JTextField getTfModalidade() {
 		return tfModalidade;
 	}
 
+	/**
+	 * Define o campo de texto de modalidade.
+	 * @param tfModalidade novo JTextField para modalidade
+	 */
 	public void setTfModalidade(JTextField tfModalidade) {
 		this.tfModalidade = tfModalidade;
 	}
 
+	/**
+	 * Retorna o campo de texto de valor.
+	 * @return JTextField do valor
+	 */
 	public JTextField getTfValor() {
 		return tfValor;
 	}
 
+	/**
+	 * Define o campo de texto de valor.
+	 * @param tfValor novo JTextField para valor
+	 */
 	public void setTfValor(JTextField tfValor) {
 		this.tfValor = tfValor;
 	}
 
+	/**
+	 * Retorna a área de texto de descrição.
+	 * @return JTextArea da descrição
+	 */
 	public JTextArea getTfDescricao() {
 		return tfDescricao;
 	}
 
+	/**
+	 * Define a área de texto de descrição.
+	 * @param tfDescricao nova JTextArea para descrição
+	 */
 	public void setTfDescricao(JTextArea tfDescricao) {
 		this.tfDescricao = tfDescricao;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 }

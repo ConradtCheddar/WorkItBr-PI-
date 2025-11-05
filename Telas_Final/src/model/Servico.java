@@ -39,6 +39,11 @@ public class Servico {
 		this.idServico = (id != null) ? id : 0;
 	}
 
+	/**
+	 * Retorna o nome do serviço.
+	 * 
+	 * @return nome do serviço (campo nome_Servico)
+	 */
 	public String getNome_Servico() {
 		return nome_Servico;
 	}
@@ -47,6 +52,11 @@ public class Servico {
 		this.nome_Servico = nome_Servico;
 	}
 
+	/**
+	 * Retorna o valor do serviço.
+	 * 
+	 * @return valor (Double) associado ao serviço
+	 */
 	public Double getValor() {
 		return valor;
 	}
@@ -55,6 +65,11 @@ public class Servico {
 		this.valor = valor;
 	}
 
+	/**
+	 * Retorna a modalidade do serviço (por exemplo presencial/online).
+	 * 
+	 * @return modalidade do serviço
+	 */
 	public String getModalidade() {
 		return modalidade;
 	}
@@ -63,6 +78,11 @@ public class Servico {
 		this.modalidade = modalidade;
 	}
 
+	/**
+	 * Retorna a descrição livre do serviço.
+	 * 
+	 * @return descrição do serviço
+	 */
 	public String getDescricao() {
 		return descricao;
 	}
@@ -71,6 +91,11 @@ public class Servico {
 		this.descricao = descricao;
 	}
 
+	/**
+	 * Indica se o serviço foi aceito.
+	 * 
+	 * @return true se aceito, false caso contrário (pode ser null)
+	 */
 	public Boolean getAceito() {
 		return aceito;
 	}
@@ -79,6 +104,11 @@ public class Servico {
 		this.aceito = aceito;
 	}
 
+	/**
+	 * Retorna o usuário contratante (quem solicitou o serviço).
+	 * 
+	 * @return objeto Usuario representando o contratante
+	 */
 	public Usuario getContratante() {
 		return contratante;
 	}
@@ -87,6 +117,12 @@ public class Servico {
 		this.contratante = contratante;
 	}
 
+	/**
+	 * Retorna o usuário contratado (quem realizará o serviço), ou null se ainda não
+	 * houver.
+	 * 
+	 * @return objeto Usuario do contratado ou null
+	 */
 	public Usuario getContratado() {
 		return contratado;
 	}
@@ -95,6 +131,11 @@ public class Servico {
 		this.contratado = contratado;
 	}
 
+	/**
+	 * Retorna o identificador interno do serviço.
+	 * 
+	 * @return idServico (int)
+	 */
 	public int getIdServico() {
 		return idServico;
 	}
@@ -103,6 +144,11 @@ public class Servico {
 		this.idServico = idServico;
 	}
 
+	/**
+	 * Retorna o id do contratante associado ao serviço.
+	 * 
+	 * @return id do contratante (int)
+	 */
 	public int getIdContratante() {
 		return idContratante;
 	}
@@ -111,6 +157,11 @@ public class Servico {
 		this.idContratante = idContratante;
 	}
 
+	/**
+	 * Retorna o id do contratado associado ao serviço.
+	 * 
+	 * @return id do contratado (int)
+	 */
 	public int getIdContratado() {
 		return idContratado;
 	}
@@ -118,9 +169,5 @@ public class Servico {
 	public void setIdContratado(int idContratado) {
 		this.idContratado = idContratado;
 	}
-
-	
-	
-	
 
 }

@@ -1,40 +1,82 @@
+// Define o pacote onde esta classe está localizada (agrupamento lógico de classes relacionadas)
 package view;
 
+// Importa componentes Swing para construção da interface gráfica
 import javax.swing.*;
+// Importa classes AWT para gerenciamento de layout, cores e dimensões
 import java.awt.*;
+// Importa classes para manipulação de eventos (cliques, ações, etc.)
 import java.awt.event.*;
+// Importa Consumer para callbacks funcionais (notificações de mudança de estado)
 import java.util.function.Consumer;
+// Importa o Navegador responsável por controlar navegação entre telas
 import controller.Navegador;
+// Importa a fábrica de telas que cria instâncias dinâmicas de visualizações
 import controller.TelaFactory;
+// Importa o DAO para acesso a dados de usuários no banco de dados
 import model.UsuarioDAO;
+// Importa a classe de modelo que representa um usuário no sistema
 import model.Usuario;
+// Importa a tela de configuração de usuário
 import view.TelaConfigUser;
+// Importa o controller da tela de configuração de usuário
 import controller.TelaConfigUserController;
 
+/**
+ * Menu lateral deslizante (drawer) que aparece do lado direito da tela.
+ * <p>
+ * Responsável por: exibir opções de navegação (Home, Profile, Trabalhos,
+ * Settings), gerenciar logout do usuário, animar a abertura/fechamento do menu
+ * com efeito suave, e integrar-se com o sistema de navegação para trocar entre
+ * telas.
+ * </p>
+ */
 public class DrawerMenu extends JPanel {
+	// Largura fixa do menu em pixels quando está aberto
 	private static final int MENU_WIDTH = 250;
-	private static final int MARGIN = 10; // Margem entre botões e borda
+	// Margem interna entre os botões e a borda do menu (espaçamento)
+	private static final int MARGIN = 10;
+	// Altura padrão dos botões do menu
 	private static final int BUTTON_HEIGHT = 50;
-	private static final int ANIMATION_DURATION = 300; // Duração da animação em ms
-	private static final int ANIMATION_FPS = 60; // Frames por segundo
+	// Duração total da animação de abertura/fechamento em milissegundos
+	private static final int ANIMATION_DURATION = 300;
+	// Taxa de quadros por segundo da animação (frames por segundo)
+	private static final int ANIMATION_FPS = 60;
 
+	// Flag que indica se o menu está atualmente aberto (true) ou fechado (false)
 	private boolean isOpen = false;
+	// Flag que indica se uma animação está em execução no momento
 	private boolean isAnimating = false;
+	// Timer responsável por executar os frames da animação periodicamente
 	private Timer animationTimer;
+	// Timestamp que marca o início da animação (usado para calcular progresso)
 	private long animationStartTime;
+	// Posição X de destino para onde o menu está se movendo
 	private int targetX;
+	// Posição X inicial de onde o menu começou a se mover
 	private int startX;
 
+	// Botão que realiza o logout do usuário e limpa a sessão
 	private JButton btnLogout;
+	// Botão que navega para a tela de configurações (temporária)
 	private JButton btnSettings;
+	// Botão que navega para o perfil/configurações do usuário
 	private JButton btnProfile;
+	// Botão que navega para a lista de trabalhos/serviços
 	private JButton btnTrabalhos;
+	// Botão que navega para a tela inicial (Home) baseado no tipo de usuário
 	private JButton btnHome;
+	// Referência ao DAO para operações de banco de dados relacionadas a usuários
 	private UsuarioDAO usuarioDAO;
+	// Referência ao navegador que controla a navegação entre telas
 	private Navegador navegador;
+	// Referência à fábrica que cria instâncias dinâmicas de telas
 	private TelaFactory telaFactory;
+	// Callback executado quando o estado do menu muda (abre ou fecha)
 	private Consumer<Boolean> onStateChange;
+	// Painel superior que contém os botões principais de navegação
 	private JPanel topPanel;
+	// Painel inferior que contém o botão de logout
 	private JPanel bottomPanel;
 
 	public DrawerMenu(UsuarioDAO usuarioDAO) {
@@ -220,7 +262,8 @@ public class DrawerMenu extends JPanel {
 	}
 
 	/**
-	 * Fecha o menu de forma segura (iniciando animação de fechamento se necessário).
+	 * Fecha o menu de forma segura (iniciando animação de fechamento se
+	 * necessário).
 	 */
 	public void closeMenu() {
 		// Se já estiver fechado e não estiver animando, nada a fazer
@@ -362,27 +405,37 @@ public class DrawerMenu extends JPanel {
 			protected void paintBorder(Graphics g) {
 				// Não desenha borda padrão
 			}
-		};
+		}; // Fim da classe anônima JButton
 
-		button.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button.setBackground(Color.GRAY);
-		button.setForeground(Color.WHITE);
-		button.setFocusPainted(false);
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setOpaque(false);
-		int buttonWidth = MENU_WIDTH - (2 * MARGIN);
-		button.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-		button.setPreferredSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-		button.setMinimumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-		return button;
-	}
+		button.setAlignmentX(Component.CENTER_ALIGNMENT); // Define alinhamento horizontal do botão como centralizado
+		button.setBackground(Color.GRAY); // Define cor de fundo cinza para o botão
+		button.setForeground(Color.WHITE); // Define cor do texto como branco
+		button.setFocusPainted(false); // Remove indicador visual de foco (borda ao selecionar)
+		button.setBorderPainted(false); // Remove pintura de borda padrão do Swing
+		button.setContentAreaFilled(false); // Remove preenchimento automático da área de conteúdo
+		button.setOpaque(false); // Define botão como não opaco (transparente onde não foi pintado)
+		int buttonWidth = MENU_WIDTH - (2 * MARGIN); // Calcula largura do botão subtraindo margens dos dois lados (250 - 20 = 230 pixels)
+		button.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT)); // Define tamanho máximo do botão (230 x 50 pixels)
+		button.setPreferredSize(new Dimension(buttonWidth, BUTTON_HEIGHT)); // Define tamanho preferencial do botão (230 x 50 pixels)
+		button.setMinimumSize(new Dimension(buttonWidth, BUTTON_HEIGHT)); // Define tamanho mínimo do botão (230 x 50 pixels)
+		return button; // Retorna botão configurado e estilizado
+	} // Fim do método createMenuButton
 
-	public boolean isOpen() {
-		return isOpen;
-	}
+	/**
+	 * Retorna se o menu está aberto.
+	 * 
+	 * @return true se menu está aberto, false caso contrário
+	 */
+	public boolean isOpen() { // Método getter público que retorna estado de abertura do menu
+		return isOpen; // Retorna valor da flag isOpen
+	} // Fim do método isOpen
 
-	public boolean isAnimating() {
-		return isAnimating;
-	}
-}
+	/**
+	 * Retorna se uma animação está em execução.
+	 * 
+	 * @return true se animação está rodando, false caso contrário
+	 */
+	public boolean isAnimating() { // Método getter público que retorna se animação está executando
+		return isAnimating; // Retorna valor da flag isAnimating
+	} // Fim do método isAnimating
+} // Fim da classe DrawerMenu

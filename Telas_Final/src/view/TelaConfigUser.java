@@ -247,26 +247,50 @@ public class TelaConfigUser extends JPanel {
 		}
 	}
 
+	/**
+	 * Retorna o texto atual do campo de nome.
+	 * @return nome preenchido no formulário
+	 */
 	public String getNome() {
 		return tfNome.getText();
 	}
 
+	/**
+	 * Retorna o texto atual do campo de senha.
+	 * @return senha preenchida no formulário
+	 */
 	public String getSenha() {
 		return tfSenha.getText();
 	}
 
+	/**
+	 * Retorna o texto atual do campo de email.
+	 * @return email preenchido no formulário
+	 */
 	public String getEmail() {
 		return tfEmail.getText();
 	}
 
+	/**
+	 * Retorna o texto atual do campo de telefone.
+	 * @return telefone preenchido no formulário
+	 */
 	public String getTelefone() {
 		return tfTelefone.getText();
 	}
 
+	/**
+	 * Retorna o texto atual do campo CPF/CNPJ.
+	 * @return cpf/cnpj preenchido no formulário
+	 */
 	public String getCpfCnpj() {
 		return tfCPF.getText();
 	}
 
+	/**
+	 * Retorna o texto atual do campo Github.
+	 * @return github preenchido no formulário
+	 */
 	public String getGithub() {
 		return txtGithub.getText();
 	}
