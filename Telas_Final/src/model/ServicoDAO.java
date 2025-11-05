@@ -338,7 +338,7 @@ public class ServicoDAO {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(url, Usuario, Senha);
-			String sql = "UPDATE Servico SET arquivo = ? WHERE ID_servico = ?";
+			String sql = "UPDATE Servico SET submicoes = ? WHERE ID_servico = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setBytes(1, arquivo);
 			stmt.setInt(2, idServico);
