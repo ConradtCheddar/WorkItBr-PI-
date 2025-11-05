@@ -55,15 +55,15 @@ import util.FontScaler.FontSize;
  * <p>
  * Responsável por: exibir informações detalhadas de um usuário contratado,
  * mostrar foto de perfil com redimensionamento automático, exibir dados como
- * nome, GitHub, email e telefone, fornecer botão de voltar para navegação,
- * e integrar-se com o controller para processar interações do usuário.
+ * nome, GitHub, email e telefone, fornecer botão de voltar para navegação, e
+ * integrar-se com o controller para processar interações do usuário.
  * </p>
  */
 public class VisContratado extends JPanel {
 
 	// Identificador de versão para serialização (compatibilidade entre versões)
 	private static final long serialVersionUID = 1L;
-	
+
 	// Painel container para a foto de perfil
 	private JPanel panel;
 	// Painel customizado que renderiza a foto do usuário
@@ -81,9 +81,9 @@ public class VisContratado extends JPanel {
 	// Botão para retornar à tela anterior
 	private JButton btnVoltar;
 	// Imagem atualmente exibida (redimensionada para o tamanho do painel)
-    private Image imagemSelecionada;
+	private Image imagemSelecionada;
 	// Imagem original carregada (mantida para redimensionamentos futuros)
-    private Image imagemOriginal;
+	private Image imagemOriginal;
 
 	/**
 	 * Construtor que cria e configura a tela de visualização de contratado.
@@ -94,16 +94,17 @@ public class VisContratado extends JPanel {
 	 * 
 	 * @param u objeto Usuario contendo os dados do contratado a serem exibidos
 	 */
-    public VisContratado(Usuario u) {
-		// Configura MigLayout com margens e espaçamento: 3 colunas crescentes, 3 linhas crescentes
+	public VisContratado(Usuario u) {
+		// Configura MigLayout com margens e espaçamento: 3 colunas crescentes, 3 linhas
+		// crescentes
 		setLayout(new MigLayout("fill, insets 20 20 20 20, gap 20", "[grow][grow][grow]", "[grow][grow][grow]"));
-		
+
 		// Cria painel container para foto com borda titulada
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Perfil"));
 		add(panel, "cell 0 0 1 2,grow");
 		panel.setLayout(new CardLayout(0, 0));
-		
+
 		// Cria painel customizado que renderiza a foto do usuário quando disponível
 		Perfil = new JPanel() {
 			@Override
@@ -117,25 +118,27 @@ public class VisContratado extends JPanel {
 			}
 		};
 		panel.add(Perfil, "name_12377154952900");
-		
-		// Adiciona listener para redimensionar a imagem quando o painel mudar de tamanho
+
+		// Adiciona listener para redimensionar a imagem quando o painel mudar de
+		// tamanho
 		Perfil.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				// Se há imagem original carregada, redimensiona para o novo tamanho
 				if (imagemOriginal != null) {
-					imagemSelecionada = imagemOriginal.getScaledInstance(Perfil.getWidth(), Perfil.getHeight(), Image.SCALE_SMOOTH);
+					imagemSelecionada = imagemOriginal.getScaledInstance(Perfil.getWidth(), Perfil.getHeight(),
+							Image.SCALE_SMOOTH);
 					Perfil.repaint();
 				}
 			}
 		});
-		
+
 		// Cria painel para informações textuais com borda titulada
 		PanelInfo = new JPanel();
 		PanelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Contratado"));
 		add(PanelInfo, "cell 1 0 2 2,grow");
 		PanelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow]"));
-		
+
 		// Cria área de texto para nome
 		taNome = new JTextArea("Nome");
 		taNome.setEditable(false);
@@ -147,7 +150,7 @@ public class VisContratado extends JPanel {
 		taNome.setBackground(PanelInfo.getBackground());
 		taNome.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taNome, "cell 0 0,grow");
-		
+
 		// Cria área de texto para GitHub
 		taGithub = new JTextArea("Github");
 		taGithub.setEditable(false);
@@ -159,7 +162,7 @@ public class VisContratado extends JPanel {
 		taGithub.setBackground(PanelInfo.getBackground());
 		taGithub.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taGithub, "cell 0 1,grow");
-		
+
 		// Cria área de texto para email
 		taEmail = new JTextArea("Email");
 		taEmail.setEditable(false);
@@ -171,7 +174,7 @@ public class VisContratado extends JPanel {
 		taEmail.setBackground(PanelInfo.getBackground());
 		taEmail.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taEmail, "cell 0 2,grow");
-		
+
 		// Cria área de texto para telefone
 		taTelefone = new JTextArea("Telefone");
 		taTelefone.setEditable(false);
@@ -191,7 +194,7 @@ public class VisContratado extends JPanel {
 		taGithub.setText(githubText);
 		taEmail.setText(u.getEmail());
 		taTelefone.setText(u.getTelefone());
-		
+
 		// Cria botão de voltar
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -200,22 +203,19 @@ public class VisContratado extends JPanel {
 		});
 		add(btnVoltar, "cell 0 2 3 1,alignx center,aligny center");
 		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		
+
 		// Configura redimensionamento automático de fontes
-		FontScaler.addAutoResize(this,
-			new Object[] {taNome, FontSize.SUBTITULO},
-			new Object[] {taGithub, FontSize.TEXTO},
-			new Object[] {taEmail, FontSize.TEXTO},
-			new Object[] {taTelefone, FontSize.TEXTO},
-			new Object[] {btnVoltar, FontSize.BOTAO}
-		);
-		
+		FontScaler.addAutoResize(this, new Object[] { taNome, FontSize.SUBTITULO },
+				new Object[] { taGithub, FontSize.TEXTO }, new Object[] { taEmail, FontSize.TEXTO },
+				new Object[] { taTelefone, FontSize.TEXTO }, new Object[] { btnVoltar, FontSize.BOTAO });
+
 		// Carrega a imagem do usuário caso exista caminho válido
 		if (u != null && u.getCaminhoFoto() != null && !u.getCaminhoFoto().isBlank()) {
 			try {
 				ImageIcon imgIcon = new ImageIcon(u.getCaminhoFoto());
 				imagemOriginal = imgIcon.getImage();
-				// Se o painel já tem tamanho, escala imediatamente, senão será escalada no componentResized
+				// Se o painel já tem tamanho, escala imediatamente, senão será escalada no
+				// componentResized
 				int w = Perfil.getWidth() > 0 ? Perfil.getWidth() : 200;
 				int h = Perfil.getHeight() > 0 ? Perfil.getHeight() : 200;
 				imagemSelecionada = imagemOriginal.getScaledInstance(w, h, Image.SCALE_SMOOTH);
@@ -226,7 +226,7 @@ public class VisContratado extends JPanel {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adiciona um listener ao botão voltar para processar a navegação.
 	 * 

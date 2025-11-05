@@ -47,17 +47,17 @@ import util.FontScaler.FontSize;
 /**
  * Tela de visualização de serviço do contratante (ainda não aceito).
  * <p>
- * Responsável por: exibir informações detalhadas de um serviço cadastrado pelo contratante,
- * mostrar título, modalidade, preço e descrição, fornecer botão para editar o serviço,
- * permitir visualização antes que seja aceito por um contratado, e integrar-se com o
- * controller para processar edições.
+ * Responsável por: exibir informações detalhadas de um serviço cadastrado pelo
+ * contratante, mostrar título, modalidade, preço e descrição, fornecer botão
+ * para editar o serviço, permitir visualização antes que seja aceito por um
+ * contratado, e integrar-se com o controller para processar edições.
  * </p>
  */
 public class VisServicoCnte extends JPanel {
 
 	// Identificador de versão para serialização (compatibilidade entre versões)
 	private static final long serialVersionUID = 1L;
-	
+
 	// Painel container para foto/imagem do serviço (placeholder)
 	private JPanel panel;
 	// Painel de perfil (não utilizado atualmente - possível funcionalidade futura)
@@ -78,30 +78,31 @@ public class VisServicoCnte extends JPanel {
 	private JTextArea tpDesc;
 
 	/**
-	 * Construtor que cria e configura a tela de visualização de serviço do contratante.
+	 * Construtor que cria e configura a tela de visualização de serviço do
+	 * contratante.
 	 * <p>
-	 * Inicializa todos os painéis e componentes, popula os campos com dados do serviço,
-	 * e organiza o layout visual com botão de edição.
+	 * Inicializa todos os painéis e componentes, popula os campos com dados do
+	 * serviço, e organiza o layout visual com botão de edição.
 	 * </p>
 	 * 
 	 * @param s objeto Servico contendo os dados a serem exibidos
 	 */
 	public VisServicoCnte(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
-		
+
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Serviço"));
 		add(panel, "cell 0 0,grow");
 		panel.setLayout(new CardLayout(0, 0));
-		
+
 		Perfil = new JPanel();
 		panel.add(Perfil, "name_1709392782600");
-		
+
 		PanelInfo = new JPanel();
 		PanelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Serviço"));
 		add(PanelInfo, "cell 1 0,grow");
 		PanelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
-		
+
 		taTitulo = new JTextArea("Titulo");
 		taTitulo.setEditable(false);
 		taTitulo.setFocusable(false);
@@ -112,7 +113,7 @@ public class VisServicoCnte extends JPanel {
 		taTitulo.setBackground(PanelInfo.getBackground());
 		taTitulo.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taTitulo, "cell 0 0,grow");
-		
+
 		taModalidade = new JTextArea("Modalidade");
 		taModalidade.setEditable(false);
 		taModalidade.setFocusable(false);
@@ -123,7 +124,7 @@ public class VisServicoCnte extends JPanel {
 		taModalidade.setBackground(PanelInfo.getBackground());
 		taModalidade.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taModalidade, "cell 0 1,grow");
-		
+
 		taPreco = new JTextArea("Preco");
 		taPreco.setEditable(false);
 		taPreco.setFocusable(false);
@@ -134,12 +135,12 @@ public class VisServicoCnte extends JPanel {
 		taPreco.setBackground(PanelInfo.getBackground());
 		taPreco.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taPreco, "cell 0 2,grow");
-		
+
 		PanelDesc = new JPanel();
 		PanelDesc.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Descrição"));
 		add(PanelDesc, "cell 0 1 2 1,grow");
 		PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
-		
+
 		tpDesc = new JTextArea();
 		tpDesc.setEditable(false);
 		tpDesc.setFocusable(false);
@@ -148,11 +149,11 @@ public class VisServicoCnte extends JPanel {
 		tpDesc.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tpDesc.setBackground(PanelDesc.getBackground());
 		tpDesc.setText(s.getDescricao());
-		
+
 		JScrollPane scrollPane = new JScrollPane(tpDesc);
 		scrollPane.setBorder(null);
 		PanelDesc.add(scrollPane, "cell 0 0,grow");
-		
+
 		btnEditar = new JButton("Editar");
 		btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(btnEditar, "cell 0 2 2 1,alignx center");
@@ -161,17 +162,13 @@ public class VisServicoCnte extends JPanel {
 		taModalidade.setText(s.getModalidade());
 		taPreco.setText(String.format("R$ %.2f", s.getValor()));
 		tpDesc.setText(s.getDescricao());
-		
+
 		// Aplicar FontScaler padronizado
-		FontScaler.addAutoResize(this,
-			new Object[] {taTitulo, FontSize.SUBTITULO},
-			new Object[] {taModalidade, FontSize.TEXTO},
-			new Object[] {taPreco, FontSize.TEXTO},
-			new Object[] {tpDesc, FontSize.TEXTO},
-			new Object[] {btnEditar, FontSize.BOTAO}
-		);
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
+				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnEditar, FontSize.BOTAO });
 	}
-	
+
 	/**
 	 * Adiciona um listener ao botão editar para processar a edição do serviço.
 	 * 

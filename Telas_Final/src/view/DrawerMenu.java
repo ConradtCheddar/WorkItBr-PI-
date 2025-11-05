@@ -405,37 +405,27 @@ public class DrawerMenu extends JPanel {
 			protected void paintBorder(Graphics g) {
 				// Não desenha borda padrão
 			}
-		}; // Fim da classe anônima JButton
+		};
 
-		button.setAlignmentX(Component.CENTER_ALIGNMENT); // Define alinhamento horizontal do botão como centralizado
-		button.setBackground(Color.GRAY); // Define cor de fundo cinza para o botão
-		button.setForeground(Color.WHITE); // Define cor do texto como branco
-		button.setFocusPainted(false); // Remove indicador visual de foco (borda ao selecionar)
-		button.setBorderPainted(false); // Remove pintura de borda padrão do Swing
-		button.setContentAreaFilled(false); // Remove preenchimento automático da área de conteúdo
-		button.setOpaque(false); // Define botão como não opaco (transparente onde não foi pintado)
-		int buttonWidth = MENU_WIDTH - (2 * MARGIN); // Calcula largura do botão subtraindo margens dos dois lados (250 - 20 = 230 pixels)
-		button.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT)); // Define tamanho máximo do botão (230 x 50 pixels)
-		button.setPreferredSize(new Dimension(buttonWidth, BUTTON_HEIGHT)); // Define tamanho preferencial do botão (230 x 50 pixels)
-		button.setMinimumSize(new Dimension(buttonWidth, BUTTON_HEIGHT)); // Define tamanho mínimo do botão (230 x 50 pixels)
-		return button; // Retorna botão configurado e estilizado
-	} // Fim do método createMenuButton
+		button.setAlignmentX(Component.CENTER_ALIGNMENT);
+		button.setBackground(Color.GRAY);
+		button.setForeground(Color.WHITE);
+		button.setFocusPainted(false);
+		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
+		button.setOpaque(false);
+		int buttonWidth = MENU_WIDTH - (2 * MARGIN);
+		button.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+		button.setPreferredSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+		button.setMinimumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+		return button;
+	}
 
-	/**
-	 * Retorna se o menu está aberto.
-	 * 
-	 * @return true se menu está aberto, false caso contrário
-	 */
-	public boolean isOpen() { // Método getter público que retorna estado de abertura do menu
-		return isOpen; // Retorna valor da flag isOpen
-	} // Fim do método isOpen
+	public boolean isOpen() {
+		return isOpen;
+	}
 
-	/**
-	 * Retorna se uma animação está em execução.
-	 * 
-	 * @return true se animação está rodando, false caso contrário
-	 */
-	public boolean isAnimating() { // Método getter público que retorna se animação está executando
-		return isAnimating; // Retorna valor da flag isAnimating
-	} // Fim do método isAnimating
-} // Fim da classe DrawerMenu
+	public boolean isAnimating() {
+		return isAnimating;
+	}
+}

@@ -49,11 +49,11 @@ import java.awt.ComponentOrientation;
 /**
  * Tela de cadastro de novos usuários no sistema.
  * <p>
- * Responsável por: coletar dados pessoais (email, telefone, CPF/CNPJ, usuário, senha),
- * permitir seleção do tipo de usuário (contratante ou contratado), aplicar formatação
- * automática em campos específicos (telefone, CPF), validar confirmação de senha,
- * fornecer feedback visual ao usuário, e integrar-se com o controller para processar
- * o cadastro no banco de dados.
+ * Responsável por: coletar dados pessoais (email, telefone, CPF/CNPJ, usuário,
+ * senha), permitir seleção do tipo de usuário (contratante ou contratado),
+ * aplicar formatação automática em campos específicos (telefone, CPF), validar
+ * confirmação de senha, fornecer feedback visual ao usuário, e integrar-se com
+ * o controller para processar o cadastro no banco de dados.
  * </p>
  */
 public class TelaCadastro extends JPanel {
@@ -86,8 +86,8 @@ public class TelaCadastro extends JPanel {
 	/**
 	 * Construtor que cria e configura a tela de cadastro.
 	 * <p>
-	 * Inicializa todos os campos, configura validadores e formatadores,
-	 * organiza o layout, e aplica redimensionamento automático de fontes.
+	 * Inicializa todos os campos, configura validadores e formatadores, organiza o
+	 * layout, e aplica redimensionamento automático de fontes.
 	 * </p>
 	 */
 	public TelaCadastro() {
@@ -124,9 +124,7 @@ public class TelaCadastro extends JPanel {
 		// Torna o fundo transparente
 		tfEmail.setOpaque(false);
 		// Remove cor de fundo ao focar
-		tfEmail.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfEmail.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		// Cria campo de telefone com formatação automática
 		tfTelefone = new JTextField();
@@ -135,9 +133,7 @@ public class TelaCadastro extends JPanel {
 		tfTelefone.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Telefone");
 		tfTelefone.putClientProperty("JComponent.roundRect", true);
 		tfTelefone.setOpaque(false);
-		tfTelefone.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfTelefone.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 		// Aplica formatador automático de telefone (adiciona parênteses e hífen)
 		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
@@ -148,9 +144,7 @@ public class TelaCadastro extends JPanel {
 		tfCPF.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "CPF ou CNPJ");
 		tfCPF.putClientProperty("JComponent.roundRect", true);
 		tfCPF.setOpaque(false);
-		tfCPF.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfCPF.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 		// Aplica formatador automático de CPF (adiciona pontos e hífen)
 		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
 
@@ -161,9 +155,7 @@ public class TelaCadastro extends JPanel {
 		tfUsuario.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Usuário");
 		tfUsuario.putClientProperty("JComponent.roundRect", true);
 		tfUsuario.setOpaque(false);
-		tfUsuario.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfUsuario.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		// Cria campo de senha
 		senha = new JPasswordField();
@@ -172,9 +164,7 @@ public class TelaCadastro extends JPanel {
 		senha.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
 		senha.putClientProperty("JComponent.roundRect", true);
 		senha.setOpaque(false);
-		senha.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		senha.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		// Cria campo de confirmação de senha
 		senha2 = new JPasswordField();
@@ -183,11 +173,10 @@ public class TelaCadastro extends JPanel {
 		senha2.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Confirmar Senha");
 		senha2.putClientProperty("JComponent.roundRect", true);
 		senha2.setOpaque(false);
-		senha2.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		senha2.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
-		// Cria RadioButton para tipo "Contratante" com orientação RTL (texto à esquerda, botão à direita)
+		// Cria RadioButton para tipo "Contratante" com orientação RTL (texto à
+		// esquerda, botão à direita)
 		rdbtnContratante = new ScalableRadioButton("Contratante");
 		rdbtnContratante.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		rdbtnContratante.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -200,24 +189,18 @@ public class TelaCadastro extends JPanel {
 		add(rdbtnContratado, "cell 3 7,alignx center,growy");
 		// Adiciona ao grupo para garantir seleção exclusiva
 		div.add(rdbtnContratado);
-		
+
 		// Adiciona botão de cadastro
 		add(btnCadastrar, "cell 2 8,grow");
 
 		// Configura redimensionamento automático de fontes para todos os componentes
-		FontScaler.addAutoResize(this,
-			new Object[] {lblTitulo, FontSize.TITULO},
-			new Object[] {tfEmail, FontSize.TEXTO},
-			new Object[] {tfTelefone, FontSize.TEXTO},
-			new Object[] {tfCPF, FontSize.TEXTO},
-			new Object[] {tfUsuario, FontSize.TEXTO},
-			new Object[] {senha, FontSize.TEXTO},
-			new Object[] {senha2, FontSize.TEXTO},
-			new Object[] {btnCadastrar, FontSize.BOTAO},
-			new Object[] {rdbtnContratante, FontSize.TEXTO},
-			new Object[] {rdbtnContratado, FontSize.TEXTO}
-		);
-		
+		FontScaler.addAutoResize(this, new Object[] { lblTitulo, FontSize.TITULO },
+				new Object[] { tfEmail, FontSize.TEXTO }, new Object[] { tfTelefone, FontSize.TEXTO },
+				new Object[] { tfCPF, FontSize.TEXTO }, new Object[] { tfUsuario, FontSize.TEXTO },
+				new Object[] { senha, FontSize.TEXTO }, new Object[] { senha2, FontSize.TEXTO },
+				new Object[] { btnCadastrar, FontSize.BOTAO }, new Object[] { rdbtnContratante, FontSize.TEXTO },
+				new Object[] { rdbtnContratado, FontSize.TEXTO });
+
 		// Atualizar ícones dos radio buttons quando redimensionar
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -260,6 +243,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o campo de texto de email.
+	 * 
 	 * @return JTextField do email
 	 */
 	public JTextField getTfEmail() {
@@ -268,6 +252,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o campo de texto de email.
+	 * 
 	 * @param tfEmail novo JTextField para email
 	 */
 	public void setTfEmail(JTextField tfEmail) {
@@ -276,6 +261,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o campo de texto de telefone.
+	 * 
 	 * @return JTextField do telefone
 	 */
 	public JTextField getTfTelefone() {
@@ -284,6 +270,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o campo de texto de telefone.
+	 * 
 	 * @param tfTelefone novo JTextField para telefone
 	 */
 	public void setTfTelefone(JTextField tfTelefone) {
@@ -292,6 +279,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o campo de texto de CPF.
+	 * 
 	 * @return JTextField do CPF
 	 */
 	public JTextField getTfCPF() {
@@ -300,6 +288,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o campo de texto de CPF.
+	 * 
 	 * @param tfCPF novo JTextField para CPF
 	 */
 	public void setTfCPF(JTextField tfCPF) {
@@ -308,6 +297,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o campo de texto de usuário.
+	 * 
 	 * @return JTextField do usuário
 	 */
 	public JTextField getTfUsuario() {
@@ -316,6 +306,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o campo de texto de usuário.
+	 * 
 	 * @param tfUsuario novo JTextField para usuário
 	 */
 	public void setTfUsuario(JTextField tfUsuario) {
@@ -324,6 +315,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o campo de senha.
+	 * 
 	 * @return JPasswordField da senha
 	 */
 	public JPasswordField getSenha() {
@@ -332,6 +324,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o campo de senha.
+	 * 
 	 * @param senha novo JPasswordField para senha
 	 */
 	public void setSenha(JPasswordField senha) {
@@ -340,6 +333,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o campo de confirmação de senha.
+	 * 
 	 * @return JPasswordField da confirmação de senha
 	 */
 	public JPasswordField getSenha2() {
@@ -348,6 +342,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o campo de confirmação de senha.
+	 * 
 	 * @param senha2 novo JPasswordField para confirmação de senha
 	 */
 	public void setSenha2(JPasswordField senha2) {
@@ -356,6 +351,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o RadioButton de tipo "Contratante".
+	 * 
 	 * @return ScalableRadioButton do contratante
 	 */
 	public ScalableRadioButton getRdbtnContratante() {
@@ -364,6 +360,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o RadioButton de tipo "Contratante".
+	 * 
 	 * @param rdbtnContratante novo ScalableRadioButton para contratante
 	 */
 	public void setRdbtnContratante(ScalableRadioButton rdbtnContratante) {
@@ -372,6 +369,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o RadioButton de tipo "Contratado".
+	 * 
 	 * @return ScalableRadioButton do contratado
 	 */
 	public ScalableRadioButton getRdbtnContratado() {
@@ -380,6 +378,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o RadioButton de tipo "Contratado".
+	 * 
 	 * @param rdbtnContratado novo ScalableRadioButton para contratado
 	 */
 	public void setRdbtnContratado(ScalableRadioButton rdbtnContratado) {
@@ -388,6 +387,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Retorna o botão de cadastrar.
+	 * 
 	 * @return JButton do cadastrar
 	 */
 	public JButton getBtnCadastrar() {
@@ -396,6 +396,7 @@ public class TelaCadastro extends JPanel {
 
 	/**
 	 * Define o botão de cadastrar.
+	 * 
 	 * @param btnCadastrar novo JButton para cadastrar
 	 */
 	public void setBtnCadastrar(JButton btnCadastrar) {

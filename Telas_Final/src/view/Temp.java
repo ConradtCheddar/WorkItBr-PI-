@@ -80,80 +80,53 @@ public class Temp extends JPanel {
 	 * centralizado.
 	 * </p>
 	 */
-	public Temp() { // Método construtor sem parâmetros
+	public Temp() {
 		// Remove bordas para maximizar área útil
-		setBorder(new EmptyBorder(0, 0, 0, 0)); // Cria borda vazia sem espaçamento em nenhum lado
+		setBorder(new EmptyBorder(0, 0, 0, 0));
 		// Configura MigLayout com grid extenso (21 colunas x 18 linhas) para
 		// posicionamento preciso
-		setLayout(new MigLayout("fill, insets 0", // Parâmetros do layout: fill (preencher espaço), insets 0 (sem margens)
-				"[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]", // Define 21 colunas com margens de 20px nas laterais
-				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]")); // Define 18 linhas com margens de 35px no topo e rodapé
+		setLayout(new MigLayout("fill, insets 0",
+				"[20px][grow][grow][grow][grow][][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][grow][20px]",
+				"[35px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][35px]"));
 
 		// Cria e posiciona botão de navegação para Login
-		btnLogin = new JButton("Login"); // Instancia novo JButton com texto "Login"
-		add(btnLogin, "cell 11 9,grow"); // Adiciona botão na célula coluna 11, linha 9, com crescimento para preencher espaço
+		btnLogin = new JButton("Login");
+		add(btnLogin, "cell 11 9,grow");
 
 		// Cria e posiciona botão de navegação para tela ADM
-		btnADM = new JButton("ADM"); // Instancia novo JButton com texto "ADM"
-		add(btnADM, "cell 11 10,grow"); // Adiciona botão na célula coluna 11, linha 10, com crescimento para preencher espaço
+		btnADM = new JButton("ADM");
+		add(btnADM, "cell 11 10,grow");
 
 		// Cria e posiciona botão de navegação para tela Contratado
-		btnContratado = new JButton("Contratado"); // Instancia novo JButton com texto "Contratado"
-		add(btnContratado, "cell 11 11,grow"); // Adiciona botão na célula coluna 11, linha 11, com crescimento para preencher espaço
+		btnContratado = new JButton("Contratado");
+		add(btnContratado, "cell 11 11,grow");
 
-		// Cria e posiciona botão de navegação para tela Contratante
-		btnContratante = new JButton("Contratante"); // Instancia novo JButton com texto "Contratante"
-		add(btnContratante, "cell 11 12,grow"); // Adiciona botão na célula coluna 11, linha 12, com crescimento para preencher espaço
+		btnContratante = new JButton("Contratante");
+		add(btnContratante, "cell 11 12,grow");
 
-		// Cria e posiciona botão de navegação para tela de Cadastro de Contratante
-		btnCadastroContratante = new JButton("Cadastro Contratante"); // Instancia novo JButton com texto "Cadastro Contratante"
-		add(btnCadastroContratante, "cell 11 13,grow"); // Adiciona botão na célula coluna 11, linha 13, com crescimento para preencher espaço
+		btnCadastroContratante = new JButton("Cadastro Contratante");
+		add(btnCadastroContratante, "cell 11 13,grow");
 
-	} // Fim do construtor Temp
+	}
 
-	/**
-	 * Adiciona listener de ação ao botão Login.
-	 * 
-	 * @param actionListener listener a ser executado quando botão for clicado
-	 */
-	public void login(ActionListener actionListener) { // Método público que recebe ActionListener como parâmetro
-		this.btnLogin.addActionListener(actionListener); // Adiciona listener ao botão Login
-	} // Fim do método login
+	public void login(ActionListener actionListener) {
+		this.btnLogin.addActionListener(actionListener);
+	}
 
-	/**
-	 * Adiciona listener de ação ao botão ADM.
-	 * 
-	 * @param actionListener listener a ser executado quando botão for clicado
-	 */
-	public void adm(ActionListener actionListener) { // Método público que recebe ActionListener como parâmetro
-		this.btnADM.addActionListener(actionListener); // Adiciona listener ao botão ADM
-	} // Fim do método adm
+	public void adm(ActionListener actionListener) {
+		this.btnADM.addActionListener(actionListener);
+	}
 
-	/**
-	 * Adiciona listener de ação ao botão Contratado.
-	 * 
-	 * @param actionListener listener a ser executado quando botão for clicado
-	 */
-	public void contratado(ActionListener actionListener) { // Método público que recebe ActionListener como parâmetro
-		this.btnContratado.addActionListener(actionListener); // Adiciona listener ao botão Contratado
-	} // Fim do método contratado
+	public void contratado(ActionListener actionListener) {
+		this.btnContratado.addActionListener(actionListener);
+	}
 
-	/**
-	 * Adiciona listener de ação ao botão Contratante.
-	 * 
-	 * @param actionListener listener a ser executado quando botão for clicado
-	 */
-	public void contratante(ActionListener actionListener) { // Método público que recebe ActionListener como parâmetro
-		this.btnContratante.addActionListener(actionListener); // Adiciona listener ao botão Contratante
-	} // Fim do método contratante
+	public void contratante(ActionListener actionListener) {
+		this.btnContratante.addActionListener(actionListener);
+	}
 
-	/**
-	 * Adiciona listener de ação ao botão Cadastro Contratante.
-	 * 
-	 * @param actionListener listener a ser executado quando botão for clicado
-	 */
-	public void cadastroContratante(ActionListener actionListener) { // Método público que recebe ActionListener como parâmetro
-		this.btnCadastroContratante.addActionListener(actionListener); // Adiciona listener ao botão Cadastro Contratante
-	} // Fim do método cadastroContratante
+	public void cadastroContratante(ActionListener actionListener) {
+		this.btnCadastroContratante.addActionListener(actionListener);
+	}
 
-} // Fim da classe Temp
+}

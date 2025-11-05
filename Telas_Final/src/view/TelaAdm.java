@@ -52,9 +52,10 @@ import javax.swing.JScrollPane;
 /**
  * Tela de administração do sistema (em desenvolvimento).
  * <p>
- * Responsável por: fornecer interface para gerenciamento administrativo do sistema,
- * exibir estatísticas e relatórios, gerenciar usuários e serviços globalmente.
- * Atualmente é uma tela placeholder que será expandida futuramente.
+ * Responsável por: fornecer interface para gerenciamento administrativo do
+ * sistema, exibir estatísticas e relatórios, gerenciar usuários e serviços
+ * globalmente. Atualmente é uma tela placeholder que será expandida
+ * futuramente.
  * </p>
  */
 public class TelaAdm extends JPanel {
@@ -74,8 +75,9 @@ public class TelaAdm extends JPanel {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		// Configura MigLayout com 8 colunas e 6 linhas de tamanhos específicos
 		// Este layout será usado para organizar futuros componentes administrativos
-		setLayout(new MigLayout("fill, insets 0", "[20px][98.00,grow][grow][81.00][-56.00][65.00,grow][][]", "[35px][66.00,grow][grow][][][66]"));
-		
+		setLayout(new MigLayout("fill, insets 0", "[20px][98.00,grow][grow][81.00][-56.00][65.00,grow][][]",
+				"[35px][66.00,grow][grow][][][66]"));
+
 		// FontScaler será aplicado quando houver componentes para redimensionar
 		// Por enquanto, não há componentes a serem escalados
 	}

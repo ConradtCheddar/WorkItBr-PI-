@@ -204,25 +204,25 @@ public class ScalableRadioButton extends JRadioButton {
 			g2.drawOval(x + 1, y + 1, size - 2, size - 2);
 
 			// Se o RadioButton está selecionado, desenha o círculo interno preenchido
-			if (selected) { // Verifica se este ícone representa estado selecionado
-				g2.setColor(fillColor); // Define cor de desenho como cor de preenchimento (azul ou cinza)
+			if (selected) {
+				g2.setColor(fillColor);
 				// Calcula o tamanho do círculo interno (48% do tamanho total)
-				int innerSize = (int) Math.round(size * 0.48); // Multiplica tamanho por 0.48 e arredonda para inteiro (círculo interno é quase metade do total)
+				int innerSize = (int) Math.round(size * 0.48);
 				// Garante que o tamanho tenha a mesma paridade que size (ambos pares ou
 				// ímpares)
 				// Isso ajuda na centralização perfeita pixel-a-pixel
-				if ((size % 2) != (innerSize % 2)) { // Se size e innerSize têm paridades diferentes (um par e outro ímpar)
-					innerSize = Math.max(1, innerSize - 1); // Subtrai 1 de innerSize para igualar paridade, mínimo 1 pixel
-				} // Fim do ajuste de paridade
+				if ((size % 2) != (innerSize % 2)) {
+					innerSize = Math.max(1, innerSize - 1);
+				}
 				// Calcula o deslocamento para centralizar o círculo interno
-				int offset = (size - innerSize) / 2; // Divide diferença de tamanhos por 2 para obter deslocamento que centraliza círculo interno
+				int offset = (size - innerSize) / 2;
 				// Desenha o círculo interno preenchido
-				g2.fillOval(x + offset, y + offset, innerSize, innerSize); // Desenha círculo preenchido deslocado do canto superior esquerdo
-			} // Fim do desenho do círculo interno
+				g2.fillOval(x + offset, y + offset, innerSize, innerSize);
+			}
 
 			// Libera os recursos do contexto gráfico
-			g2.dispose(); // Libera memória do contexto gráfico criado para evitar vazamento de recursos
-		} // Fim do método paintIcon
+			g2.dispose();
+		}
 
 		/**
 		 * Retorna a largura do ícone.
@@ -230,9 +230,9 @@ public class ScalableRadioButton extends JRadioButton {
 		 * @return largura em pixels
 		 */
 		@Override
-		public int getIconWidth() { // Método que retorna largura do ícone
-			return size; // Retorna tamanho armazenado (ícone é quadrado, largura = altura)
-		} // Fim do método getIconWidth
+		public int getIconWidth() {
+			return size;
+		}
 
 		/**
 		 * Retorna a altura do ícone.
@@ -240,8 +240,8 @@ public class ScalableRadioButton extends JRadioButton {
 		 * @return altura em pixels
 		 */
 		@Override
-		public int getIconHeight() { // Método que retorna altura do ícone
-			return size; // Retorna tamanho armazenado (ícone é quadrado, largura = altura)
-		} // Fim do método getIconHeight
-	} // Fim da classe interna ScalableRadioIcon
-} // Fim da classe ScalableRadioButton
+		public int getIconHeight() {
+			return size;
+		}
+	}
+}

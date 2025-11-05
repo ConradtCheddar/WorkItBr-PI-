@@ -51,10 +51,11 @@ import util.FontScaler.FontSize;
 /**
  * Barra superior da aplicação (toolbar/header).
  * <p>
- * Responsável por: exibir o título da aplicação centralizado, fornecer botão de voltar
- * (navegação para tela anterior), fornecer botão de menu (abre drawer lateral), ajustar
- * automaticamente o tamanho dos ícones e fontes baseado no redimensionamento da janela,
- * e controlar a visibilidade dos botões de navegação conforme contexto.
+ * Responsável por: exibir o título da aplicação centralizado, fornecer botão de
+ * voltar (navegação para tela anterior), fornecer botão de menu (abre drawer
+ * lateral), ajustar automaticamente o tamanho dos ícones e fontes baseado no
+ * redimensionamento da janela, e controlar a visibilidade dos botões de
+ * navegação conforme contexto.
  * </p>
  */
 public class wbBarra extends JPanel {
@@ -80,8 +81,8 @@ public class wbBarra extends JPanel {
 	/**
 	 * Construtor que cria e configura a barra superior da aplicação.
 	 * <p>
-	 * Inicializa o layout, adiciona os ícones de navegação, configura o título,
-	 * e prepara os listeners de redimensionamento (desabilitados inicialmente).
+	 * Inicializa o layout, adiciona os ícones de navegação, configura o título, e
+	 * prepara os listeners de redimensionamento (desabilitados inicialmente).
 	 * </p>
 	 */
 	public wbBarra() {
@@ -92,7 +93,8 @@ public class wbBarra extends JPanel {
 		setBackground(new Color(0, 102, 204));
 		// Remove bordas para maximizar área útil
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		// Configura MigLayout com 3 colunas: [esquerda fixa 80px][centro crescente][direita fixa 80px]
+		// Configura MigLayout com 3 colunas: [esquerda fixa 80px][centro
+		// crescente][direita fixa 80px]
 		// Isso garante centralização do título e posicionamento fixo dos botões
 		setLayout(new MigLayout("fill", "[80:80:80][grow,fill][80:80:80]", "[grow]"));
 
@@ -174,7 +176,6 @@ public class wbBarra extends JPanel {
 		// Adiciona o botão de menu à terceira coluna (direita)
 		add(getLblBarra(), "cell 2 0,alignx right,aligny center");
 
-
 		// Ajusta tamanhos iniciais dos ícones
 		ajustarIcones();
 		// Adiciona listener para redimensionar ícones quando a barra for redimensionada
@@ -182,7 +183,8 @@ public class wbBarra extends JPanel {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				// Ignora durante inicialização para evitar múltiplos redimensionamentos
-				if (!resizeListenersEnabled) return;
+				if (!resizeListenersEnabled)
+					return;
 				// Ajusta tamanhos dos ícones
 				ajustarIcones();
 				// Recarrega e redimensiona ícone do menu baseado no novo tamanho
@@ -194,13 +196,16 @@ public class wbBarra extends JPanel {
 			}
 		});
 
-		// Adiciona listener para redimensionar fonte do título quando a barra for redimensionada
+		// Adiciona listener para redimensionar fonte do título quando a barra for
+		// redimensionada
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				// Ignora durante inicialização
-				if (!resizeListenersEnabled) return;
-				// Calcula tamanho da fonte baseado na altura da barra (mínimo 18, máximo altura/3)
+				if (!resizeListenersEnabled)
+					return;
+				// Calcula tamanho da fonte baseado na altura da barra (mínimo 18, máximo
+				// altura/3)
 				int panelHeight = getHeight();
 				int fontSizeTitulo = Math.max(18, panelHeight / 3);
 				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
@@ -209,7 +214,7 @@ public class wbBarra extends JPanel {
 			}
 		});
 	}
-	
+
 	/**
 	 * Ativa os listeners de redimensionamento após a inicialização completa.
 	 * <p>
@@ -222,7 +227,8 @@ public class wbBarra extends JPanel {
 	}
 
 	/**
-	 * Sobrescreve addNotify para ajustar ícones quando o componente é adicionado à hierarquia.
+	 * Sobrescreve addNotify para ajustar ícones quando o componente é adicionado à
+	 * hierarquia.
 	 * <p>
 	 * Garante que os ícones tenham tamanho correto assim que a barra é exibida.
 	 * </p>
@@ -260,7 +266,8 @@ public class wbBarra extends JPanel {
 	}
 
 	/**
-	 * Define um listener de clique para o ícone de menu, removendo listeners anteriores.
+	 * Define um listener de clique para o ícone de menu, removendo listeners
+	 * anteriores.
 	 * <p>
 	 * Garante que apenas um listener esteja ativo, evitando múltiplas chamadas.
 	 * </p>
@@ -278,10 +285,26 @@ public class wbBarra extends JPanel {
 			public void mouseClicked(java.awt.event.MouseEvent e) {
 				listener.mouseClicked(e);
 			}
-			@Override public void mousePressed(java.awt.event.MouseEvent e) { listener.mousePressed(e); }
-			@Override public void mouseReleased(java.awt.event.MouseEvent e) { listener.mouseReleased(e); }
-			@Override public void mouseEntered(java.awt.event.MouseEvent e) { listener.mouseEntered(e); }
-			@Override public void mouseExited(java.awt.event.MouseEvent e) { listener.mouseExited(e); }
+
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				listener.mousePressed(e);
+			}
+
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e) {
+				listener.mouseReleased(e);
+			}
+
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent e) {
+				listener.mouseEntered(e);
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent e) {
+				listener.mouseExited(e);
+			}
 		});
 	}
 
@@ -349,10 +372,12 @@ public class wbBarra extends JPanel {
 	}
 
 	/**
-	 * Ajusta os tamanhos dos ícones de voltar e menu baseado no tamanho atual da barra.
+	 * Ajusta os tamanhos dos ícones de voltar e menu baseado no tamanho atual da
+	 * barra.
 	 * <p>
 	 * Calcula dimensões proporcionais, recarrega as imagens dos recursos,
-	 * redimensiona-as e atualiza os ícones. Também ajusta a área clicável do botão voltar.
+	 * redimensiona-as e atualiza os ícones. Também ajusta a área clicável do botão
+	 * voltar.
 	 * </p>
 	 */
 	public void ajustarIcones() {
@@ -363,7 +388,7 @@ public class wbBarra extends JPanel {
 		// Calcula largura do ícone do menu: largura/25, mínimo 64
 		int largura = Math.max(64, w / 25);
 		// Calcula altura do ícone do menu: altura*2/5, mínimo 40
-		int altura = Math.max(40, h * 2 / 5); 
+		int altura = Math.max(40, h * 2 / 5);
 
 		// Calcula largura do ícone de voltar: largura/45, mínimo 32
 		int larguraCasa = Math.max(32, w / 45);
@@ -385,16 +410,13 @@ public class wbBarra extends JPanel {
 		// Aplica os ícones redimensionados aos labels
 		lblVoltar.setIcon(new ImageIcon(scaled));
 		lblBarra.setIcon(new ImageIcon(scaledBarra));
-		
+
 		// Calcula padding proporcional ao tamanho (largura/200, mínimo 4)
 		int padding = Math.max(4, w / 200);
 		// Aplica padding ao redor do ícone de voltar
 		lblVoltar.setBorder(javax.swing.BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 		// Calcula área clicável incluindo padding
-		java.awt.Dimension hitArea = new java.awt.Dimension(
-			larguraCasa + (padding * 2), 
-			alturaCasa + (padding * 2)
-		);
+		java.awt.Dimension hitArea = new java.awt.Dimension(larguraCasa + (padding * 2), alturaCasa + (padding * 2));
 		// Define todos os tamanhos do label para garantir área clicável consistente
 		lblVoltar.setPreferredSize(hitArea);
 		lblVoltar.setMinimumSize(hitArea);
@@ -436,7 +458,7 @@ public class wbBarra extends JPanel {
 	public void setTitulo(String titulo) {
 		this.lblTitulo.setText(titulo);
 	}
-	
+
 	/**
 	 * Retorna o texto atual do título exibido na barra.
 	 * 
@@ -446,4 +468,3 @@ public class wbBarra extends JPanel {
 		return this.lblTitulo.getText();
 	}
 }
-

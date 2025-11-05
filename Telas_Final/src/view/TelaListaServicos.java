@@ -58,17 +58,18 @@ import javax.swing.table.DefaultTableModel;
 /**
  * Tela que exibe uma lista/tabela de serviços do usuário contratante.
  * <p>
- * Responsável por: exibir serviços em formato de tabela editável, fornecer botões
- * para visualizar, editar, deletar e cadastrar serviços, atualizar dinamicamente
- * a tabela com dados do banco, permitir edição inline de células (exceto ID),
- * e integrar-se com o controller para processar ações do usuário.
+ * Responsável por: exibir serviços em formato de tabela editável, fornecer
+ * botões para visualizar, editar, deletar e cadastrar serviços, atualizar
+ * dinamicamente a tabela com dados do banco, permitir edição inline de células
+ * (exceto ID), e integrar-se com o controller para processar ações do usuário.
  * </p>
  */
 public class TelaListaServicos extends JPanel {
 
 	// Identificador de versão para serialização (compatibilidade entre versões)
 	private static final long serialVersionUID = 1L;
-	// Painel com barra de rolagem para a tabela (não utilizado atualmente - possível legado)
+	// Painel com barra de rolagem para a tabela (não utilizado atualmente -
+	// possível legado)
 	private JScrollPane scrollPane;
 	// Modelo de dados que gerencia o conteúdo e estrutura da tabela
 	private DefaultTableModel tableModel;
@@ -84,8 +85,8 @@ public class TelaListaServicos extends JPanel {
 	/**
 	 * Construtor que cria e configura a tela de listagem de serviços.
 	 * <p>
-	 * Inicializa a tabela com colunas específicas, configura editabilidade,
-	 * oculta a coluna de ID, e adiciona botões de ação ao layout.
+	 * Inicializa a tabela com colunas específicas, configura editabilidade, oculta
+	 * a coluna de ID, e adiciona botões de ação ao layout.
 	 * </p>
 	 */
 	public TelaListaServicos() {
@@ -93,18 +94,18 @@ public class TelaListaServicos extends JPanel {
 		setPreferredSize(new Dimension(597, 364));
 		// Remove bordas para maximizar área útil
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		// Configura MigLayout: preenche todo espaço, margens personalizadas, gap de 40px
+		// Configura MigLayout: preenche todo espaço, margens personalizadas, gap de
+		// 40px
 		// Colunas: [crescente][200px fixo], Linhas: 4 linhas crescentes
 		setLayout(new MigLayout("fill, insets 20 20 20 40, gap 40", "[grow][200]", "[grow][grow][grow][grow]"));
-		
+
 		// Define os nomes das colunas da tabela
-		String colunas[]= {
-			"ID", "Nome", "Valor", "Modalidade", "Aceito?", "Descrição"
-		};
+		String colunas[] = { "ID", "Nome", "Valor", "Modalidade", "Aceito?", "Descrição" };
 		// Cria matriz vazia inicial (0 linhas, 6 colunas)
-		Object dados[][]= new Object[0][6];
-		// Cria o modelo da tabela com dados iniciais e colunas, sobrescrevendo isCellEditable
-		this.tableModel = new DefaultTableModel(dados,colunas) {
+		Object dados[][] = new Object[0][6];
+		// Cria o modelo da tabela com dados iniciais e colunas, sobrescrevendo
+		// isCellEditable
+		this.tableModel = new DefaultTableModel(dados, colunas) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// Permite edição de todas as colunas exceto a coluna 0 (ID)
@@ -115,12 +116,12 @@ public class TelaListaServicos extends JPanel {
 		tableServicos = new JTable(tableModel);
 		// Obtém os itens atuais da tabela para backup inicial
 		this.tableData = this.getItems();
-		
+
 		// Cria painel de rolagem para envolver a tabela
 		JScrollPane scrollPane_1 = new JScrollPane();
 		// Adiciona o scroll pane ocupando toda a primeira coluna (4 linhas)
 		add(scrollPane_1, "cell 0 0 1 4,grow");
-		
+
 		// Define a tabela como conteúdo do scroll pane
 		scrollPane_1.setViewportView(tableServicos);
 		// Define cor branca para o texto da tabela
@@ -134,22 +135,23 @@ public class TelaListaServicos extends JPanel {
 		tableServicos.getColumnModel().getColumn(0).setMaxWidth(0);
 		// Define largura atual 0 (torna a coluna invisível)
 		tableServicos.getColumnModel().getColumn(0).setWidth(0);
-		
+
 		// Cria botão "Visualizar" para abrir detalhes do serviço selecionado
 		btnVisualizar = new JButton("Visualizar");
-		// Adiciona na célula 1,0 (segunda coluna, primeira linha), crescendo horizontalmente
+		// Adiciona na célula 1,0 (segunda coluna, primeira linha), crescendo
+		// horizontalmente
 		add(btnVisualizar, "cell 1 0,growx,height 20:40:60");
-		
+
 		// Cria botão "Deletar" para excluir serviço selecionado
 		btnDeletar = new JButton("Deletar");
 		// Adiciona na célula 1,1
 		add(btnDeletar, "cell 1 1,growx,height 20:40:60");
-		
+
 		// Cria botão "Cadastrar" para navegar à tela de cadastro de novo serviço
 		btnCadastrar = new JButton("Cadastrar");
 		// Adiciona na célula 1,2
 		add(btnCadastrar, "cell 1 2,growx,height 20:40:60");
-		
+
 		// Cria botão "Editar" para salvar alterações feitas na tabela
 		btnEditar = new JButton("Editar");
 		// Adiciona na célula 1,3 (última linha de botões)
@@ -159,8 +161,8 @@ public class TelaListaServicos extends JPanel {
 	/**
 	 * Atualiza a tabela com uma nova lista de serviços.
 	 * <p>
-	 * Remove todas as linhas existentes e adiciona novas linhas baseadas
-	 * nos serviços fornecidos. Converte o boolean "aceito" em texto legível.
+	 * Remove todas as linhas existentes e adiciona novas linhas baseadas nos
+	 * serviços fornecidos. Converte o boolean "aceito" em texto legível.
 	 * </p>
 	 * 
 	 * @param lista lista de objetos Servico a serem exibidos na tabela
@@ -169,21 +171,23 @@ public class TelaListaServicos extends JPanel {
 		// Limpa todas as linhas existentes na tabela
 		this.tableModel.setRowCount(0);
 		// Percorre cada serviço na lista fornecida
-		for(int i =0; i<lista.size(); i++) {
+		for (int i = 0; i < lista.size(); i++) {
 			// Obtém o serviço atual
 			Servico s = lista.get(i);
 			// Converte o boolean aceito em texto legível ("Sim" ou "Não")
 			String aceitoTexto = Boolean.TRUE.equals(s.getAceito()) ? "Sim" : "Não";
 			// Cria array com os dados do serviço na ordem das colunas
-			Object[] newRowData = {s.getId(), s.getNome_Servico(), s.getValor(), s.getModalidade(), aceitoTexto, s.getDescricao()};
+			Object[] newRowData = { s.getId(), s.getNome_Servico(), s.getValor(), s.getModalidade(), aceitoTexto,
+					s.getDescricao() };
 			// Adiciona a nova linha ao modelo da tabela
 			this.tableModel.addRow(newRowData);
 		}
-			
+
 	}
-	
+
 	/**
-	 * Sobrescreve addNotify para executar callback quando a tela é adicionada ao container.
+	 * Sobrescreve addNotify para executar callback quando a tela é adicionada ao
+	 * container.
 	 * <p>
 	 * Permite que o controller seja notificado quando a tela se torna visível,
 	 * possibilitando atualização automática dos dados.
@@ -207,7 +211,7 @@ public class TelaListaServicos extends JPanel {
 	public void setOnShow(Runnable r) {
 		this.onShowCallback = r;
 	}
-	
+
 	/**
 	 * Obtém todos os valores atuais da tabela como matriz bidimensional.
 	 * 
@@ -231,7 +235,7 @@ public class TelaListaServicos extends JPanel {
 			}
 		}
 		// Retorna a matriz com todos os valores
-		return allValues; 
+		return allValues;
 	}
 
 	/**
@@ -258,7 +262,8 @@ public class TelaListaServicos extends JPanel {
 	/**
 	 * Retorna uma cópia dos dados atualmente armazenados em cache.
 	 * 
-	 * @return matriz de objetos com os valores das células (pode estar desatualizado)
+	 * @return matriz de objetos com os valores das células (pode estar
+	 *         desatualizado)
 	 */
 	public Object[][] getTableData() {
 		return tableData;
@@ -295,30 +300,32 @@ public class TelaListaServicos extends JPanel {
 	}
 
 	// Remove todos os ActionListeners de um botão antes de adicionar um novo
-    private void replaceActionListener(javax.swing.JButton btn, java.awt.event.ActionListener l) {
-        if (btn == null) return;
-        java.awt.event.ActionListener[] existing = btn.getActionListeners();
-        for (java.awt.event.ActionListener al : existing) {
-            btn.removeActionListener(al);
-        }
-        if (l != null) btn.addActionListener(l);
-    }
+	private void replaceActionListener(javax.swing.JButton btn, java.awt.event.ActionListener l) {
+		if (btn == null)
+			return;
+		java.awt.event.ActionListener[] existing = btn.getActionListeners();
+		for (java.awt.event.ActionListener al : existing) {
+			btn.removeActionListener(al);
+		}
+		if (l != null)
+			btn.addActionListener(l);
+	}
 
-    // Métodos chamados pelo controller — registram um ActionListener nos botões
-    public void cadastrar(java.awt.event.ActionListener l) {
-        replaceActionListener(this.btnCadastrar, l);
-    }
+	// Métodos chamados pelo controller — registram um ActionListener nos botões
+	public void cadastrar(java.awt.event.ActionListener l) {
+		replaceActionListener(this.btnCadastrar, l);
+	}
 
-    public void visualizar(java.awt.event.ActionListener l) {
-        replaceActionListener(this.btnVisualizar, l);
-    }
+	public void visualizar(java.awt.event.ActionListener l) {
+		replaceActionListener(this.btnVisualizar, l);
+	}
 
-    public void deletar(java.awt.event.ActionListener l) {
-        replaceActionListener(this.btnDeletar, l);
-    }
+	public void deletar(java.awt.event.ActionListener l) {
+		replaceActionListener(this.btnDeletar, l);
+	}
 
-    public void editar(java.awt.event.ActionListener l) {
-        replaceActionListener(this.btnEditar, l);
-    }
+	public void editar(java.awt.event.ActionListener l) {
+		replaceActionListener(this.btnEditar, l);
+	}
 
 }

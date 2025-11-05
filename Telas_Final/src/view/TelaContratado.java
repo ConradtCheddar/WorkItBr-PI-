@@ -56,10 +56,10 @@ import javax.swing.JList;
 /**
  * Tela principal do contratado exibindo trabalhos disponíveis e em andamento.
  * <p>
- * Responsável por: exibir duas listas lado a lado (trabalhos disponíveis e em andamento),
- * permitir interação com duplo clique nos itens, atualizar automaticamente ao ser exibida,
- * fornecer callback para carregar dados, e integrar-se com o controller para processar
- * seleções e navegação.
+ * Responsável por: exibir duas listas lado a lado (trabalhos disponíveis e em
+ * andamento), permitir interação com duplo clique nos itens, atualizar
+ * automaticamente ao ser exibida, fornecer callback para carregar dados, e
+ * integrar-se com o controller para processar seleções e navegação.
  * </p>
  */
 public class TelaContratado extends JPanel {
@@ -68,7 +68,7 @@ public class TelaContratado extends JPanel {
 	private static final long serialVersionUID = 1L;
 	// Painel com barra de rolagem para lista de trabalhos em andamento
 	private JScrollPane scrollPane;
-	
+
 	// Lista de trabalhos disponíveis para aceitar
 	private JList listaDisponivel;
 	// Lista de trabalhos já aceitos e em andamento
@@ -85,43 +85,41 @@ public class TelaContratado extends JPanel {
 	/**
 	 * Construtor que cria e configura a tela do contratado.
 	 * <p>
-	 * Inicializa as duas listas (disponíveis e em andamento), configura scrolls,
-	 * e aplica redimensionamento automático de fontes.
+	 * Inicializa as duas listas (disponíveis e em andamento), configura scrolls, e
+	 * aplica redimensionamento automático de fontes.
 	 * </p>
 	 */
 	public TelaContratado() {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 20 20 20 20, gap 20", "[grow][grow]", "[grow 10][grow]"));
-		
+
 		lblVoltar = new JLabel("");
 		add(lblVoltar, "cell 0 0");
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		scrollPane.setBackground(Color.LIGHT_GRAY);
 		add(scrollPane, "cell 0 1,grow");
-		
+
 		listaAndamento = new JList();
 		scrollPane.setViewportView(listaAndamento);
-		
+
 		lblAndamento = new JLabel("Trabalhos em andamento");
 		scrollPane.setColumnHeaderView(lblAndamento);
 		lblAndamento.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 1 1,grow");
-		
+
 		listaDisponivel = new JList();
 		scrollPane_1.setViewportView(listaDisponivel);
-		
+
 		lblDisponiveis = new JLabel("Trabalhos disponiveis");
 		lblDisponiveis.setHorizontalAlignment(SwingConstants.CENTER);
 		scrollPane_1.setColumnHeaderView(lblDisponiveis);
-		
-		FontScaler.addAutoResize(this,
-			new Object[] {lblAndamento, FontSize.SUBTITULO},
-			new Object[] {lblDisponiveis, FontSize.SUBTITULO}
-		);
+
+		FontScaler.addAutoResize(this, new Object[] { lblAndamento, FontSize.SUBTITULO },
+				new Object[] { lblDisponiveis, FontSize.SUBTITULO });
 	}
 
 	/**
@@ -143,7 +141,8 @@ public class TelaContratado extends JPanel {
 	}
 
 	/**
-	 * Sobrescreve addNotify para executar callback quando a tela é adicionada ao container.
+	 * Sobrescreve addNotify para executar callback quando a tela é adicionada ao
+	 * container.
 	 * <p>
 	 * Permite que o controller seja notificado quando a tela se torna visível.
 	 * </p>
@@ -155,7 +154,7 @@ public class TelaContratado extends JPanel {
 			onShowCallback.run();
 		}
 	}
-	
+
 	/**
 	 * Adiciona um listener de componente para eventos de redimensionamento.
 	 * 
@@ -164,7 +163,7 @@ public class TelaContratado extends JPanel {
 	public void adicionarOuvinte(ComponentListener listener) {
 		this.addComponentListener(listener);
 	}
-	
+
 	/**
 	 * Adiciona listener de mouse à lista de trabalhos disponíveis.
 	 * <p>
@@ -174,9 +173,9 @@ public class TelaContratado extends JPanel {
 	 * @param actionListener MouseListener para processar eventos
 	 */
 	public void cliqueDuploNoJList(MouseListener actionListener) {
-	    this.listaDisponivel.addMouseListener(actionListener);
+		this.listaDisponivel.addMouseListener(actionListener);
 	}
-	
+
 	/**
 	 * Adiciona listener de mouse à lista de trabalhos em andamento.
 	 * <p>
@@ -186,7 +185,7 @@ public class TelaContratado extends JPanel {
 	 * @param actionListener MouseListener para processar eventos
 	 */
 	public void cliqueDuploNoAndamento(MouseListener actionListener) {
-	    this.listaAndamento.addMouseListener(actionListener);
+		this.listaAndamento.addMouseListener(actionListener);
 	}
 
 	/**

@@ -275,61 +275,56 @@ public class Primario extends JFrame {
 		}
 	}
 
-	/**
-	 * Sobrescreve setVisible para controlar visibilidade da janela.
-	 * 
-	 * @param b true para tornar janela visível, false para ocultá-la
-	 */
 	@Override
-	public void setVisible(boolean b) { // Método sobrescrito que recebe boolean como parâmetro
-		super.setVisible(b); // Chama método da classe pai (JFrame) para aplicar visibilidade
-	} // Fim do método setVisible
+	public void setVisible(boolean b) {
+		super.setVisible(b);
+	}
 
 	/**
 	 * Configura o Navegador e adiciona WindowListener para limpar imagens ao fechar
 	 */
-	public void setNavegador(controller.Navegador navegador) { // Método público que recebe Navegador como parâmetro
-		this.navegador = navegador; // Armazena referência do navegador na variável de instância
+	public void setNavegador(controller.Navegador navegador) {
+		this.navegador = navegador;
 
 		// Adiciona listener para limpar imagens quando a janela for fechada
-		addWindowListener(new java.awt.event.WindowAdapter() { // Cria adaptador de eventos de janela
+		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
-			public void windowClosing(java.awt.event.WindowEvent e) { // Método chamado quando janela está sendo fechada
-				if (Primario.this.navegador != null) { // Verifica se navegador foi definido
-					Primario.this.navegador.limparImagensPerfil(); // Limpa cache de imagens de perfil para liberar memória
-				} // Fim da verificação do navegador
-			} // Fim do windowClosing
-		}); // Fim do listener
-	} // Fim do método setNavegador
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				if (Primario.this.navegador != null) {
+					Primario.this.navegador.limparImagensPerfil();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Pré-inicializa a janela forçando todos os layouts e renderizações antes de
 	 * torná-la visível. Isso evita redimensionamentos visíveis.
 	 */
-	public void preinicializar() { // Método público para inicialização prévia da janela
+	public void preinicializar() {
 		// Força o cálculo de todos os tamanhos e layouts
-		pack(); // Ajusta tamanho da janela para acomodar todos os componentes (calcula tamanhos preferidos)
+		pack();
 
 		// Restaura o tamanho desejado
-		setSize(1200, 800); // Define tamanho da janela para 1200x800 pixels (sobrescreve pack())
-		setLocationRelativeTo(null); // Centraliza janela na tela
+		setSize(1200, 800);
+		setLocationRelativeTo(null);
 
 		// Força validação completa de todos os componentes
-		validate(); // Valida hierarquia de componentes garantindo que layouts sejam calculados
+		validate();
 
 		// Força a renderização de todos os componentes
-		doLayout(); // Executa layout de todos os componentes forçando posicionamento
+		doLayout();
 
 		// Força repaint completo
-		revalidate(); // Revalida layout da janela
-		repaint(); // Marca janela para redesenho
+		revalidate();
+		repaint();
 
 		// Força a pintura imediata de todos os componentes
 		// Nota: getGraphics() pode ser null se não houver peer ainda
-		java.awt.Graphics g = getGraphics(); // Obtém contexto gráfico da janela (pode ser null se janela ainda não foi exibida)
-		if (g != null) { // Se contexto gráfico está disponível
-			paintAll(g); // Força pintura imediata de todos os componentes
-			g.dispose(); // Libera recursos do contexto gráfico
-		} // Fim da verificação do contexto gráfico
-	} // Fim do método preinicializar
-} // Fim da classe Primario
+		java.awt.Graphics g = getGraphics();
+		if (g != null) {
+			paintAll(g);
+			g.dispose();
+		}
+	}
+}

@@ -62,20 +62,21 @@ import util.FontScaler;
 import util.FontScaler.FontSize;
 
 /**
- * Tela de visualização de serviço disponível para contratação (visão do contratado).
+ * Tela de visualização de serviço disponível para contratação (visão do
+ * contratado).
  * <p>
  * Responsável por: exibir informações detalhadas de um serviço disponível,
- * mostrar foto e dados do contratante, exibir título, modalidade, preço e descrição
- * do serviço, fornecer botão para aceitar o serviço, carregar imagens do contratante
- * com fallback para placeholder, e integrar-se com o controller para processar
- * a aceitação do trabalho.
+ * mostrar foto e dados do contratante, exibir título, modalidade, preço e
+ * descrição do serviço, fornecer botão para aceitar o serviço, carregar imagens
+ * do contratante com fallback para placeholder, e integrar-se com o controller
+ * para processar a aceitação do trabalho.
  * </p>
  */
 public class VisServico extends JPanel {
 
 	// Identificador de versão para serialização (compatibilidade entre versões)
 	private static final long serialVersionUID = 1L;
-	
+
 	// Painel container para a foto do contratante
 	private JPanel panel;
 	// Painel que contém a foto de perfil do contratante
@@ -102,20 +103,20 @@ public class VisServico extends JPanel {
 	/**
 	 * Construtor que cria e configura a tela de visualização de serviço.
 	 * <p>
-	 * Inicializa todos os painéis e componentes, popula os campos com dados do serviço,
-	 * carrega a foto do contratante, e organiza o layout visual.
+	 * Inicializa todos os painéis e componentes, popula os campos com dados do
+	 * serviço, carrega a foto do contratante, e organiza o layout visual.
 	 * </p>
 	 * 
 	 * @param s objeto Servico contendo os dados a serem exibidos
 	 */
 	public VisServico(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
-		
+
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante"));
 		add(panel, "cell 0 0,grow");
 		panel.setLayout(new CardLayout(0, 0));
-		
+
 		panelPerfil = new JPanel();
 		// configurar painel de perfil com espaço para foto
 		panelPerfil.setLayout(new MigLayout("", "[grow]", "[grow]"));
@@ -123,12 +124,12 @@ public class VisServico extends JPanel {
 		lblFoto = new JLabel();
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
 		panelPerfil.add(lblFoto, "cell 0 0,alignx center,aligny center");
-		
+
 		panelInfo = new JPanel();
 		panelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Serviço"));
 		add(panelInfo, "cell 1 0,grow");
 		panelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
-		
+
 		taTitulo = new JTextArea("Título");
 		taTitulo.setEditable(false);
 		taTitulo.setFocusable(false);
@@ -139,7 +140,7 @@ public class VisServico extends JPanel {
 		taTitulo.setBackground(panelInfo.getBackground());
 		taTitulo.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		panelInfo.add(taTitulo, "cell 0 0,grow");
-		
+
 		taModalidade = new JTextArea("Modalidade");
 		taModalidade.setEditable(false);
 		taModalidade.setFocusable(false);
@@ -150,7 +151,7 @@ public class VisServico extends JPanel {
 		taModalidade.setBackground(panelInfo.getBackground());
 		taModalidade.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		panelInfo.add(taModalidade, "cell 0 1,grow");
-		
+
 		taPreco = new JTextArea("Preço");
 		taPreco.setEditable(false);
 		taPreco.setFocusable(false);
@@ -161,12 +162,12 @@ public class VisServico extends JPanel {
 		taPreco.setBackground(panelInfo.getBackground());
 		taPreco.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		panelInfo.add(taPreco, "cell 0 2,grow");
-		
+
 		panelDesc = new JPanel();
 		panelDesc.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Descrição"));
 		add(panelDesc, "cell 0 1 2 1,grow");
 		panelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
-		
+
 		taDesc = new JTextArea();
 		taDesc.setEditable(false);
 		taDesc.setFocusable(false);
@@ -175,7 +176,7 @@ public class VisServico extends JPanel {
 		taDesc.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		taDesc.setBackground(panelDesc.getBackground());
 		taDesc.setText(s.getDescricao());
-		
+
 		JScrollPane scrollPane = new JScrollPane(taDesc);
 		scrollPane.setBorder(null);
 		panelDesc.add(scrollPane, "cell 0 0,grow");
@@ -183,8 +184,9 @@ public class VisServico extends JPanel {
 		taTitulo.setText(s.getNome_Servico());
 		taModalidade.setText(s.getModalidade());
 		taPreco.setText(String.format("R$ %.2f", s.getValor()));
-		
-		// Carrega a foto do contratante (se disponível). Se o objeto Usuario não estiver presente,
+
+		// Carrega a foto do contratante (se disponível). Se o objeto Usuario não
+		// estiver presente,
 		// tenta recuperar pelo idContratante via UsuarioDAO.
 		Usuario u = s.getContratante();
 		if (u == null && s.getIdContratante() != 0) {
@@ -193,40 +195,38 @@ public class VisServico extends JPanel {
 		}
 		ImageIcon foto = loadUserImage(u, 150, 150);
 		lblFoto.setIcon(foto);
-		
+
 		panelBotoes = new JPanel();
 		add(panelBotoes, "cell 0 2 2 1,growx");
-		
+
 		btnAceitar = new JButton("Aceitar");
 		btnAceitar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelBotoes.add(btnAceitar);
-		
+
 		// Aplicar FontScaler padronizado
-		FontScaler.addAutoResize(this,
-			new Object[] {taTitulo, FontSize.SUBTITULO},
-			new Object[] {taModalidade, FontSize.TEXTO},
-			new Object[] {taPreco, FontSize.TEXTO},
-			new Object[] {taDesc, FontSize.TEXTO},
-			new Object[] {btnAceitar, FontSize.BOTAO}
-		);
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
+				new Object[] { taDesc, FontSize.TEXTO }, new Object[] { btnAceitar, FontSize.BOTAO });
 	}
-	
+
 	/**
 	 * Carrega e escala a imagem do usuário.
 	 * <p>
-	 * Tenta carregar de: caminho do banco → recurso no classpath → imagem padrão → placeholder vazio.
-	 * Fornece fallback robusto para garantir que sempre haja alguma imagem exibida.
+	 * Tenta carregar de: caminho do banco → recurso no classpath → imagem padrão →
+	 * placeholder vazio. Fornece fallback robusto para garantir que sempre haja
+	 * alguma imagem exibida.
 	 * </p>
 	 * 
-	 * @param u usuário do qual carregar a foto
-	 * @param width largura desejada da imagem
+	 * @param u      usuário do qual carregar a foto
+	 * @param width  largura desejada da imagem
 	 * @param height altura desejada da imagem
 	 * @return ImageIcon com a imagem carregada e escalada
 	 */
 	private ImageIcon loadUserImage(Usuario u, int width, int height) {
 		try {
 			String caminho = null;
-			if (u != null) caminho = u.getCaminhoFoto();
+			if (u != null)
+				caminho = u.getCaminhoFoto();
 			// Tentar caminho informado
 			if (caminho != null && !caminho.trim().isEmpty()) {
 				File f = new File(caminho);
@@ -243,9 +243,11 @@ public class VisServico extends JPanel {
 					return new ImageIcon(scaled);
 				}
 			}
-			// alternativa: usar imagem padrão do projeto (imagens/clickable_icon.png ou Casa.png)
+			// alternativa: usar imagem padrão do projeto (imagens/clickable_icon.png ou
+			// Casa.png)
 			URL fallback = getClass().getResource("/imagens/clickable_icon.png");
-			if (fallback == null) fallback = getClass().getResource("/imagens/Casa.png");
+			if (fallback == null)
+				fallback = getClass().getResource("/imagens/Casa.png");
 			if (fallback != null) {
 				Image img = ImageIO.read(fallback);
 				Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -265,7 +267,7 @@ public class VisServico extends JPanel {
 		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		return new ImageIcon(bi);
 	}
-	
+
 	/**
 	 * Adiciona um listener ao botão aceitar para processar a aceitação do serviço.
 	 * 

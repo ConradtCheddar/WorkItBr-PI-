@@ -70,10 +70,11 @@ import util.FontScaler.FontSize;
 /**
  * Tela de visualização de serviço em andamento para o contratado.
  * <p>
- * Responsável por: exibir informações detalhadas de um serviço que está sendo executado,
- * mostrar dados do contratante (foto e informações), exibir título, modalidade, preço e
- * descrição do serviço, fornecer botão para finalizar o serviço quando concluído, e
- * integrar-se com o controller para processar a finalização do trabalho.
+ * Responsável por: exibir informações detalhadas de um serviço que está sendo
+ * executado, mostrar dados do contratante (foto e informações), exibir título,
+ * modalidade, preço e descrição do serviço, fornecer botão para finalizar o
+ * serviço quando concluído, e integrar-se com o controller para processar a
+ * finalização do trabalho.
  * </p>
  */
 public class VisServicoAndamento extends JPanel {
@@ -101,16 +102,18 @@ public class VisServicoAndamento extends JPanel {
 	private JButton btnFinalizar;
 
 	/**
-	 * Construtor que cria e configura a tela de visualização de serviço em andamento.
+	 * Construtor que cria e configura a tela de visualização de serviço em
+	 * andamento.
 	 * <p>
-	 * Inicializa todos os painéis e componentes, popula os campos com dados do serviço,
-	 * e organiza o layout visual.
+	 * Inicializa todos os painéis e componentes, popula os campos com dados do
+	 * serviço, e organiza o layout visual.
 	 * </p>
 	 * 
 	 * @param s objeto Servico contendo os dados a serem exibidos
 	 */
 	public VisServicoAndamento(Servico s) {
-		// Configura MigLayout: 2 colunas [crescente][170px fixo], 3 linhas [crescente][130px][10px]
+		// Configura MigLayout: 2 colunas [crescente][170px fixo], 3 linhas
+		// [crescente][130px][10px]
 		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
 
 		// Cria painel para foto do contratante com borda titulada
@@ -118,7 +121,7 @@ public class VisServicoAndamento extends JPanel {
 		Perfil.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante"));
 		Perfil.setLayout(new MigLayout("", "[grow]", "[grow]"));
 		add(Perfil, "cell 0 0,grow");
-		
+
 		// Cria e configura label para exibir a foto
 		lblFoto = new JLabel();
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
@@ -179,7 +182,7 @@ public class VisServicoAndamento extends JPanel {
 		tpDesc.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tpDesc.setBackground(PanelDesc.getBackground());
 		tpDesc.setText(s.getDescricao());
-		
+
 		JScrollPane scrollPane = new JScrollPane(tpDesc);
 		scrollPane.setBorder(null);
 		PanelDesc.add(scrollPane, "cell 0 0,grow");
@@ -204,15 +207,11 @@ public class VisServicoAndamento extends JPanel {
 		}
 		ImageIcon foto = loadUserImage(u, 150, 150);
 		lblFoto.setIcon(foto);
-		
+
 		// Aplicar FontScaler padronizado
-		FontScaler.addAutoResize(this,
-			new Object[] {taTitulo, FontSize.SUBTITULO},
-			new Object[] {taModalidade, FontSize.TEXTO},
-			new Object[] {taPreco, FontSize.TEXTO},
-			new Object[] {tpDesc, FontSize.TEXTO},
-			new Object[] {btnFinalizar, FontSize.BOTAO}
-		);
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
+				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnFinalizar, FontSize.BOTAO });
 	}
 
 	private ImageIcon loadUserImage(Usuario u, int width, int height) {
@@ -234,7 +233,8 @@ public class VisServicoAndamento extends JPanel {
 					return new ImageIcon(scaled);
 				}
 			}
-			// alternativa: usar imagem padrão do projeto (imagens/clickable_icon.png ou Casa.png)
+			// alternativa: usar imagem padrão do projeto (imagens/clickable_icon.png ou
+			// Casa.png)
 			URL fallback = getClass().getResource("/imagens/clickable_icon.png");
 			if (fallback == null)
 				fallback = getClass().getResource("/imagens/Casa.png");
@@ -255,7 +255,7 @@ public class VisServicoAndamento extends JPanel {
 		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		return new ImageIcon(bi);
 	}
-	
+
 	public void finalizar(ActionListener actionlistener) {
 		this.btnFinalizar.addActionListener(actionlistener);
 	}

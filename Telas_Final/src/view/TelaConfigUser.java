@@ -93,15 +93,15 @@ public class TelaConfigUser extends JPanel {
 					int fontSize = Math.min(panelWidth, panelHeight) / 3;
 					Font questionFont = new Font("Tahoma", Font.BOLD, fontSize);
 					g.setFont(questionFont);
-					
+
 					String text = "???";
 					java.awt.FontMetrics fm = g.getFontMetrics();
 					int textWidth = fm.stringWidth(text);
 					int textHeight = fm.getAscent();
-					
+
 					int x = (panelWidth - textWidth) / 2;
 					int y = (panelHeight + textHeight) / 2 - fm.getDescent();
-					
+
 					g.drawString(text, x, y);
 				}
 			}
@@ -130,9 +130,8 @@ public class TelaConfigUser extends JPanel {
 		tfNome.setColumns(10);
 		tfNome.putClientProperty("JComponent.roundRect", true);
 		tfNome.setOpaque(false);
-		tfNome.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfNome.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
+				"focusedBackground: null;" + "background: null");
 
 		lblSenha = new JLabel("Senha");
 		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -143,9 +142,8 @@ public class TelaConfigUser extends JPanel {
 		tfSenha.setColumns(10);
 		tfSenha.putClientProperty("JComponent.roundRect", true);
 		tfSenha.setOpaque(false);
-		tfSenha.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfSenha.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
+				"focusedBackground: null;" + "background: null");
 
 		lblEmail = new JLabel("Email");
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -156,9 +154,8 @@ public class TelaConfigUser extends JPanel {
 		tfEmail.setColumns(10);
 		tfEmail.putClientProperty("JComponent.roundRect", true);
 		tfEmail.setOpaque(false);
-		tfEmail.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfEmail.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
+				"focusedBackground: null;" + "background: null");
 
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -169,9 +166,8 @@ public class TelaConfigUser extends JPanel {
 		tfTelefone.setColumns(10);
 		tfTelefone.putClientProperty("JComponent.roundRect", true);
 		tfTelefone.setOpaque(false);
-		tfTelefone.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfTelefone.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
+				"focusedBackground: null;" + "background: null");
 		// Aplicar formatação automática de telefone
 		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
@@ -184,9 +180,8 @@ public class TelaConfigUser extends JPanel {
 		tfCPF.setColumns(10);
 		tfCPF.putClientProperty("JComponent.roundRect", true);
 		tfCPF.setOpaque(false);
-		tfCPF.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfCPF.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
+				"focusedBackground: null;" + "background: null");
 		// Aplicar formatação automática de CPF
 		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
 
@@ -198,9 +193,8 @@ public class TelaConfigUser extends JPanel {
 		txtGithub.setColumns(10);
 		txtGithub.putClientProperty("JComponent.roundRect", true);
 		txtGithub.setOpaque(false);
-		txtGithub.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		txtGithub.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
+				"focusedBackground: null;" + "background: null");
 		add(txtGithub, "cell 0 12,grow");
 
 		btnAlterarImagem = new JButton("Alterar Imagem");
@@ -210,23 +204,14 @@ public class TelaConfigUser extends JPanel {
 		add(btnAlterarDados, "cell 0 14 3 1,grow");
 		btnAlterarDados.putClientProperty("JComponent.roundRect", true);
 
-		FontScaler.addAutoResize(this,
-			new Object[] {lblTitulo, FontSize.TITULO},
-			new Object[] {lblNome, FontSize.TEXTO},
-			new Object[] {lblSenha, FontSize.TEXTO},
-			new Object[] {lblEmail, FontSize.TEXTO},
-			new Object[] {lblTelefone, FontSize.TEXTO},
-			new Object[] {lblCPF, FontSize.TEXTO},
-			new Object[] {lblGithub, FontSize.TEXTO},
-			new Object[] {tfNome, FontSize.TEXTO},
-			new Object[] {tfSenha, FontSize.TEXTO},
-			new Object[] {tfEmail, FontSize.TEXTO},
-			new Object[] {tfTelefone, FontSize.TEXTO},
-			new Object[] {tfCPF, FontSize.TEXTO},
-			new Object[] {txtGithub, FontSize.TEXTO},
-			new Object[] {btnAlterarDados, FontSize.BOTAO},
-			new Object[] {btnAlterarImagem, FontSize.BOTAO}
-		);
+		FontScaler.addAutoResize(this, new Object[] { lblTitulo, FontSize.TITULO },
+				new Object[] { lblNome, FontSize.TEXTO }, new Object[] { lblSenha, FontSize.TEXTO },
+				new Object[] { lblEmail, FontSize.TEXTO }, new Object[] { lblTelefone, FontSize.TEXTO },
+				new Object[] { lblCPF, FontSize.TEXTO }, new Object[] { lblGithub, FontSize.TEXTO },
+				new Object[] { tfNome, FontSize.TEXTO }, new Object[] { tfSenha, FontSize.TEXTO },
+				new Object[] { tfEmail, FontSize.TEXTO }, new Object[] { tfTelefone, FontSize.TEXTO },
+				new Object[] { tfCPF, FontSize.TEXTO }, new Object[] { txtGithub, FontSize.TEXTO },
+				new Object[] { btnAlterarDados, FontSize.BOTAO }, new Object[] { btnAlterarImagem, FontSize.BOTAO });
 	}
 
 	public void setUserData(Usuario usuario) {
@@ -249,6 +234,7 @@ public class TelaConfigUser extends JPanel {
 
 	/**
 	 * Retorna o texto atual do campo de nome.
+	 * 
 	 * @return nome preenchido no formulário
 	 */
 	public String getNome() {
@@ -257,6 +243,7 @@ public class TelaConfigUser extends JPanel {
 
 	/**
 	 * Retorna o texto atual do campo de senha.
+	 * 
 	 * @return senha preenchida no formulário
 	 */
 	public String getSenha() {
@@ -265,6 +252,7 @@ public class TelaConfigUser extends JPanel {
 
 	/**
 	 * Retorna o texto atual do campo de email.
+	 * 
 	 * @return email preenchido no formulário
 	 */
 	public String getEmail() {
@@ -273,6 +261,7 @@ public class TelaConfigUser extends JPanel {
 
 	/**
 	 * Retorna o texto atual do campo de telefone.
+	 * 
 	 * @return telefone preenchido no formulário
 	 */
 	public String getTelefone() {
@@ -281,6 +270,7 @@ public class TelaConfigUser extends JPanel {
 
 	/**
 	 * Retorna o texto atual do campo CPF/CNPJ.
+	 * 
 	 * @return cpf/cnpj preenchido no formulário
 	 */
 	public String getCpfCnpj() {
@@ -289,6 +279,7 @@ public class TelaConfigUser extends JPanel {
 
 	/**
 	 * Retorna o texto atual do campo Github.
+	 * 
 	 * @return github preenchido no formulário
 	 */
 	public String getGithub() {

@@ -32,10 +32,10 @@ import javax.swing.JScrollPane;
 /**
  * Tela de cadastro de novo trabalho/serviço pelo contratante.
  * <p>
- * Responsável por: coletar informações do serviço (nome, modalidade, valor, descrição),
- * validar dados inseridos, fornecer área de texto multilinha para descrição,
- * aplicar formatação e estilos visuais, e integrar-se com o controller para
- * processar o cadastro no banco de dados.
+ * Responsável por: coletar informações do serviço (nome, modalidade, valor,
+ * descrição), validar dados inseridos, fornecer área de texto multilinha para
+ * descrição, aplicar formatação e estilos visuais, e integrar-se com o
+ * controller para processar o cadastro no banco de dados.
  * </p>
  */
 public class TelaCadastroContratante extends JPanel {
@@ -62,15 +62,16 @@ public class TelaCadastroContratante extends JPanel {
 	/**
 	 * Construtor que cria e configura a tela de cadastro de trabalho.
 	 * <p>
-	 * Inicializa todos os campos, configura propriedades visuais,
-	 * organiza o layout, e aplica redimensionamento de título.
+	 * Inicializa todos os campos, configura propriedades visuais, organiza o
+	 * layout, e aplica redimensionamento de título.
 	 * </p>
 	 */
 	public TelaCadastroContratante() {
 		setPreferredSize(new Dimension(543, 388));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 30 20 20 20, gap 20", "[grow][grow,right]", "[grow 1][grow][grow][grow][grow 20]"));
-		
+		setLayout(new MigLayout("fill, insets 30 20 20 20, gap 20", "[grow][grow,right]",
+				"[grow 1][grow][grow][grow][grow 20]"));
+
 		lblTitulo = new JLabel("Cadastrar Trabalho");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblTitulo, "cell 0 0 2 1,growx,aligny center");
@@ -81,9 +82,7 @@ public class TelaCadastroContratante extends JPanel {
 		tfNome.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nome");
 		tfNome.putClientProperty("JComponent.roundRect", true);
 		tfNome.setOpaque(false);
-		tfNome.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfNome.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 		tfNome.setSize(new Dimension(50, 50));
 
 		scrollPane = new JScrollPane();
@@ -101,9 +100,7 @@ public class TelaCadastroContratante extends JPanel {
 		tfModalidade.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Modalidade");
 		tfModalidade.putClientProperty("JComponent.roundRect", true);
 		tfModalidade.setOpaque(false);
-		tfModalidade.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfModalidade.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		tfValor = new JTextField();
 		add(tfValor, "cell 0 3,height 20:20:40,grow");
@@ -111,21 +108,19 @@ public class TelaCadastroContratante extends JPanel {
 		tfValor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Valor");
 		tfValor.putClientProperty("JComponent.roundRect", true);
 		tfValor.setOpaque(false);
-		tfValor.putClientProperty(FlatClientProperties.STYLE, 
-			"focusedBackground: null;" +
-			"background: null");
+		tfValor.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		panel = new JPanel();
 		add(panel, "cell 0 4 2 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow]"));
-		
-				btnCadastrarTrabalho = new JButton("Cadastrar Trabalho");
-				panel.add(btnCadastrarTrabalho, "cell 2 0,grow");
-				btnCadastrarTrabalho.setFont(new Font("Tahoma", Font.PLAIN, 15));
-				btnCadastrarTrabalho.setForeground(Color.WHITE);
-				btnCadastrarTrabalho.setBackground(new Color(0, 102, 204));
+
+		btnCadastrarTrabalho = new JButton("Cadastrar Trabalho");
+		panel.add(btnCadastrarTrabalho, "cell 2 0,grow");
+		btnCadastrarTrabalho.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCadastrarTrabalho.setForeground(Color.WHITE);
+		btnCadastrarTrabalho.setBackground(new Color(0, 102, 204));
 		btnCadastrarTrabalho.putClientProperty("JComponent.roundRect", true);
-		
+
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -167,6 +162,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Retorna o campo de texto de nome.
+	 * 
 	 * @return JTextField do nome
 	 */
 	public JTextField getTfNome() {
@@ -175,6 +171,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Define o campo de texto de nome.
+	 * 
 	 * @param tfNome novo JTextField para nome
 	 */
 	public void setTfNome(JTextField tfNome) {
@@ -183,6 +180,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Retorna o botão de cadastrar trabalho.
+	 * 
 	 * @return JButton de cadastro
 	 */
 	public JButton getBtnCadastrarTrabalho() {
@@ -191,6 +189,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Define o botão de cadastrar trabalho.
+	 * 
 	 * @param btnCadastrarTrabalho novo JButton para cadastro
 	 */
 	public void setBtnCadastrarTrabalho(JButton btnCadastrarTrabalho) {
@@ -199,6 +198,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Retorna o campo de texto de modalidade.
+	 * 
 	 * @return JTextField da modalidade
 	 */
 	public JTextField getTfModalidade() {
@@ -207,6 +207,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Define o campo de texto de modalidade.
+	 * 
 	 * @param tfModalidade novo JTextField para modalidade
 	 */
 	public void setTfModalidade(JTextField tfModalidade) {
@@ -215,6 +216,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Retorna o campo de texto de valor.
+	 * 
 	 * @return JTextField do valor
 	 */
 	public JTextField getTfValor() {
@@ -223,6 +225,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Define o campo de texto de valor.
+	 * 
 	 * @param tfValor novo JTextField para valor
 	 */
 	public void setTfValor(JTextField tfValor) {
@@ -231,6 +234,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Retorna a área de texto de descrição.
+	 * 
 	 * @return JTextArea da descrição
 	 */
 	public JTextArea getTfDescricao() {
@@ -239,6 +243,7 @@ public class TelaCadastroContratante extends JPanel {
 
 	/**
 	 * Define a área de texto de descrição.
+	 * 
 	 * @param tfDescricao nova JTextArea para descrição
 	 */
 	public void setTfDescricao(JTextArea tfDescricao) {
