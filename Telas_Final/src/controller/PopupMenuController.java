@@ -11,6 +11,7 @@ import controller.TelaConfigUserController;
 import model.Usuario;
 // Importa UsuarioDAO, responsável por operações de banco de dados relacionadas a usuários
 import model.UsuarioDAO;
+import javax.swing.JOptionPane;
 
 /**
  * Controller responsável por ações relacionadas ao menu de perfil exibido no DrawerMenu.
@@ -26,6 +27,7 @@ public class PopupMenuController {
 	private final Navegador navegador;
 	// Referência à fábrica de telas que cria instâncias de visualizações
 	private final TelaFactory telaFactory;
+	private boolean listenersInitialized = false;
 	
 	/**
 	 * Construtor que inicializa o controller com suas dependências.
@@ -42,6 +44,7 @@ public class PopupMenuController {
 		// Atribui a referência da fábrica de telas recebida ao atributo da classe
 		this.telaFactory = telaFactory;
 		// O view receberá o navegador quando necessário via updateProfileAction()
+		updateMenuState(); // Define o estado inicial dos botões
 	}
 	
 	/**
@@ -53,19 +56,131 @@ public class PopupMenuController {
 		// Retorna a referência da view
 		return view;
 	}
+
+	/**
+	 * Inicializa os listeners para os botões do menu lateral uma única vez.
+	 */
+	private void initializeListeners() {
+		if (listenersInitialized) {
+			return;
+		}
+
+		// Ação do botão Home
+		view.getBtnHome().addActionListener(e -> {
+			navigateToHome();
+			view.toggleMenu();
+		});
+
+		// Ação do botão de Perfil
+		view.getBtnProfile().addActionListener(e -> {
+			navigateToProfile();
+			view.toggleMenu();
+		});
+
+		// Ação do botão Trabalhos
+		view.getBtnTrabalhos().addActionListener(e -> {
+			navigateToTrabalhos();
+			view.toggleMenu();
+		});
+		
+		// Ação do botão de Configurações (Settings)
+		view.getBtnSettings().addActionListener(e -> {
+			navegador.navegarPara("TEMP");
+			view.toggleMenu();
+		});
+
+		// Ação do botão de Logout
+		view.getBtnLogout().addActionListener(e -> {
+			performLogout();
+			view.toggleMenu();
+		});
+
+		listenersInitialized = true;
+	}
+
+	/**
+	 * Atualiza o estado dos botões do menu (ativado/desativado) com base no
+	 * status de login do usuário.
+	 */
+	public void updateMenuState() {
+		Usuario currentUser = navegador.getCurrentUser();
+		boolean isLoggedIn = currentUser != null;
+
+		view.getBtnProfile().setEnabled(isLoggedIn);
+		view.getBtnLogout().setEnabled(isLoggedIn);
+		view.getBtnTrabalhos().setEnabled(isLoggedIn);
+		view.getBtnHome().setEnabled(isLoggedIn);
+	}
 	
 	/**
-	 * Atualiza ações relacionadas ao botão de perfil do `DrawerMenu`.
-	 * <p>
-	 * Garante que o `DrawerMenu` tenha a referência correta do `Navegador` para
-	 * que suas ações (abrir configurações do usuário, logout, etc.) funcionem
-	 * corretamente quando o usuário faz login/out ou quando o contexto muda.
-	 * </p>
+	 * Navega para a tela inicial apropriada com base no perfil do usuário.
+	 */
+	private void navigateToHome() {
+		Usuario u = navegador.getCurrentUser();
+		if (u != null) {
+			if (u.isAdmin()) {
+				navegador.navegarPara("ADM");
+			} else if (u.isContratante()) {
+				navegador.navegarPara("SERVICOS");
+			} else if (u.isContratado()) {
+				navegador.navegarPara("CONTRATADO");
+			} else {
+				navegador.navegarPara("LOGIN"); // Fallback
+			}
+		}
+	}
+	
+	/**
+	 * Navega para a tela de configuração de perfil do usuário.
+	 */
+	private void navigateToProfile() {
+		Usuario usuario = navegador.getCurrentUser();
+		if (usuario != null) {
+			String panelName = telaFactory.criarTelaConfigUser(usuario);
+			navegador.navegarPara(panelName);
+		} else {
+			JOptionPane.showMessageDialog(view, "Nenhum usuário logado.", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	/**
+	 * Navega para a tela de trabalhos apropriada (Serviços ou Contratado).
+	 */
+	private void navigateToTrabalhos() {
+		Usuario u = navegador.getCurrentUser();
+		if (u != null) {
+			if (u.isContratante()) {
+				navegador.navegarPara("SERVICOS");
+			} else if (u.isContratado()) {
+				navegador.navegarPara("CONTRATADO");
+			} else {
+				// Para admin ou outros tipos, pode ir para uma tela padrão ou TEMP
+				navegador.navegarPara("TEMP");
+			}
+		}
+	}
+	
+	/**
+	 * Executa o processo de logout do usuário.
+	 */
+	private void performLogout() {
+		navegador.clearCurrentUser();
+		telaFactory.limparCache();
+		navegador.removerPainel("CONFIG_USER");
+		navegador.clearHistory();
+		navegador.limparImagensPerfil();
+		navegador.navegarPara("LOGIN", false);
+		updateMenuState(); // Atualiza os botões para o estado "deslogado"
+	}
+	
+	/**
+	 * Atualiza o menu após uma mudança de estado de login (login/logout).
+	 * Garante que os listeners estejam inicializados e o estado dos botões
+	 * seja o correto.
 	 */
 	public void updateProfileAction() {
-		// Garante que listeners do DrawerMenu apontem para o navegador atual
-		// Define o navegador na view para que ela possa executar ações de navegação
-		view.setNavegador(navegador);
+		initializeListeners();
+		updateMenuState();
 	}
 
 } // Fim da classe PopupMenuController

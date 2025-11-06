@@ -67,7 +67,7 @@ public class Main {
 				
 				// --- Interface principal ---
 				splash.setProgress(35, "Criando interface principal...");
-				DrawerMenu pm = new DrawerMenu(usuarioDAO); // menu lateral com contexto do usuário
+				DrawerMenu pm = new DrawerMenu(); // menu lateral, agora sem dependências no construtor
 				Primario prim = new Primario(wbb, pm); // janela principal que recebe a barra e o menu
 				Thread.sleep(150);
 
@@ -76,13 +76,13 @@ public class Main {
 				controller.Navegador navegador = new controller.Navegador(prim);
 				navegador.setUsuarioDAO(usuarioDAO);
 				prim.setNavegador(navegador);
-				pm.setNavegador(navegador);
+				// As dependências do DrawerMenu foram movidas para o PopupMenuController
 				Thread.sleep(100);
 
 				// --- Fábrica de telas ---
 				splash.setProgress(55, "Criando fábrica de telas...");
 				controller.TelaFactory telaFactory = new controller.TelaFactory(navegador, servicoDAO, usuarioDAO);
-				pm.setTelaFactory(telaFactory);
+				// A fábrica de telas agora é gerenciada pelo PopupMenuController
 				Thread.sleep(100);
 				
 				// --- Controladores auxiliares / Popups ---

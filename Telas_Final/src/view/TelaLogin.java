@@ -213,8 +213,8 @@ public class TelaLogin extends JPanel {
 	 * 
 	 * @return texto do campo senha
 	 */
-	public String getSenha() { // Método getter público que retorna String
-		return this.passwordField.getText(); // Retorna texto atual do campo passwordField (senha em texto simples)
+	public char[] getSenha() { // Método getter público que retorna String
+		return this.passwordField.getPassword(); // Retorna texto atual do campo passwordField (senha em texto simples)
 	} // Fim do método getSenha
 
 	/**

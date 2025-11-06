@@ -5,6 +5,7 @@ package controller;
 import java.awt.event.MouseAdapter;
 // Importa MouseEvent que contém informações sobre eventos de mouse
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 // Importa JOptionPane para exibir diálogos de mensagem ao usuário
 import javax.swing.JOptionPane;
@@ -50,82 +51,109 @@ public class LoginController {
 	 * @param popupMenuController controller do menu popup
 	 */
 	public LoginController(TelaLogin view, UsuarioDAO model, Navegador navegador, TelaCadastro telaCadastro, PopupMenuController popupMenuController){
-		// Atribui a referência da view recebida ao atributo da classe
 		this.view = view;
-		// Atribui a referência do model (DAO) recebido ao atributo da classe
 		this.model = model;
-		// Atribui a referência do navegador recebido ao atributo da classe
 		this.navegador = navegador;
-		// Atribui a referência da tela de cadastro recebida ao atributo da classe
 		this.telaCadastro = telaCadastro;
-		// Atribui a referência do controller do menu popup recebido ao atributo da classe
 		this.popupMenuController = popupMenuController;
 		
-		// Registra ação de login: obtém usuário/senha, autentica e navega conforme o perfil
-		// Configura o listener do botão "login" na view
-		this.view.login(e ->{
-			// Obtém o nome de usuário digitado no campo de texto
-			String nome = view.getUsuario();
-			// Obtém a senha digitada no campo de senha
-			String senha = view.getSenha();
+		initListeners();
+	}
 
-			// Cria uma nova instância do DAO de usuários
-			UsuarioDAO dao = new UsuarioDAO();
-			// Tenta autenticar o usuário no banco de dados
-			Usuario u = dao.login(nome, senha);
-			
-			// Verifica se a autenticação foi bem-sucedida (usuário encontrado)
-			if (u != null) {
-				// Se autenticação for bem-sucedida: decodifica e salva imagem de perfil localmente
-				// Decodifica a imagem de perfil que está em Base64 e salva como arquivo
-				dao.decode64(u);
-				// Define o usuário autenticado como usuário atual no navegador
-				this.navegador.setCurrentUser(u);
-				// Atualiza a ação de perfil no menu popup com os dados do usuário logado
-				popupMenuController.updateProfileAction();
-				// Atualiza botões/menus dependentes do estado de autenticação
-				// Notifica que o estado de navegação mudou (para atualizar botões voltar/avançar)
-				this.navegador.notifyHistoryChange();
-				// Direciona conforme tipo de usuário
-				// Verifica se o usuário é administrador
-				if (u.isAdmin()) {
-					// Navega para a tela de administrador sem adicionar ao histórico
-					navegador.navegarPara("ADM", false);
-				} else if (u.isContratado()) {
-					// Verifica se o usuário é contratado
-					// Navega para a tela de contratado sem adicionar ao histórico
-					navegador.navegarPara("CONTRATADO", false);
-				} else if (u.isContratante()) {
-					// Verifica se o usuário é contratante
-					// Navega para a tela de serviços (lista de serviços) sem adicionar ao histórico
-					navegador.navegarPara("SERVICOS", false);
-				} else {
-					// Se o usuário não tem nenhum perfil definido, retorna para o login
-					navegador.navegarPara("LOGIN", false);
-				}
-			}else {
-				// Mensagem simples para falha de autenticação
-				// Se a autenticação falhou, exibe mensagem de erro
-				JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
-			}
-			
-			// Limpa os campos de usuário e senha do formulário
-			this.view.limparFormulario();
-	
-		});
+	/**
+	 * Inicializa os listeners de eventos da tela de login.
+	 */
+	private void initListeners() {
+		// Registra ação de login
+		this.view.login(e -> handleLoginAttempt());
 
-		// Listener para o link de cadastro na tela de login
-		// Configura um listener de mouse para o link/botão de cadastro
+		// Listener para o link de cadastro
 		this.view.cadastro(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
-		        // Limpa todos os campos da tela de cadastro para começar um novo cadastro limpo
 		        telaCadastro.limparCampos();
-		        // Navega para a tela de cadastro
 		        navegador.navegarPara("CADASTRO");
 		    }
 		});
-	} // Fim do construtor LoginController
-	
+	}
 
+	/**
+	 * Gerencia a tentativa de login, validando credenciais e tratando possíveis erros.
+	 */
+	private void handleLoginAttempt() {
+		String nome = view.getUsuario();
+		char[] senha = view.getSenha();
+
+		// Verifica se os campos não estão vazios
+		if (nome.trim().isEmpty() || senha.length == 0) {
+			JOptionPane.showMessageDialog(view, "Usuário e senha não podem estar em branco.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+			view.limparFormulario();
+			Arrays.fill(senha, ' '); // Limpa a senha da memória
+			return;
+		}
+
+		try {
+			Usuario u = model.login(nome, senha);
+			
+			if (u != null) {
+				handleSuccessfulLogin(u);
+			} else {
+				handleFailedLogin();
+			}
+		} catch (Exception e) {
+			handleLoginError(e);
+		} finally {
+			// Limpa a senha da memória por segurança
+			Arrays.fill(senha, ' ');
+			// Limpa os campos do formulário na view
+			this.view.limparFormulario();
+		}
+	}
+
+	/**
+	 * Executa as ações necessárias após um login bem-sucedido.
+	 * @param user O usuário autenticado.
+	 */
+	private void handleSuccessfulLogin(Usuario user) {
+		model.decode64(user);
+		this.navegador.setCurrentUser(user);
+		popupMenuController.updateProfileAction();
+		this.navegador.notifyHistoryChange();
+		navigateToUserScreen(user);
+	}
+
+	/**
+	 * Navega para a tela apropriada com base no perfil do usuário.
+	 * @param user O usuário autenticado.
+	 */
+	private void navigateToUserScreen(Usuario user) {
+		String destination;
+		if (user.isAdmin()) {
+			destination = "ADM";
+		} else if (user.isContratado()) {
+			destination = "CONTRATADO";
+		} else if (user.isContratante()) {
+			destination = "SERVICOS";
+		} else {
+			destination = "LOGIN"; // Fallback para a tela de login
+		}
+		navegador.navegarPara(destination, false);
+	}
+
+	/**
+	 * Exibe uma mensagem de falha de autenticação.
+	 */
+	private void handleFailedLogin() {
+		JOptionPane.showMessageDialog(view, "Usuário ou senha incorretos.", "Erro de Autenticação", JOptionPane.ERROR_MESSAGE);
+	}
+
+	/**
+	 * Exibe uma mensagem de erro genérica para falhas de conexão ou outras exceções.
+	 * @param e A exceção que ocorreu.
+	 */
+	private void handleLoginError(Exception e) {
+		// O ideal seria logar o erro para análise posterior
+		e.printStackTrace(); 
+		JOptionPane.showMessageDialog(view, "Ocorreu um erro de comunicação com o sistema. Tente novamente mais tarde.", "Erro de Conexão", JOptionPane.ERROR_MESSAGE);
+	}
 } // Fim da classe LoginController

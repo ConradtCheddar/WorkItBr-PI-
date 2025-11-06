@@ -53,6 +53,9 @@ import util.FontScaler.FontSize;
 // Importa JList para exibir listas de itens
 import javax.swing.JList;
 
+// Importa a classe Servico do pacote model
+import model.Servico;
+
 /**
  * Tela principal do contratado exibindo trabalhos disponíveis e em andamento.
  * <p>
@@ -70,9 +73,9 @@ public class TelaContratado extends JPanel {
 	private JScrollPane scrollPane;
 
 	// Lista de trabalhos disponíveis para aceitar
-	private JList listaDisponivel;
+	private JList<Servico> listaDisponivel;
 	// Lista de trabalhos já aceitos e em andamento
-	private JList listaAndamento;
+	private JList<Servico> listaAndamento;
 	// Callback executado quando a tela é mostrada (para atualizar dados)
 	private Runnable onShowCallback;
 	// Label título da lista de trabalhos disponíveis
@@ -101,7 +104,7 @@ public class TelaContratado extends JPanel {
 		scrollPane.setBackground(Color.LIGHT_GRAY);
 		add(scrollPane, "cell 0 1,grow");
 
-		listaAndamento = new JList();
+		listaAndamento = new JList<Servico>();
 		scrollPane.setViewportView(listaAndamento);
 
 		lblAndamento = new JLabel("Trabalhos em andamento");
@@ -111,7 +114,7 @@ public class TelaContratado extends JPanel {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		add(scrollPane_1, "cell 1 1,grow");
 
-		listaDisponivel = new JList();
+		listaDisponivel = new JList<Servico>();
 		scrollPane_1.setViewportView(listaDisponivel);
 
 		lblDisponiveis = new JLabel("Trabalhos disponiveis");
@@ -127,7 +130,7 @@ public class TelaContratado extends JPanel {
 	 * 
 	 * @return JList contendo os serviços disponíveis para aceitar
 	 */
-	public JList getListaDisponivel() {
+	public JList<Servico> getListaDisponivel() {
 		return listaDisponivel;
 	}
 
@@ -193,7 +196,7 @@ public class TelaContratado extends JPanel {
 	 * 
 	 * @param listaDisponivel nova JList para trabalhos disponíveis
 	 */
-	public void setListaDisponivel(JList listaDisponivel) {
+	public void setListaDisponivel(JList<Servico> listaDisponivel) {
 		this.listaDisponivel = listaDisponivel;
 	}
 
@@ -202,7 +205,7 @@ public class TelaContratado extends JPanel {
 	 * 
 	 * @return JList contendo os trabalhos em andamento
 	 */
-	public JList getListaAndamento() {
+	public JList<Servico> getListaAndamento() {
 		return listaAndamento;
 	}
 
@@ -211,7 +214,7 @@ public class TelaContratado extends JPanel {
 	 * 
 	 * @param listAndamento nova JList para trabalhos em andamento
 	 */
-	public void setListaAndamento(JList listAndamento) {
+	public void setListaAndamento(JList<Servico> listAndamento) {
 		this.listaAndamento = listAndamento;
 	}
 }

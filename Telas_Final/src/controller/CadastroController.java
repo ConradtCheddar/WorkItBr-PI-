@@ -75,7 +75,7 @@ public class CadastroController {
 		    // Usa o validador para verificar se o formato do email é válido
 		    if (!FieldValidator.validarEmail(email)) {
 		        // Se o email for inválido, exibe mensagem de erro e interrompe o cadastro
-		        JOptionPane.showMessageDialog(null, "Email inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+		        JOptionPane.showMessageDialog(view, "Email inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
 		        return;
 		    }
 		    
@@ -83,7 +83,7 @@ public class CadastroController {
 		    // Usa o validador para verificar se o telefone tem 10 ou 11 dígitos
 		    if (!FieldValidator.validarTelefone(telefone)) {
 		        // Se o telefone for inválido, exibe mensagem de erro e interrompe o cadastro
-		        JOptionPane.showMessageDialog(null, "Telefone inválido! Deve ter 10 ou 11 dígitos.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+		        JOptionPane.showMessageDialog(view, "Telefone inválido! Deve ter 10 ou 11 dígitos.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
 		        return;
 		    }
 		    
@@ -98,7 +98,7 @@ public class CadastroController {
 		        cpfValido = FieldValidator.validarCPF(cpf);
 		        // Se o CPF for inválido, exibe mensagem de erro e interrompe
 		        if (!cpfValido) {
-		            JOptionPane.showMessageDialog(null, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.showMessageDialog(view, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
 		            return;
 		        }
 		    } else if (cpfLimpo.length() == 14) {
@@ -107,12 +107,12 @@ public class CadastroController {
 		        cpfValido = FieldValidator.validarCNPJ(cpf);
 		        // Se o CNPJ for inválido, exibe mensagem de erro e interrompe
 		        if (!cpfValido) {
-		            JOptionPane.showMessageDialog(null, "CNPJ inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.showMessageDialog(view, "CNPJ inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
 		            return;
 		        }
 		    } else {
 		        // Se não tem 11 nem 14 dígitos, exibe mensagem de erro
-		        JOptionPane.showMessageDialog(null, "CPF/CNPJ inválido! Digite 11 dígitos para CPF ou 14 para CNPJ.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+		        JOptionPane.showMessageDialog(view, "CPF/CNPJ inválido! Digite 11 dígitos para CPF ou 14 para CNPJ.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
 		        return;
 		    }
 		    

@@ -51,7 +51,7 @@ public class CadastroContratanteController {
 			// Valida se existe um usuário autenticado no sistema
 			if (navegador.getCurrentUser() == null) {
 				// Exibe mensagem de erro se não houver usuário logado
-				javax.swing.JOptionPane.showMessageDialog(null, "Erro: Nenhum usuário logado. Por favor, faça login novamente.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+				javax.swing.JOptionPane.showMessageDialog(view, "Erro: Nenhum usuário logado. Por favor, faça login novamente.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
 				// Redireciona para a tela de login
 				navegador.navegarPara("LOGIN");
 				// Interrompe a execução do método
@@ -63,19 +63,23 @@ public class CadastroContratanteController {
 			// Obtém o texto do campo modalidade (presencial, remoto, etc.)
 		    String modalidade = this.view.getTfModalidade().getText();
 		    // Obtém o texto do campo valor e converte para Double (número decimal)
-		    Double valor = Double.parseDouble(this.view.getTfValor().getText());
+		    Double valor;
+		    try {
+		    	valor = Double.parseDouble(this.view.getTfValor().getText());
+		    } catch (NumberFormatException ex) {
+		    	javax.swing.JOptionPane.showMessageDialog(view, "Valor inválido. Por favor, insira um número.", "Erro de Formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+		    	return;
+		    }
 		    // Obtém o texto do campo descrição do serviço
 		    String descricao = this.view.getTfDescricao().getText();
 		    
-		    // Cria uma nova instância do DAO para cadastrar o serviço
-			ServicoDAO dao = new ServicoDAO();
 			// Cria um novo objeto Servico com os dados coletados
 			// O parâmetro false indica que o serviço ainda não foi aceito
 			// O usuário logado é definido como proprietário do serviço
 			Servico s = new Servico(nome_Servico,valor,modalidade,descricao, false, navegador.getCurrentUser());
 
 			// Tenta cadastrar o serviço no banco de dados
-			boolean sucesso = dao.cadastrarS(s);
+			boolean sucesso = model.cadastrarS(s);
 			// Verifica se o cadastro foi bem-sucedido
 			if (sucesso) {
 				// Limpa todos os campos do formulário

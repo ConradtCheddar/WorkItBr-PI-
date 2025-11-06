@@ -82,7 +82,7 @@ public class ContratadoController extends ComponentAdapter {
 		    	if (e.getClickCount() == 2) { 
 		            // Obtém o índice do item na lista onde o clique ocorreu
 		            int index = view.getListaDisponivel().locationToIndex(e.getPoint());
-		            // Obtém o objeto do modelo da lista no índice clicado
+		            if (index == -1) return; // Sai se o clique for fora de um item
 		            Object selectedItem = view.getListaDisponivel().getModel().getElementAt(index);
 		            
 		            // Verifica se o item selecionado é uma instância de Servico
@@ -91,20 +91,14 @@ public class ContratadoController extends ComponentAdapter {
 		                Servico servicoSelecionado = (Servico) selectedItem;
 
 		                // Cria uma visualização específica para o serviço selecionado e navega até ela
-		                // Cria uma nova instância do DAO de serviços
-		                final ServicoDAO sd = new ServicoDAO();
-		                // Cria a view de visualização do serviço disponível
 		                VisServico vs = new VisServico(servicoSelecionado);
 		                // Cria o controller para a visualização, passando todas as dependências
-		                VisServicoController vsc = new VisServicoController(vs, sd, navegador, servicoSelecionado);
+		                new VisServicoController(vs, servicoDAO, navegador, servicoSelecionado);
 		                // Adiciona o painel de visualização ao navegador com a chave "VISUALIZAR_SERVICO"
 		                navegador.adicionarPainel("VISUALIZAR_SERVICO", vs);
 		                // Navega para o painel de visualização
 		                navegador.navegarPara("VISUALIZAR_SERVICO");
-		                
-		            } else {
-		                // item não é do tipo esperado; não faz nada
-		            }   
+		            } 
 		        }
 		    }
 		});
@@ -118,7 +112,7 @@ public class ContratadoController extends ComponentAdapter {
 		    	if (e.getClickCount() == 2) { 
 		            // Obtém o índice do item na lista onde o clique ocorreu
 		            int index = view.getListaAndamento().locationToIndex(e.getPoint());
-		            // Obtém o objeto do modelo da lista no índice clicado
+		            if (index == -1) return; // Sai se o clique for fora de um item
 		            Object selectedItem = view.getListaAndamento().getModel().getElementAt(index);
 		            
 		            // Verifica se o item selecionado é uma instância de Servico
@@ -126,21 +120,15 @@ public class ContratadoController extends ComponentAdapter {
 		                // Faz o cast do objeto para Servico
 		                Servico servicoSelecionado = (Servico) selectedItem;
 
-		                    // Cria uma nova instância do DAO de serviços
-		                    final ServicoDAO sd = new ServicoDAO();
-		                    // Cria a view de visualização do serviço em andamento
-		                    VisServicoAndamento vs = new VisServicoAndamento(servicoSelecionado);
-		                    // Cria o controller para a visualização de serviço em andamento
-		                    VisServicoAndamentoController vsc = new VisServicoAndamentoController(vs, sd, navegador, servicoSelecionado);
-		                    // Adiciona o painel de visualização ao navegador
-		                    navegador.adicionarPainel("VISUALIZAR_SERVICO", vs);
-		                    // Navega para o painel de visualização
-		                    navegador.navegarPara("VISUALIZAR_SERVICO");
-		                    
-		            } else {
-		            	// Se o item não for um Servico, exibe mensagem de erro
-		            	JOptionPane.showMessageDialog(null, "Nenhum servico selecionado", "Erro", JOptionPane.ERROR_MESSAGE);
-		            }   
+		                // Cria a view de visualização do serviço em andamento
+		                VisServicoAndamento vs = new VisServicoAndamento(servicoSelecionado);
+		                // Cria o controller para a visualização de serviço em andamento
+		                new VisServicoAndamentoController(vs, servicoDAO, navegador, servicoSelecionado);
+		                // Adiciona o painel de visualização ao navegador
+		                navegador.adicionarPainel("VISUALIZAR_SERVICO_ANDAMENTO", vs);
+		                // Navega para o painel de visualização
+		                navegador.navegarPara("VISUALIZAR_SERVICO_ANDAMENTO");
+		            }
 		        }
 		    }
 		});

@@ -141,7 +141,7 @@ public class UsuarioDAO {
 		}
 	}
 
-	public Usuario login(String nome, String senha) {
+	public Usuario login(String nome, char[] senha) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
@@ -150,7 +150,7 @@ public class UsuarioDAO {
 			var stmt = conn.prepareStatement(sql);
 
 			stmt.setString(1, nome);
-			stmt.setString(2, senha);
+			stmt.setString(2, new String(senha)); // Convert char[] to String only for the query
 
 			var rs = stmt.executeQuery();
 

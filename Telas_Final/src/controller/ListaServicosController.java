@@ -86,103 +86,59 @@ public class ListaServicosController {
 		// Configura o listener do botão "visualizar" na view
 		// Botão "visualizar": abre a visualização detalhada do serviço selecionado
 		this.view.visualizar(e -> {
-			// Obtém a referência da tabela de serviços da view
-			JTable table = view.getTableServicos();
-			// Obtém o modelo de dados da tabela (DefaultTableModel permite manipulação dos dados)
-			DefaultTableModel modelTable = (DefaultTableModel) table.getModel();
-
-			// Obtém o índice da linha selecionada pelo usuário (-1 se nenhuma linha estiver selecionada)
-			int selectedRow = table.getSelectedRow();
-			// Verifica se há uma linha selecionada (índice >= 0)
+			int selectedRow = view.getTableServicos().getSelectedRow();
 			if (selectedRow >= 0) {
-				// Coluna 0 armazena o id (oculta na UI)
-				// Obtém o valor do ID da linha selecionada (coluna 0)
-				Object idValue = table.getValueAt(selectedRow, 0);
-				// Verifica se o valor do ID não é nulo
-				if (idValue != null) {
-					// Converte o valor do ID para inteiro
-					int id = (int) idValue;
-					
-					// Busca o serviço completo no banco de dados usando o ID
+				try {
+					int id = (int) view.getTableServicos().getValueAt(selectedRow, 0);
 					Servico s = this.model.buscarServicoPorId(id);
-					// Verifica se o serviço foi encontrado no banco
 					if (s == null) {
-						// Exibe mensagem de erro se o serviço não foi encontrado
-						JOptionPane.showMessageDialog(null, "Serviço não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-						// Interrompe a execução do método
+						JOptionPane.showMessageDialog(view, "Serviço não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					// Se serviço não foi aceito, usa a visualização do contratante; caso contrário, a versão "aceito"
-					// Verifica se o serviço NÃO foi aceito (status aceito = false)
-					if (Boolean.FALSE.equals(s.getAceito())) {
-						// Cria uma tela de visualização para serviço não aceito usando a factory
-						String panelName = telaFactory.criarVisServicoCnte(s);
-						// Navega para a tela criada
-						navegador.navegarPara(panelName);
-					} else {
-						// Cria uma tela de visualização para serviço aceito usando a factory
-						String panelName = telaFactory.criarVisServicoCnteAceito(s);
-						// Navega para a tela criada
-						navegador.navegarPara(panelName);
-					}
 					
-				} else {
-					// Exibe mensagem de erro se o ID é nulo (dados inconsistentes)
-					JOptionPane.showMessageDialog(null, "Nenhum servico selecionado", "Erro",
-						JOptionPane.ERROR_MESSAGE);
+					String panelName = Boolean.TRUE.equals(s.getAceito())
+						? telaFactory.criarVisServicoCnteAceito(s)
+						: telaFactory.criarVisServicoCnte(s);
+					navegador.navegarPara(panelName);
+
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(view, "Erro ao carregar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
-
+			} else {
+				JOptionPane.showMessageDialog(view, "Nenhum serviço selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
 			}
-
 		});
 
 		// Configura o listener do botão "deletar" na view
 		// Botão "deletar": confirma e deleta serviço selecionado, protegendo serviços aceitos
 		this.view.deletar(e -> {
-			// Obtém a referência da tabela de serviços da view
 			JTable table = view.getTableServicos();
-			// Obtém o modelo de dados da tabela para manipulação
 			DefaultTableModel modelTable = (DefaultTableModel) table.getModel();
-
-			// Obtém o índice da linha que o usuário selecionou
 			int selectedRow = table.getSelectedRow();
-			// Verifica se há uma linha selecionada (índice válido >= 0)
+
 			if (selectedRow >= 0) {
-				// Obtém o valor do ID do serviço da coluna 0 da linha selecionada
-				Object idValue = table.getValueAt(selectedRow, 0);
-				// Verifica se o ID não é nulo
-				if (idValue != null) {
-					// Converte o valor do ID para tipo inteiro
-					int id = (int) idValue;
+				try {
+					int id = (int) table.getValueAt(selectedRow, 0);
+					Servico servicoTmp = this.model.buscarServicoPorId(id);
 
-					// Busca o serviço completo no banco de dados usando o ID
-					model.Servico servicoTmp = this.model.buscarServicoPorId(id);
-					// Verifica se o serviço existe E se ele foi aceito (status aceito = true)
 					if (servicoTmp != null && Boolean.TRUE.equals(servicoTmp.getAceito())) {
-						// Se o serviço foi aceito, impede a exclusão e exibe mensagem de erro
-						JOptionPane.showMessageDialog(null, "Imposivel deletar trabalhos aceitos", "Erro",
-							JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(view, "Impossível deletar trabalhos que já foram aceitos.", "Erro", JOptionPane.ERROR_MESSAGE);
 					} else {
-						// Se o serviço não foi aceito, prossegue com a confirmação de exclusão
-						// Confirma exclusão
-						// Exibe diálogo de confirmação perguntando se o usuário realmente quer deletar
-						int option = JOptionPane.showConfirmDialog(null,
-							"Tem certeza que deseja deletar este trabalho?", "Confirmar Exclusão",
-							JOptionPane.YES_NO_OPTION);
-
-						// Verifica se o usuário clicou em "Sim"
+						int option = JOptionPane.showConfirmDialog(view, "Tem certeza que deseja deletar este trabalho?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
 						if (option == JOptionPane.YES_OPTION) {
-							// Remove no DAO e na tabela visual
-							// Deleta o serviço do banco de dados através do DAO
-							this.model.deletarServico(id);
-							// Remove a linha correspondente da tabela visual
-							modelTable.removeRow(selectedRow);
+							if (this.model.deletarServico(id)) {
+								modelTable.removeRow(selectedRow);
+								JOptionPane.showMessageDialog(view, "Serviço deletado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								JOptionPane.showMessageDialog(view, "Falha ao deletar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+							}
 						}
 					}
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(view, "Erro ao tentar deletar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				// Se nenhuma linha foi selecionada, exibe mensagem informativa
-				JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir.");
+				JOptionPane.showMessageDialog(view, "Selecione uma linha para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 

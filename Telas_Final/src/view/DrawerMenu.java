@@ -9,18 +9,6 @@ import java.awt.*;
 import java.awt.event.*;
 // Importa Consumer para callbacks funcionais (notificações de mudança de estado)
 import java.util.function.Consumer;
-// Importa o Navegador responsável por controlar navegação entre telas
-import controller.Navegador;
-// Importa a fábrica de telas que cria instâncias dinâmicas de visualizações
-import controller.TelaFactory;
-// Importa o DAO para acesso a dados de usuários no banco de dados
-import model.UsuarioDAO;
-// Importa a classe de modelo que representa um usuário no sistema
-import model.Usuario;
-// Importa a tela de configuração de usuário
-import view.TelaConfigUser;
-// Importa o controller da tela de configuração de usuário
-import controller.TelaConfigUserController;
 
 /**
  * Menu lateral deslizante (drawer) que aparece do lado direito da tela.
@@ -57,30 +45,24 @@ public class DrawerMenu extends JPanel {
 	private int startX;
 
 	// Botão que realiza o logout do usuário e limpa a sessão
-	private JButton btnLogout;
+	private final JButton btnLogout;
 	// Botão que navega para a tela de configurações (temporária)
-	private JButton btnSettings;
+	private final JButton btnSettings;
 	// Botão que navega para o perfil/configurações do usuário
-	private JButton btnProfile;
+	private final JButton btnProfile;
 	// Botão que navega para a lista de trabalhos/serviços
-	private JButton btnTrabalhos;
+	private final JButton btnTrabalhos;
 	// Botão que navega para a tela inicial (Home) baseado no tipo de usuário
-	private JButton btnHome;
-	// Referência ao DAO para operações de banco de dados relacionadas a usuários
-	private UsuarioDAO usuarioDAO;
-	// Referência ao navegador que controla a navegação entre telas
-	private Navegador navegador;
-	// Referência à fábrica que cria instâncias dinâmicas de telas
-	private TelaFactory telaFactory;
+	private final JButton btnHome;
+	
 	// Callback executado quando o estado do menu muda (abre ou fecha)
 	private Consumer<Boolean> onStateChange;
 	// Painel superior que contém os botões principais de navegação
-	private JPanel topPanel;
+	private final JPanel topPanel;
 	// Painel inferior que contém o botão de logout
-	private JPanel bottomPanel;
+	private final JPanel bottomPanel;
 
-	public DrawerMenu(UsuarioDAO usuarioDAO) {
-		this.usuarioDAO = usuarioDAO;
+	public DrawerMenu() {
 		setLayout(new BorderLayout());
 		setBackground(Color.DARK_GRAY);
 		setOpaque(true);
@@ -124,133 +106,30 @@ public class DrawerMenu extends JPanel {
 		isOpen = false;
 	}
 
-	public void setTelaFactory(TelaFactory telaFactory) {
-		this.telaFactory = telaFactory;
+	//<editor-fold defaultstate="collapsed" desc="Getters for Controller">
+	public JButton getBtnLogout() {
+		return btnLogout;
 	}
 
-	public void setNavegador(Navegador navegador) {
-		this.navegador = navegador;
-		// Home button
-		if (btnHome != null) {
-			for (ActionListener al : btnHome.getActionListeners()) {
-				btnHome.removeActionListener(al);
-			}
-			btnHome.addActionListener(e -> {
-				if (this.navegador != null) {
-					Usuario u = this.navegador.getCurrentUser();
-					if (u != null) {
-						// Redireciona para a tela principal baseada no tipo de usuário
-						if (u.isAdmin()) {
-							this.navegador.navegarPara("ADM");
-						} else if (u.isContratante()) {
-							this.navegador.navegarPara("SERVICOS");
-						} else if (u.isContratado()) {
-							this.navegador.navegarPara("CONTRATADO");
-						} else {
-							// Fallback para login se não tiver tipo definido
-							this.navegador.navegarPara("LOGIN");
-						}
-					}
-				}
-				if (isOpen)
-					toggleMenu();
-			});
-		}
-		// Settings button
-		if (btnSettings != null) {
-			for (ActionListener al : btnSettings.getActionListeners()) {
-				btnSettings.removeActionListener(al);
-			}
-			btnSettings.addActionListener(e -> {
-				if (this.navegador != null) {
-					this.navegador.navegarPara("TEMP");
-				}
-				if (isOpen)
-					toggleMenu();
-			});
-		}
-		// Logout button
-		if (btnLogout != null) {
-			for (ActionListener al : btnLogout.getActionListeners()) {
-				btnLogout.removeActionListener(al);
-			}
-			btnLogout.addActionListener(e -> {
-				if (this.navegador != null) {
-					this.navegador.clearCurrentUser();
-					if (telaFactory != null) {
-						telaFactory.limparCache();
-					}
-					this.navegador.removerPainel("CONFIG_USER");
-					this.navegador.clearHistory();
-					this.navegador.limparImagensPerfil();
-					this.navegador.navegarPara("LOGIN", false);
-				}
-				if (isOpen)
-					toggleMenu();
-			});
-		}
-		// Trabalhos button
-		if (btnTrabalhos != null) {
-			for (ActionListener al : btnTrabalhos.getActionListeners()) {
-				btnTrabalhos.removeActionListener(al);
-			}
-			btnTrabalhos.addActionListener(e -> {
-				if (this.navegador != null) {
-					Usuario u = this.navegador.getCurrentUser();
-					// SAFETY: check for null user to avoid NPE when no one is logged in
-					if (u != null) {
-						if (u.isContratante()) {
-							this.navegador.navegarPara("SERVICOS");
-						} else if (u.isContratado()) {
-							this.navegador.navegarPara("CONTRATADO");
-						} else {
-							navegador.navegarPara("TEMP");
-						}
-					} else {
-						// Sem usuário logado: fallback para tela temporária (ou login)
-						navegador.navegarPara("TEMP");
-					}
-				}
-				if (isOpen)
-					toggleMenu();
-			});
-		}
-		// Profile button
-		if (btnProfile != null) {
-			for (ActionListener al : btnProfile.getActionListeners()) {
-				btnProfile.removeActionListener(al);
-			}
-			btnProfile.addActionListener(e -> {
-				if (this.navegador != null) {
-					Usuario usuario = this.navegador.getCurrentUser();
-					if (usuario != null) {
-						if (telaFactory != null) {
-							String panelName = telaFactory.criarTelaConfigUser(usuario);
-							this.navegador.navegarPara(panelName);
-						} else {
-							Usuario usuarioBanco = usuarioDAO.getUsuarioById(usuario.getIdUsuario());
-							if (usuarioBanco != null) {
-								this.navegador.setCurrentUser(usuarioBanco);
-								usuario = usuarioBanco;
-							}
-							TelaConfigUser telaConfigUser = new TelaConfigUser();
-							new TelaConfigUserController(telaConfigUser, usuarioDAO, navegador, usuario);
-							this.navegador.adicionarPainel("CONFIG_USER", telaConfigUser);
-							this.navegador.navegarPara("CONFIG_USER");
-						}
-					} else {
-						JOptionPane.showMessageDialog(this, "Nenhum usuário logado.", "Erro",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
-				if (isOpen)
-					toggleMenu();
-			});
-		}
+	public JButton getBtnSettings() {
+		return btnSettings;
 	}
 
-	public void setOnStateChange(Consumer<Boolean> callback) {
-		this.onStateChange = callback;
+	public JButton getBtnProfile() {
+		return btnProfile;
+	}
+
+	public JButton getBtnTrabalhos() {
+		return btnTrabalhos;
+	}
+
+	public JButton getBtnHome() {
+		return btnHome;
+	}
+	//</editor-fold>
+
+	public void setOnStateChange(Consumer<Boolean> onStateChange) {
+		this.onStateChange = onStateChange;
 	}
 
 	public void toggleMenu() {
@@ -373,59 +252,30 @@ public class DrawerMenu extends JPanel {
 	}
 
 	private JButton createMenuButton(String text) {
-		JButton button = new JButton(text) {
-			@Override
-			protected void paintComponent(Graphics g) {
-				Graphics2D g2 = (Graphics2D) g.create();
-				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-				// Desenha o fundo arredondado
-				if (getModel().isPressed()) {
-					g2.setColor(getBackground().darker());
-				} else if (getModel().isRollover()) {
-					g2.setColor(getBackground().brighter());
-				} else {
-					g2.setColor(getBackground());
-				}
-				g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
-
-				// Desenha o texto
-				g2.setColor(getForeground());
-				FontMetrics fm = g2.getFontMetrics();
-				int textWidth = fm.stringWidth(getText());
-				int textHeight = fm.getAscent();
-				int x = (getWidth() - textWidth) / 2;
-				int y = (getHeight() + textHeight) / 2 - 2;
-				g2.drawString(getText(), x, y);
-
-				g2.dispose();
-			}
-
-			@Override
-			protected void paintBorder(Graphics g) {
-				// Não desenha borda padrão
-			}
-		};
-
-		button.setAlignmentX(Component.CENTER_ALIGNMENT);
-		button.setBackground(Color.GRAY);
-		button.setForeground(Color.WHITE);
+		JButton button = new JButton(text);
+		button.setMaximumSize(new Dimension(Integer.MAX_VALUE, BUTTON_HEIGHT));
+		button.setPreferredSize(new Dimension(MENU_WIDTH - 2 * MARGIN, BUTTON_HEIGHT));
+		button.setMinimumSize(new Dimension(MENU_WIDTH - 2 * MARGIN, BUTTON_HEIGHT));
 		button.setFocusPainted(false);
-		button.setBorderPainted(false);
 		button.setContentAreaFilled(false);
-		button.setOpaque(false);
-		int buttonWidth = MENU_WIDTH - (2 * MARGIN);
-		button.setMaximumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-		button.setPreferredSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
-		button.setMinimumSize(new Dimension(buttonWidth, BUTTON_HEIGHT));
+		button.setOpaque(true);
+		button.setBackground(Color.DARK_GRAY);
+		button.setForeground(Color.WHITE);
+		button.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+		button.setHorizontalAlignment(SwingConstants.LEFT);
+
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				button.setBackground(Color.GRAY);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				button.setBackground(Color.DARK_GRAY);
+			}
+		});
+
 		return button;
-	}
-
-	public boolean isOpen() {
-		return isOpen;
-	}
-
-	public boolean isAnimating() {
-		return isAnimating;
 	}
 }
