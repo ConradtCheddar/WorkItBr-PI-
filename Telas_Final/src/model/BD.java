@@ -1,9 +1,3 @@
-package model;
-
-public class BD {
-	
-
-
 //	CREATE DATABASE IF NOT EXISTS WorkItBr_BD;
 //	USE WorkItBr_BD;
 //
@@ -31,9 +25,8 @@ public class BD {
 //	    Valor Double NOT NULL,
 //	    Modalidade VARCHAR(50) NOT NULL,
 //	    Descricao LONGTEXT NOT NULL,
-//	    Aceito BOOLEAN DEFAULT FALSE,
-//	    Finalizado boolean default false,
 //	    submicoes longblob default null,
+//	    status ENUM('CADASTRADO', 'FINALIZADO', 'ACEITO','REABERTO') NOT NULL default 'CADASTRADO',
 //	    id_contratante INT NOT NULL,
 //	    id_contratado INT DEFAULT NULL,
 //	    KEY idx_contratante (id_contratante),
@@ -48,8 +41,8 @@ public class BD {
 //	    SELECT 1 FROM Usuarios WHERE Nome_Usuario = 'Admin'
 //	);
 //
-//	INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, id_contratante)
-//	SELECT 'teste1', 100, 'Remoto', 'Serviço ainda não aceito', idUsuario
+//	INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, id_contratante, status)
+//	SELECT 'teste1', 100, 'Remoto', 'Serviço ainda não aceito', 1, 'CADASTRADO'
 //	FROM Usuarios
 //	WHERE Nome_Usuario = 'Admin'
 //	AND NOT EXISTS (
@@ -71,6 +64,3 @@ public class BD {
 //
 //	SELECT * FROM Usuarios;
 //	SELECT * FROM Servico;
-
-
-}
