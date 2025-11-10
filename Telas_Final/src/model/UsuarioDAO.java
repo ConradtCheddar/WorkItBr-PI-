@@ -22,7 +22,6 @@ public class UsuarioDAO {
 	}
 	
 	public Usuario code64(Usuario u) throws FileNotFoundException, IOException {
-		// Trocar CaminhoFoto por imagem64
 		String imagem64 = u.getImagem64();
 		String caminho = u.getCaminhoFoto();
 		if (caminho == null || caminho.isEmpty()) {
@@ -42,14 +41,11 @@ public class UsuarioDAO {
 	}
 	
 	public Usuario decode64(Usuario u) {
-		// Trocar CaminhoFoto por imagem64
 		String imagem64 = u.getImagem64();
 		if (imagem64 == null || imagem64.isEmpty()) {
-			// Não há imagem para decodificar
 			return u;
 		}
 		byte[] fotoContent = Base64.getDecoder().decode(imagem64);
-		// Usa o ID do usuário no nome do arquivo para diferenciar entre usuários
 		String caminhofoto = System.getProperty("user.dir") + "/src/imagens/FotoPerfil_" + u.getIdUsuario() + ".jpg";
 		try (FileOutputStream fos = new FileOutputStream(caminhofoto)) {
 			fos.write(fotoContent);
@@ -59,7 +55,6 @@ public class UsuarioDAO {
 		u.setCaminhoFoto(caminhofoto);
 		return u;
 		}
-
 
 	public boolean cadastrarU(Usuario u, String senha2) {
 
@@ -76,12 +71,12 @@ public class UsuarioDAO {
 
 						String sql = "INSERT INTO Usuarios (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, isContratado) VALUES (?, ?, ?, ?, ?, ?)";
 						var stmt = conn.prepareStatement(sql);
-						stmt.setString(1, u.getEmail()); // Email
-						stmt.setString(2, u.getUsuario()); // Nome
-						stmt.setString(3, u.getCpfCnpj()); // CPF/CNPJ
-						stmt.setString(4, u.getTelefone()); // Telefone
-						stmt.setString(5, u.getSenha()); // Senha
-						stmt.setBoolean(6, u.isContratado()); // contratado
+						stmt.setString(1, u.getEmail());
+						stmt.setString(2, u.getUsuario());
+						stmt.setString(3, u.getCpfCnpj());
+						stmt.setString(4, u.getTelefone());
+						stmt.setString(5, u.getSenha());
+						stmt.setBoolean(6, u.isContratado());
 
 						stmt.executeUpdate();
 						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Sucesso!",
@@ -112,12 +107,12 @@ public class UsuarioDAO {
 
 						String sql = "INSERT INTO Usuarios (Email, Nome_Usuario, CPF_CNPJ, Telefone, Senha, isContratante) VALUES (?, ?, ?, ?, ?, ?)";
 						var stmt = conn.prepareStatement(sql);
-						stmt.setString(1, u.getEmail()); // Email
-						stmt.setString(2, u.getUsuario()); // Nome
-						stmt.setString(3, u.getCpfCnpj()); // CPF/CNPJ
-						stmt.setString(4, u.getTelefone()); // Telefone
-						stmt.setString(5, u.getSenha()); // Senha
-						stmt.setBoolean(6, u.isContratante()); // contratante
+						stmt.setString(1, u.getEmail());
+						stmt.setString(2, u.getUsuario());
+						stmt.setString(3, u.getCpfCnpj());
+						stmt.setString(4, u.getTelefone());
+						stmt.setString(5, u.getSenha());
+						stmt.setBoolean(6, u.isContratante());
 
 						stmt.executeUpdate();
 						JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Sucesso!",
@@ -150,7 +145,7 @@ public class UsuarioDAO {
 			var stmt = conn.prepareStatement(sql);
 
 			stmt.setString(1, nome);
-			stmt.setString(2, new String(senha)); // Convert char[] to String only for the query
+			stmt.setString(2, new String(senha));
 
 			var rs = stmt.executeQuery();
 
@@ -166,7 +161,6 @@ public class UsuarioDAO {
 						rs.getBoolean("isContratante"),
 						rs.getBoolean("isAdmin")
 				);
-				// Substituir rs.getString("CaminhoFoto") por rs.getString("imagem64")
 				u.setImagem64(rs.getString("imagem64"));
 				u.setIdUsuario(rs.getInt("idUsuario"));
 				rs.close();
@@ -207,7 +201,6 @@ public class UsuarioDAO {
 						rs.getBoolean("isContratante"),
 						rs.getBoolean("isAdmin")
 	            );
-	            // Substituir rs.getString("CaminhoFoto") por rs.getString("imagem64")
 	            u.setImagem64(rs.getString("imagem64"));
 	            u.setIdUsuario(rs.getInt("idUsuario"));
 	            rs.close();
@@ -257,7 +250,6 @@ public class UsuarioDAO {
 	    }
 	}
 	
-	// Busca um usuário pelo id (usado para visualizar dados do contratado/contratante)
     public Usuario getUsuarioById(int id) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -281,7 +273,6 @@ public class UsuarioDAO {
                         rs.getBoolean("isContratante"),
                         rs.getBoolean("isAdmin")
                 );
-                // Substituir rs.getString("CaminhoFoto") por rs.getString("imagem64")
                 u.setImagem64(rs.getString("imagem64"));
                 u.setIdUsuario(rs.getInt("idUsuario"));
                 rs.close();

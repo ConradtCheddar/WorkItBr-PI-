@@ -24,13 +24,9 @@ public class Usuario {
 		this.contratado = contratado;
 		this.contratante = contratante;
 		this.admin = admin;
-		this.github = github; // Corrigido: atribui o valor ao campo
+		this.github = github;
 	}
 
-	/**
-	 * Retorna o e-mail do usuário.
-	 * @return endereço de e-mail cadastrado
-	 */
 	public String getEmail() {
 		return email;
 	}
@@ -39,10 +35,6 @@ public class Usuario {
 		this.email = email;
 	}
 
-	/**
-	 * Retorna o nome de usuário (login/apelido).
-	 * @return nome de usuário
-	 */
 	public String getUsuario() {
 		return usuario;
 	}
@@ -51,10 +43,6 @@ public class Usuario {
 		this.usuario = usuario;
 	}
 
-	/**
-	 * Retorna o CPF ou CNPJ do usuário.
-	 * @return cpf ou cnpj como String
-	 */
 	public String getCpfCnpj() {
 		return cpfCnpj;
 	}
@@ -63,10 +51,6 @@ public class Usuario {
 		this.cpfCnpj = cpfCnpj;
 	}
 
-	/**
-	 * Retorna o número de telefone do usuário.
-	 * @return telefone como String
-	 */
 	public String getTelefone() {
 		return telefone;
 	}
@@ -75,10 +59,6 @@ public class Usuario {
 		this.telefone = telefone;
 	}
 
-	/**
-	 * Retorna a senha do usuário (texto puro no objeto; evite expondo em logs).
-	 * @return senha em texto
-	 */
 	public String getSenha() {
 		return senha;
 	}
@@ -87,10 +67,6 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	/**
-	 * Indica se o usuário está registrado como contratado (prestador).
-	 * @return true se contratado, false caso contrário
-	 */
 	public boolean isContratado() {
 		return contratado;
 	}
@@ -99,10 +75,6 @@ public class Usuario {
 		this.contratado = contratado;
 	}
 
-	/**
-	 * Indica se o usuário é contratante (solicitante de serviços).
-	 * @return true se contratante
-	 */
 	public boolean isContratante() {
 		return contratante;
 	}
@@ -111,10 +83,6 @@ public class Usuario {
 		this.contratante = contratante;
 	}
 
-	/**
-	 * Indica se o usuário tem privilégios de administrador.
-	 * @return true se admin
-	 */
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -123,10 +91,6 @@ public class Usuario {
 		this.admin = admin;
 	}
 
-	/**
-	 * Retorna o identificador interno do usuário.
-	 * @return idUsuario (int)
-	 */
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -134,10 +98,6 @@ public class Usuario {
 		this.idUsuario = idUsuario;
 	}
 
-	/**
-	 * Retorna o nome do repositório/usuário do GitHub cadastrado.
-	 * @return github (String) ou null
-	 */
 	public String getGithub() {
 		return github;
 	}
@@ -146,10 +106,6 @@ public class Usuario {
 		this.github = github;
 	}
 
-	/**
-	 * Retorna a imagem do usuário codificada em Base64, se houver.
-	 * @return imagem em Base64 (String) ou null
-	 */
 	public String getImagem64() {
 		return imagem64;
 	}
@@ -158,10 +114,6 @@ public class Usuario {
 		this.imagem64 = imagem64;
 	}
 
-	/**
-	 * Retorna o caminho local da foto do usuário (se armazenado).
-	 * @return caminho do arquivo de foto (String)
-	 */
 	public String getCaminhoFoto() {
 		return caminhoFoto;
 	}
@@ -169,6 +121,5 @@ public class Usuario {
 	public void setCaminhoFoto(String caminhoFoto) {
 		this.caminhoFoto = caminhoFoto;
 	}
-	
 	
 }

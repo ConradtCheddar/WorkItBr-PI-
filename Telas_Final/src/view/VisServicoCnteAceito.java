@@ -1,89 +1,42 @@
 package view;
 
-// Importa JPanel, container básico para agrupar componentes
 import javax.swing.JPanel;
-// Importa MigLayout, gerenciador de layout avançado e flexível
 import net.miginfocom.swing.MigLayout;
-// Importa CardLayout para alternar entre múltiplos painéis na mesma área
 import java.awt.CardLayout;
-// Importa ActionListener para capturar eventos de clique em botões
 import java.awt.event.ActionListener;
-// Importa MouseListener para capturar eventos de mouse (não utilizado - possível legado)
 import java.awt.event.MouseListener;
 
-// Importa JButton, componente de botão clicável
 import javax.swing.JButton;
-// Importa JLabel para exibição de textos e imagens (não utilizado - possível legado)
 import javax.swing.JLabel;
-// Importa SwingConstants para constantes de alinhamento (não utilizado - possível legado)
 import javax.swing.SwingConstants;
-// Importa LineBorder para criar bordas com linha
 import javax.swing.border.LineBorder;
-// Importa TitledBorder para criar bordas com título
 import javax.swing.border.TitledBorder;
-// Importa Color para definição de cores personalizadas
 import java.awt.Color;
 
-// Importa a classe de modelo que representa um serviço no sistema
 import model.Servico;
 
-// Importa JTextPane para áreas de texto formatadas (não utilizado - possível legado)
 import javax.swing.JTextPane;
-// Importa JTextArea para áreas de texto multilinhas
 import javax.swing.JTextArea;
-// Importa JScrollPane para adicionar barras de rolagem a componentes
 import javax.swing.JScrollPane;
-// Importa Font para trabalhar com fontes de texto
 import java.awt.Font;
-// Importa ComponentAdapter para responder a eventos de redimensionamento (não utilizado - possível legado)
 import java.awt.event.ComponentAdapter;
-// Importa ComponentEvent que contém informações sobre eventos de componentes (não utilizado - possível legado)
 import java.awt.event.ComponentEvent;
-// Importa FontScaler, utilitário customizado para redimensionamento automático de fontes
 import util.FontScaler;
-// Importa enum FontSize que define tamanhos padrão de fonte
 import util.FontScaler.FontSize;
 
-/**
- * Tela de visualização de serviço do contratante (já aceito por contratado).
- * <p>
- * Responsável por: exibir informações detalhadas de um serviço já aceito,
- * mostrar título, modalidade, preço e descrição, fornecer botão para visualizar
- * o contratado que aceitou o serviço, permitir navegação para perfil do
- * contratado, e integrar-se com o controller para processar visualizações.
- * </p>
- */
 public class VisServicoCnteAceito extends JPanel {
 
-	// Identificador de versão para serialização (compatibilidade entre versões)
 	private static final long serialVersionUID = 1L;
 
-	// Painel container para botão de visualizar contratado
 	private JPanel panel;
-	// Painel que exibe informações do serviço (título, modalidade, preço)
 	private JPanel PanelInfo;
-	// Painel que contém a descrição detalhada do serviço
 	private JPanel PanelDesc;
-	// Área de texto que exibe o título/nome do serviço
 	private JTextArea taTitulo;
-	// Área de texto que exibe a modalidade do serviço
 	private JTextArea taModalidade;
-	// Área de texto que exibe o preço/valor do serviço
 	private JTextArea taPreco;
-	// Botão para voltar à tela anterior, botão para visualizar perfil do contratado
 	private JButton btnVoltar, btnContratado;
-	// Área de texto que exibe a descrição completa do serviço
 	private JTextArea tpDesc;
 
-	/**
-	 * Construtor que cria e configura a tela de visualização de serviço aceito.
-	 * <p>
-	 * Inicializa todos os painéis e componentes, popula os campos com dados do
-	 * serviço, e organiza o layout visual com botões de ação.
-	 * </p>
-	 * 
-	 * @param s objeto Servico contendo os dados a serem exibidos
-	 */
 	public VisServicoCnteAceito(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
 
@@ -160,27 +113,16 @@ public class VisServicoCnteAceito extends JPanel {
 		taPreco.setText(String.format("R$ %.2f", s.getValor()));
 		tpDesc.setText(s.getDescricao());
 
-		// Aplicar FontScaler padronizado
 		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
 				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
 				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnVoltar, FontSize.BOTAO },
 				new Object[] { btnContratado, FontSize.BOTAO });
 	}
 
-	/**
-	 * Adiciona um listener ao botão voltar para processar a navegação.
-	 * 
-	 * @param actionListener listener que processará o evento de clique
-	 */
 	public void voltar(ActionListener actionListener) {
 		this.btnVoltar.addActionListener(actionListener);
 	}
 
-	/**
-	 * Adiciona um listener ao botão de visualizar contratado.
-	 * 
-	 * @param actionListener listener que processará o evento de clique
-	 */
 	public void contratante(ActionListener actionListener) {
 		this.btnContratado.addActionListener(actionListener);
 	}

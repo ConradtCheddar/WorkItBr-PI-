@@ -64,21 +64,17 @@ public class ServicoDAO {
 			ArrayList<Servico> listaServicos = new ArrayList<Servico>();
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {
-				// Carregar dados completos do contratante (já temos o objeto u, mas vamos garantir que tem foto)
 				if (u.getImagem64() != null && !u.getImagem64().isEmpty()) {
 					try {
 						usuarioDAO.decode64(u);
 					} catch (Exception ex) {
-						// Se falhar ao decodificar a foto, continua sem ela
 					}
 				}
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
 						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBoolean("Aceito"), u);
-				// preencher ids relacionados para uso posterior
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(rs.getInt("id_contratante"));
-				// pode ser 0 ou NULL no banco -> checar
-				try { s.setIdContratado(rs.getInt("id_contratado")); } catch (Exception ex) { /* ignore */ }
+}
 				listaServicos.add(s);
 
 			}
@@ -103,19 +99,16 @@ public class ServicoDAO {
 			ResultSet rs = stmt.executeQuery();
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {
-				// Carregar dados completos do contratante incluindo foto
 				int idContratante = rs.getInt("id_contratante");
 				Usuario contratante = usuarioDAO.getUsuarioById(idContratante);
 				if (contratante != null) {
 					try {
 						usuarioDAO.decode64(contratante);
 					} catch (Exception ex) {
-						// Se falhar ao decodificar a foto, continua sem ela
 					}
 				}
 				Servico s = new Servico(rs.getString("Nome_servico"), rs.getDouble("Valor"), rs.getString("Modalidade"),
 						rs.getString("Descricao"), rs.getBoolean("Aceito"), contratante);
-				// preencher id do servico e contratante se existirem
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(idContratante);
 				servicos.add(s);
@@ -139,22 +132,18 @@ public class ServicoDAO {
 			ResultSet rs = stmt.executeQuery();
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {
-				// Carregar dados completos do contratante incluindo foto
 				int idContratante = rs.getInt("id_contratante");
 				Usuario contratante = usuarioDAO.getUsuarioById(idContratante);
 				if (contratante != null) {
 					try {
 						usuarioDAO.decode64(contratante);
 					} catch (Exception ex) {
-						// Se falhar ao decodificar a foto, continua sem ela
 					}
 				}
 				Servico s = new Servico(rs.getString("Nome_servico"), rs.getDouble("Valor"), rs.getString("Modalidade"),
 						rs.getString("Descricao"), rs.getBoolean("Aceito"), contratante);
-				// preencher ids para permitir visualizacao do contratado
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(idContratante);
-				// id_contratado pode ser nulo -> rs.getInt retorna 0 se nulo
 				s.setIdContratado(rs.getInt("id_contratado"));
 				servicos.add(s);
 			}
@@ -177,7 +166,6 @@ public class ServicoDAO {
 			stmt.setInt(1, idServico);
 			var rs = stmt.executeQuery();
 			if (rs.next()) {
-				// Carregar dados completos do contratante incluindo foto
 				int idContratante = rs.getInt("id_contratante");
 				UsuarioDAO usuarioDAO = new UsuarioDAO();
 				Usuario contratante = usuarioDAO.getUsuarioById(idContratante);
@@ -185,7 +173,6 @@ public class ServicoDAO {
 					try {
 						usuarioDAO.decode64(contratante);
 					} catch (Exception ex) {
-						// Se falhar ao decodificar a foto, continua sem ela
 					}
 				}
 				servico = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
@@ -274,16 +261,13 @@ public class ServicoDAO {
 	}
 
     public boolean atualizarServicoPorId(int idServico, Servico s) {
-        // Buscar valores atuais do serviço
         Servico atual = buscarServicoPorId(idServico);
         if (atual == null) return false;
-        // Usar o novo valor se não for nulo/vazio, senão manter o atual
         String nome = (s.getNome_Servico() != null && !s.getNome_Servico().isEmpty()) ? s.getNome_Servico() : atual.getNome_Servico();
         Double valor = (s.getValor() != null) ? s.getValor() : atual.getValor();
         String modalidade = (s.getModalidade() != null && !s.getModalidade().isEmpty()) ? s.getModalidade() : atual.getModalidade();
         String descricao = (s.getDescricao() != null && !s.getDescricao().isEmpty()) ? s.getDescricao() : atual.getDescricao();
         Boolean aceito = (s.getAceito() != null) ? s.getAceito() : atual.getAceito();
-        // Nunca permitir descricao nula
         if (descricao == null) descricao = "";
         String sql = "UPDATE Servico SET Nome_servico = ?, Valor = ?, Modalidade = ?, Descricao = ?, Aceito = ? WHERE ID_servico = ?";
         Connection conn = null;
@@ -307,8 +291,8 @@ public class ServicoDAO {
             try { if (conn != null) conn.rollback(); } catch (Exception e) { e.printStackTrace(); }
             return false;
         } finally {
-            try { if (stmt != null) stmt.close(); } catch (Exception e) { /* ignore */ }
-            try { if (conn != null) conn.close(); } catch (Exception e) { /* ignore */ }
+}
+}
         }
     }
     
@@ -321,8 +305,6 @@ public class ServicoDAO {
 		var stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, id);
 		int rowsAffected = stmt.executeUpdate();
-            // opcional: informar no log ou UI; não usar System.out em produção
-            // rowsAffected disponibilizado para chamadas futuras se necessário
 		
 		stmt.close();
 		conn.close();
@@ -333,7 +315,6 @@ public class ServicoDAO {
 	        return false;
 	    }
         
-    
     }
 
 }

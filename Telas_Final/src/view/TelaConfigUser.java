@@ -55,12 +55,6 @@ public class TelaConfigUser extends JPanel {
 	private JLabel lblTelefone;
 	private JLabel lblCPF;
 
-	/**
-	 * Create the panel.
-	 * 
-	 * @param usuario
-	 */
-
 	public TelaConfigUser() {
 		setPreferredSize(new Dimension(837, 635));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -86,7 +80,6 @@ public class TelaConfigUser extends JPanel {
 				if (imagemSelecionada != null) {
 					g.drawImage(imagemSelecionada, 0, 0, getWidth(), getHeight(), this);
 				} else {
-					// Desenha "???" no centro quando não há imagem
 					g.setColor(Color.GRAY);
 					int panelWidth = getWidth();
 					int panelHeight = getHeight();
@@ -168,7 +161,6 @@ public class TelaConfigUser extends JPanel {
 		tfTelefone.setOpaque(false);
 		tfTelefone.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
 				"focusedBackground: null;" + "background: null");
-		// Aplicar formatação automática de telefone
 		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
 		lblCPF = new JLabel("CPF");
@@ -182,7 +174,6 @@ public class TelaConfigUser extends JPanel {
 		tfCPF.setOpaque(false);
 		tfCPF.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
 				"focusedBackground: null;" + "background: null");
-		// Aplicar formatação automática de CPF
 		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
 
 		lblGithub = new JLabel("Github");
@@ -232,56 +223,26 @@ public class TelaConfigUser extends JPanel {
 		}
 	}
 
-	/**
-	 * Retorna o texto atual do campo de nome.
-	 * 
-	 * @return nome preenchido no formulário
-	 */
 	public String getNome() {
 		return tfNome.getText();
 	}
 
-	/**
-	 * Retorna o texto atual do campo de senha.
-	 * 
-	 * @return senha preenchida no formulário
-	 */
 	public String getSenha() {
 		return tfSenha.getText();
 	}
 
-	/**
-	 * Retorna o texto atual do campo de email.
-	 * 
-	 * @return email preenchido no formulário
-	 */
 	public String getEmail() {
 		return tfEmail.getText();
 	}
 
-	/**
-	 * Retorna o texto atual do campo de telefone.
-	 * 
-	 * @return telefone preenchido no formulário
-	 */
 	public String getTelefone() {
 		return tfTelefone.getText();
 	}
 
-	/**
-	 * Retorna o texto atual do campo CPF/CNPJ.
-	 * 
-	 * @return cpf/cnpj preenchido no formulário
-	 */
 	public String getCpfCnpj() {
 		return tfCPF.getText();
 	}
 
-	/**
-	 * Retorna o texto atual do campo Github.
-	 * 
-	 * @return github preenchido no formulário
-	 */
 	public String getGithub() {
 		return txtGithub.getText();
 	}
@@ -311,16 +272,10 @@ public class TelaConfigUser extends JPanel {
 		return null;
 	}
 
-	/**
-	 * Metodo responsavel pelo funcionamento do botão "Alterar dados"
-	 */
 	public void AlterarDados(ActionListener actionListener) {
 		this.btnAlterarDados.addActionListener(actionListener);
 	}
 
-	/**
-	 * getters e setters
-	 */
 	public JTextField getTfPesquisar() {
 		return tfPesquisar;
 	}
