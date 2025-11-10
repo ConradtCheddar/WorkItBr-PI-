@@ -12,7 +12,7 @@ import model.UsuarioDAO;
 import view.DrawerMenu;
 import view.Primario;
 import view.SplashScreen;
-import view.TelaAdm;
+import view.TelaVisArquivos;
 import view.TelaCadastro;
 import view.TelaCadastroContratante;
 import view.TelaContratado;
@@ -84,7 +84,7 @@ public class Main {
 				TelaCadastroContratante telacadastrocontratante = new TelaCadastroContratante();
 				controller.CadastroContratanteController cadastrocontratantecontroller = new controller.CadastroContratanteController(telacadastrocontratante, servicoDAO, navegador);
 
-				TelaAdm telaadm = new TelaAdm();
+				TelaVisArquivos visarquivos = new TelaVisArquivos();
 				Thread.sleep(100);
 				
 				splash.setProgress(90, "Configurando lista de serviços...");
@@ -97,7 +97,7 @@ public class Main {
 				navegador.adicionarPainel("LOGIN", telalogin);
 				navegador.adicionarPainel("CADASTRO", telacadastro);
 				navegador.adicionarPainel("CONTRATADO", telacontratado);
-				navegador.adicionarPainel("ADM", telaadm);
+				navegador.adicionarPainel("VISARQUIVOS", visarquivos);
 				navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
 				navegador.adicionarPainel("SERVICOS", telaservicos);
 				Thread.sleep(100);

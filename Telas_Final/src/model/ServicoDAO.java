@@ -312,8 +312,26 @@ public class ServicoDAO {
 	        ex.printStackTrace();
 	        JOptionPane.showMessageDialog(null, "Erro ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
 	        return false;
-	    }
-        
+	    }     
     }
+    
+    public void salvarArquivoServico(int idServico, byte[] arquivo) {
+		Connection conn = null;
+		java.sql.PreparedStatement stmt = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, Usuario, Senha);
+			String sql = "UPDATE Servico SET submicoes = ? WHERE ID_servico = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setBytes(1, arquivo);
+			stmt.setInt(2, idServico);
+			stmt.executeUpdate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try { if (stmt != null) stmt.close(); } catch (Exception e) { /* ignore */ }
+			try { if (conn != null) conn.close(); } catch (Exception e) { /* ignore */ }
+		}
+	}
 
 }

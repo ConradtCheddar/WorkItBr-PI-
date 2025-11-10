@@ -163,6 +163,12 @@ public class UsuarioDAO {
 				);
 				u.setImagem64(rs.getString("imagem64"));
 				u.setIdUsuario(rs.getInt("idUsuario"));
+				
+				// Decodifica a imagem Base64 para um arquivo local
+				if (u.getImagem64() != null && !u.getImagem64().isEmpty()) {
+					u = decode64(u);
+				}
+				
 				rs.close();
 				stmt.close();
 				conn.close();
@@ -203,6 +209,12 @@ public class UsuarioDAO {
 	            );
 	            u.setImagem64(rs.getString("imagem64"));
 	            u.setIdUsuario(rs.getInt("idUsuario"));
+	            
+	            // Decodifica a imagem Base64 para um arquivo local
+	            if (u.getImagem64() != null && !u.getImagem64().isEmpty()) {
+	                u = decode64(u);
+	            }
+	            
 	            rs.close();
 	            stmt.close();
 	            conn.close();
@@ -275,6 +287,12 @@ public class UsuarioDAO {
                 );
                 u.setImagem64(rs.getString("imagem64"));
                 u.setIdUsuario(rs.getInt("idUsuario"));
+                
+                // Decodifica a imagem Base64 para um arquivo local
+                if (u.getImagem64() != null && !u.getImagem64().isEmpty()) {
+                    u = decode64(u);
+                }
+                
                 rs.close();
                 stmt.close();
                 conn.close();
