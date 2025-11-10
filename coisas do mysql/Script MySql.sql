@@ -41,8 +41,8 @@ WHERE NOT EXISTS (
     SELECT 1 FROM Usuarios WHERE Nome_Usuario = 'Admin'
 );
 
-INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, id_contratante)
-SELECT 'teste1', 100, 'Remoto', 'Serviço ainda não aceito', idUsuario
+INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, id_contratante, status)
+SELECT 'teste1', 100, 'Remoto', 'Serviço ainda não aceito', 1, 'CADASTRADO'
 FROM Usuarios
 WHERE Nome_Usuario = 'Admin'
 AND NOT EXISTS (
