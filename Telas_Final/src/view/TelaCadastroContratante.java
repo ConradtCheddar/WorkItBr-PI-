@@ -54,7 +54,7 @@ public class TelaCadastroContratante extends JPanel {
 		add(lblTitulo, "cell 0 0 2 1,growx,aligny center");
 
 		tfNome = new JTextField();
-		add(tfNome, "cell 0 1,grow");
+		add(tfNome, "cell 0 1,growx");
 		tfNome.setColumns(25);
 		tfNome.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nome");
 		tfNome.putClientProperty("JComponent.roundRect", true);
@@ -70,7 +70,7 @@ public class TelaCadastroContratante extends JPanel {
 		tfDescricao.setWrapStyleWord(true);
 
 		tfModalidade = new JTextField();
-		add(tfModalidade, "cell 0 2,grow");
+		add(tfModalidade, "cell 0 2,growx");
 		tfModalidade.setColumns(10);
 		tfModalidade.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Modalidade");
 		tfModalidade.putClientProperty("JComponent.roundRect", true);
@@ -78,7 +78,7 @@ public class TelaCadastroContratante extends JPanel {
 		tfModalidade.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		tfValor = new JTextField();
-		add(tfValor, "cell 0 3,grow");
+		add(tfValor, "cell 0 3,growx");
 		tfValor.setColumns(10);
 		tfValor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Valor");
 		tfValor.putClientProperty("JComponent.roundRect", true);
