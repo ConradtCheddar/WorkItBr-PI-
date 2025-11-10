@@ -22,20 +22,12 @@ import javax.swing.border.TitledBorder;
 import java.awt.Color;
 
 import model.Servico;
-
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
-import java.awt.Image;
-import java.io.File;
-import java.net.URL;
-import java.awt.image.BufferedImage;
 import model.Usuario;
 import model.UsuarioDAO;
 import net.miginfocom.swing.MigLayout;
 
-import javax.imageio.ImageIO;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import util.FontScaler;
 import util.FontScaler.FontSize;
@@ -44,23 +36,18 @@ public class VisServicoAndamento extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private JPanel panel,Perfil,PanelInfo,PanelDesc;
-	private JLabel lblTitulo,lblModalidade,lblPreco,tpDesc,lblFoto,lblNome_Arquivo;
-	private JButton btnFinalizar,btnArquivos;
+	private JPanel panel, Perfil, PanelInfo, PanelDesc;
+	private JLabel lblTitulo, lblModalidade, lblPreco, lblFoto, lblNome_Arquivo;
+	private JButton btnFinalizar, btnArquivos;
 	private JFileChooser fileChooser;
 	private File ArquivoSelecionado;
-	private JPanel Perfil;
-	private JPanel PanelInfo;
-	private JPanel PanelDesc;
 	private JTextArea taTitulo;
 	private JTextArea taModalidade;
 	private JTextArea taPreco;
 	private JTextArea tpDesc;
-	private JLabel lblFoto;
-	private JButton btnFinalizar;
 
 	public VisServicoAndamento(Servico s) {
-		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
+		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10][grow 10]"));
 
 		Perfil = new JPanel();
 		Perfil.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante"));
@@ -124,11 +111,13 @@ public class VisServicoAndamento extends JPanel {
 		PanelDesc.add(scrollPane, "cell 0 0,grow");
 
 		btnFinalizar = new JButton("Finalizar trabalho");
-		btnFinalizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		add(btnFinalizar, "cell 0 2 2 1,alignx center");
+		add(btnFinalizar, "cell 0 2,alignx center");
+
+		btnArquivos = new JButton("Adicionar arquivos");
+		add(btnArquivos, "cell 1 2,alignx center");
+
+		lblNome_Arquivo = new JLabel("");
+		add(lblNome_Arquivo, "cell 0 3 2 1,alignx center");
 
 		taTitulo.setText(s.getNome_Servico());
 		taModalidade.setText(s.getModalidade());
@@ -142,26 +131,14 @@ public class VisServicoAndamento extends JPanel {
 		ImageIcon foto = loadUserImage(u, 150, 150);
 		lblFoto.setIcon(foto);
 
-		PanelDesc = new JPanel();
-		add(PanelDesc, "cell 0 1 6 2,grow");
-		PanelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
-
-		tpDesc = new JLabel("");
-		PanelDesc.add(tpDesc, "cell 0 0");
-		tpDesc.setText(s.getDescricao());
-
-		btnFinalizar = new JButton("Finalizar trabalho");
-		add(btnFinalizar, "cell 0 3,alignx center");
-		
-		btnArquivos = new JButton("Adicionar arquivos");
-		add(btnArquivos, "cell 2 3,alignx center");
-		
-		lblNome_Arquivo = new JLabel("");
-		add(lblNome_Arquivo, "cell 4 3");
-		
-		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
-				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
-				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnFinalizar, FontSize.BOTAO });
+		FontScaler.addAutoResize(this, 
+			new Object[] { taTitulo, FontSize.SUBTITULO },
+			new Object[] { taModalidade, FontSize.TEXTO }, 
+			new Object[] { taPreco, FontSize.TEXTO },
+			new Object[] { tpDesc, FontSize.TEXTO }, 
+			new Object[] { btnFinalizar, FontSize.BOTAO },
+			new Object[] { btnArquivos, FontSize.BOTAO },
+			new Object[] { lblNome_Arquivo, FontSize.TEXTO });
 	}
 
 	private ImageIcon loadUserImage(Usuario u, int width, int height) {
@@ -203,7 +180,7 @@ public class VisServicoAndamento extends JPanel {
 		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		return new ImageIcon(bi);
 	}
-	
+
 	public String selecionarArquivo() {
 		JFileChooser fileChooser = new JFileChooser();
 		int result = fileChooser.showOpenDialog(null);
@@ -216,17 +193,19 @@ public class VisServicoAndamento extends JPanel {
 		}
 		return null;
 	}
-	
-	
+
 	/**
 	 * Adiciona ActionListener ao botão finalizar
+	 * 
 	 * @param actionlistener
 	 */
 	public void finalizar(ActionListener actionlistener) {
 		this.btnFinalizar.addActionListener(actionlistener);
 	}
+
 	/**
 	 * Adiciona ActionListener ao botão adicionar arquivos
+	 * 
 	 * @param actionlistener
 	 */
 	public void Adicionar(ActionListener actionlistener) {

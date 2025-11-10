@@ -1,3 +1,4 @@
+package submições;
 /******************************************************************************
 
 Welcome to GDB Online.
@@ -6,7 +7,7 @@ C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS
 Code, Compile, Run and Debug online from anywhere in world.
 
 *******************************************************************************/
-public class Main
+public class helloWorld
 {
 	public static void main(String[] args) {
 		System.out.println("Hello World");

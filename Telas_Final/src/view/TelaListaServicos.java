@@ -29,6 +29,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import util.FontScaler;
+import util.FontScaler.FontSize;
+
 public class TelaListaServicos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -76,6 +79,11 @@ public class TelaListaServicos extends JPanel {
 
 		btnEditar = new JButton("Editar");
 		add(btnEditar, "cell 1 3,growx,height 20:40:60");
+
+		// Adicionar redimensionamento de fontes
+		FontScaler.addAutoResize(this, new Object[] { btnVisualizar, FontSize.BOTAO },
+				new Object[] { btnDeletar, FontSize.BOTAO }, new Object[] { btnCadastrar, FontSize.BOTAO },
+				new Object[] { btnEditar, FontSize.BOTAO });
 	}
 
 	public void atualizarTable(ArrayList<Servico> lista) {
