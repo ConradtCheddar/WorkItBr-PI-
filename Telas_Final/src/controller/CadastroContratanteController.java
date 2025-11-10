@@ -2,6 +2,7 @@ package controller;
 
 import model.Servico;
 import model.ServicoDAO;
+import model.Status;
 import model.Usuario;
 import model.UsuarioDAO;
 import view.TelaCadastro;
@@ -35,7 +36,7 @@ public class CadastroContratanteController {
 		    }
 		    String descricao = this.view.getTfDescricao().getText();
 		    
-			Servico s = new Servico(nome_Servico,valor,modalidade,descricao, false, navegador.getCurrentUser());
+			Servico s = new Servico(nome_Servico,valor,modalidade,descricao, Status.CADASTRADO, navegador.getCurrentUser());
 
 			boolean sucesso = model.cadastrarS(s);
 			if (sucesso) {

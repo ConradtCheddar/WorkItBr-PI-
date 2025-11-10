@@ -5,7 +5,6 @@ public class Servico {
 	private Double valor;
 	private String modalidade;
 	private String descricao;
-	private Boolean aceito;
 	private Usuario contratante;
 	private Usuario contratado;
 	private int idServico;
@@ -13,21 +12,21 @@ public class Servico {
 	private int idContratado;
 	private byte[] arquivo;
 	private boolean finalizado;
+	private Status status;
 
-	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito,
+	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, Status status,
 			Usuario contratante) {
 		this.idServico = (id != null) ? id : 0;
 		this.nome_Servico = nome_Servico;
 		this.valor = valor;
 		this.modalidade = modalidade;
 		this.descricao = descricao;
-		this.aceito = aceito;
 		this.contratante = contratante;
+		this.status = status;
 	}
 
-	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, boolean aceito,
-			Usuario contratante) {
-		this(null, nome_Servico, valor, modalidade, descricao, aceito, contratante);
+	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, Status status, Usuario contratante) {
+		this(null, nome_Servico, valor, modalidade, descricao, status, contratante);
 	}
 
 	public Integer getId() {
@@ -70,13 +69,6 @@ public class Servico {
 		this.descricao = descricao;
 	}
 
-	public Boolean getAceito() {
-		return aceito;
-	}
-
-	public void setAceito(Boolean aceito) {
-		this.aceito = aceito;
-	}
 
 	public Usuario getContratante() {
 		return contratante;
@@ -133,6 +125,16 @@ public class Servico {
 	public void setFinalizado(boolean finalizado) {
 		this.finalizado = finalizado;
 	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+	
 	
 
 	

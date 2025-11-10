@@ -90,7 +90,7 @@ public class TelaListaServicos extends JPanel {
 		this.tableModel.setRowCount(0);
 		for (int i = 0; i < lista.size(); i++) {
 			Servico s = lista.get(i);
-			String aceitoTexto = Boolean.TRUE.equals(s.getAceito()) ? "Sim" : "Não";
+			String aceitoTexto =  s.getStatus().toString();
 			Object[] newRowData = { s.getId(), s.getNome_Servico(), s.getValor(), s.getModalidade(), aceitoTexto,
 					s.getDescricao() };
 			this.tableModel.addRow(newRowData);

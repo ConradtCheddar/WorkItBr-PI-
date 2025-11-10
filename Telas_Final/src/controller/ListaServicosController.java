@@ -9,6 +9,7 @@ import javax.swing.table.TableModel;
 
 import model.Servico;
 import model.ServicoDAO;
+import model.Status;
 import view.TelaListaServicos;
 import view.VisServicoAndamento;
 import view.VisServico;
@@ -47,7 +48,7 @@ public class ListaServicosController {
 						return;
 					}
 					
-					String panelName = Boolean.TRUE.equals(s.getAceito())
+					String panelName = s.getStatus() == Status.ACEITO
 						? telaFactory.criarVisServicoCnteAceito(s)
 						: telaFactory.criarVisServicoCnte(s);
 					navegador.navegarPara(panelName);
@@ -70,7 +71,7 @@ public class ListaServicosController {
 					int id = (int) table.getValueAt(selectedRow, 0);
 					Servico servicoTmp = this.model.buscarServicoPorId(id);
 
-					if (servicoTmp != null && Boolean.TRUE.equals(servicoTmp.getAceito())) {
+					if (servicoTmp != null && servicoTmp.getStatus() == Status.ACEITO) {
 						JOptionPane.showMessageDialog(view, "Impossível deletar trabalhos que já foram aceitos.", "Erro", JOptionPane.ERROR_MESSAGE);
 					} else {
 						int option = JOptionPane.showConfirmDialog(view, "Tem certeza que deseja deletar este trabalho?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
@@ -130,7 +131,7 @@ public class ListaServicosController {
 						idServico = Integer.parseInt(idObj.toString().trim());
 					}
 					model.Servico servTmp = this.model.buscarServicoPorId(idServico);
-					if (servTmp != null && Boolean.TRUE.equals(servTmp.getAceito())) {
+					if (servTmp != null && servTmp.getStatus() == Status.ACEITO) {
 						JOptionPane.showMessageDialog(null, "Imposivel modificar trabalhos aceitos", "Erro",
 							JOptionPane.ERROR_MESSAGE);
 						failed++;
@@ -139,7 +140,6 @@ public class ListaServicosController {
 						Double valor = null;
 						String modalidade = null;
 						String descricao = null;
-						Boolean aceito = null;
 
 						for (int c = 0; c < colCount; c++) {
 							String colName = modelTable.getColumnName(c).toLowerCase().replace("ç", "c").replace("ã", "a")
