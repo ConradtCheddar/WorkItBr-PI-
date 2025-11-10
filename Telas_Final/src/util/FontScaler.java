@@ -11,7 +11,7 @@ public class FontScaler {
     private static final int DIVISOR_TITULO = 20;
     private static final int DIVISOR_SUBTITULO = 25;
     private static final int DIVISOR_BOTAO = 25;
-    private static final int DIVISOR_TEXTO = 55;
+    private static final int DIVISOR_TEXTO = 35;
     private static final int DIVISOR_PEQUENO = 45;
     private static final int DIVISOR_BARRA_TITULO = 2;
     
