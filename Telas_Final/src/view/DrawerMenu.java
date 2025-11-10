@@ -126,6 +126,14 @@ public class DrawerMenu extends JPanel {
 	public JButton getBtnHome() {
 		return btnHome;
 	}
+	
+	public boolean isOpen() {
+		return isOpen;
+	}
+	
+	public boolean isAnimating() {
+		return isAnimating;
+	}
 	//</editor-fold>
 
 	public void setOnStateChange(Consumer<Boolean> onStateChange) {
@@ -257,22 +265,26 @@ public class DrawerMenu extends JPanel {
 		button.setPreferredSize(new Dimension(MENU_WIDTH - 2 * MARGIN, BUTTON_HEIGHT));
 		button.setMinimumSize(new Dimension(MENU_WIDTH - 2 * MARGIN, BUTTON_HEIGHT));
 		button.setFocusPainted(false);
-		button.setContentAreaFilled(false);
+		button.setContentAreaFilled(true);
 		button.setOpaque(true);
-		button.setBackground(Color.DARK_GRAY);
+		button.setBackground(new Color(70, 130, 180)); // Azul aço claro
 		button.setForeground(Color.WHITE);
-		button.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+		button.setBorder(BorderFactory.createCompoundBorder(
+			BorderFactory.createLineBorder(new Color(100, 149, 237), 1), // Borda azul clara
+			BorderFactory.createEmptyBorder(5, 15, 5, 15)
+		));
 		button.setHorizontalAlignment(SwingConstants.LEFT);
 
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				button.setBackground(Color.GRAY);
+				button.setBackground(new Color(100, 149, 237)); // Azul cornflower ao passar o mouse
+				button.setBorderPainted(true);
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				button.setBackground(Color.DARK_GRAY);
+				button.setBackground(new Color(70, 130, 180)); // Volta à cor azul aço original
 			}
 		});
 

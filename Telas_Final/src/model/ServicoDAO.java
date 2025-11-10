@@ -312,7 +312,7 @@ public class ServicoDAO {
         }
     }
     
-    public void deletarServico(int id) {
+    public boolean deletarServico(int id) {
      try {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(url, Usuario, Senha);
@@ -326,9 +326,11 @@ public class ServicoDAO {
 		
 		stmt.close();
 		conn.close();
+		return rowsAffected > 0;
 		} catch (Exception ex) {
 	        ex.printStackTrace();
 	        JOptionPane.showMessageDialog(null, "Erro ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+	        return false;
 	    }
         
     
