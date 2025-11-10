@@ -26,6 +26,8 @@ import org.jdesktop.swingx.prompt.PromptSupport;
 import com.formdev.flatlaf.FlatClientProperties;
 
 import net.miginfocom.swing.MigLayout;
+import util.FontScaler;
+import util.FontScaler.FontSize;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
@@ -52,13 +54,12 @@ public class TelaCadastroContratante extends JPanel {
 		add(lblTitulo, "cell 0 0 2 1,growx,aligny center");
 
 		tfNome = new JTextField();
-		add(tfNome, "cell 0 1,height 20:20:40,grow");
+		add(tfNome, "cell 0 1,grow");
 		tfNome.setColumns(25);
 		tfNome.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nome");
 		tfNome.putClientProperty("JComponent.roundRect", true);
 		tfNome.setOpaque(false);
 		tfNome.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
-		tfNome.setSize(new Dimension(50, 50));
 
 		scrollPane = new JScrollPane();
 		add(scrollPane, "cell 1 1 1 3,wmax 600,grow");
@@ -67,10 +68,9 @@ public class TelaCadastroContratante extends JPanel {
 		scrollPane.setViewportView(tfDescricao);
 		tfDescricao.setLineWrap(true);
 		tfDescricao.setWrapStyleWord(true);
-		tfDescricao.setFont(new Font("Monospaced", Font.PLAIN, 13));
 
 		tfModalidade = new JTextField();
-		add(tfModalidade, "cell 0 2,height 20:20:40,grow");
+		add(tfModalidade, "cell 0 2,grow");
 		tfModalidade.setColumns(10);
 		tfModalidade.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Modalidade");
 		tfModalidade.putClientProperty("JComponent.roundRect", true);
@@ -78,7 +78,7 @@ public class TelaCadastroContratante extends JPanel {
 		tfModalidade.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		tfValor = new JTextField();
-		add(tfValor, "cell 0 3,height 20:20:40,grow");
+		add(tfValor, "cell 0 3,grow");
 		tfValor.setColumns(10);
 		tfValor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Valor");
 		tfValor.putClientProperty("JComponent.roundRect", true);
@@ -91,20 +91,41 @@ public class TelaCadastroContratante extends JPanel {
 
 		btnCadastrarTrabalho = new JButton("Cadastrar Trabalho");
 		panel.add(btnCadastrarTrabalho, "cell 2 0,grow");
-		btnCadastrarTrabalho.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnCadastrarTrabalho.setForeground(Color.WHITE);
 		btnCadastrarTrabalho.setBackground(new Color(0, 102, 204));
 		btnCadastrarTrabalho.putClientProperty("JComponent.roundRect", true);
 
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
+		FontScaler.addAutoResizeWithCallback(this,
+			() -> {
+				// Redimensionar componentes dinamicamente
 				int panelHeight = getHeight();
-				int fontSizeTitulo = Math.max(16, panelHeight / 20);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-
-			}
-		});
+				int panelWidth = getWidth();
+				
+				// Altura dos campos baseada no tamanho do painel
+				int fieldHeight = Math.max(25, panelHeight / 15);
+				
+				// Atualizar preferred size dos campos
+				java.awt.Dimension fieldSize = new java.awt.Dimension(tfNome.getWidth(), fieldHeight);
+				tfNome.setPreferredSize(new java.awt.Dimension(fieldSize.width, fieldHeight));
+				tfModalidade.setPreferredSize(new java.awt.Dimension(fieldSize.width, fieldHeight));
+				tfValor.setPreferredSize(new java.awt.Dimension(fieldSize.width, fieldHeight));
+				
+				// Atualizar botão
+				int buttonHeight = Math.max(30, panelHeight / 12);
+				btnCadastrarTrabalho.setPreferredSize(new java.awt.Dimension(
+					btnCadastrarTrabalho.getWidth(), buttonHeight));
+				
+				// Revalidar layout
+				revalidate();
+				repaint();
+			},
+			new Object[] { lblTitulo, FontSize.TITULO },
+			new Object[] { tfNome, FontSize.TEXTO },
+			new Object[] { tfModalidade, FontSize.TEXTO },
+			new Object[] { tfValor, FontSize.TEXTO },
+			new Object[] { tfDescricao, FontSize.TEXTO },
+			new Object[] { btnCadastrarTrabalho, FontSize.BOTAO }
+		);
 
 	}
 

@@ -53,7 +53,6 @@ public class TelaCadastro extends JPanel {
 		btnCadastrar.putClientProperty("JComponent.roundRect", true);
 
 		lblTitulo = new JLabel("Cadastro");
-		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblTitulo, "cell 2 0,grow");
 
@@ -119,20 +118,22 @@ public class TelaCadastro extends JPanel {
 
 		add(btnCadastrar, "cell 2 8,grow");
 
-		FontScaler.addAutoResize(this, new Object[] { lblTitulo, FontSize.TITULO },
-				new Object[] { tfEmail, FontSize.TEXTO }, new Object[] { tfTelefone, FontSize.TEXTO },
-				new Object[] { tfCPF, FontSize.TEXTO }, new Object[] { tfUsuario, FontSize.TEXTO },
-				new Object[] { senha, FontSize.TEXTO }, new Object[] { senha2, FontSize.TEXTO },
-				new Object[] { btnCadastrar, FontSize.BOTAO }, new Object[] { rdbtnContratante, FontSize.TEXTO },
-				new Object[] { rdbtnContratado, FontSize.TEXTO });
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
+		FontScaler.addAutoResizeWithCallback(this, 
+			() -> {
 				rdbtnContratante.updateIconSize();
 				rdbtnContratado.updateIconSize();
-			}
-		});
+			},
+			new Object[] { lblTitulo, FontSize.TITULO },
+			new Object[] { tfEmail, FontSize.TEXTO },
+			new Object[] { tfTelefone, FontSize.TEXTO },
+			new Object[] { tfCPF, FontSize.TEXTO },
+			new Object[] { tfUsuario, FontSize.TEXTO },
+			new Object[] { senha, FontSize.TEXTO },
+			new Object[] { senha2, FontSize.TEXTO },
+			new Object[] { btnCadastrar, FontSize.BOTAO },
+			new Object[] { rdbtnContratante, FontSize.TEXTO },
+			new Object[] { rdbtnContratado, FontSize.TEXTO }
+		);
 	}
 
 	public void cadastrar(ActionListener actionlistener) {

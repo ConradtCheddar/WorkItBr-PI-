@@ -60,14 +60,11 @@ public class VisContratado extends JPanel {
 		};
 		panel.add(Perfil, "name_12377154952900");
 
-		Perfil.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				if (imagemOriginal != null) {
-					imagemSelecionada = imagemOriginal.getScaledInstance(Perfil.getWidth(), Perfil.getHeight(),
-							Image.SCALE_SMOOTH);
-					Perfil.repaint();
-				}
+		FontScaler.addResizeCallback(Perfil, () -> {
+			if (imagemOriginal != null) {
+				imagemSelecionada = imagemOriginal.getScaledInstance(Perfil.getWidth(), Perfil.getHeight(),
+						Image.SCALE_SMOOTH);
+				Perfil.repaint();
 			}
 		});
 
@@ -82,7 +79,6 @@ public class VisContratado extends JPanel {
 		taNome.setLineWrap(true);
 		taNome.setWrapStyleWord(true);
 		taNome.setRows(1);
-		taNome.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		taNome.setBackground(PanelInfo.getBackground());
 		taNome.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taNome, "cell 0 0,grow");
@@ -93,7 +89,6 @@ public class VisContratado extends JPanel {
 		taGithub.setLineWrap(true);
 		taGithub.setWrapStyleWord(true);
 		taGithub.setRows(1);
-		taGithub.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		taGithub.setBackground(PanelInfo.getBackground());
 		taGithub.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taGithub, "cell 0 1,grow");
@@ -104,7 +99,6 @@ public class VisContratado extends JPanel {
 		taEmail.setLineWrap(true);
 		taEmail.setWrapStyleWord(true);
 		taEmail.setRows(1);
-		taEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		taEmail.setBackground(PanelInfo.getBackground());
 		taEmail.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taEmail, "cell 0 2,grow");
@@ -115,7 +109,6 @@ public class VisContratado extends JPanel {
 		taTelefone.setLineWrap(true);
 		taTelefone.setWrapStyleWord(true);
 		taTelefone.setRows(1);
-		taTelefone.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		taTelefone.setBackground(PanelInfo.getBackground());
 		taTelefone.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		PanelInfo.add(taTelefone, "cell 0 3,grow");
@@ -132,7 +125,6 @@ public class VisContratado extends JPanel {
 			}
 		});
 		add(btnVoltar, "cell 0 2 3 1,alignx center,aligny center");
-		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
 		FontScaler.addAutoResize(this, new Object[] { taNome, FontSize.SUBTITULO },
 				new Object[] { taGithub, FontSize.TEXTO }, new Object[] { taEmail, FontSize.TEXTO },

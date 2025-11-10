@@ -3,7 +3,6 @@ package view;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -82,7 +81,6 @@ public class wbBarra extends JPanel {
 
 		lblTitulo = new JLabel("WorkITBr");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblTitulo.setForeground(Color.WHITE);
 		add(lblTitulo, "cell 1 0,growx,aligny center");
 
@@ -96,31 +94,15 @@ public class wbBarra extends JPanel {
 		add(getLblBarra(), "cell 2 0,alignx right,aligny center");
 
 		ajustarIcones();
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				if (!resizeListenersEnabled)
-					return;
-				ajustarIcones();
-				ImageIcon barraIcon = new ImageIcon(getClass().getResource("/imagens/MenuBarra.png"));
-				Image imgbarra = barraIcon.getImage();
-				Image scaledBarra = imgbarra.getScaledInstance(getWidth() / 40, getHeight() * 2 / 4,
-						Image.SCALE_SMOOTH);
-				getLblBarra().setIcon(new ImageIcon(scaledBarra));
-			}
-		});
-
-		addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				if (!resizeListenersEnabled)
-					return;
-				int panelHeight = getHeight();
-				int fontSizeTitulo = Math.max(18, panelHeight / 3);
-				lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, fontSizeTitulo));
-				ajustarFonte();
-			}
-		});
+		
+		FontScaler.addAutoResizeWithCallback(this, 
+			() -> {
+				if (resizeListenersEnabled) {
+					ajustarIcones();
+				}
+			},
+			new Object[] { lblTitulo, FontSize.BARRA_TITULO }
+		);
 	}
 
 	public void habilitarResizeListeners() {

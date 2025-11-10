@@ -3,7 +3,6 @@ package view;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
@@ -75,7 +74,6 @@ public class TelaLogin extends JPanel {
 		txtUsuario.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
 		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");
@@ -93,7 +91,6 @@ public class TelaLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnLogin.setFocusTraversalPolicyProvider(true);
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(new Color(0, 102, 204));
@@ -101,16 +98,13 @@ public class TelaLogin extends JPanel {
 		add(btnLogin, "cell 2 5,grow");
 
 		lblntlg = new JLabel("Ainda não tem um Login?");
-		lblntlg.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblntlg.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblntlg, "flowx,cell 2 6,alignx center,aligny center");
 
 		lblCadastrese = new JLabel("Cadastre-se");
 		lblCadastrese.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
 		lblCadastrese.setForeground(new Color(0, 102, 204));
 		lblCadastrese.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCadastrese.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(lblCadastrese, "cell 2 6,growy");
 		lblCadastrese.addMouseListener(new MouseAdapter() {
 			@Override

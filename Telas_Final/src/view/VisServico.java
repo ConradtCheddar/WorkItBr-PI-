@@ -75,7 +75,6 @@ public class VisServico extends JPanel {
 		taTitulo.setLineWrap(true);
 		taTitulo.setWrapStyleWord(true);
 		taTitulo.setRows(1);
-		taTitulo.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		taTitulo.setBackground(panelInfo.getBackground());
 		taTitulo.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		panelInfo.add(taTitulo, "cell 0 0,grow");
@@ -86,7 +85,6 @@ public class VisServico extends JPanel {
 		taModalidade.setLineWrap(true);
 		taModalidade.setWrapStyleWord(true);
 		taModalidade.setRows(1);
-		taModalidade.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		taModalidade.setBackground(panelInfo.getBackground());
 		taModalidade.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		panelInfo.add(taModalidade, "cell 0 1,grow");
@@ -97,7 +95,6 @@ public class VisServico extends JPanel {
 		taPreco.setLineWrap(true);
 		taPreco.setWrapStyleWord(true);
 		taPreco.setRows(1);
-		taPreco.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		taPreco.setBackground(panelInfo.getBackground());
 		taPreco.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 		panelInfo.add(taPreco, "cell 0 2,grow");
@@ -112,7 +109,6 @@ public class VisServico extends JPanel {
 		taDesc.setFocusable(false);
 		taDesc.setLineWrap(true);
 		taDesc.setWrapStyleWord(true);
-		taDesc.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		taDesc.setBackground(panelDesc.getBackground());
 		taDesc.setText(s.getDescricao());
 
@@ -136,7 +132,6 @@ public class VisServico extends JPanel {
 		add(panelBotoes, "cell 0 2 2 1,growx");
 
 		btnAceitar = new JButton("Aceitar");
-		btnAceitar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panelBotoes.add(btnAceitar);
 
 		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },

@@ -74,7 +74,7 @@ public class ServicoDAO {
 						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBoolean("Aceito"), u);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(rs.getInt("id_contratante"));
-}
+
 				listaServicos.add(s);
 
 			}
@@ -291,8 +291,7 @@ public class ServicoDAO {
             try { if (conn != null) conn.rollback(); } catch (Exception e) { e.printStackTrace(); }
             return false;
         } finally {
-}
-}
+
         }
     }
     

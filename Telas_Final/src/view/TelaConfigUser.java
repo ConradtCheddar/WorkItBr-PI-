@@ -66,7 +66,6 @@ public class TelaConfigUser extends JPanel {
 		add(lblTitulo, "cell 0 0 3 1,grow");
 
 		lblNome = new JLabel("Nome");
-		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblNome, "cell 0 1,alignx left");
 
 		fundo = new JPanel();
@@ -102,20 +101,17 @@ public class TelaConfigUser extends JPanel {
 		foto.setBounds(10, 11, 476, 390);
 		fundo.add(foto);
 
-		fundo.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				int fundoWidth = fundo.getWidth();
-				int fundoHeight = fundo.getHeight();
+		FontScaler.addResizeCallback(fundo, () -> {
+			int fundoWidth = fundo.getWidth();
+			int fundoHeight = fundo.getHeight();
 
-				int fotoWidth = foto.getWidth();
-				int fotoHeight = foto.getHeight();
+			int fotoWidth = foto.getWidth();
+			int fotoHeight = foto.getHeight();
 
-				int x = (fundoWidth - fotoWidth) / 2;
-				int y = (fundoHeight - fotoHeight) / 2;
+			int x = (fundoWidth - fotoWidth) / 2;
+			int y = (fundoHeight - fotoHeight) / 2;
 
-				foto.setLocation(x, y);
-			}
+			foto.setLocation(x, y);
 		});
 
 		tfNome = new JTextField();
@@ -127,7 +123,6 @@ public class TelaConfigUser extends JPanel {
 				"focusedBackground: null;" + "background: null");
 
 		lblSenha = new JLabel("Senha");
-		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblSenha, "flowx,cell 0 3,alignx left");
 
 		tfSenha = new JTextField();
@@ -139,7 +134,6 @@ public class TelaConfigUser extends JPanel {
 				"focusedBackground: null;" + "background: null");
 
 		lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblEmail, "cell 0 5,alignx left");
 
 		tfEmail = new JTextField();
@@ -151,7 +145,6 @@ public class TelaConfigUser extends JPanel {
 				"focusedBackground: null;" + "background: null");
 
 		lblTelefone = new JLabel("Telefone");
-		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(lblTelefone, "cell 0 7,alignx left");
 
 		tfTelefone = new JTextField();
@@ -164,7 +157,6 @@ public class TelaConfigUser extends JPanel {
 		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
 		lblCPF = new JLabel("CPF");
-		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(lblCPF, "cell 0 9,alignx left");
 
 		tfCPF = new JTextField();
@@ -177,7 +169,6 @@ public class TelaConfigUser extends JPanel {
 		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
 
 		lblGithub = new JLabel("Github");
-		lblGithub.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(lblGithub, "cell 0 11,alignx left");
 
 		txtGithub = new JTextField();
@@ -191,7 +182,6 @@ public class TelaConfigUser extends JPanel {
 		btnAlterarImagem = new JButton("Alterar Imagem");
 		add(btnAlterarImagem, "cell 1 12 2 1,grow");
 		btnAlterarDados = new JButton("Alterar Dados");
-		btnAlterarDados.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(btnAlterarDados, "cell 0 14 3 1,grow");
 		btnAlterarDados.putClientProperty("JComponent.roundRect", true);
 
