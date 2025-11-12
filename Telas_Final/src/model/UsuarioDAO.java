@@ -9,8 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Base64;
 
-import javax.swing.JOptionPane;
-
 public class UsuarioDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
@@ -61,7 +59,7 @@ public class UsuarioDAO {
 		if (u.isContratado() == true) {
 			if (u.getEmail().isEmpty() || u.getUsuario().isEmpty() || u.getCpfCnpj().isEmpty()
 					|| u.getTelefone().isEmpty() || u.getSenha().isEmpty() || senha2.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
+				throw new campoVazioException("Preencha todos os campos");
 				return false;
 			} else {
 				if (u.getSenha().equals(senha2)) {
@@ -94,7 +92,7 @@ public class UsuarioDAO {
 		} else if (u.isContratante() == true) {
 			if (u.getEmail().isEmpty() || u.getUsuario().isEmpty() || u.getCpfCnpj().isEmpty()
 					|| u.getTelefone().isEmpty() || u.getSenha().isEmpty() || senha2.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
+				throw campoVazioException("Preencha todos os campos");
 				return false;
 			} else {
 				if (u.getSenha().equals(senha2)) {
@@ -123,7 +121,7 @@ public class UsuarioDAO {
 						return false;
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Senha Incoreta", "Erro", JOptionPane.ERROR_MESSAGE);
+					throw new SenhaException("Senhas se diferem!");
 					return false;
 				}
 			}
