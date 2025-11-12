@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import model.Servico;
 import model.ServicoDAO;
+import model.Status;
 import model.UsuarioDAO;
 import view.VisServico;
 import view.VisServicoAndamento;
@@ -25,13 +26,12 @@ public class VisServicoAndamentoController {
 		this.s= s;
 		
 		this.view.finalizar(e -> {
-			model.deletarServico(s.getIdServico());
-			JOptionPane.showMessageDialog(null, "Serviço finalizado com sucesso!");
+			this.model.finalizarServico(s);
 			navegador.navegarPara("CONTRATADO");
 		});
 		
 		this.view.Adicionar(e -> {
-			String caminhoArquivo = view.selecionarArquivo();
+			String caminhoArquivo = view.selecionarArquivo(s);
 			if (caminhoArquivo != null) {
 				try {
 					// Converter o arquivo para bytes

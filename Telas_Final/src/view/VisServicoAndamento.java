@@ -181,7 +181,7 @@ public class VisServicoAndamento extends JPanel {
 		return new ImageIcon(bi);
 	}
 
-	public String selecionarArquivo() {
+	public String selecionarArquivo(Servico s) {
 		JFileChooser fileChooser = new JFileChooser();
 		int result = fileChooser.showOpenDialog(null);
 		if (result == JFileChooser.APPROVE_OPTION) {
@@ -189,6 +189,7 @@ public class VisServicoAndamento extends JPanel {
 			String caminho = selectedFile.getAbsolutePath();
 			File file = new File(selectedFile.getAbsolutePath());
 			lblNome_Arquivo.setText(file.getName());
+			s.setCaminhoArquivo(caminho);
 			return caminho;
 		}
 		return null;

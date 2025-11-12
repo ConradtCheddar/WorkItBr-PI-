@@ -164,17 +164,10 @@ public class ListaServicosController {
 								modalidade = cell != null ? cell.toString() : null;
 							} else if (colName.contains("descricao")) {
 								descricao = cell != null ? cell.toString() : null;
-							} else if (colName.contains("aceit") || colName.contains("aceito")) {
-								if (cell instanceof Boolean)
-									aceito = (Boolean) cell;
-								else if (cell != null) {
-									String s = cell.toString().toLowerCase();
-									aceito = s.equals("true") || s.equals("1") || s.equals("sim") || s.equals("yes");
-								}
-							}
+							} 
 						}
-
-						Servico s = new Servico(nome, valor, modalidade, descricao, aceito != null ? aceito : false, null);
+						model.Servico servico = this.model.buscarServicoPorId(idServico);
+						Servico s = new Servico(nome, valor, modalidade, descricao, servico.getStatus(), null);
 						boolean ok = dao.atualizarServicoPorId(idServico, s);
 						if (ok)
 							updated++;
