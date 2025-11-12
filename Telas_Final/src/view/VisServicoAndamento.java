@@ -110,12 +110,6 @@ public class VisServicoAndamento extends JPanel {
 		scrollPane.setBorder(null);
 		PanelDesc.add(scrollPane, "cell 0 0,grow");
 
-		btnFinalizar = new JButton("Finalizar trabalho");
-		add(btnFinalizar, "cell 0 2,alignx center");
-
-		btnArquivos = new JButton("Adicionar arquivos");
-		add(btnArquivos, "cell 1 2,alignx center");
-
 		lblNome_Arquivo = new JLabel("");
 		add(lblNome_Arquivo, "cell 0 3 2 1,alignx center");
 
@@ -131,14 +125,20 @@ public class VisServicoAndamento extends JPanel {
 		ImageIcon foto = loadUserImage(u, 150, 150);
 		lblFoto.setIcon(foto);
 
-		FontScaler.addAutoResize(this, 
-			new Object[] { taTitulo, FontSize.SUBTITULO },
-			new Object[] { taModalidade, FontSize.TEXTO }, 
-			new Object[] { taPreco, FontSize.TEXTO },
-			new Object[] { tpDesc, FontSize.TEXTO }, 
-			new Object[] { btnFinalizar, FontSize.BOTAO },
-			new Object[] { btnArquivos, FontSize.BOTAO },
-			new Object[] { lblNome_Arquivo, FontSize.TEXTO });
+		btnArquivos = new JButton("Adicionar arquivos");
+		btnArquivos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		add(btnArquivos, "flowx,cell 0 2 2 1,alignx left, gap 100");
+
+		btnFinalizar = new JButton("Finalizar trabalho");
+		add(btnFinalizar, "cell 1 2,alignx right, gap 0 100");
+
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
+				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnFinalizar, FontSize.BOTAO },
+				new Object[] { btnArquivos, FontSize.BOTAO }, new Object[] { lblNome_Arquivo, FontSize.TEXTO });
 	}
 
 	private ImageIcon loadUserImage(Usuario u, int width, int height) {
