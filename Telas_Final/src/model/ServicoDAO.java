@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import controller.Navegador;
+
 public class ServicoDAO {
 
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
@@ -125,13 +127,15 @@ public class ServicoDAO {
 		return servicos;
 	}
 
-	public List<Servico> listarServicosAceitos() {
+	public List<Servico> listarServicosAceitos(Navegador n) {
 		List<Servico> servicos = new ArrayList<>();
+		 Usuario u = n.getCurrentUser();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-			String sql = "SELECT * FROM Servico WHERE status = 'ACEITO'";
+			String sql = "SELECT * FROM Servico WHERE status = 'ACEITO' and id_contratado = ?";
 			var stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, u.getIdUsuario() );
 			ResultSet rs = stmt.executeQuery();
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {

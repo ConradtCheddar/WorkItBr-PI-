@@ -48,10 +48,17 @@ public class ListaServicosController {
 						return;
 					}
 					
-					String panelName = s.getStatus() == Status.ACEITO
-						? telaFactory.criarVisServicoCnteAceito(s)
-						: telaFactory.criarVisServicoCnte(s);
-					navegador.navegarPara(panelName);
+					if(s.getStatus() == Status.CADASTRADO) {
+						telaFactory.criarVisServicoCnte(s);
+						navegador.navegarPara(telaFactory.criarVisServicoCnte(s));
+					}else if(s.getStatus() == Status.ACEITO) {
+						telaFactory.criarVisServicoCnteAceito(s);
+						navegador.navegarPara(telaFactory.criarVisServicoCnteAceito(s));
+					}else {
+						telaFactory.criarVisServicoCnteFinalizado(s);
+						navegador.navegarPara(telaFactory.criarVisServicoCnteFinalizado(s));
+					} 
+					
 
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(view, "Erro ao carregar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);

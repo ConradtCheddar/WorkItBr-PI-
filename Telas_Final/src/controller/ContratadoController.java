@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import model.Servico;
 import model.ServicoDAO;
+import model.Usuario;
 import model.UsuarioDAO;
 import view.ServicoListCellRenderer;
 import view.TelaContratado;
@@ -85,7 +86,7 @@ public class ContratadoController extends ComponentAdapter {
 	
 	public void atualizarListaAceitos() {
 		ServicoDAO servicoDAO = new ServicoDAO();
-		java.util.List<Servico> servicosAceitos = servicoDAO.listarServicosAceitos();
+		java.util.List<Servico> servicosAceitos = servicoDAO.listarServicosAceitos(navegador);
 		DefaultListModel<Servico> listModelAceito = new DefaultListModel<>();
 		for (Servico s : servicosAceitos) {
 			listModelAceito.addElement(s);

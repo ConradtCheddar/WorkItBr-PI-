@@ -21,7 +21,7 @@ public class TelaFactory {
     }
     
     public String criarVisServico(Servico servico) {
-        String panelName = "VIS_SERVICO_" + servico.getIdServico();
+        String panelName = "VIS_SERVICO" + servico.getIdServico();
         
         navegador.removerPainel(panelName);
         
@@ -33,7 +33,7 @@ public class TelaFactory {
     }
     
     public String criarVisServicoAndamento(Servico servico) {
-        String panelName = "VIS_SERVICO_ANDAMENTO_" + servico.getIdServico();
+        String panelName = "VIS_SERVICO_ANDAMENTO"+ servico.getIdServico();
         
         navegador.removerPainel(panelName);
         
@@ -45,7 +45,7 @@ public class TelaFactory {
     }
     
     public String criarVisServicoCnte(Servico servico) {
-        String panelName = "VIS_SERVICO_CNTE_" + servico.getIdServico();
+        String panelName = "VIS_SERVICO_CNTE";
         
         navegador.removerPainel(panelName);
         
@@ -57,7 +57,7 @@ public class TelaFactory {
     }
     
     public String criarVisServicoCnteAceito(Servico servico) {
-        String panelName = "VIS_SERVICO_CNTE_ACEITO_" + servico.getIdServico();
+        String panelName = "VIS_SERVICO_CNTE_ACEITO";
         
         navegador.removerPainel(panelName);
         
@@ -69,7 +69,7 @@ public class TelaFactory {
     }
     
     public String criarVisContratado(Usuario usuario, String telaPreviaRetorno) {
-        String panelName = "VIS_CONTRATADO_" + usuario.getIdUsuario();
+        String panelName = "VIS_CONTRATADO";
         
         navegador.removerPainel(panelName);
         
@@ -99,13 +99,25 @@ public class TelaFactory {
         return panelName;
     }
     
+    public String criarVisServicoCnteFinalizado(Servico s) {
+    	String panelName = "VIS_FINALIZADO";
+    	
+    	navegador.removerPainel(panelName);
+    	
+    	VisServicoCnteFinalizado view = new VisServicoCnteFinalizado(s);
+		VisServicoCnteFinalizadoController controller = new VisServicoCnteFinalizadoController(view, servicoDAO, navegador, s, this);
+		
+		navegador.adicionarPainel(panelName, view);
+        return panelName;
+    }
+    
     public void limparCache() {
         String[] prefixos = {
-            "VIS_SERVICO_",
-            "VIS_SERVICO_ANDAMENTO_",
-            "VIS_SERVICO_CNTE_",
-            "VIS_SERVICO_CNTE_ACEITO_",
-            "VIS_CONTRATADO_",
+            "VIS_SERVICO",
+            "VIS_SERVICO_ANDAMENTO",
+            "VIS_SERVICO_CNTE",
+            "VIS_SERVICO_CNTE_ACEITO",
+            "VIS_CONTRATADO",
             "CONFIG_USER"
         };
         

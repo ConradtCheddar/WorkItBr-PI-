@@ -91,8 +91,6 @@ public class Main {
 				TelaListaServicos telaservicos = new TelaListaServicos();
 				ListaServicosController controller = new ListaServicosController(telaservicos, servicoDAO, navegador, telaFactory);
 				telaservicos.setOnShow(() -> controller.atualizarTabelaServicosDoUsuario());
-//				view.VisServicoCnteFinalizado visServicoCnteFinalizado = new view.VisServicoCnteFinalizado();
-//				VisServicoCnteFinalizadoController visServicoCnteFinalizadoController = new VisServicoCnteFinalizadoController(visServicoCnteFinalizado, servicoDAO, navegador);
 				Thread.sleep(100);
 
 				splash.setProgress(95, "Registrando telas...");

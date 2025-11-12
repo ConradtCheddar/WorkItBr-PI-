@@ -4,19 +4,20 @@ import model.Servico;
 import model.ServicoDAO;
 import view.VisServicoCnte;
 import view.VisServicoCnteAceito;
+import view.VisServicoCnteFinalizado;
 import model.UsuarioDAO;
 import model.Usuario;
 import view.VisContratado;
 import javax.swing.JOptionPane;
 
 public class VisServicoCnteFinalizadoController {
-	private final VisServicoCnteFinalizadoController view;
+	private final VisServicoCnteFinalizado view;
 	private final ServicoDAO model;
 	private final Navegador navegador;
 	private final Servico s;
 	private final TelaFactory telaFactory;
 
-	public VisServicoCnteFinalizadoController(VisServicoCnteFinalizadoController view, ServicoDAO model, Navegador navegador, Servico s, TelaFactory telaFactory){
+	public VisServicoCnteFinalizadoController(VisServicoCnteFinalizado view, ServicoDAO model, Navegador navegador, Servico s, TelaFactory telaFactory){
 		this.view = view;
 		this.model = model;
 		this.navegador = navegador;
