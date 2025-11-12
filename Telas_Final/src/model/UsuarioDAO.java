@@ -65,7 +65,7 @@ public class UsuarioDAO {
 				return false;
 			} else {
 				if (u.getSenha().equals(senha2)) {
-					try {
+				
 						Class.forName("com.mysql.cj.jdbc.Driver");
 						Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
@@ -85,13 +85,10 @@ public class UsuarioDAO {
 						stmt.close();
 						conn.close();
 						return true;
-					} catch (Exception ex) {
-						ex.printStackTrace();
-						return false;
-					}
+					
 				} else {
-					JOptionPane.showMessageDialog(null, "Senhas se diferem", "Erro", JOptionPane.ERROR_MESSAGE);
-					return false;
+					throw new SenhaException("Senhas se diferem!");
+					
 				}
 			}
 		} else if (u.isContratante() == true) {

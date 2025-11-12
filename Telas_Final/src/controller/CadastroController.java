@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.swing.JOptionPane;
 
@@ -62,7 +63,18 @@ public class CadastroController {
 		    
 			Usuario u = new Usuario(email, usuario, cpf, telefone, senha1, null, this.view.getRdbtnContratado().isSelected(), this.view.getRdbtnContratante().isSelected(), false);
 
-			boolean sucesso = model.cadastrarU(u, senha2Text);
+			boolean sucesso = false;
+			try {
+				sucesso = model.cadastrarU(u, senha2Text);
+			} catch (SQLIntegrityConstraintViolationException e2) {
+				e2.getClass();
+				JOptionPane.showMessageDialog(view, "Email ou CPF ja cadastrado","Erro de duplicata", JOptionPane.ERROR_MESSAGE);
+			}
+			catch (SenhaException e3) {
+				// TODO: handle exception
+			}
+			
+			
 			if (sucesso) {
 				navegador.navegarPara("LOGIN", false);
 				this.view.limparCampos();
