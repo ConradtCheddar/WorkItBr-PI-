@@ -43,6 +43,7 @@ public class TelaConfigUser extends JPanel {
 	private JTextField tfTelefone;
 	private JTextField tfCPF;
 	private Image imagemSelecionada;
+	private Image imagemOriginal;
 	private JButton btnAlterarDados;
 	private JButton btnAlterarImagem;
 	private JLabel lblGithub;
@@ -77,7 +78,10 @@ public class TelaConfigUser extends JPanel {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				if (imagemSelecionada != null) {
-					g.drawImage(imagemSelecionada, 0, 0, getWidth(), getHeight(), this);
+					// Centralizar a imagem no painel
+					int x = (getWidth() - imagemSelecionada.getWidth(null)) / 2;
+					int y = (getHeight() - imagemSelecionada.getHeight(null)) / 2;
+					g.drawImage(imagemSelecionada, x, y, this);
 				} else {
 					g.setColor(Color.GRAY);
 					int panelWidth = getWidth();
@@ -112,6 +116,12 @@ public class TelaConfigUser extends JPanel {
 			int y = (fundoHeight - fotoHeight) / 2;
 
 			foto.setLocation(x, y);
+		});
+
+		FontScaler.addResizeCallback(foto, () -> {
+			if (imagemOriginal != null) {
+				updateImageSize();
+			}
 		});
 
 		tfNome = new JTextField();
@@ -204,10 +214,10 @@ public class TelaConfigUser extends JPanel {
 		txtGithub.setText(usuario.getGithub());
 		if (usuario.getCaminhoFoto() != null) {
 			ImageIcon imgIcon = new ImageIcon(usuario.getCaminhoFoto());
-			imagemSelecionada = imgIcon.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(),
-					Image.SCALE_SMOOTH);
-			foto.repaint();
+			imagemOriginal = imgIcon.getImage();
+			updateImageSize();
 		} else {
+			imagemOriginal = null;
 			imagemSelecionada = null;
 			foto.repaint();
 		}
@@ -254,12 +264,36 @@ public class TelaConfigUser extends JPanel {
 			File selectedFile = fileChooser.getSelectedFile();
 			String caminho = selectedFile.getAbsolutePath();
 			ImageIcon selectedImageIcon = new ImageIcon(selectedFile.getAbsolutePath());
-			imagemSelecionada = selectedImageIcon.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(),
-					Image.SCALE_SMOOTH);
-			foto.repaint();
+			imagemOriginal = selectedImageIcon.getImage();
+			updateImageSize();
 			return caminho;
 		}
 		return null;
+	}
+
+	/**
+	 * Atualiza o tamanho da imagem mantendo a proporção (aspect ratio)
+	 */
+	private void updateImageSize() {
+		if (imagemOriginal == null || foto.getWidth() <= 0 || foto.getHeight() <= 0) {
+			return;
+		}
+
+		int panelWidth = foto.getWidth();
+		int panelHeight = foto.getHeight();
+		int imgWidth = imagemOriginal.getWidth(null);
+		int imgHeight = imagemOriginal.getHeight(null);
+
+		// Calcular proporção mantendo aspect ratio
+		double scaleWidth = (double) panelWidth / imgWidth;
+		double scaleHeight = (double) panelHeight / imgHeight;
+		double scale = Math.min(scaleWidth, scaleHeight) * 0.9; // 90% do tamanho disponível
+
+		int scaledWidth = (int) (imgWidth * scale);
+		int scaledHeight = (int) (imgHeight * scale);
+
+		imagemSelecionada = imagemOriginal.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+		foto.repaint();
 	}
 
 	public void AlterarDados(ActionListener actionListener) {

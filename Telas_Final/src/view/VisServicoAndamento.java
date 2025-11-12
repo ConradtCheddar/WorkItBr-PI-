@@ -45,6 +45,7 @@ public class VisServicoAndamento extends JPanel {
 	private JTextArea taModalidade;
 	private JTextArea taPreco;
 	private JTextArea tpDesc;
+	private Image imagemOriginal;
 
 	public VisServicoAndamento(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10][grow 10]"));
@@ -122,8 +123,14 @@ public class VisServicoAndamento extends JPanel {
 			UsuarioDAO udao = new UsuarioDAO();
 			u = udao.getUsuarioById(s.getIdContratante());
 		}
-		ImageIcon foto = loadUserImage(u, 150, 150);
-		lblFoto.setIcon(foto);
+		loadUserImage(u);
+		
+		// Adicionar callback para redimensionar a imagem quando o painel mudar de tamanho
+		FontScaler.addResizeCallback(Perfil, () -> {
+			if (imagemOriginal != null) {
+				updateImageSize();
+			}
+		});
 
 		btnArquivos = new JButton("Adicionar arquivos");
 		btnArquivos.addActionListener(new ActionListener() {
@@ -141,7 +148,7 @@ public class VisServicoAndamento extends JPanel {
 				new Object[] { btnArquivos, FontSize.BOTAO }, new Object[] { lblNome_Arquivo, FontSize.TEXTO });
 	}
 
-	private ImageIcon loadUserImage(Usuario u, int width, int height) {
+	private void loadUserImage(Usuario u) {
 		try {
 			String caminho = null;
 			if (u != null)
@@ -149,36 +156,62 @@ public class VisServicoAndamento extends JPanel {
 			if (caminho != null && !caminho.trim().isEmpty()) {
 				File f = new File(caminho);
 				if (f.exists()) {
-					Image img = ImageIO.read(f);
-					Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-					return new ImageIcon(scaled);
+					imagemOriginal = ImageIO.read(f);
+					updateImageSize();
+					return;
 				}
 				URL res = getClass().getResource(caminho.startsWith("/") ? caminho : "/" + caminho);
 				if (res != null) {
-					Image img = ImageIO.read(res);
-					Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-					return new ImageIcon(scaled);
+					imagemOriginal = ImageIO.read(res);
+					updateImageSize();
+					return;
 				}
 			}
 			URL fallback = getClass().getResource("/imagens/clickable_icon.png");
 			if (fallback == null)
 				fallback = getClass().getResource("/imagens/Casa.png");
 			if (fallback != null) {
-				Image img = ImageIO.read(fallback);
-				Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-				return new ImageIcon(scaled);
+				imagemOriginal = ImageIO.read(fallback);
+				updateImageSize();
+				return;
 			}
 			File alt = new File("imagens/clickable_icon.png");
 			if (alt.exists()) {
-				Image img = ImageIO.read(alt);
-				Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-				return new ImageIcon(scaled);
+				imagemOriginal = ImageIO.read(alt);
+				updateImageSize();
+				return;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		return new ImageIcon(bi);
+		// Criar imagem padrão se nada funcionar
+		imagemOriginal = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		updateImageSize();
+	}
+
+	/**
+	 * Atualiza o tamanho da imagem mantendo a proporção (aspect ratio)
+	 */
+	private void updateImageSize() {
+		if (imagemOriginal == null || Perfil.getWidth() <= 0 || Perfil.getHeight() <= 0) {
+			return;
+		}
+
+		int panelWidth = Perfil.getWidth();
+		int panelHeight = Perfil.getHeight();
+		int imgWidth = imagemOriginal.getWidth(null);
+		int imgHeight = imagemOriginal.getHeight(null);
+
+		// Calcular proporção mantendo aspect ratio
+		double scaleWidth = (double) panelWidth / imgWidth;
+		double scaleHeight = (double) panelHeight / imgHeight;
+		double scale = Math.min(scaleWidth, scaleHeight) * 0.9; // 90% do tamanho disponível
+
+		int scaledWidth = (int) (imgWidth * scale);
+		int scaledHeight = (int) (imgHeight * scale);
+
+		Image scaledImage = imagemOriginal.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+		lblFoto.setIcon(new ImageIcon(scaledImage));
 	}
 
 	public String selecionarArquivo() {
