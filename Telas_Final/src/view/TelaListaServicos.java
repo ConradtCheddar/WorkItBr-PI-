@@ -47,7 +47,7 @@ public class TelaListaServicos extends JPanel {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 20 20 20 40, gap 40", "[grow][200]", "[grow][grow][grow][grow]"));
 
-		String colunas[] = { "ID", "Nome", "Valor", "Modalidade", "Aceito?", "Descrição" };
+		String colunas[] = { "ID", "Nome", "Valor", "Modalidade", "Status", "Descrição" };
 		Object dados[][] = new Object[0][6];
 		this.tableModel = new DefaultTableModel(dados, colunas) {
 			@Override

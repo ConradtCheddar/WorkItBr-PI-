@@ -140,11 +140,12 @@ public class ListaServicosController {
 						Double valor = null;
 						String modalidade = null;
 						String descricao = null;
+						Status status = null;
 
 						for (int c = 0; c < colCount; c++) {
 							String colName = modelTable.getColumnName(c).toLowerCase().replace("ç", "c").replace("ã", "a")
 								.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o")
-								.replace("ú", "u").replace(" ", "");
+								.replace("ú", "u").replace(" ", "").replace("?", "");
 							Object cell = modelTable.getValueAt(r, c);
 							if (colName.contains("nome")) {
 								nome = cell != null ? cell.toString() : null;
@@ -164,17 +165,19 @@ public class ListaServicosController {
 								modalidade = cell != null ? cell.toString() : null;
 							} else if (colName.contains("descricao")) {
 								descricao = cell != null ? cell.toString() : null;
-							} else if (colName.contains("aceit") || colName.contains("aceito")) {
-								if (cell instanceof Boolean)
-									aceito = (Boolean) cell;
-								else if (cell != null) {
-									String s = cell.toString().toLowerCase();
-									aceito = s.equals("true") || s.equals("1") || s.equals("sim") || s.equals("yes");
+							} else if (colName.contains("status") || colName.contains("aceit")) {
+								if (cell != null) {
+									try {
+										String statusStr = cell.toString().toUpperCase().trim();
+										status = Status.valueOf(statusStr);
+									} catch (Exception ex) {
+										status = null;
+									}
 								}
 							}
 						}
 
-						Servico s = new Servico(nome, valor, modalidade, descricao, aceito != null ? aceito : false, null);
+						Servico s = new Servico(nome, valor, modalidade, descricao, status, null);
 						boolean ok = dao.atualizarServicoPorId(idServico, s);
 						if (ok)
 							updated++;

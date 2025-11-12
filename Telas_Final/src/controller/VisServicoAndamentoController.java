@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import model.Servico;
 import model.ServicoDAO;
+import model.Status;
 import model.UsuarioDAO;
 import view.VisServico;
 import view.VisServicoAndamento;
@@ -25,8 +26,13 @@ public class VisServicoAndamentoController {
 		this.s= s;
 		
 		this.view.finalizar(e -> {
-			model.deletarServico(s.getIdServico());
-			JOptionPane.showMessageDialog(null, "Serviço finalizado com sucesso!");
+			s.setStatus(Status.FINALIZADO);
+			boolean sucesso = model.atualizarServicoPorId(s.getIdServico(), s);
+			if (sucesso) {
+				JOptionPane.showMessageDialog(null, "Serviço finalizado com sucesso!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Erro ao finalizar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 			navegador.navegarPara("CONTRATADO");
 		});
 		

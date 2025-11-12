@@ -11,7 +11,6 @@ public class Servico {
 	private int idContratante;
 	private int idContratado;
 	private byte[] arquivo;
-	private boolean finalizado;
 	private Status status;
 
 	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, Status status,
@@ -116,14 +115,6 @@ public class Servico {
 
 	public void setArquivo(byte[] arquivo) {
 		this.arquivo = arquivo;
-	}
-
-	public boolean isFinalizado() {
-		return finalizado;
-	}
-
-	public void setFinalizado(boolean finalizado) {
-		this.finalizado = finalizado;
 	}
 
 	public Status getStatus() {
