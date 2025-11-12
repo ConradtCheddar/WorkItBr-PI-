@@ -54,7 +54,7 @@ public class UsuarioDAO {
 		return u;
 		}
 
-	public boolean cadastrarU(Usuario u, String senha2) {
+	public boolean cadastrarU(Usuario u, String senha2) throws campoVazioException{
 
 		if (u.isContratado() == true) {
 			if (u.getEmail().isEmpty() || u.getUsuario().isEmpty() || u.getCpfCnpj().isEmpty()
