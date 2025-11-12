@@ -54,7 +54,10 @@ public class VisContratado extends JPanel {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				if (imagemSelecionada != null) {
-					g.drawImage(imagemSelecionada, 0, 0, getWidth(), getHeight(), this);
+					// Centralizar a imagem no painel
+					int x = (getWidth() - imagemSelecionada.getWidth(null)) / 2;
+					int y = (getHeight() - imagemSelecionada.getHeight(null)) / 2;
+					g.drawImage(imagemSelecionada, x, y, this);
 				}
 			}
 		};
@@ -62,9 +65,7 @@ public class VisContratado extends JPanel {
 
 		FontScaler.addResizeCallback(Perfil, () -> {
 			if (imagemOriginal != null) {
-				imagemSelecionada = imagemOriginal.getScaledInstance(Perfil.getWidth(), Perfil.getHeight(),
-						Image.SCALE_SMOOTH);
-				Perfil.repaint();
+				updateImageSize();
 			}
 		});
 
@@ -134,14 +135,36 @@ public class VisContratado extends JPanel {
 			try {
 				ImageIcon imgIcon = new ImageIcon(u.getCaminhoFoto());
 				imagemOriginal = imgIcon.getImage();
-				int w = Perfil.getWidth() > 0 ? Perfil.getWidth() : 200;
-				int h = Perfil.getHeight() > 0 ? Perfil.getHeight() : 200;
-				imagemSelecionada = imagemOriginal.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-				Perfil.repaint();
+				updateImageSize();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * Atualiza o tamanho da imagem mantendo a proporção (aspect ratio)
+	 */
+	private void updateImageSize() {
+		if (imagemOriginal == null || Perfil.getWidth() <= 0 || Perfil.getHeight() <= 0) {
+			return;
+		}
+
+		int panelWidth = Perfil.getWidth();
+		int panelHeight = Perfil.getHeight();
+		int imgWidth = imagemOriginal.getWidth(null);
+		int imgHeight = imagemOriginal.getHeight(null);
+
+		// Calcular proporção mantendo aspect ratio
+		double scaleWidth = (double) panelWidth / imgWidth;
+		double scaleHeight = (double) panelHeight / imgHeight;
+		double scale = Math.min(scaleWidth, scaleHeight) * 0.9; // 90% do tamanho disponível
+
+		int scaledWidth = (int) (imgWidth * scale);
+		int scaledHeight = (int) (imgHeight * scale);
+
+		imagemSelecionada = imagemOriginal.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+		Perfil.repaint();
 	}
 
 	public void voltar(ActionListener actionListener) {
