@@ -54,10 +54,7 @@ public class VisContratado extends JPanel {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				if (imagemSelecionada != null) {
-					// Centralizar a imagem no painel
-					int x = (getWidth() - imagemSelecionada.getWidth(null)) / 2;
-					int y = (getHeight() - imagemSelecionada.getHeight(null)) / 2;
-					g.drawImage(imagemSelecionada, x, y, this);
+					g.drawImage(imagemSelecionada, 0, 0, getWidth(), getHeight(), this);
 				}
 			}
 		};
@@ -65,7 +62,9 @@ public class VisContratado extends JPanel {
 
 		FontScaler.addResizeCallback(Perfil, () -> {
 			if (imagemOriginal != null) {
-				updateImageSize();
+				imagemSelecionada = imagemOriginal.getScaledInstance(Perfil.getWidth(), Perfil.getHeight(),
+						Image.SCALE_SMOOTH);
+				Perfil.repaint();
 			}
 		});
 
@@ -77,7 +76,7 @@ public class VisContratado extends JPanel {
 		taNome = new JTextArea("Nome");
 		taNome.setEditable(false);
 		taNome.setFocusable(false);
-		taNome.setLineWrap(true);
+		//taNome.setLineWrap(true);
 		taNome.setWrapStyleWord(true);
 		taNome.setRows(1);
 		taNome.setBackground(PanelInfo.getBackground());
@@ -87,7 +86,7 @@ public class VisContratado extends JPanel {
 		taGithub = new JTextArea("Github");
 		taGithub.setEditable(false);
 		taGithub.setFocusable(false);
-		taGithub.setLineWrap(true);
+		//taGithub.setLineWrap(true);
 		taGithub.setWrapStyleWord(true);
 		taGithub.setRows(1);
 		taGithub.setBackground(PanelInfo.getBackground());
@@ -97,7 +96,7 @@ public class VisContratado extends JPanel {
 		taEmail = new JTextArea("Email");
 		taEmail.setEditable(false);
 		taEmail.setFocusable(false);
-		taEmail.setLineWrap(true);
+		//taEmail.setLineWrap(true);
 		taEmail.setWrapStyleWord(true);
 		taEmail.setRows(1);
 		taEmail.setBackground(PanelInfo.getBackground());
@@ -107,7 +106,7 @@ public class VisContratado extends JPanel {
 		taTelefone = new JTextArea("Telefone");
 		taTelefone.setEditable(false);
 		taTelefone.setFocusable(false);
-		taTelefone.setLineWrap(true);
+		//taTelefone.setLineWrap(true);
 		taTelefone.setWrapStyleWord(true);
 		taTelefone.setRows(1);
 		taTelefone.setBackground(PanelInfo.getBackground());
@@ -135,36 +134,14 @@ public class VisContratado extends JPanel {
 			try {
 				ImageIcon imgIcon = new ImageIcon(u.getCaminhoFoto());
 				imagemOriginal = imgIcon.getImage();
-				updateImageSize();
+				int w = Perfil.getWidth() > 0 ? Perfil.getWidth() : 200;
+				int h = Perfil.getHeight() > 0 ? Perfil.getHeight() : 200;
+				imagemSelecionada = imagemOriginal.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+				Perfil.repaint();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
-	}
-
-	/**
-	 * Atualiza o tamanho da imagem mantendo a proporção (aspect ratio)
-	 */
-	private void updateImageSize() {
-		if (imagemOriginal == null || Perfil.getWidth() <= 0 || Perfil.getHeight() <= 0) {
-			return;
-		}
-
-		int panelWidth = Perfil.getWidth();
-		int panelHeight = Perfil.getHeight();
-		int imgWidth = imagemOriginal.getWidth(null);
-		int imgHeight = imagemOriginal.getHeight(null);
-
-		// Calcular proporção mantendo aspect ratio
-		double scaleWidth = (double) panelWidth / imgWidth;
-		double scaleHeight = (double) panelHeight / imgHeight;
-		double scale = Math.min(scaleWidth, scaleHeight) * 0.9; // 90% do tamanho disponível
-
-		int scaledWidth = (int) (imgWidth * scale);
-		int scaledHeight = (int) (imgHeight * scale);
-
-		imagemSelecionada = imagemOriginal.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-		Perfil.repaint();
 	}
 
 	public void voltar(ActionListener actionListener) {

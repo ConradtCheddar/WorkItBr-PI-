@@ -165,10 +165,19 @@ public class ListaServicosController {
 								modalidade = cell != null ? cell.toString() : null;
 							} else if (colName.contains("descricao")) {
 								descricao = cell != null ? cell.toString() : null;
-							} 
+							} else if (colName.contains("status") || colName.contains("aceit")) {
+								if (cell != null) {
+									try {
+										String statusStr = cell.toString().toUpperCase().trim();
+										status = Status.valueOf(statusStr);
+									} catch (Exception ex) {
+										status = null;
+									}
+								}
+							}
 						}
-						model.Servico servico = this.model.buscarServicoPorId(idServico);
-						Servico s = new Servico(nome, valor, modalidade, descricao, servico.getStatus(), null);
+
+						Servico s = new Servico(nome, valor, modalidade, descricao, status, null);
 						boolean ok = dao.atualizarServicoPorId(idServico, s);
 						if (ok)
 							updated++;

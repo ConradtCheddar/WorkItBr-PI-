@@ -12,7 +12,6 @@ public class Servico {
 	private int idContratado;
 	private byte[] arquivo;
 	private Status status;
-	private String caminhoArquivo;
 
 	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, Status status,
 			Usuario contratante) {
@@ -125,16 +124,6 @@ public class Servico {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
-	public String getCaminhoArquivo() {
-		return caminhoArquivo;
-	}
-
-	public void setCaminhoArquivo(String caminhoArquivo) {
-		this.caminhoArquivo = caminhoArquivo;
-	}
-	
-	
 	
 	
 	

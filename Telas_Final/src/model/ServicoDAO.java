@@ -17,7 +17,6 @@ public class ServicoDAO {
 	public ServicoDAO() {
 
 	}
-	
 
 	public boolean cadastrarS(Servico s) {
 
@@ -192,53 +191,21 @@ public class ServicoDAO {
 		}
 		return servico;
 	}
-	
-	public void finalizarServico(Servico s) {
+
+	public void aceitarServico(Servico u) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
 			String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, status = ?, id_contratado = ? WHERE ID_servico = ?";
 			var stmt = conn.prepareStatement(sql);
-			stmt.setString(1, s.getNome_Servico());
-			stmt.setString(2, s.getModalidade());
-			stmt.setDouble(3, s.getValor());
-			stmt.setString(4, s.getDescricao());
-			stmt.setString(5, model.Status.FINALIZADO.toString());
-			stmt.setInt(6, s.getIdContratado());
-			stmt.setInt(7, s.getIdServico());
-
-			int rowsUpdated = stmt.executeUpdate();
-
-			if (rowsUpdated > 0) {
-				JOptionPane.showMessageDialog(null, "Servico finalizado", "Sucesso",
-						JOptionPane.PLAIN_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(null, "Servico não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-			}
-
-			stmt.close();
-			conn.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao finalizar servico", "Erro", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	public void aceitarServico(Servico s) {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-
-			String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, status = ?, id_contratado = ? WHERE ID_servico = ?";
-			var stmt = conn.prepareStatement(sql);
-			stmt.setString(1, s.getNome_Servico());
-			stmt.setString(2, s.getModalidade());
-			stmt.setDouble(3, s.getValor());
-			stmt.setString(4, s.getDescricao());
+			stmt.setString(1, u.getNome_Servico());
+			stmt.setString(2, u.getModalidade());
+			stmt.setDouble(3, u.getValor());
+			stmt.setString(4, u.getDescricao());
 			stmt.setString(5, model.Status.ACEITO.toString());
-			stmt.setInt(6, s.getIdContratado());
-			stmt.setInt(7, s.getIdServico());
+			stmt.setInt(6, u.getIdContratado());
+			stmt.setInt(7, u.getIdServico());
 
 			int rowsUpdated = stmt.executeUpdate();
 

@@ -45,10 +45,9 @@ public class VisServicoAndamento extends JPanel {
 	private JTextArea taModalidade;
 	private JTextArea taPreco;
 	private JTextArea tpDesc;
-	private Image imagemOriginal;
 
 	public VisServicoAndamento(Servico s) {
-		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10][grow 10]"));
+		setLayout(new MigLayout("", "[grow 60][grow]", "[grow][grow][grow 10][grow]"));
 
 		Perfil = new JPanel();
 		Perfil.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante"));
@@ -67,7 +66,7 @@ public class VisServicoAndamento extends JPanel {
 		taTitulo = new JTextArea("Titulo");
 		taTitulo.setEditable(false);
 		taTitulo.setFocusable(false);
-		taTitulo.setLineWrap(true);
+		//taTitulo.setLineWrap(true);
 		taTitulo.setWrapStyleWord(true);
 		taTitulo.setRows(1);
 		taTitulo.setBackground(PanelInfo.getBackground());
@@ -77,7 +76,7 @@ public class VisServicoAndamento extends JPanel {
 		taModalidade = new JTextArea("Modalidade");
 		taModalidade.setEditable(false);
 		taModalidade.setFocusable(false);
-		taModalidade.setLineWrap(true);
+		//taModalidade.setLineWrap(true);
 		taModalidade.setWrapStyleWord(true);
 		taModalidade.setRows(1);
 		taModalidade.setBackground(PanelInfo.getBackground());
@@ -87,7 +86,7 @@ public class VisServicoAndamento extends JPanel {
 		taPreco = new JTextArea("Preco");
 		taPreco.setEditable(false);
 		taPreco.setFocusable(false);
-		taPreco.setLineWrap(true);
+		//taPreco.setLineWrap(true);
 		taPreco.setWrapStyleWord(true);
 		taPreco.setRows(1);
 		taPreco.setBackground(PanelInfo.getBackground());
@@ -102,7 +101,7 @@ public class VisServicoAndamento extends JPanel {
 		tpDesc = new JTextArea();
 		tpDesc.setEditable(false);
 		tpDesc.setFocusable(false);
-		tpDesc.setLineWrap(true);
+		//tpDesc.setLineWrap(true);
 		tpDesc.setWrapStyleWord(true);
 		tpDesc.setBackground(PanelDesc.getBackground());
 		tpDesc.setText(s.getDescricao());
@@ -123,14 +122,8 @@ public class VisServicoAndamento extends JPanel {
 			UsuarioDAO udao = new UsuarioDAO();
 			u = udao.getUsuarioById(s.getIdContratante());
 		}
-		loadUserImage(u);
-		
-		// Adicionar callback para redimensionar a imagem quando o painel mudar de tamanho
-		FontScaler.addResizeCallback(Perfil, () -> {
-			if (imagemOriginal != null) {
-				updateImageSize();
-			}
-		});
+		ImageIcon foto = loadUserImage(u, 150, 150);
+		lblFoto.setIcon(foto);
 
 		btnArquivos = new JButton("Adicionar arquivos");
 		btnArquivos.addActionListener(new ActionListener() {
@@ -148,7 +141,7 @@ public class VisServicoAndamento extends JPanel {
 				new Object[] { btnArquivos, FontSize.BOTAO }, new Object[] { lblNome_Arquivo, FontSize.TEXTO });
 	}
 
-	private void loadUserImage(Usuario u) {
+	private ImageIcon loadUserImage(Usuario u, int width, int height) {
 		try {
 			String caminho = null;
 			if (u != null)
@@ -156,65 +149,39 @@ public class VisServicoAndamento extends JPanel {
 			if (caminho != null && !caminho.trim().isEmpty()) {
 				File f = new File(caminho);
 				if (f.exists()) {
-					imagemOriginal = ImageIO.read(f);
-					updateImageSize();
-					return;
+					Image img = ImageIO.read(f);
+					Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+					return new ImageIcon(scaled);
 				}
 				URL res = getClass().getResource(caminho.startsWith("/") ? caminho : "/" + caminho);
 				if (res != null) {
-					imagemOriginal = ImageIO.read(res);
-					updateImageSize();
-					return;
+					Image img = ImageIO.read(res);
+					Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+					return new ImageIcon(scaled);
 				}
 			}
 			URL fallback = getClass().getResource("/imagens/clickable_icon.png");
 			if (fallback == null)
 				fallback = getClass().getResource("/imagens/Casa.png");
 			if (fallback != null) {
-				imagemOriginal = ImageIO.read(fallback);
-				updateImageSize();
-				return;
+				Image img = ImageIO.read(fallback);
+				Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				return new ImageIcon(scaled);
 			}
 			File alt = new File("imagens/clickable_icon.png");
 			if (alt.exists()) {
-				imagemOriginal = ImageIO.read(alt);
-				updateImageSize();
-				return;
+				Image img = ImageIO.read(alt);
+				Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				return new ImageIcon(scaled);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		// Criar imagem padrão se nada funcionar
-		imagemOriginal = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
-		updateImageSize();
+		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		return new ImageIcon(bi);
 	}
 
-	/**
-	 * Atualiza o tamanho da imagem mantendo a proporção (aspect ratio)
-	 */
-	private void updateImageSize() {
-		if (imagemOriginal == null || Perfil.getWidth() <= 0 || Perfil.getHeight() <= 0) {
-			return;
-		}
-
-		int panelWidth = Perfil.getWidth();
-		int panelHeight = Perfil.getHeight();
-		int imgWidth = imagemOriginal.getWidth(null);
-		int imgHeight = imagemOriginal.getHeight(null);
-
-		// Calcular proporção mantendo aspect ratio
-		double scaleWidth = (double) panelWidth / imgWidth;
-		double scaleHeight = (double) panelHeight / imgHeight;
-		double scale = Math.min(scaleWidth, scaleHeight) * 0.9; // 90% do tamanho disponível
-
-		int scaledWidth = (int) (imgWidth * scale);
-		int scaledHeight = (int) (imgHeight * scale);
-
-		Image scaledImage = imagemOriginal.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-		lblFoto.setIcon(new ImageIcon(scaledImage));
-	}
-
-	public String selecionarArquivo(Servico s) {
+	public String selecionarArquivo() {
 		JFileChooser fileChooser = new JFileChooser();
 		int result = fileChooser.showOpenDialog(null);
 		if (result == JFileChooser.APPROVE_OPTION) {
@@ -222,7 +189,6 @@ public class VisServicoAndamento extends JPanel {
 			String caminho = selectedFile.getAbsolutePath();
 			File file = new File(selectedFile.getAbsolutePath());
 			lblNome_Arquivo.setText(file.getName());
-			s.setCaminhoArquivo(caminho);
 			return caminho;
 		}
 		return null;

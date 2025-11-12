@@ -26,12 +26,18 @@ public class VisServicoAndamentoController {
 		this.s= s;
 		
 		this.view.finalizar(e -> {
-			this.model.finalizarServico(s);
+			s.setStatus(Status.FINALIZADO);
+			boolean sucesso = model.atualizarServicoPorId(s.getIdServico(), s);
+			if (sucesso) {
+				JOptionPane.showMessageDialog(null, "Serviço finalizado com sucesso!");
+			} else {
+				JOptionPane.showMessageDialog(null, "Erro ao finalizar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 			navegador.navegarPara("CONTRATADO");
 		});
 		
 		this.view.Adicionar(e -> {
-			String caminhoArquivo = view.selecionarArquivo(s);
+			String caminhoArquivo = view.selecionarArquivo();
 			if (caminhoArquivo != null) {
 				try {
 					// Converter o arquivo para bytes
