@@ -10,6 +10,7 @@ import controller.PopupController;
 import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.DrawerMenu;
+import view.Mensagem;
 import view.Primario;
 import view.SplashScreen;
 import view.TelaVisArquivos;
@@ -37,6 +38,7 @@ public class Main {
 				
 				splash.setProgress(15, "Inicializando componentes...");
 				wbBarra wbb = new wbBarra();
+				Mensagem M = new Mensagem();
 				Thread.sleep(150);
 				
 				splash.setProgress(25, "Conectando ao banco de dados...");

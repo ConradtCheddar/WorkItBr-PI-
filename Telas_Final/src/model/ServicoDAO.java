@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 
 import controller.Navegador;
 
@@ -23,11 +22,6 @@ public class ServicoDAO {
 
 	public boolean cadastrarS(Servico s) {
 
-		if (s.getNome_Servico().isEmpty() || s.getModalidade().isEmpty() || Double.toString(s.getValor()).isEmpty()
-				|| s.getDescricao().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
-			return false;
-		} else {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				Connection conn = DriverManager.getConnection(url, Usuario, Senha);
@@ -40,8 +34,7 @@ public class ServicoDAO {
 				stmt.setString(4, s.getDescricao());
 				stmt.setInt(5, s.getContratante().getIdUsuario());
 				stmt.executeUpdate();
-				JOptionPane.showMessageDialog(null, "Serviço cadastrado com sucesso!", "Sucesso!",
-						JOptionPane.PLAIN_MESSAGE);
+
 				stmt.close();
 				conn.close();
 				return true;
@@ -50,7 +43,6 @@ public class ServicoDAO {
 				return false;
 			}
 		}
-	}
 
 	public ArrayList<Servico> buscarTodosServicosPorUsuario(Usuario u) {
 		try {
@@ -215,17 +207,16 @@ public class ServicoDAO {
 			int rowsUpdated = stmt.executeUpdate();
 
 			if (rowsUpdated > 0) {
-				JOptionPane.showMessageDialog(null, "Servico finalizado", "Sucesso",
-						JOptionPane.PLAIN_MESSAGE);
+
 			} else {
-				JOptionPane.showMessageDialog(null, "Servico não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+
 			}
 
 			stmt.close();
 			conn.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao finalizar servico", "Erro", JOptionPane.ERROR_MESSAGE);
+
 		}
 	}
 
@@ -247,17 +238,16 @@ public class ServicoDAO {
 			int rowsUpdated = stmt.executeUpdate();
 
 			if (rowsUpdated > 0) {
-				JOptionPane.showMessageDialog(null, "Servico aceito", "Sucesso",
-						JOptionPane.PLAIN_MESSAGE);
+
 			} else {
-				JOptionPane.showMessageDialog(null, "Servico não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+
 			}
 
 			stmt.close();
 			conn.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao aceitar servico", "Erro", JOptionPane.ERROR_MESSAGE);
+
 		}
 	}
 
@@ -348,7 +338,7 @@ public class ServicoDAO {
 		return rowsAffected > 0;
 		} catch (Exception ex) {
 	        ex.printStackTrace();
-	        JOptionPane.showMessageDialog(null, "Erro ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+
 	        return false;
 	    }     
     }

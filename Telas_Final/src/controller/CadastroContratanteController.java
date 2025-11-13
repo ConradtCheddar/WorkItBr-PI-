@@ -3,9 +3,7 @@ package controller;
 import model.Servico;
 import model.ServicoDAO;
 import model.Status;
-import model.Usuario;
-import model.UsuarioDAO;
-import view.TelaCadastro;
+import view.Mensagem;
 import view.TelaCadastroContratante;
 
 public class CadastroContratanteController {
@@ -19,30 +17,44 @@ public class CadastroContratanteController {
 		this.navegador = navegador;
 		
 		this.view.cadastrar(e ->{
-			if (navegador.getCurrentUser() == null) {
-				javax.swing.JOptionPane.showMessageDialog(view, "Erro: Nenhum usuário logado. Por favor, faça login novamente.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
-				navegador.navegarPara("LOGIN");
-				return;
-			}
-			
+			/**
+			 * salva os valores em variaveis
+			 */
+			Mensagem M = new Mensagem();
 			String nome_Servico = this.view.getTfNome().getText();
 		    String modalidade = this.view.getTfModalidade().getText();
-		    Double valor;
-		    try {
-		    	valor = Double.parseDouble(this.view.getTfValor().getText());
-		    } catch (NumberFormatException ex) {
-		    	javax.swing.JOptionPane.showMessageDialog(view, "Valor inválido. Por favor, insira um número.", "Erro de Formato", javax.swing.JOptionPane.ERROR_MESSAGE);
-		    	return;
-		    }
+		    String valorS = this.view.getTfValor().getText();
 		    String descricao = this.view.getTfDescricao().getText();
 		    
-			Servico s = new Servico(nome_Servico,valor,modalidade,descricao, Status.CADASTRADO, navegador.getCurrentUser());
+		    /**
+		     * faz validação dos valores
+		     */
+		    if(nome_Servico.trim().isEmpty()||modalidade.trim().isEmpty()||valorS.trim().isEmpty()||nome_Servico.trim().isEmpty()) {
+		    	M.Erro("Preencha todos os campos", "Erro");
+		    }else {
+		    	Double valorD;
+			    try {
+			    	valorD = Double.parseDouble(this.view.getTfValor().getText());
+			    } catch (NumberFormatException ex) {
+			    	M.Erro("Campo valor com dado invalido, insira um valor numerico", "Valor invalido");
+			    	return;
+			    }
+			    
+			    /**
+			     * salva os valores
+			     */
+			    Servico s = new Servico(nome_Servico,valorD,modalidade,descricao, Status.CADASTRADO, navegador.getCurrentUser());
 
-			boolean sucesso = model.cadastrarS(s);
-			if (sucesso) {
-				this.view.limparCampos();
-				navegador.navegarPara("SERVICOS", false);
-			}
+				boolean sucesso = model.cadastrarS(s);
+				if (sucesso) {
+					M.Sucesso("Cadastro realizado com sucesso", "Sucesso");
+					this.view.limparCampos();
+					navegador.navegarPara("SERVICOS", false);
+				}else {
+					M.Erro("Cadastro falhou", "Erro inesperado");
+				}
+		    }
+		    	
 		});
 	}
 }

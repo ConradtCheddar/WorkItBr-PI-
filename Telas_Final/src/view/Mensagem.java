@@ -4,9 +4,12 @@ import javax.swing.JOptionPane;
 
 public class Mensagem {
 	
-	public void camposVazios{
-		JOptionPane.showMessageDialog(null, "Preencha todos os campos requisitados", "Erro!!",
-				JOptionPane.ERROR);
+	public void Erro(String mensagem, String titulo){
+		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.ERROR);
 	}
+	public void Sucesso(String mensagem, String titulo){
+		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.PLAIN_MESSAGE);
+	}
+	
 
 }
