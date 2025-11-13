@@ -34,14 +34,19 @@ public class ContratadoController extends ComponentAdapter {
 		this.view.cliqueDuploNoJList(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	/**
+		    	 * verifica contagem
+		    	 */
 		    	if (e.getClickCount() == 2) { 
 		            int index = view.getListaDisponivel().locationToIndex(e.getPoint());
 		            if (index == -1) return;
 		            Object selectedItem = view.getListaDisponivel().getModel().getElementAt(index);
 		            
+		            /**
+		             * instancia a tela correta
+		             */
 		            if (selectedItem instanceof Servico) {
 		                Servico servicoSelecionado = (Servico) selectedItem;
-
 		                VisServico vs = new VisServico(servicoSelecionado);
 		                new VisServicoController(vs, servicoDAO, navegador, servicoSelecionado);
 		                navegador.adicionarPainel("VISUALIZAR_SERVICO", vs);
@@ -54,14 +59,19 @@ public class ContratadoController extends ComponentAdapter {
 		this.view.cliqueDuploNoAndamento(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	/**
+		    	 * verifica contagem
+		    	 */
 		    	if (e.getClickCount() == 2) { 
 		            int index = view.getListaAndamento().locationToIndex(e.getPoint());
 		            if (index == -1) return;
 		            Object selectedItem = view.getListaAndamento().getModel().getElementAt(index);
 		            
+		            /**
+		             * instancia a tela correta
+		             */
 		            if (selectedItem instanceof Servico) {
 		                Servico servicoSelecionado = (Servico) selectedItem;
-
 		                VisServicoAndamento vs = new VisServicoAndamento(servicoSelecionado);
 		                new VisServicoAndamentoController(vs, servicoDAO, navegador, servicoSelecionado);
 		                navegador.adicionarPainel("VISUALIZAR_SERVICO_ANDAMENTO", vs);
