@@ -80,7 +80,7 @@ public class TelaCadastro extends JPanel {
 		tfCPF.putClientProperty("JComponent.roundRect", true);
 		tfCPF.setOpaque(false);
 		tfCPF.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
-		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
+		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CpfCnpjDocumentFilter());
 
 		tfUsuario = new JTextField();
 		add(tfUsuario, "cell 1 4 3 1,growx");

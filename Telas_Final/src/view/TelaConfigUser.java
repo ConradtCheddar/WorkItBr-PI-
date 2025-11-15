@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -38,7 +39,7 @@ public class TelaConfigUser extends JPanel {
 	private JPanel foto;
 	private JPanel cPanel;
 	private JTextField tfNome;
-	private JTextField tfSenha;
+	private JPasswordField pfSenha;
 	private JTextField tfEmail;
 	private JTextField tfTelefone;
 	private JTextField tfCPF;
@@ -58,8 +59,7 @@ public class TelaConfigUser extends JPanel {
 	public TelaConfigUser() {
 		setPreferredSize(new Dimension(837, 635));
 		setBorder(new EmptyBorder(0, 0, 0, 0));
-		setLayout(new MigLayout("fill, insets 20 20 20 20, gap 20", "[grow][grow][grow]",
-				"[][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow]"));
+		setLayout(new MigLayout("fill, insets 20 20 20 20, gap 20", "[grow][grow][grow]", "[][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][][grow][]"));
 
 		lblTitulo = new JLabel("Configurações");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -69,7 +69,7 @@ public class TelaConfigUser extends JPanel {
 		add(lblNome, "cell 0 1,alignx left");
 
 		fundo = new JPanel();
-		add(fundo, "cell 1 1 2 11,grow");
+		add(fundo, "cell 1 1 2 9,grow");
 		fundo.setLayout(null);
 
 		foto = new JPanel() {
@@ -125,12 +125,12 @@ public class TelaConfigUser extends JPanel {
 		lblSenha = new JLabel("Senha");
 		add(lblSenha, "flowx,cell 0 3,alignx left");
 
-		tfSenha = new JTextField();
-		add(tfSenha, "cell 0 4,grow");
-		tfSenha.setColumns(10);
-		tfSenha.putClientProperty("JComponent.roundRect", true);
-		tfSenha.setOpaque(false);
-		tfSenha.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
+		pfSenha = new JPasswordField();
+		add(pfSenha, "cell 0 4,grow");
+		pfSenha.setColumns(10);
+		pfSenha.putClientProperty("JComponent.roundRect", true);
+		pfSenha.setOpaque(false);
+		pfSenha.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
 				"focusedBackground: null;" + "background: null");
 
 		lblEmail = new JLabel("Email");
@@ -156,7 +156,7 @@ public class TelaConfigUser extends JPanel {
 				"focusedBackground: null;" + "background: null");
 		((AbstractDocument) tfTelefone.getDocument()).setDocumentFilter(new FieldValidator.TelefoneDocumentFilter());
 
-		lblCPF = new JLabel("CPF");
+		lblCPF = new JLabel("CPF/CNPJ");
 		add(lblCPF, "cell 0 9,alignx left");
 
 		tfCPF = new JTextField();
@@ -166,7 +166,7 @@ public class TelaConfigUser extends JPanel {
 		tfCPF.setOpaque(false);
 		tfCPF.putClientProperty(com.formdev.flatlaf.FlatClientProperties.STYLE,
 				"focusedBackground: null;" + "background: null");
-		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CPFDocumentFilter());
+		((AbstractDocument) tfCPF.getDocument()).setDocumentFilter(new FieldValidator.CpfCnpjDocumentFilter());
 
 		lblGithub = new JLabel("Github");
 		add(lblGithub, "cell 0 11,alignx left");
@@ -182,22 +182,23 @@ public class TelaConfigUser extends JPanel {
 		btnAlterarImagem = new JButton("Alterar Imagem");
 		add(btnAlterarImagem, "cell 1 12 2 1,grow");
 		btnAlterarDados = new JButton("Alterar Dados");
-		add(btnAlterarDados, "cell 0 14 3 1,grow");
+		add(btnAlterarDados, "cell 0 13 3 1,grow");
 		btnAlterarDados.putClientProperty("JComponent.roundRect", true);
 
 		FontScaler.addAutoResize(this, new Object[] { lblTitulo, FontSize.TITULO },
 				new Object[] { lblNome, FontSize.TEXTO }, new Object[] { lblSenha, FontSize.TEXTO },
 				new Object[] { lblEmail, FontSize.TEXTO }, new Object[] { lblTelefone, FontSize.TEXTO },
 				new Object[] { lblCPF, FontSize.TEXTO }, new Object[] { lblGithub, FontSize.TEXTO },
-				new Object[] { tfNome, FontSize.TEXTO }, new Object[] { tfSenha, FontSize.TEXTO },
-				new Object[] { tfEmail, FontSize.TEXTO }, new Object[] { tfTelefone, FontSize.TEXTO },
-				new Object[] { tfCPF, FontSize.TEXTO }, new Object[] { txtGithub, FontSize.TEXTO },
-				new Object[] { btnAlterarDados, FontSize.BOTAO }, new Object[] { btnAlterarImagem, FontSize.BOTAO });
+				new Object[] { tfNome, FontSize.TEXTO }, new Object[] { pfSenha, FontSize.TEXTO },
+				new Object[] { tfEmail, FontSize.TEXTO },
+				new Object[] { tfTelefone, FontSize.TEXTO }, new Object[] { tfCPF, FontSize.TEXTO },
+				new Object[] { txtGithub, FontSize.TEXTO }, new Object[] { btnAlterarDados, FontSize.BOTAO },
+				new Object[] { btnAlterarImagem, FontSize.BOTAO });
 	}
 
 	public void setUserData(Usuario usuario) {
 		tfNome.setText(usuario.getUsuario());
-		tfSenha.setText(usuario.getSenha());
+		pfSenha.setText(usuario.getSenha());
 		tfEmail.setText(usuario.getEmail());
 		tfTelefone.setText(usuario.getTelefone());
 		tfCPF.setText(usuario.getCpfCnpj());
@@ -218,7 +219,7 @@ public class TelaConfigUser extends JPanel {
 	}
 
 	public String getSenha() {
-		return tfSenha.getText();
+		return new String(pfSenha.getPassword());
 	}
 
 	public String getEmail() {
@@ -235,6 +236,17 @@ public class TelaConfigUser extends JPanel {
 
 	public String getGithub() {
 		return txtGithub.getText();
+	}
+
+	// Validation helpers: prevent empty or whitespace-only name/password
+	public boolean isNomeValido() {
+		String nome = tfNome.getText();
+		return nome != null && !nome.trim().isEmpty();
+	}
+
+	public boolean isSenhaValida() {
+		String senha = new String(pfSenha.getPassword());
+		return senha != null && !senha.trim().isEmpty();
 	}
 
 	public void addAlterarDadosListener(ActionListener l) {
@@ -291,11 +303,11 @@ public class TelaConfigUser extends JPanel {
 	}
 
 	public JTextField getTfSenha() {
-		return tfSenha;
+		return pfSenha;
 	}
 
-	public void setTfSenha(JTextField tfSenha) {
-		this.tfSenha = tfSenha;
+	public void setTfSenha(JPasswordField pfSenha) {
+		this.pfSenha = pfSenha;
 	}
 
 	public JTextField getTfEmail() {

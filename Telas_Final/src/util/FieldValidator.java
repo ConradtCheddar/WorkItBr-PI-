@@ -85,6 +85,21 @@ public class FieldValidator {
         return apenasNumeros.length() == 10 || apenasNumeros.length() == 11;
     }
     
+    /**
+     * Valida CPF ou CNPJ automaticamente com base na quantidade de dígitos.
+     * Retorna true se for CPF válido (11 dígitos) ou CNPJ válido (14 dígitos).
+     */
+    public static boolean validarCpfCnpj(String valor) {
+        if (valor == null) return false;
+        String apenasNumeros = removerFormatacao(valor);
+        if (apenasNumeros.length() == 11) {
+            return validarCPF(apenasNumeros);
+        } else if (apenasNumeros.length() == 14) {
+            return validarCNPJ(apenasNumeros);
+        }
+        return false;
+    }
+    
     public static String formatarCPF(String cpf) {
         if (cpf == null) return "";
         
@@ -282,6 +297,57 @@ public class FieldValidator {
             
             super.remove(fb, 0, fb.getDocument().getLength());
             super.insertString(fb, 0, formatarCNPJ(apenasNumeros), null);
+        }
+    }
+    
+    // Documento filter que suporta CPF (11 dígitos) e CNPJ (14 dígitos).
+    public static class CpfCnpjDocumentFilter extends DocumentFilter {
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+                throws BadLocationException {
+            String text = fb.getDocument().getText(0, fb.getDocument().getLength());
+            String newText = text.substring(0, offset) + string + text.substring(offset);
+            String apenasNumeros = removerFormatacao(newText);
+
+            if (apenasNumeros.length() <= 14) {
+                super.remove(fb, 0, fb.getDocument().getLength());
+                if (apenasNumeros.length() <= 11) {
+                    super.insertString(fb, 0, formatarCPF(apenasNumeros), attr);
+                } else {
+                    super.insertString(fb, 0, formatarCNPJ(apenasNumeros), attr);
+                }
+            }
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+                throws BadLocationException {
+            String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+            String newText = currentText.substring(0, offset) + text + currentText.substring(offset + length);
+            String apenasNumeros = removerFormatacao(newText);
+
+            if (apenasNumeros.length() <= 14) {
+                super.remove(fb, 0, fb.getDocument().getLength());
+                if (apenasNumeros.length() <= 11) {
+                    super.insertString(fb, 0, formatarCPF(apenasNumeros), attrs);
+                } else {
+                    super.insertString(fb, 0, formatarCNPJ(apenasNumeros), attrs);
+                }
+            }
+        }
+
+        @Override
+        public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+            String text = fb.getDocument().getText(0, fb.getDocument().getLength());
+            String newText = text.substring(0, offset) + text.substring(offset + length);
+            String apenasNumeros = removerFormatacao(newText);
+
+            super.remove(fb, 0, fb.getDocument().getLength());
+            if (apenasNumeros.length() <= 11) {
+                super.insertString(fb, 0, formatarCPF(apenasNumeros), null);
+            } else {
+                super.insertString(fb, 0, formatarCNPJ(apenasNumeros), null);
+            }
         }
     }
 }

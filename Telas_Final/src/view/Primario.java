@@ -34,7 +34,7 @@ public class Primario extends JFrame {
 		this.wbb = wbb;
 		this.dm = dm;
 		setFocusTraversalPolicyProvider(true);
-		//setMinimumSize(new Dimension(1200, 900));
+		setMinimumSize(new Dimension(1500, 1200));
 		setTitle("WorkITBr");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 800);

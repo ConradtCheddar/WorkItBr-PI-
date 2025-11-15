@@ -30,35 +30,44 @@ public class TelaConfigUserController {
             String email = view.getEmail().trim();
             String telefone = view.getTelefone().trim();
             String cpfCnpj = view.getCpfCnpj().trim();
+            String novaSenha = view.getSenha();
+            
+            // Validate name (must not be empty or whitespace-only)
+            if (!view.isNomeValido()) {
+                JOptionPane.showMessageDialog(null, "Nome inválido! Não pode ser vazio ou apenas espaços.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // If a new password was entered, ensure it's not only whitespace
+            if (novaSenha != null && !novaSenha.isEmpty() && !view.isSenhaValida()) {
+                JOptionPane.showMessageDialog(null, "Senha inválida! Não pode ser vazia ou apenas espaços.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             
             if (!FieldValidator.validarEmail(email)) {
                 JOptionPane.showMessageDialog(null, "Email inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
             if (!FieldValidator.validarTelefone(telefone)) {
                 JOptionPane.showMessageDialog(null, "Telefone inválido! Deve ter 10 ou 11 dígitos.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
-            String cpfLimpo = FieldValidator.removerFormatacao(cpfCnpj);
-            if (cpfLimpo.length() == 11) {
-                if (!FieldValidator.validarCPF(cpfCnpj)) {
-                    JOptionPane.showMessageDialog(null, "CPF inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            } else if (cpfLimpo.length() == 14) {
-                if (!FieldValidator.validarCNPJ(cpfCnpj)) {
-                    JOptionPane.showMessageDialog(null, "CNPJ inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            } else {
+
+            // Unified validation for CPF or CNPJ
+            if (!FieldValidator.validarCpfCnpj(cpfCnpj)) {
                 JOptionPane.showMessageDialog(null, "CPF/CNPJ inválido! Digite 11 dígitos para CPF ou 14 para CNPJ.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
+            // If a new password is provided, update it (no confirmation field present)
+            if (novaSenha != null && !novaSenha.isEmpty()) {
+                // optional: add complexity/length checks here
+                usuario.setSenha(novaSenha);
+            }
+            
             usuario.setUsuario(view.getNome());
-            usuario.setSenha(view.getSenha());
+            
             usuario.setEmail(email);
             usuario.setTelefone(telefone);
             usuario.setCpfCnpj(cpfCnpj);
