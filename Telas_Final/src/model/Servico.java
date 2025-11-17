@@ -1,5 +1,7 @@
 package model;
 
+import java.nio.file.Path;
+
 public class Servico {
 	private String nome_Servico;
 	private Double valor;
@@ -12,8 +14,9 @@ public class Servico {
 	private int idContratado;
 	private byte[] arquivo;
 	private Status status;
+	private Path caminho;
 
-	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, Status status,
+	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, byte[] arquivo, Status status,
 			Usuario contratante) {
 		this.idServico = (id != null) ? id : 0;
 		this.nome_Servico = nome_Servico;
@@ -21,11 +24,12 @@ public class Servico {
 		this.modalidade = modalidade;
 		this.descricao = descricao;
 		this.contratante = contratante;
+		this.arquivo = arquivo;
 		this.status = status;
 	}
 
-	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, Status status, Usuario contratante) {
-		this(null, nome_Servico, valor, modalidade, descricao, status, contratante);
+	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, byte[] arquivo, Status status, Usuario contratante) {
+		this(null, nome_Servico, valor, modalidade, descricao, arquivo, status, contratante);
 	}
 
 	public Integer getId() {
@@ -124,6 +128,15 @@ public class Servico {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
+	public Path getCaminho() {
+		return caminho;
+	}
+
+	public void setCaminho(Path caminho) {
+		this.caminho = caminho;
+	}
+	
 	
 	
 	

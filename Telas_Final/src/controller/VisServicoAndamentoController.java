@@ -44,6 +44,7 @@ public class VisServicoAndamentoController {
 					File arquivo = new File(caminhoArquivo);
 					byte[] arquivoBytes = Files.readAllBytes(arquivo.toPath());
 					
+					
 					// Salvar no banco de dados
 					model.salvarArquivoServico(s.getIdServico(), arquivoBytes);
 					

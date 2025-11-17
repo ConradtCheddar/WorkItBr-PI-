@@ -1,15 +1,15 @@
 package controller;
 
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 import model.Servico;
 import model.ServicoDAO;
-import view.VisServicoCnte;
-import view.VisServicoCnteAceito;
-import view.VisServicoCnteFinalizado;
-import model.UsuarioDAO;
 import model.Usuario;
-import view.TelaVisArquivos;
-import view.VisContratado;
-import javax.swing.JOptionPane;
+import model.UsuarioDAO;
+import view.Mensagem;
+import view.VisServicoCnteFinalizado;
 
 public class VisServicoCnteFinalizadoController {
 	private final VisServicoCnteFinalizado view;
@@ -52,10 +52,20 @@ public class VisServicoCnteFinalizadoController {
 		});
 		
 		this.view.visualizar(e ->{
-			System.out.println(s + " print");
-			telaFactory.criarTelaVisArquivo(s);
-			navegador.navegarPara("ARQUIVOS");
-			
+			Mensagem M = new Mensagem();
+			if(s.getArquivo() == null) {
+				M.Erro("nenhum arquivo foi descarregado\n"
+						+ " confirme com contratado", "arquivo não salvo");
+			}else {
+				try {
+					this.model.salvarArquivoLocal(s);
+				} catch (IOException e1) {
+					M.Erro("erro ao abrir arquivo", "erro inesperado");
+					e1.printStackTrace();
+				}
+				telaFactory.criarTelaVisArquivo(s);
+				navegador.navegarPara("ARQUIVOS");
+			}
 		});
 
 	}

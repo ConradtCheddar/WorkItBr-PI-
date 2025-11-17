@@ -63,7 +63,7 @@ public class Navegador {
 			}
 		}
 		
-		this.prim.fecharDrawerMenuSeAberto();
+		this.prim.fecharDrawerMenuSeAberto();  
 		
 		try {
 			String current = this.prim.getCurrentPanelName();

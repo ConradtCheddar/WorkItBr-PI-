@@ -1,9 +1,15 @@
 package model;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +24,8 @@ public class ServicoDAO {
 	public ServicoDAO() {
 
 	}
+	
+	
 
 	public boolean cadastrarS(Servico s) {
 
@@ -66,7 +74,7 @@ public class ServicoDAO {
 				}
 
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
 						model.Status.valueOf(rs.getString("status")), u);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(rs.getInt("id_contratante"));
@@ -104,7 +112,7 @@ public class ServicoDAO {
 					}
 				}
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
 						model.Status.valueOf(rs.getString("status")), contratante);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(idContratante);
@@ -140,7 +148,7 @@ public class ServicoDAO {
 					}
 				}
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
 						model.Status.valueOf(rs.getString("status")), contratante);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(idContratante);
@@ -176,7 +184,7 @@ public class ServicoDAO {
 					}
 				}
 				servico = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
 						model.Status.valueOf(rs.getString("status")), contratante);
 				servico.setIdServico(rs.getInt("ID_servico"));
 				servico.setIdContratante(idContratante);
@@ -266,8 +274,9 @@ public class ServicoDAO {
 			var rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				Servico u = new Servico(rs.getString("Nome_servico"), rs.getDouble("Valor"), rs.getString("Modalidade"),
-						rs.getString("Descricao"), model.Status.valueOf(rs.getString("status")), null);
+				Servico u = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
+						model.Status.valueOf(rs.getString("status")), null);
 				u.setIdServico(rs.getInt("ID_servico"));
 				rs.close();
 				stmt.close();
@@ -374,6 +383,16 @@ public class ServicoDAO {
 			} catch (Exception e) {
 				/* ignore */ }
 		}
+	}
+	
+	public void salvarArquivoLocal(Servico s) throws IOException {
+		byte[] arquivoByte = s.getArquivo();
+		String caminho = System.getProperty("user.dir") + "/src/submicoes/sub_servico_N"+s.getIdServico()+".java";
+		Path caminhoArquivo = Paths.get(caminho);
+		
+		FileOutputStream arquivo = new FileOutputStream(caminho);
+		arquivo.write(arquivoByte);
+		s.setCaminho(caminhoArquivo);
 	}
 
 }

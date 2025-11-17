@@ -1,13 +1,12 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
 import model.Servico;
 import model.ServicoDAO;
-import view.VisServicoCnte;
-import view.VisServicoCnteAceito;
-import model.UsuarioDAO;
 import model.Usuario;
-import view.VisContratado;
-import javax.swing.JOptionPane;
+import model.UsuarioDAO;
+import view.VisServicoCnteAceito;
 
 public class VisServicoCnteAceitoController {
 	private final VisServicoCnteAceito view;
