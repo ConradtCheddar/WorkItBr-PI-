@@ -68,6 +68,12 @@ public class CadastroController {
 			        return;
 			    }
 			    
+			    cpfLimpo = FieldValidator.removerFormatacao(cpf);
+				if (!FieldValidator.validarCpfCnpj(cpf)) {
+					M.Erro("CPF/CNPJ inválido! Digite 11 dígitos para CPF ou 14 para CNPJ.", "Erro de Validação");
+					return;
+				}
+			    
 			    /**
 			     * salva os valores
 			     */
@@ -93,19 +99,7 @@ public class CadastroController {
 		    	
 		    }
 		    
-			String cpfLimpo = FieldValidator.removerFormatacao(cpf);
-			if (!FieldValidator.validarCpfCnpj(cpf)) {
-				JOptionPane.showMessageDialog(view, "CPF/CNPJ inválido! Digite 11 dígitos para CPF ou 14 para CNPJ.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
 			
-			Usuario u = new Usuario(email, usuario, cpf, telefone, senha1, null, this.view.getRdbtnContratado().isSelected(), this.view.getRdbtnContratante().isSelected(), false);
-
-			boolean sucesso = model.cadastrarU(u, senha2Text);
-			if (sucesso) {
-				navegador.navegarPara("LOGIN", false);
-				this.view.limparCampos();
-			}
 		});
 	}
 }

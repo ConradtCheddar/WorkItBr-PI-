@@ -40,13 +40,13 @@ public class TelaVisArquivos extends JPanel {
 
 		RTextScrollPane scrollPane = new RTextScrollPane(mainTextArea);
 		add(scrollPane, "cell 1 1 4 4,grow");
+		/**
+		 * Carregar arquivo de exemplo File file = new
+		 * File("src/submições/helloWorld.java"); loadFile(file, mainTextArea);
+		 */
 
-		// Carregar arquivo de exemplo
-	//	File file = new File("src/submições/helloWorld.java");
-	//	loadFile(file, mainTextArea);
-		
-		File file = new File(s.getCaminhoArquivo());
-		loadFile(file, mainTextArea);
+		// File file = new File(s.getCaminhoArquivo());
+		// loadFile(file, mainTextArea);
 
 		// Adicionar redimensionamento de fonte
 		FontScaler.addResizeCallback(this, () -> {

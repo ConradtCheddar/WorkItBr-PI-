@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import controller.Navegador;
 
 public class ServicoDAO {
@@ -15,33 +14,34 @@ public class ServicoDAO {
 	static String url = "jdbc:mysql://localhost:3306/WorkItBr_BD";
 	static String Usuario = "workitbr";
 	static String Senha = "1234";
+
 	public ServicoDAO() {
 
 	}
 
 	public boolean cadastrarS(Servico s) {
 
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-				String sql = "INSERT INTO Servico (Nome_servico, Modalidade, Valor, Descricao, id_contratante) VALUES (?, ?, ?, ?, ?)";
-				var stmt = conn.prepareStatement(sql);
-				stmt.setString(1, s.getNome_Servico());
-				stmt.setString(2, s.getModalidade());
-				stmt.setDouble(3, s.getValor());
-				stmt.setString(4, s.getDescricao());
-				stmt.setInt(5, s.getContratante().getIdUsuario());
-				stmt.executeUpdate();
+			String sql = "INSERT INTO Servico (Nome_servico, Modalidade, Valor, Descricao, id_contratante) VALUES (?, ?, ?, ?, ?)";
+			var stmt = conn.prepareStatement(sql);
+			stmt.setString(1, s.getNome_Servico());
+			stmt.setString(2, s.getModalidade());
+			stmt.setDouble(3, s.getValor());
+			stmt.setString(4, s.getDescricao());
+			stmt.setInt(5, s.getContratante().getIdUsuario());
+			stmt.executeUpdate();
 
-				stmt.close();
-				conn.close();
-				return true;
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				return false;
-			}
+			stmt.close();
+			conn.close();
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
 		}
+	}
 
 	public ArrayList<Servico> buscarTodosServicosPorUsuario(Usuario u) {
 		try {
@@ -64,10 +64,10 @@ public class ServicoDAO {
 					} catch (Exception ex) {
 					}
 				}
-				
-				
+
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), model.Status.valueOf(rs.getString("status")), u);
+						rs.getString("Modalidade"), rs.getString("Descricao"),
+						model.Status.valueOf(rs.getString("status")), u);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(rs.getInt("id_contratante"));
 
@@ -104,7 +104,8 @@ public class ServicoDAO {
 					}
 				}
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), model.Status.valueOf(rs.getString("status")), contratante);
+						rs.getString("Modalidade"), rs.getString("Descricao"),
+						model.Status.valueOf(rs.getString("status")), contratante);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(idContratante);
 				servicos.add(s);
@@ -120,13 +121,13 @@ public class ServicoDAO {
 
 	public List<Servico> listarServicosAceitos(Navegador n) {
 		List<Servico> servicos = new ArrayList<>();
-		 Usuario u = n.getCurrentUser();
+		Usuario u = n.getCurrentUser();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 			String sql = "SELECT * FROM Servico WHERE status = 'ACEITO' and id_contratado = ?";
 			var stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, u.getIdUsuario() );
+			stmt.setInt(1, u.getIdUsuario());
 			ResultSet rs = stmt.executeQuery();
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {
@@ -139,7 +140,8 @@ public class ServicoDAO {
 					}
 				}
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), model.Status.valueOf(rs.getString("status")), contratante);
+						rs.getString("Modalidade"), rs.getString("Descricao"),
+						model.Status.valueOf(rs.getString("status")), contratante);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(idContratante);
 				s.setIdContratado(rs.getInt("id_contratado"));
@@ -174,7 +176,8 @@ public class ServicoDAO {
 					}
 				}
 				servico = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), model.Status.valueOf(rs.getString("status")), contratante);
+						rs.getString("Modalidade"), rs.getString("Descricao"),
+						model.Status.valueOf(rs.getString("status")), contratante);
 				servico.setIdServico(rs.getInt("ID_servico"));
 				servico.setIdContratante(idContratante);
 				servico.setIdContratado(rs.getInt("id_contratado"));
@@ -187,6 +190,11 @@ public class ServicoDAO {
 		}
 		return servico;
 	}
+
+	public void finalizarServico(Servico s) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
 			String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, status = ?, id_contratado = ? WHERE ID_servico = ?";
 			var stmt = conn.prepareStatement(sql);
@@ -221,13 +229,13 @@ public class ServicoDAO {
 
 			String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, status = ?, id_contratado = ? WHERE ID_servico = ?";
 			var stmt = conn.prepareStatement(sql);
-			stmt.setString(1, u.getNome_Servico());
-			stmt.setString(2, u.getModalidade());
-			stmt.setDouble(3, u.getValor());
-			stmt.setString(4, u.getDescricao());
+			stmt.setString(1, s.getNome_Servico());
+			stmt.setString(2, s.getModalidade());
+			stmt.setDouble(3, s.getValor());
+			stmt.setString(4, s.getDescricao());
 			stmt.setString(5, model.Status.ACEITO.toString());
-			stmt.setInt(6, u.getIdContratado());
-			stmt.setInt(7, u.getIdServico());
+			stmt.setInt(6, s.getIdContratado());
+			stmt.setInt(7, s.getIdServico());
 
 			int rowsUpdated = stmt.executeUpdate();
 
@@ -246,7 +254,7 @@ public class ServicoDAO {
 	}
 
 	public Servico buscarServicoPorNome(String nome) {
-		 try {
+		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
@@ -258,14 +266,8 @@ public class ServicoDAO {
 			var rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				Servico u = new Servico(
-							rs.getString("Nome_servico"),
-							rs.getDouble("Valor"),
-							rs.getString("Modalidade"),
-							rs.getString("Descricao"),
-							model.Status.valueOf(rs.getString("status")),
-							null
-						);
+				Servico u = new Servico(rs.getString("Nome_servico"), rs.getDouble("Valor"), rs.getString("Modalidade"),
+						rs.getString("Descricao"), model.Status.valueOf(rs.getString("status")), null);
 				u.setIdServico(rs.getInt("ID_servico"));
 				rs.close();
 				stmt.close();
@@ -282,62 +284,72 @@ public class ServicoDAO {
 		return null;
 	}
 
-    public boolean atualizarServicoPorId(int idServico, Servico s) {
-        Servico atual = buscarServicoPorId(idServico);
-        if (atual == null) return false;
-        String nome = (s.getNome_Servico() != null && !s.getNome_Servico().isEmpty()) ? s.getNome_Servico() : atual.getNome_Servico();
-        Double valor = (s.getValor() != null) ? s.getValor() : atual.getValor();
-        String modalidade = (s.getModalidade() != null && !s.getModalidade().isEmpty()) ? s.getModalidade() : atual.getModalidade();
-        String descricao = (s.getDescricao() != null && !s.getDescricao().isEmpty()) ? s.getDescricao() : atual.getDescricao();
-        model.Status status = (s.getStatus() != null) ? s.getStatus() : atual.getStatus();
-        if (descricao == null) descricao = "";
-        String sql = "UPDATE Servico SET Nome_servico = ?, Valor = ?, Modalidade = ?, Descricao = ?, status = ? WHERE ID_servico = ?";
-        Connection conn = null;
-        java.sql.PreparedStatement stmt = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(url, Usuario, Senha);
-            conn.setAutoCommit(false);
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, nome);
-            stmt.setDouble(2, valor);
-            stmt.setString(3, modalidade);
-            stmt.setString(4, descricao);
-            stmt.setString(5, status.toString());
-            stmt.setInt(6, idServico);
-            int rowsUpdated = stmt.executeUpdate();
-            conn.commit();
-            return rowsUpdated > 0;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            try { if (conn != null) conn.rollback(); } catch (Exception e) { e.printStackTrace(); }
-            return false;
-        } finally {
-
-        }
-    }
-    
-    public boolean deletarServico(int id) {
-     try {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-		
-		String sql = "Delete from Servico where ID_servico = ?";
-		var stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, id);
-		int rowsAffected = stmt.executeUpdate();
-		
-		stmt.close();
-		conn.close();
-		return rowsAffected > 0;
+	public boolean atualizarServicoPorId(int idServico, Servico s) {
+		Servico atual = buscarServicoPorId(idServico);
+		if (atual == null)
+			return false;
+		String nome = (s.getNome_Servico() != null && !s.getNome_Servico().isEmpty()) ? s.getNome_Servico()
+				: atual.getNome_Servico();
+		Double valor = (s.getValor() != null) ? s.getValor() : atual.getValor();
+		String modalidade = (s.getModalidade() != null && !s.getModalidade().isEmpty()) ? s.getModalidade()
+				: atual.getModalidade();
+		String descricao = (s.getDescricao() != null && !s.getDescricao().isEmpty()) ? s.getDescricao()
+				: atual.getDescricao();
+		model.Status status = (s.getStatus() != null) ? s.getStatus() : atual.getStatus();
+		if (descricao == null)
+			descricao = "";
+		String sql = "UPDATE Servico SET Nome_servico = ?, Valor = ?, Modalidade = ?, Descricao = ?, status = ? WHERE ID_servico = ?";
+		Connection conn = null;
+		java.sql.PreparedStatement stmt = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, Usuario, Senha);
+			conn.setAutoCommit(false);
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, nome);
+			stmt.setDouble(2, valor);
+			stmt.setString(3, modalidade);
+			stmt.setString(4, descricao);
+			stmt.setString(5, status.toString());
+			stmt.setInt(6, idServico);
+			int rowsUpdated = stmt.executeUpdate();
+			conn.commit();
+			return rowsUpdated > 0;
 		} catch (Exception ex) {
-	        ex.printStackTrace();
+			ex.printStackTrace();
+			try {
+				if (conn != null)
+					conn.rollback();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return false;
+		} finally {
 
-	        return false;
-	    }     
-    }
-    
-    public void salvarArquivoServico(int idServico, byte[] arquivo) {
+		}
+	}
+
+	public boolean deletarServico(int id) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+			String sql = "Delete from Servico where ID_servico = ?";
+			var stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			int rowsAffected = stmt.executeUpdate();
+
+			stmt.close();
+			conn.close();
+			return rowsAffected > 0;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+			return false;
+		}
+	}
+
+	public void salvarArquivoServico(int idServico, byte[] arquivo) {
 		Connection conn = null;
 		java.sql.PreparedStatement stmt = null;
 		try {
@@ -351,8 +363,16 @@ public class ServicoDAO {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			try { if (stmt != null) stmt.close(); } catch (Exception e) { /* ignore */ }
-			try { if (conn != null) conn.close(); } catch (Exception e) { /* ignore */ }
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+				/* ignore */ }
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				/* ignore */ }
 		}
 	}
 
