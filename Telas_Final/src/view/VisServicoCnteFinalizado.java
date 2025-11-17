@@ -122,7 +122,7 @@ public class VisServicoCnteFinalizado extends JPanel {
 		this.btnVoltar.addActionListener(actionListener);
 	}
 
-	public void contratante(ActionListener actionListener) {
+	public void contratado(ActionListener actionListener) {
 		this.btnContratado.addActionListener(actionListener);
 	}
 	
