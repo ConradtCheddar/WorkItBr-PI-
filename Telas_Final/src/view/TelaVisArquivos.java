@@ -1,47 +1,30 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
+import model.Servico;
 import net.miginfocom.swing.MigLayout;
 import util.FontScaler;
-import util.FontScaler.FontSize;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
 
 public class TelaVisArquivos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private RSyntaxTextArea mainTextArea;
 
-	public TelaVisArquivos() {
+	public TelaVisArquivos(Servico s) {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][98.00,grow][grow][81.00][-56.00][65.00,grow][][]",
 				"[35px][66.00,grow][grow][][][66]"));
@@ -59,7 +42,10 @@ public class TelaVisArquivos extends JPanel {
 		add(scrollPane, "cell 1 1 4 4,grow");
 
 		// Carregar arquivo de exemplo
-		File file = new File("src/submições/helloWorld.java");
+	//	File file = new File("src/submições/helloWorld.java");
+	//	loadFile(file, mainTextArea);
+		
+		File file = new File(s.getCaminhoArquivo());
 		loadFile(file, mainTextArea);
 
 		// Adicionar redimensionamento de fonte

@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
+
+import controller.Navegador;
 
 public class ServicoDAO {
 
@@ -20,11 +21,6 @@ public class ServicoDAO {
 
 	public boolean cadastrarS(Servico s) {
 
-		if (s.getNome_Servico().isEmpty() || s.getModalidade().isEmpty() || Double.toString(s.getValor()).isEmpty()
-				|| s.getDescricao().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Erro", JOptionPane.ERROR_MESSAGE);
-			return false;
-		} else {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				Connection conn = DriverManager.getConnection(url, Usuario, Senha);
@@ -37,8 +33,7 @@ public class ServicoDAO {
 				stmt.setString(4, s.getDescricao());
 				stmt.setInt(5, s.getContratante().getIdUsuario());
 				stmt.executeUpdate();
-				JOptionPane.showMessageDialog(null, "Serviço cadastrado com sucesso!", "Sucesso!",
-						JOptionPane.PLAIN_MESSAGE);
+
 				stmt.close();
 				conn.close();
 				return true;
@@ -47,7 +42,6 @@ public class ServicoDAO {
 				return false;
 			}
 		}
-	}
 
 	public ArrayList<Servico> buscarTodosServicosPorUsuario(Usuario u) {
 		try {
@@ -124,13 +118,15 @@ public class ServicoDAO {
 		return servicos;
 	}
 
-	public List<Servico> listarServicosAceitos() {
+	public List<Servico> listarServicosAceitos(Navegador n) {
 		List<Servico> servicos = new ArrayList<>();
+		 Usuario u = n.getCurrentUser();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-			String sql = "SELECT * FROM Servico WHERE status = 'ACEITO'";
+			String sql = "SELECT * FROM Servico WHERE status = 'ACEITO' and id_contratado = ?";
 			var stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, u.getIdUsuario() );
 			ResultSet rs = stmt.executeQuery();
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			while (rs.next()) {
@@ -192,7 +188,33 @@ public class ServicoDAO {
 		return servico;
 	}
 
-	public void aceitarServico(Servico u) {
+			String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, status = ?, id_contratado = ? WHERE ID_servico = ?";
+			var stmt = conn.prepareStatement(sql);
+			stmt.setString(1, s.getNome_Servico());
+			stmt.setString(2, s.getModalidade());
+			stmt.setDouble(3, s.getValor());
+			stmt.setString(4, s.getDescricao());
+			stmt.setString(5, model.Status.FINALIZADO.toString());
+			stmt.setInt(6, s.getIdContratado());
+			stmt.setInt(7, s.getIdServico());
+
+			int rowsUpdated = stmt.executeUpdate();
+
+			if (rowsUpdated > 0) {
+
+			} else {
+
+			}
+
+			stmt.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+	}
+
+	public void aceitarServico(Servico s) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
@@ -210,17 +232,16 @@ public class ServicoDAO {
 			int rowsUpdated = stmt.executeUpdate();
 
 			if (rowsUpdated > 0) {
-				JOptionPane.showMessageDialog(null, "Servico aceito", "Sucesso",
-						JOptionPane.PLAIN_MESSAGE);
+
 			} else {
-				JOptionPane.showMessageDialog(null, "Servico não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+
 			}
 
 			stmt.close();
 			conn.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao aceitar servico", "Erro", JOptionPane.ERROR_MESSAGE);
+
 		}
 	}
 
@@ -311,7 +332,7 @@ public class ServicoDAO {
 		return rowsAffected > 0;
 		} catch (Exception ex) {
 	        ex.printStackTrace();
-	        JOptionPane.showMessageDialog(null, "Erro ao deletar dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+
 	        return false;
 	    }     
     }

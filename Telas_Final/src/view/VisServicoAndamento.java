@@ -126,10 +126,6 @@ public class VisServicoAndamento extends JPanel {
 		lblFoto.setIcon(foto);
 
 		btnArquivos = new JButton("Adicionar arquivos");
-		btnArquivos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		add(btnArquivos, "flowx,cell 0 2 2 1,alignx left, gap 100");
 
 		btnFinalizar = new JButton("Finalizar trabalho");

@@ -79,7 +79,7 @@ public class LoginController {
 	private void navigateToUserScreen(Usuario user) {
 		String destination;
 		if (user.isAdmin()) {
-			destination = "ADM";
+			destination = "TEMP";
 		} else if (user.isContratado()) {
 			destination = "CONTRATADO";
 		} else if (user.isContratante()) {

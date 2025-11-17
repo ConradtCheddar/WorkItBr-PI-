@@ -132,6 +132,7 @@ public class TelaCadastroContratante extends JPanel {
 	public void cadastrar(ActionListener actionlistener) {
 		this.btnCadastrarTrabalho.addActionListener(actionlistener);
 	}
+	
 
 	public void limparCampos() {
 		tfNome.setText("");

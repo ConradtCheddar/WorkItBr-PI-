@@ -7,12 +7,15 @@ import controller.ContratadoController;
 import controller.ListaServicosController;
 import controller.LoginController;
 import controller.PopupController;
+import controller.TempController;
 import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.DrawerMenu;
+import view.Mensagem;
 import view.Primario;
 import view.SplashScreen;
 import view.TelaVisArquivos;
+import view.Temp;
 import view.TelaCadastro;
 import view.TelaCadastroContratante;
 import view.TelaContratado;
@@ -37,6 +40,7 @@ public class Main {
 				
 				splash.setProgress(15, "Inicializando componentes...");
 				wbBarra wbb = new wbBarra();
+				Mensagem M = new Mensagem();
 				Thread.sleep(150);
 				
 				splash.setProgress(25, "Conectando ao banco de dados...");
@@ -78,13 +82,14 @@ public class Main {
 				TelaContratado telacontratado = new TelaContratado();
 				ContratadoController contratadocontroller = new ContratadoController(telacontratado, usuarioDAO, navegador, servicoDAO, telaFactory);
 				telacontratado.adicionarOuvinte(contratadocontroller);
+				Temp temp = new Temp();
+				TempController tempController = new TempController(temp, usuarioDAO, navegador);
 				Thread.sleep(100);
 				
 				splash.setProgress(85, "Configurando cadastros...");
 				TelaCadastroContratante telacadastrocontratante = new TelaCadastroContratante();
 				controller.CadastroContratanteController cadastrocontratantecontroller = new controller.CadastroContratanteController(telacadastrocontratante, servicoDAO, navegador);
 
-				TelaVisArquivos visarquivos = new TelaVisArquivos();
 				Thread.sleep(100);
 				
 				splash.setProgress(90, "Configurando lista de serviços...");
@@ -97,9 +102,9 @@ public class Main {
 				navegador.adicionarPainel("LOGIN", telalogin);
 				navegador.adicionarPainel("CADASTRO", telacadastro);
 				navegador.adicionarPainel("CONTRATADO", telacontratado);
-				navegador.adicionarPainel("VISARQUIVOS", visarquivos);
 				navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
 				navegador.adicionarPainel("SERVICOS", telaservicos);
+				navegador.adicionarPainel("TEMP", temp);
 				Thread.sleep(100);
 
 				splash.setProgress(98, "Finalizando...");
