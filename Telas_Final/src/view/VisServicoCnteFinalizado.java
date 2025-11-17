@@ -37,6 +37,7 @@ public class VisServicoCnteFinalizado extends JPanel {
 	private JButton btnVoltar, btnContratado;
 	private JTextArea tpDesc;
 	private JButton btnVisualizar;
+	private JButton btnReabrir;
 
 	public VisServicoCnteFinalizado(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
@@ -115,7 +116,10 @@ public class VisServicoCnteFinalizado extends JPanel {
 				new Object[] { btnContratado, FontSize.BOTAO });
 		
 		btnVisualizar = new JButton("Visualizar Arquivo");
-		add(btnVisualizar, "cell 1 2,alignx center");
+		add(btnVisualizar, "flowx,cell 1 2,alignx center");
+		
+		btnReabrir = new JButton("Reabrir Serviço");
+		add(btnReabrir, "cell 1 2");
 	}
 
 	public void voltar(ActionListener actionListener) {
@@ -129,4 +133,8 @@ public class VisServicoCnteFinalizado extends JPanel {
 	public void visualizar(ActionListener actionListener) {
 		this.btnVisualizar.addActionListener(actionListener);
 	}
+	public void Reabrir(ActionListener actionListener) {
+		this.btnReabrir.addActionListener(actionListener);
+	}
+	
 }

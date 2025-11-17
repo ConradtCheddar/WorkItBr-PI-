@@ -46,7 +46,7 @@ public class Main {
 				splash.setProgress(25, "Conectando ao banco de dados...");
 				UsuarioDAO usuarioDAO = new UsuarioDAO();
 				ServicoDAO servicoDAO = new ServicoDAO();
-				Thread.sleep(200);
+				Thread.sleep(200); 
 				
 				splash.setProgress(35, "Criando interface principal...");
 				DrawerMenu pm = new DrawerMenu();
