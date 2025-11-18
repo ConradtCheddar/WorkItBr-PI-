@@ -112,25 +112,26 @@ public class VisServicoCnteFinalizado extends JPanel {
 
 		Panel1 = new JPanel();
 		add(Panel1, "cell 0 2 2 1,grow");
-		Panel1.setLayout(new MigLayout("", "[grow][grow]", "[grow]"));
+		Panel1.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow]"));
 
 		btnVoltar = new JButton("Voltar");
 		Panel1.add(btnVoltar, "cell 0 0,alignx center");
 
+		btnReabrir = new JButton("Reabrir Serviço");
+		Panel1.add(btnReabrir, "flowx,cell 1 0,alignx center");
+
 		btnBaixar = new JButton("Baixar arquivo");
-		Panel1.add(btnBaixar, "cell 1 0,alignx center");
+		Panel1.add(btnBaixar, "cell 2 0,alignx center");
+
+		btnVisualizar = new JButton("Visualizar Arquivo");
+		add(btnVisualizar, "flowx,cell 1 2,alignx center");
 
 		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
 				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
 				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnVoltar, FontSize.BOTAO },
-				new Object[] { btnBaixar, FontSize.BOTAO }, new Object[] { btnContratado, FontSize.BOTAO });
-				new Object[] { btnContratado, FontSize.BOTAO });
-		
-		btnVisualizar = new JButton("Visualizar Arquivo");
-		add(btnVisualizar, "flowx,cell 1 2,alignx center");
-		
-		btnReabrir = new JButton("Reabrir Serviço");
-		add(btnReabrir, "cell 1 2");
+				new Object[] { btnBaixar, FontSize.BOTAO }, new Object[] { btnContratado, FontSize.BOTAO },
+				new Object[] { btnReabrir, FontSize.BOTAO });
+
 	}
 
 	public void voltar(ActionListener actionListener) {
@@ -144,8 +145,9 @@ public class VisServicoCnteFinalizado extends JPanel {
 	public void visualizar(ActionListener actionListener) {
 		this.btnBaixar.addActionListener(actionListener);
 	}
+
 	public void Reabrir(ActionListener actionListener) {
 		this.btnReabrir.addActionListener(actionListener);
 	}
-	
+
 }

@@ -193,8 +193,10 @@ public class ServicoDAO {
 		                rs.getDouble("Valor"),
 		                rs.getString("Modalidade"),
 		                rs.getString("Descricao"),
-		                model.Status.valueOf(rs.getString("status")),
+		   //esse null e problema
+		                null, model.Status.valueOf(rs.getString("status")),
 		                contratante
+		               
 	            );
 	            s.setIdServico(rs.getInt("ID_servico"));
 	            s.setIdContratante(idContratante);
