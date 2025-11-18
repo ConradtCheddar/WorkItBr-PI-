@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
 
 import controller.Navegador;
 
@@ -466,13 +467,47 @@ public class ServicoDAO {
 		}
 	}
 	
+	// New: retrieve the arquivo (BLOB) bytes from the database by service ID
+	public byte[] recuperarArquivo(int idServico) {
+		byte[] arquivo = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			try (Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+					var stmt = conn.prepareStatement("SELECT submicoes FROM Servico WHERE ID_servico = ?")) {
+				stmt.setInt(1, idServico);
+				try (ResultSet rs = stmt.executeQuery()) {
+					if (rs.next()) {
+						arquivo = rs.getBytes("submicoes");
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return arquivo;
+	}
+	
+	// Improved: save arquivo to a local file; if bytes are missing on the Servico object, fetch from DB
 	public void salvarArquivoLocal(Servico s) throws IOException {
 		byte[] arquivoByte = s.getArquivo();
-		String caminho = System.getProperty("user.dir") + "/src/submicoes/sub_servico_N"+s.getIdServico()+".java";
-		Path caminhoArquivo = Paths.get(caminho);
-		
-		FileOutputStream arquivo = new FileOutputStream(caminho);
-		arquivo.write(arquivoByte);
+		if (arquivoByte == null || arquivoByte.length == 0) {
+			arquivoByte = recuperarArquivo(s.getIdServico());
+			if (arquivoByte == null || arquivoByte.length == 0) {
+				throw new IOException("Arquivo não encontrado no banco de dados para o serviço: " + s.getIdServico());
+			}
+			s.setArquivo(arquivoByte);
+		}
+
+		String dir = System.getProperty("user.dir") + File.separator + "src" + File.separator + "submicoes";
+		Path dirPath = Paths.get(dir);
+		if (!Files.exists(dirPath)) {
+			Files.createDirectories(dirPath);
+		}
+		String nome = "sub_servico_N" + s.getIdServico();
+		Path caminhoArquivo = dirPath.resolve(nome);
+		try (FileOutputStream fos = new FileOutputStream(caminhoArquivo.toFile())) {
+			fos.write(arquivoByte);
+		}
 		s.setCaminho(caminhoArquivo);
 	}
 

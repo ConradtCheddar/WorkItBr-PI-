@@ -1,7 +1,10 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import model.Servico;
@@ -52,18 +55,47 @@ public class VisServicoCnteFinalizadoController {
 			navegador.navegarPara("SERVICOS");
 		});
 		
+		// When user clicks to download/baixar the file, ask where to save and write bytes to disk
 		this.view.visualizar(e ->{
-			if(s.getArquivo() == null) {
-				M.Erro("nenhum arquivo foi descarregado\n"
-						+ " confirme com contratado", "arquivo não salvo");
-			}else {
-				try {
-					this.model.salvarArquivoLocal(s);
-				} catch (IOException e1) {
-					M.Erro("erro ao abrir arquivo", "erro inesperado");
-					e1.printStackTrace();
+			byte[] arquivoBytes = s.getArquivo();
+			if (arquivoBytes == null || arquivoBytes.length == 0) {
+				// try to recover from DB
+				arquivoBytes = this.model.recuperarArquivo(s.getIdServico());
+				if (arquivoBytes == null || arquivoBytes.length == 0) {
+					M.Erro("Nenhum arquivo foi descarregado. Confirme com contratado.", "Arquivo não salvo");
+					return;
 				}
+				// set on object for future use
+				s.setArquivo(arquivoBytes);
+			}
+
+			// Open a Save dialog to ask where to save the file
+			JFileChooser chooser = new JFileChooser();
+			chooser.setDialogTitle("Salvar arquivo");
+			// suggest a filename
+			String sugestao = "sub_servico_N" + s.getIdServico();
+			chooser.setSelectedFile(new File(sugestao));
+			int resp = chooser.showSaveDialog(null);
+			if (resp != JFileChooser.APPROVE_OPTION) {
+				// user cancelled
+				return;
+			}
+			File destino = chooser.getSelectedFile();
+			Path caminho = destino.toPath();
+			try {
+				// ensure parent exists
+				if (caminho.getParent() != null && !Files.exists(caminho.getParent())) {
+					Files.createDirectories(caminho.getParent());
+				}
+				Files.write(caminho, arquivoBytes);
+				M.Sucesso("Arquivo salvo em: " + caminho.toString(), "Arquivo salvo");
+				// update service caminho
+				s.setCaminho(caminho);
+				// navigate to arquivos panel as before
 				navegador.navegarPara("ARQUIVOS");
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				M.Erro("Erro ao salvar arquivo: " + ex.getMessage(), "Erro");
 			}
 		});
 
