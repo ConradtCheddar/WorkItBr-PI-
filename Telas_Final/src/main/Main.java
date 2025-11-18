@@ -1,7 +1,5 @@
 package main;
 
-import java.awt.event.ComponentEvent;
-
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -17,14 +15,13 @@ import view.DrawerMenu;
 import view.Mensagem;
 import view.Primario;
 import view.SplashScreen;
-import view.TelaVisArquivos;
-import view.Temp;
 import view.TelaCadastro;
 import view.TelaCadastroContratante;
 import view.TelaContratado;
 import view.TelaHistorico;
 import view.TelaListaServicos;
 import view.TelaLogin;
+import view.Temp;
 import view.wbBarra;
 
 public class Main {

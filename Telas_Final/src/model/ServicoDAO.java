@@ -180,13 +180,13 @@ public class ServicoDAO {
 	                } catch (Exception ignore) {}
 	            }
 	            Servico s = new Servico(
-	                rs.getInt("ID_servico"),
-	                rs.getString("Nome_servico"),
-	                rs.getDouble("Valor"),
-	                rs.getString("Modalidade"),
-	                rs.getString("Descricao"),
-	                model.Status.valueOf(rs.getString("status")),
-	                contratante
+		                rs.getInt("ID_servico"),
+		                rs.getString("Nome_servico"),
+		                rs.getDouble("Valor"),
+		                rs.getString("Modalidade"),
+		                rs.getString("Descricao"),
+		                model.Status.valueOf(rs.getString("status")),
+		                contratante
 	            );
 	            s.setIdServico(rs.getInt("ID_servico"));
 	            s.setIdContratante(idContratante);

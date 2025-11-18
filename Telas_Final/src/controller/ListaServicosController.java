@@ -61,7 +61,8 @@ public class ListaServicosController {
 					
 
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(view, "Erro ao carregar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+					ex.printStackTrace();
+//					JOptionPane.showMessageDialog(view, "Erro ao carregar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
 				JOptionPane.showMessageDialog(view, "Nenhum serviço selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
