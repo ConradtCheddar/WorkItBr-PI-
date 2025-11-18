@@ -47,19 +47,19 @@ public class DrawerMenu extends JPanel {
 		bottomPanel.setOpaque(true);
 		bottomPanel.setBorder(BorderFactory.createEmptyBorder(MARGIN, MARGIN, MARGIN, MARGIN));
 
-		btnHome = createMenuButton("Home");
+		btnHome = createMenuButton("Histórico");
 		topPanel.add(btnHome);
 		topPanel.add(Box.createVerticalStrut(5));
-		btnProfile = createMenuButton("Profile");
+		btnProfile = createMenuButton("Perfil");
 		topPanel.add(btnProfile);
 		topPanel.add(Box.createVerticalStrut(5));
 		btnTrabalhos = createMenuButton("Trabalhos");
 		topPanel.add(btnTrabalhos);
 		topPanel.add(Box.createVerticalStrut(5));
-		btnSettings = createMenuButton("Settings");
+		btnSettings = createMenuButton("Confirgurações");
 		topPanel.add(btnSettings);
 
-		btnLogout = createMenuButton("Logout");
+		btnLogout = createMenuButton("Sair");
 		bottomPanel.add(btnLogout);
 
 		add(topPanel, BorderLayout.NORTH);

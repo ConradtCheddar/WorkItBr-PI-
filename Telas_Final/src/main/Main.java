@@ -4,6 +4,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import controller.ContratadoController;
+import controller.HistoricoController;
 import controller.ListaServicosController;
 import controller.LoginController;
 import controller.PopupController;
@@ -14,13 +15,13 @@ import view.DrawerMenu;
 import view.Mensagem;
 import view.Primario;
 import view.SplashScreen;
-import view.TelaVisArquivos;
-import view.Temp;
 import view.TelaCadastro;
 import view.TelaCadastroContratante;
 import view.TelaContratado;
+import view.TelaHistorico;
 import view.TelaListaServicos;
 import view.TelaLogin;
+import view.Temp;
 import view.wbBarra;
 
 public class Main {
@@ -96,6 +97,11 @@ public class Main {
 				TelaListaServicos telaservicos = new TelaListaServicos();
 				ListaServicosController controller = new ListaServicosController(telaservicos, servicoDAO, navegador, telaFactory);
 				telaservicos.setOnShow(() -> controller.atualizarTabelaServicosDoUsuario());
+				TelaHistorico telahistorico = new TelaHistorico();
+				HistoricoController historicoController = new HistoricoController(telahistorico, usuarioDAO, navegador, servicoDAO, telaFactory);
+				telahistorico.adicionarOuvinte(historicoController);
+				
+		
 				Thread.sleep(100);
 
 				splash.setProgress(95, "Registrando telas...");
@@ -105,6 +111,7 @@ public class Main {
 				navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
 				navegador.adicionarPainel("SERVICOS", telaservicos);
 				navegador.adicionarPainel("TEMP", temp);
+				navegador.adicionarPainel("HISTORICO", telahistorico);
 				Thread.sleep(100);
 
 				splash.setProgress(98, "Finalizando...");

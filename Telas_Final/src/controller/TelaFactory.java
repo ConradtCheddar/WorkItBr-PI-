@@ -111,17 +111,6 @@ public class TelaFactory {
         return panelName;
     }
     
-    public String criarTelaVisArquivo(Servico s) {
-    	String panelName = "ARQUIVO";
-    	
-    	navegador.removerPainel(panelName);
-    	
-    	TelaVisArquivos view = new TelaVisArquivos(s);
-		
-		navegador.adicionarPainel(panelName, view);
-        return panelName;
-    }
-    
     public void limparCache() {
         String[] prefixos = {
             "VIS_SERVICO",

@@ -156,6 +156,54 @@ public class ServicoDAO {
 		return servicos;
 	}
 
+	public List<Servico> listarServicosFinalizados(Navegador n, boolean comoContratado) {
+
+	    List<Servico> servicos = new ArrayList<>();
+	    Usuario u = n.getCurrentUser();
+
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+	        String coluna = comoContratado ? "id_contratado" : "id_contratante";
+	        String sql = "SELECT * FROM Servico WHERE status = 'FINALIZADO' AND " + coluna + " = ?";
+	        var stmt = conn.prepareStatement(sql);
+	        stmt.setInt(1, u.getIdUsuario());
+	        System.out.println("Executando SQL: " + sql + " com ID_usuario = " + u.getIdUsuario());
+	        ResultSet rs = stmt.executeQuery();
+	        UsuarioDAO usuarioDAO = new UsuarioDAO();
+	        while (rs.next()) {
+	            int idContratante = rs.getInt("id_contratante");
+	            Usuario contratante = usuarioDAO.getUsuarioById(idContratante);
+	            if (contratante != null) {
+	                try {
+	                    usuarioDAO.decode64(contratante);
+	                } catch (Exception ignore) {}
+	            }
+	            Servico s = new Servico(
+		                rs.getInt("ID_servico"),
+		                rs.getString("Nome_servico"),
+		                rs.getDouble("Valor"),
+		                rs.getString("Modalidade"),
+		                rs.getString("Descricao"),
+		                model.Status.valueOf(rs.getString("status")),
+		                contratante
+	            );
+	            s.setIdServico(rs.getInt("ID_servico"));
+	            s.setIdContratante(idContratante);
+	            s.setIdContratado(rs.getInt("id_contratado"));
+	            servicos.add(s);
+	        }
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+
+	    return servicos;
+	}
+
+
 	public Servico buscarServicoPorId(int idServico) {
 		Servico servico = null;
 		try {

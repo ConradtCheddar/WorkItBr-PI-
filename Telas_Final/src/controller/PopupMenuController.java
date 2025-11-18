@@ -74,11 +74,11 @@ public class PopupMenuController {
 		Usuario u = navegador.getCurrentUser();
 		if (u != null) {
 			if (u.isAdmin()) {
-				navegador.navegarPara("ADM");
+				navegador.navegarPara("HISTORICO");
 			} else if (u.isContratante()) {
-				navegador.navegarPara("SERVICOS");
+				navegador.navegarPara("HISTORICO");
 			} else if (u.isContratado()) {
-				navegador.navegarPara("CONTRATADO");
+				navegador.navegarPara("HISTORICO");
 			} else {
 				navegador.navegarPara("LOGIN");
 			}

@@ -31,12 +31,14 @@ public class VisServicoCnteFinalizado extends JPanel {
 	private JPanel panel;
 	private JPanel PanelInfo;
 	private JPanel PanelDesc;
+	private JPanel Panel1;
 	private JTextArea taTitulo;
 	private JTextArea taModalidade;
 	private JTextArea taPreco;
 	private JButton btnVoltar, btnContratado;
 	private JTextArea tpDesc;
-	private JButton btnVisualizar;
+	private JButton btnBaixar;
+	private JPanel panel_1;
 
 	public VisServicoCnteFinalizado(Servico s) {
 		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
@@ -101,21 +103,25 @@ public class VisServicoCnteFinalizado extends JPanel {
 		scrollPane.setBorder(null);
 		PanelDesc.add(scrollPane, "cell 0 0,grow");
 
-		btnVoltar = new JButton("Voltar");
-		add(btnVoltar, "cell 0 2,alignx center");
-
 		taTitulo.setText(s.getNome_Servico());
 		taModalidade.setText(s.getModalidade());
 		taPreco.setText(String.format("R$ %.2f", s.getValor()));
 		tpDesc.setText(s.getDescricao());
 
+		Panel1 = new JPanel();
+		add(Panel1, "cell 0 2 2 1,grow");
+		Panel1.setLayout(new MigLayout("", "[grow][grow]", "[grow]"));
+
+		btnVoltar = new JButton("Voltar");
+		Panel1.add(btnVoltar, "cell 0 0,alignx center");
+
+		btnBaixar = new JButton("Baixar arquivo");
+		Panel1.add(btnBaixar, "cell 1 0,alignx center");
+
 		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
 				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
 				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnVoltar, FontSize.BOTAO },
-				new Object[] { btnContratado, FontSize.BOTAO });
-		
-		btnVisualizar = new JButton("Visualizar Arquivo");
-		add(btnVisualizar, "cell 1 2,alignx center");
+				new Object[] { btnBaixar, FontSize.BOTAO }, new Object[] { btnContratado, FontSize.BOTAO });
 	}
 
 	public void voltar(ActionListener actionListener) {
@@ -125,8 +131,8 @@ public class VisServicoCnteFinalizado extends JPanel {
 	public void contratado(ActionListener actionListener) {
 		this.btnContratado.addActionListener(actionListener);
 	}
-	
+
 	public void visualizar(ActionListener actionListener) {
-		this.btnVisualizar.addActionListener(actionListener);
+		this.btnBaixar.addActionListener(actionListener);
 	}
 }
