@@ -24,6 +24,10 @@ public class HistoricoController extends ComponentAdapter {
 	private final Navegador navegador;
 	private final ServicoDAO servicoDAO;
 	private final TelaFactory telaFactory;
+	private Usuario usuarioLogado;
+	private boolean isContratado;
+	
+
 
 	public HistoricoController(TelaHistorico view, UsuarioDAO model, Navegador navegador, ServicoDAO servicoDAO, TelaFactory telaFactory){
 		this.view = view;
@@ -60,10 +64,21 @@ public class HistoricoController extends ComponentAdapter {
 		
 	}
 	
-	
+
 	public void atualizarListaHistorico() {
+		usuarioLogado = navegador.getCurrentUser();
+		System.out.println("atualizarListaHistorico chamado");
 		ServicoDAO servicoDAO = new ServicoDAO();
-		java.util.List<Servico> servicosFinalizados = servicoDAO.listarServicosFinalizados(navegador);
+		
+		if(usuarioLogado.isContratado()) {
+			isContratado = true;
+		} else {
+			isContratado = false;
+			
+		}
+		
+		System.out.println("isContratado: " + isContratado);
+		java.util.List<Servico> servicosFinalizados = servicoDAO.listarServicosFinalizados(navegador, isContratado);
 		DefaultListModel<Servico> listModelFinalizado = new DefaultListModel<>();
 		for (Servico s : servicosFinalizados) {
 			listModelFinalizado.addElement(s);
@@ -76,6 +91,5 @@ public class HistoricoController extends ComponentAdapter {
 	@Override
 	public void componentShown(ComponentEvent e) {
 		atualizarListaHistorico();
-
 	}
 }
