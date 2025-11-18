@@ -56,7 +56,7 @@ public class VisServicoCnteAceito extends JPanel {
 		taTitulo = new JTextArea("Titulo");
 		taTitulo.setEditable(false);
 		taTitulo.setFocusable(false);
-		//taTitulo.setLineWrap(true);
+	
 		taTitulo.setWrapStyleWord(true);
 		taTitulo.setRows(1);
 		taTitulo.setBackground(PanelInfo.getBackground());
@@ -66,7 +66,7 @@ public class VisServicoCnteAceito extends JPanel {
 		taModalidade = new JTextArea("Modalidade");
 		taModalidade.setEditable(false);
 		taModalidade.setFocusable(false);
-		//taModalidade.setLineWrap(true);
+	
 		taModalidade.setWrapStyleWord(true);
 		taModalidade.setRows(1);
 		taModalidade.setBackground(PanelInfo.getBackground());
@@ -76,7 +76,7 @@ public class VisServicoCnteAceito extends JPanel {
 		taPreco = new JTextArea("Preco");
 		taPreco.setEditable(false);
 		taPreco.setFocusable(false);
-		//taPreco.setLineWrap(true);
+		
 		taPreco.setWrapStyleWord(true);
 		taPreco.setRows(1);
 		taPreco.setBackground(PanelInfo.getBackground());
@@ -91,7 +91,7 @@ public class VisServicoCnteAceito extends JPanel {
 		tpDesc = new JTextArea();
 		tpDesc.setEditable(false);
 		tpDesc.setFocusable(false);
-		//tpDesc.setLineWrap(true);
+
 		tpDesc.setWrapStyleWord(true);
 		tpDesc.setBackground(PanelDesc.getBackground());
 		tpDesc.setText(s.getDescricao());

@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import model.Usuario;
 import model.UsuarioDAO;
 import util.FieldValidator;
+import view.Mensagem;
 import view.TelaConfigUser;
 
 public class TelaConfigUserController {
@@ -26,7 +27,10 @@ public class TelaConfigUserController {
         }
         this.view.setUserData(usuario);
 
+        Mensagem M = new Mensagem();
+        
         this.view.addAlterarDadosListener(e -> {
+        	
             String email = view.getEmail().trim();
             String telefone = view.getTelefone().trim();
             String cpfCnpj = view.getCpfCnpj().trim();
@@ -34,29 +38,29 @@ public class TelaConfigUserController {
             
             // Validate name (must not be empty or whitespace-only)
             if (!view.isNomeValido()) {
-                JOptionPane.showMessageDialog(null, "Nome inválido! Não pode ser vazio ou apenas espaços.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+               M.Erro("Nome inválido! Não pode ser vazio ou apenas espaços.","Erro de Validação");
                 return;
             }
 
             // If a new password was entered, ensure it's not only whitespace
             if (novaSenha != null && !novaSenha.isEmpty() && !view.isSenhaValida()) {
-                JOptionPane.showMessageDialog(null, "Senha inválida! Não pode ser vazia ou apenas espaços.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+             M.Erro("Senha inválida! Não pode ser apenas espaços.","Erro de Validação");
                 return;
             }
             
             if (!FieldValidator.validarEmail(email)) {
-                JOptionPane.showMessageDialog(null, "Email inválido!", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                M.Erro("Email inválido!", "Erro de Validação");
                 return;
             }
 
             if (!FieldValidator.validarTelefone(telefone)) {
-                JOptionPane.showMessageDialog(null, "Telefone inválido! Deve ter 10 ou 11 dígitos.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+              M.Erro("Telefone inválido! Deve ter 10 ou 11 dígitos.", "Erro de Validação");
                 return;
             }
 
             // Unified validation for CPF or CNPJ
             if (!FieldValidator.validarCpfCnpj(cpfCnpj)) {
-                JOptionPane.showMessageDialog(null, "CPF/CNPJ inválido! Digite 11 dígitos para CPF ou 14 para CNPJ.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+               M.Erro("CPF/CNPJ inválido! Digite 11 dígitos para CPF ou 14 para CNPJ.", "Erro de Validação");
                 return;
             }
             
@@ -86,13 +90,13 @@ public class TelaConfigUserController {
                     this.view.setUserData(usuario);
                 } catch (java.io.FileNotFoundException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Erro: Arquivo de imagem não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                  M.Erro("Erro: Arquivo de imagem não encontrado.", "Erro");
                 } catch (java.io.IOException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Erro ao processar imagem: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                  M.Erro("Erro ao processar a imagem.", "Erro");
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Erro inesperado ao alterar imagem.", "Erro", JOptionPane.ERROR_MESSAGE);
+                  M.Erro("Erro inesperado ao alterar imagem.", "Erro");
                 }
             }
         });

@@ -10,6 +10,7 @@ import javax.swing.table.TableModel;
 import model.Servico;
 import model.ServicoDAO;
 import model.Status;
+import view.Mensagem;
 import view.TelaListaServicos;
 import view.VisServicoAndamento;
 import view.VisServico;
@@ -37,6 +38,7 @@ public class ListaServicosController {
 			navegador.navegarPara("CADASTRO_CONTRATANTE");
 		});
 
+		Mensagem M = new Mensagem();
 		this.view.visualizar(e -> {
 			int selectedRow = view.getTableServicos().getSelectedRow();
 			if (selectedRow >= 0) {
@@ -44,7 +46,7 @@ public class ListaServicosController {
 					int id = (int) view.getTableServicos().getValueAt(selectedRow, 0);
 					Servico s = this.model.buscarServicoPorId(id);
 					if (s == null) {
-						JOptionPane.showMessageDialog(view, "Serviço não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+						M.Erro("Serviço não encontrado","Erro");
 						return;
 					}
 					
@@ -61,10 +63,10 @@ public class ListaServicosController {
 					
 
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(view, "Erro ao carregar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+					M.Erro("Erro ao carregar Serviço", "Erro");
 				}
 			} else {
-				JOptionPane.showMessageDialog(view, "Nenhum serviço selecionado.", "Aviso", JOptionPane.WARNING_MESSAGE);
+				M.Aviso("Nenhum serviço selecionado.", "Aviso");
 			}
 		});
 
@@ -79,23 +81,23 @@ public class ListaServicosController {
 					Servico servicoTmp = this.model.buscarServicoPorId(id);
 
 					if (servicoTmp != null && servicoTmp.getStatus() == Status.ACEITO) {
-						JOptionPane.showMessageDialog(view, "Impossível deletar trabalhos que já foram aceitos.", "Erro", JOptionPane.ERROR_MESSAGE);
+						M.Erro("Impossível deletar trabalhos que já foram aceitos.", "Erro");
 					} else {
 						int option = JOptionPane.showConfirmDialog(view, "Tem certeza que deseja deletar este trabalho?", "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);
 						if (option == JOptionPane.YES_OPTION) {
 							if (this.model.deletarServico(id)) {
 								modelTable.removeRow(selectedRow);
-								JOptionPane.showMessageDialog(view, "Serviço deletado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+								M.Sucesso("Serviço deletado com sucesso.", "Sucesso");
 							} else {
-								JOptionPane.showMessageDialog(view, "Falha ao deletar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+                              M.Erro("Falha ao deletar o serviço.", "Erro");
 							}
 						}
 					}
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(view, "Erro ao tentar deletar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+					M.Erro("Erro ao tentar deletar o serviço.", "Erro");
 				}
 			} else {
-				JOptionPane.showMessageDialog(view, "Selecione uma linha para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+				M.Aviso("Selecione uma linha para excluir.", "Aviso");
 			}
 		});
 
@@ -139,8 +141,7 @@ public class ListaServicosController {
 					}
 					model.Servico servTmp = this.model.buscarServicoPorId(idServico);
 					if (servTmp != null && servTmp.getStatus() == Status.ACEITO) {
-						JOptionPane.showMessageDialog(null, "Imposivel modificar trabalhos aceitos", "Erro",
-							JOptionPane.ERROR_MESSAGE);
+					M.Erro("Imposivel modificar trabalhos aceitos", "Erro");
 						failed++;
 					} else {
 						String nome = null;

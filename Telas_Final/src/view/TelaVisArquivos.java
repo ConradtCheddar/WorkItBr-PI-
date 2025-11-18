@@ -23,7 +23,9 @@ public class TelaVisArquivos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private RSyntaxTextArea mainTextArea;
-
+	
+    Mensagem M = new Mensagem();
+    
 	public TelaVisArquivos(Servico s) {
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new MigLayout("fill, insets 0", "[20px][98.00,grow][grow][81.00][-56.00][65.00,grow][][]",
@@ -40,15 +42,7 @@ public class TelaVisArquivos extends JPanel {
 
 		RTextScrollPane scrollPane = new RTextScrollPane(mainTextArea);
 		add(scrollPane, "cell 1 1 4 4,grow");
-		/**
-		 * Carregar arquivo de exemplo File file = new
-		 * File("src/submições/helloWorld.java"); loadFile(file, mainTextArea);
-		 */
-
-		// File file = new File(s.getCaminhoArquivo());
-		// loadFile(file, mainTextArea);
-
-		// Adicionar redimensionamento de fonte
+		
 		FontScaler.addResizeCallback(this, () -> {
 			int panelHeight = getHeight();
 			int fontSize = Math.max(12, panelHeight / 40);
@@ -72,8 +66,7 @@ public class TelaVisArquivos extends JPanel {
 
 			System.out.println("[INFO] Arquivo carregado: " + file.getName());
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Erro ao abrir o arquivo: " + e.getMessage(), "Erro",
-					JOptionPane.ERROR_MESSAGE);
+          M.Erro("Erro ao carregar o Arquivo","Erro");
 		}
 	}
 }

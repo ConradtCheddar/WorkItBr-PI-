@@ -1,6 +1,7 @@
 package controller;
 
 import view.DrawerMenu;
+import view.Mensagem;
 import view.TelaConfigUser;
 import controller.TelaConfigUserController;
 import model.Usuario;
@@ -19,6 +20,8 @@ public class PopupMenuController {
 		this.telaFactory = telaFactory;
 		updateMenuState();
 	}
+	
+	Mensagem M = new Mensagem();
 	
 	public DrawerMenu getView(){
 		return view;
@@ -88,7 +91,7 @@ public class PopupMenuController {
 			String panelName = telaFactory.criarTelaConfigUser(usuario);
 			navegador.navegarPara(panelName);
 		} else {
-			JOptionPane.showMessageDialog(view, "Nenhum usuário logado.", "Erro", JOptionPane.ERROR_MESSAGE);
+			M.Erro("Nenhum usuário logado.", "Erro");
 		}
 	}
 	

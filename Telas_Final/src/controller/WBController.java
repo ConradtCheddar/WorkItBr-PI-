@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import model.UsuarioDAO;
+import view.Mensagem;
 import view.wbBarra;
 
 public class WBController {
@@ -28,6 +29,8 @@ public class WBController {
         this.view.setBackEnabled(navegador.hasHistory());
         this.view.setMenuEnabled(navegador.getCurrentUser() != null);
         
+        Mensagem M = new Mensagem();
+        
         this.navegador.setOnHistoryChange(() -> SwingUtilities.invokeLater(() -> {
             this.view.setBackEnabled(navegador.hasHistory());
             this.view.setMenuEnabled(navegador.getCurrentUser() != null);
@@ -41,12 +44,8 @@ public class WBController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (navegador.getCurrentUser() == null) {
-                    JOptionPane.showMessageDialog(
-                        view,
-                        "Você precisa estar logado para acessar o menu.",
-                        "Acesso Negado",
-                        JOptionPane.WARNING_MESSAGE
-                    );
+                  M.Aviso("Você precisa estar logado para acessar o menu.","Acesso Negado");
+                  
                     return;
                 }
                 popup2.getView().toggleMenu();
@@ -63,12 +62,7 @@ public class WBController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!navegador.hasHistory()) {
-                    JOptionPane.showMessageDialog(
-                        view,
-                        "Não há tela anterior para retornar.",
-                        "Aviso",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
+                   M.Aviso( "Não há tela anterior para retornar.","Aviso");
                     return;
                 }
                 navegador.voltar();

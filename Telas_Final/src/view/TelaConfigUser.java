@@ -238,7 +238,6 @@ public class TelaConfigUser extends JPanel {
 		return txtGithub.getText();
 	}
 
-	// Validation helpers: prevent empty or whitespace-only name/password
 	public boolean isNomeValido() {
 		String nome = tfNome.getText();
 		return nome != null && !nome.trim().isEmpty();

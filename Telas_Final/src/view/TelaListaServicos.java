@@ -80,7 +80,6 @@ public class TelaListaServicos extends JPanel {
 		btnEditar = new JButton("Editar");
 		add(btnEditar, "cell 1 3,growx,height 20:40:60");
 
-		// Adicionar redimensionamento de fontes
 		FontScaler.addAutoResize(this, new Object[] { btnVisualizar, FontSize.BOTAO },
 				new Object[] { btnDeletar, FontSize.BOTAO }, new Object[] { btnCadastrar, FontSize.BOTAO },
 				new Object[] { btnEditar, FontSize.BOTAO });

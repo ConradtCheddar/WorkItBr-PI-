@@ -10,6 +10,7 @@ import model.Servico;
 import model.ServicoDAO;
 import model.Status;
 import model.UsuarioDAO;
+import view.Mensagem;
 import view.VisServico;
 import view.VisServicoAndamento;
 
@@ -25,13 +26,15 @@ public class VisServicoAndamentoController {
 		this.navegador = navegador;
 		this.s= s;
 		
+		Mensagem M = new Mensagem();
+		
 		this.view.finalizar(e -> {
 			s.setStatus(Status.FINALIZADO);
 			boolean sucesso = model.atualizarServicoPorId(s.getIdServico(), s);
 			if (sucesso) {
-				JOptionPane.showMessageDialog(null, "Serviço finalizado com sucesso!");
+			M.Sucesso("Serviço finalizado com sucesso.", "Sucesso");
 			} else {
-				JOptionPane.showMessageDialog(null, "Erro ao finalizar o serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+				M.Erro("Erro ao finalizar o serviço.", "Erro");
 			}
 			navegador.navegarPara("CONTRATADO");
 		});
@@ -47,24 +50,15 @@ public class VisServicoAndamentoController {
 					// Salvar no banco de dados
 					model.salvarArquivoServico(s.getIdServico(), arquivoBytes);
 					
-					JOptionPane.showMessageDialog(null, 
-						"Arquivo '" + arquivo.getName() + "' salvo com sucesso!", 
-						"Sucesso", 
-						JOptionPane.INFORMATION_MESSAGE);
+					M. Sucesso("Arquivo salvo com sucesso no banco de dados.", "Sucesso");
 					
 					System.out.println("Arquivo salvo no banco: " + caminhoArquivo);
 				} catch (IOException ex) {
 					ex.printStackTrace();
-					JOptionPane.showMessageDialog(null, 
-						"Erro ao ler o arquivo selecionado.", 
-						"Erro", 
-						JOptionPane.ERROR_MESSAGE);
+					M.Erro("Erro ao ler o arquivo selecionado.", "Erro");
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					JOptionPane.showMessageDialog(null, 
-						"Erro ao salvar o arquivo no banco de dados.", 
-						"Erro", 
-						JOptionPane.ERROR_MESSAGE);
+					M.Erro("Erro ao salvar o arquivo no banco de dados.", "Erro");
 				}
 			}
 		});

@@ -3,6 +3,7 @@ package controller;
 import model.Servico;
 import model.ServicoDAO;
 import model.UsuarioDAO;
+import view.Mensagem;
 import view.VisServico;
 
 public class VisServicoController {
@@ -17,9 +18,11 @@ public class VisServicoController {
 		this.navegador = navegador;
 		this.s= s;
 		
+		Mensagem M = new Mensagem();
+		
 		this.view.aceitar(e ->{
 			if (navegador.getCurrentUser() == null) {
-				javax.swing.JOptionPane.showMessageDialog(null, "Erro: Nenhum usuário logado. Por favor, faça login novamente.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+				M.Erro("Erro: Nenhum usuário logado. Por favor, faça login novamente.", "Erro");
 				navegador.navegarPara("LOGIN");
 				return;
 			}
@@ -32,7 +35,7 @@ public class VisServicoController {
 			}
 			
 			if (servico == null) {
-				javax.swing.JOptionPane.showMessageDialog(null, "Erro: Serviço não encontrado no banco de dados.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+                M.Erro("Erro: Serviço não encontrado no banco de dados.", "Erro");
 				navegador.navegarPara("CONTRATADO");
 				return;
 			}

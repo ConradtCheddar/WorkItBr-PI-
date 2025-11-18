@@ -7,6 +7,7 @@ import view.VisServicoCnteAceito;
 import view.VisServicoCnteFinalizado;
 import model.UsuarioDAO;
 import model.Usuario;
+import view.Mensagem;
 import view.TelaVisArquivos;
 import view.VisContratado;
 import javax.swing.JOptionPane;
@@ -26,11 +27,12 @@ public class VisServicoCnteFinalizadoController {
 		this.s = s;
 		this.telaFactory = telaFactory;
 
+		Mensagem M = new Mensagem();
+		
 		this.view.contratado(e -> {
 			int idContratado = s.getIdContratado();
 			if (idContratado <= 0) {
-				JOptionPane.showMessageDialog(null, "Contratado não definido para este serviço.", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
+				M.Aviso("Contratado não definido para este serviço.", "Aviso");
 				return;
 			}
 			UsuarioDAO udao = new UsuarioDAO();

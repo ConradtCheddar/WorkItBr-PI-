@@ -10,6 +10,8 @@ public class Mensagem {
 	public void Sucesso(String mensagem, String titulo){
 		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.PLAIN_MESSAGE);
 	}
-	
+	public void Aviso(String mensagem, String titulo){
+		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.WARNING_MESSAGE);
+	}
 
 }

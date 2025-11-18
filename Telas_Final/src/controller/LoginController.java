@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import model.Usuario;
 import model.UsuarioDAO;
+import view.Mensagem;
 import view.Primario;
 import view.TelaLogin;
 import view.TelaCadastro;
@@ -28,7 +29,7 @@ public class LoginController {
 		
 		initListeners();
 	}
-
+    Mensagem M = new Mensagem();
 	private void initListeners() {
 		this.view.login(e -> handleLoginAttempt());
 
@@ -46,7 +47,7 @@ public class LoginController {
 		char[] senha = view.getSenha();
 
 		if (nome.trim().isEmpty() || senha.length == 0) {
-			JOptionPane.showMessageDialog(view, "Usuário e senha não podem estar em branco.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+			M.Erro("Usuário e senha não podem estar em branco.", "Erro de Validação");
 			view.limparFormulario();
 			Arrays.fill(senha, ' ');
 			return;
@@ -91,11 +92,11 @@ public class LoginController {
 	}
 
 	private void handleFailedLogin() {
-		JOptionPane.showMessageDialog(view, "Usuário ou senha incorretos.", "Erro de Autenticação", JOptionPane.ERROR_MESSAGE);
+		M.Erro("Ocorreu um erro de comunicação com o sistema. Tente novamente mais tarde.", "Erro de Conexão");
 	}
 
 	private void handleLoginError(Exception e) {
 		e.printStackTrace(); 
-		JOptionPane.showMessageDialog(view, "Ocorreu um erro de comunicação com o sistema. Tente novamente mais tarde.", "Erro de Conexão", JOptionPane.ERROR_MESSAGE);
+		M.Erro("Ocorreu um erro de comunicação com o sistema. Tente novamente mais tarde.", "Erro de Conexão");
 	}
 }
