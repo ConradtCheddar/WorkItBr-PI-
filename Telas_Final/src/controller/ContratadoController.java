@@ -92,6 +92,7 @@ public class ContratadoController extends ComponentAdapter {
 		}
 		this.view.getListaDisponivel().setModel(listModel);
 		this.view.getListaDisponivel().setCellRenderer(new ServicoListCellRenderer());
+		
 	}
 	
 	public void atualizarListaAceitos() {

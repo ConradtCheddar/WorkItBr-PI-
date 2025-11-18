@@ -133,7 +133,7 @@ public class ServicoDAO {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
-			String sql = "SELECT * FROM Servico WHERE status = 'ACEITO' and id_contratado = ?";
+			String sql = "SELECT * FROM Servico WHERE (status = 'ACEITO' || status = 'REABERTO') and id_contratado = ?";
 			var stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, u.getIdUsuario());
 			ResultSet rs = stmt.executeQuery();
@@ -267,7 +267,38 @@ public class ServicoDAO {
 			if (rowsUpdated > 0) {
 
 			} else {
+				
+			}
 
+			stmt.close();
+			conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+	}
+	
+	public void ReabrirServico(Servico s) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+
+			String sql = "UPDATE Servico SET Nome_servico = ?, Modalidade = ?, Valor = ?, Descricao = ?, status = ?, id_contratado = ? WHERE ID_servico = ?";
+			var stmt = conn.prepareStatement(sql);
+			stmt.setString(1, s.getNome_Servico());
+			stmt.setString(2, s.getModalidade());
+			stmt.setDouble(3, s.getValor());
+			stmt.setString(4, s.getDescricao());
+			stmt.setString(5, model.Status.REABERTO.toString());
+			stmt.setInt(6, s.getIdContratado());
+			stmt.setInt(7, s.getIdServico());
+
+			int rowsUpdated = stmt.executeUpdate();
+
+			if (rowsUpdated > 0) {
+
+			} else {
+				
 			}
 
 			stmt.close();

@@ -78,5 +78,9 @@ public class VisServicoCnteFinalizadoController {
 			}
 		});
 
+		this.view.Reabrir(e -> {
+			this.model.ReabrirServico(s);
+			navegador.navegarPara("SERVICOS");
+		});
 	}
 }
