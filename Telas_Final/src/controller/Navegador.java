@@ -102,7 +102,7 @@ public class Navegador {
 		}
 		
 		this.prim.mostrarTela(nome);
-		if ("SERVICOS".equals(nome)) {
+		if ("SERV".equals(nome)) {
 			controller.ListaServicosController.atualizarTabelaSeExistir();
 		}
 	}

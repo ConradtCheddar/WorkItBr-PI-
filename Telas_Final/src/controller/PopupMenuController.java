@@ -99,7 +99,7 @@ public class PopupMenuController {
 		Usuario u = navegador.getCurrentUser();
 		if (u != null) {
 			if (u.isContratante()) {
-				navegador.navegarPara("SERVICOS");
+				navegador.navegarPara("SERV");
 			} else if (u.isContratado()) {
 				navegador.navegarPara("CONTRATADO");
 			} else {

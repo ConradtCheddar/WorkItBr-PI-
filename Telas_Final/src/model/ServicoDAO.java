@@ -503,7 +503,7 @@ public class ServicoDAO {
 		if (!Files.exists(dirPath)) {
 			Files.createDirectories(dirPath);
 		}
-		String nome = "sub_servico_N" + s.getIdServico();
+		String nome = s.getNome_Servico();
 		Path caminhoArquivo = dirPath.resolve(nome);
 		try (FileOutputStream fos = new FileOutputStream(caminhoArquivo.toFile())) {
 			fos.write(arquivoByte);

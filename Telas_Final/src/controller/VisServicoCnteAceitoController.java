@@ -27,7 +27,7 @@ public class VisServicoCnteAceitoController {
 		
 		Mensagem M = new Mensagem();
 		
-		this.view.contratante(e ->{
+		this.view.contratado(e ->{
 			int idContratado = s.getIdContratado();
 			if (idContratado <= 0) {
 				M.Aviso("Contratado não definido para este serviço.", "Aviso");
@@ -39,15 +39,13 @@ public class VisServicoCnteAceitoController {
 				M.Erro("Usuário contratado não encontrado.", "Erro");
 				return;
 			}
-			int idServico = s.getIdServico();
-			String prevPanel = (idServico > 0) ? ("VIS_SERVICO_CNTE_ACEITO_" + idServico) : "SERVICOS";
 			
-			String panelName = telaFactory.criarVisContratado(contratado, prevPanel);
+			String panelName = telaFactory.criarVisContratado(contratado);
 			navegador.navegarPara(panelName);
 		});
 		
 		this.view.voltar(e ->{
-			navegador.navegarPara("SERVICOS");
+			navegador.navegarPara("SERV");
 		});
 		
 	}

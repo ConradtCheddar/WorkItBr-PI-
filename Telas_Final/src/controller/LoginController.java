@@ -84,7 +84,7 @@ public class LoginController {
 		} else if (user.isContratado()) {
 			destination = "CONTRATADO";
 		} else if (user.isContratante()) {
-			destination = "SERVICOS";
+			destination = "SERV";
 		} else {
 			destination = "LOGIN";
 		}

@@ -9,42 +9,19 @@ import view.VisContratado;
 import javax.swing.JOptionPane;
 
 public class VisContratadoController {
-	private final VisServicoCnteAceito view;
+	private final VisContratado view;
 	private final Navegador navegador;
-	private final Servico s;
+	private final Usuario u;
 
-	public VisContratadoController(VisServicoCnteAceito view, Navegador navegador, Servico s){
+	public VisContratadoController(VisContratado view, Navegador navegador, Usuario u){
 		this.view = view;
 		this.navegador = navegador;
-		this.s= s;
+		this.u= u;
 		
 		Mensagem M = new Mensagem();
 		
-		this.view.contratante(e ->{
-			int idContratado = s.getIdContratado();
-			if (idContratado <= 0) {
-				M.Aviso("Contratado não definido para este serviço.", "Aviso");
-				return;
-			}
-			UsuarioDAO udao = new UsuarioDAO();
-			Usuario contratado = udao.getUsuarioById(idContratado);
-			if (contratado == null) {
-				M.Erro("Usuário contratado não encontrado.", "Erro");
-				return;
-			}
-			String panelName = "VIS_CONTRATADO_" + contratado.getIdUsuario();
-			VisContratado tela = new VisContratado(contratado);
-			navegador.adicionarPainel(panelName, tela);
-			navegador.navegarPara(panelName);
-			int idServicoLocal = s.getIdServico();
-			String prevPanelLocal = (idServicoLocal > 0) ? ("VIS_Servico_Cnte_Aceito_" + idServicoLocal) : "SERVICOS";
-			tela.voltar(ev -> {
-				navegador.navegarPara(prevPanelLocal);
-			});
-		});
-		
 		this.view.voltar(e ->{
-			navegador.navegarPara("SERVICOS");
+			navegador.navegarPara("SERV");
 		});
 		
 	}

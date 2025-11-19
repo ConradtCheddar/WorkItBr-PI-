@@ -26,7 +26,7 @@ public class TempController {
 			navegador.navegarPara("ADM");
 		});
 		this.view.contratante(e ->{
-			navegador.navegarPara("SERVICOS");
+			navegador.navegarPara("SERV");
 		});
 		this.view.contratado(e ->{
 			navegador.navegarPara("CONTRATADO");

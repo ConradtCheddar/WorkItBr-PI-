@@ -51,7 +51,7 @@ public class CadastroContratanteController {
 				if (sucesso) {
 					M.Sucesso("Cadastro realizado com sucesso", "Sucesso");
 					this.view.limparCampos();
-					navegador.navegarPara("SERVICOS", false);
+					navegador.navegarPara("SERV", false);
 				} else {
 					M.Erro("Cadastro falhou", "Erro inesperado");
 				}

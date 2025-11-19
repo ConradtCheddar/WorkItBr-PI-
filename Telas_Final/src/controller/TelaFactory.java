@@ -33,9 +33,7 @@ public class TelaFactory {
     }
     
     public String criarVisServicoAndamento(Servico servico) {
-        String panelName = "VIS_SERVICO_ANDAMENTO"+ servico.getIdServico();
-        
-        navegador.removerPainel(panelName);
+        String panelName = "VIS_SERVICO_ANDAMENTO";
         
         VisServicoAndamento view = new VisServicoAndamento(servico);
         VisServicoAndamentoController controller = new VisServicoAndamentoController(view, servicoDAO, navegador, servico);
@@ -47,8 +45,6 @@ public class TelaFactory {
     public String criarVisServicoCnte(Servico servico) {
         String panelName = "VIS_SERVICO_CNTE";
         
-        navegador.removerPainel(panelName);
-        
         VisServicoCnte view = new VisServicoCnte(servico);
         VisServicoCnteController controller = new VisServicoCnteController(view, servicoDAO, navegador, servico);
         
@@ -59,8 +55,6 @@ public class TelaFactory {
     public String criarVisServicoCnteAceito(Servico servico) {
         String panelName = "VIS_SERVICO_CNTE_ACEITO";
         
-        navegador.removerPainel(panelName);
-        
         VisServicoCnteAceito view = new VisServicoCnteAceito(servico);
         VisServicoCnteAceitoController controller = new VisServicoCnteAceitoController(view, servicoDAO, navegador, servico, this);
         
@@ -68,14 +62,12 @@ public class TelaFactory {
         return panelName;
     }
     
-    public String criarVisContratado(Usuario usuario, String telaPreviaRetorno) {
+    public String criarVisContratado(Usuario usuario) {
         String panelName = "VIS_CONTRATADO";
         
-        navegador.removerPainel(panelName);
         
         VisContratado view = new VisContratado(usuario);
-        
-        view.voltar(e -> navegador.navegarPara(telaPreviaRetorno));
+        VisContratadoController controller = new VisContratadoController(view,navegador,usuario);
         
         navegador.adicionarPainel(panelName, view);
         return panelName;

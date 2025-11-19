@@ -6,17 +6,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 
 import model.Servico;
 import model.ServicoDAO;
 import model.Usuario;
 import model.UsuarioDAO;
 import view.ServicoListCellRenderer;
-import view.TelaContratado;
 import view.TelaHistorico;
 import view.VisServico;
 import view.VisServicoAndamento;
+import view.VisServicoCnteFinalizado;
+import view.VisServicoFinalizado;
 
 public class HistoricoController extends ComponentAdapter {
 	private final TelaHistorico view;
@@ -52,11 +52,22 @@ public class HistoricoController extends ComponentAdapter {
 		             * instancia a tela correta
 		             */
 		            if (selectedItem instanceof Servico) {
-		                Servico servicoSelecionado = (Servico) selectedItem;
-		                VisServicoAndamento vs = new VisServicoAndamento(servicoSelecionado);
-		                new VisServicoAndamentoController(vs, servicoDAO, navegador, servicoSelecionado);
-		                navegador.adicionarPainel("VISUALIZAR_SERVICO_ANDAMENTO", vs);
-		                navegador.navegarPara("VISUALIZAR_SERVICO_ANDAMENTO");
+		            	if (navegador.getCurrentUser().isContratado()) {
+		            		Servico servicoSelecionado = (Servico) selectedItem;
+			                VisServicoFinalizado vs = new VisServicoFinalizado(servicoSelecionado);
+			                navegador.adicionarPainel("VIS_FINALIZADO", vs);
+			                navegador.navegarPara("VIS_FINALIZADO");
+			                return;
+		            	}
+		            	if (navegador.getCurrentUser().isContratante()) {
+		            		Servico servicoSelecionado = (Servico) selectedItem;
+			                VisServicoCnteFinalizado vs = new VisServicoCnteFinalizado(servicoSelecionado);
+			                new VisServicoCnteFinalizadoController(vs, servicoDAO, navegador, servicoSelecionado, telaFactory);
+			                navegador.adicionarPainel("VIS_FINALIZADO_CNTE", vs);
+			                navegador.navegarPara("VIS_FINALIZADO_CNTE");
+			                return;
+		            	}
+		               
 		            }
 		        }
 		    }

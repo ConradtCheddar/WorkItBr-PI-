@@ -18,7 +18,7 @@ public class VisServicoCnteController {
 		this.s= s;
 		
 		this.view.Editar(e ->{
-			navegador.navegarPara("SERVICOS");
+			navegador.navegarPara("SERV");
 		});
 		
 	}

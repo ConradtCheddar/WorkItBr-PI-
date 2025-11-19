@@ -109,7 +109,7 @@ public class Main {
 				navegador.adicionarPainel("CADASTRO", telacadastro);
 				navegador.adicionarPainel("CONTRATADO", telacontratado);
 				navegador.adicionarPainel("CADASTRO_CONTRATANTE", telacadastrocontratante);
-				navegador.adicionarPainel("SERVICOS", telaservicos);
+				navegador.adicionarPainel("SERV", telaservicos);
 				navegador.adicionarPainel("TEMP", temp);
 				navegador.adicionarPainel("HISTORICO", telahistorico);
 				Thread.sleep(100);

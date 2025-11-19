@@ -31,7 +31,7 @@ public class VisServicoCnteFinalizadoController {
 
 		Mensagem M = new Mensagem();
 		
-		this.view.contratado(e -> {
+		this.view.contratado(e ->{
 			int idContratado = s.getIdContratado();
 			if (idContratado <= 0) {
 				M.Aviso("Contratado não definido para este serviço.", "Aviso");
@@ -40,19 +40,16 @@ public class VisServicoCnteFinalizadoController {
 			UsuarioDAO udao = new UsuarioDAO();
 			Usuario contratado = udao.getUsuarioById(idContratado);
 			if (contratado == null) {
-				JOptionPane.showMessageDialog(null, "Usuário contratado não encontrado.", "Erro",
-						JOptionPane.ERROR_MESSAGE);
+				M.Erro("Usuário contratado não encontrado.", "Erro");
 				return;
 			}
-			int idServico = s.getIdServico();
-			String prevPanel = (idServico > 0) ? ("VIS_SERVICO_CNTE_ACEITO_" + idServico) : "SERVICOS";
-
-			String panelName = telaFactory.criarVisContratado(contratado, prevPanel);
+			
+			String panelName = telaFactory.criarVisContratado(contratado);
 			navegador.navegarPara(panelName);
 		});
 
 		this.view.voltar(e -> {
-			navegador.navegarPara("SERVICOS");
+			navegador.navegarPara("SERV");
 		});
 		
 		// When user clicks to download/baixar the file, ask where to save and write bytes to disk
@@ -73,7 +70,7 @@ public class VisServicoCnteFinalizadoController {
 			JFileChooser chooser = new JFileChooser();
 			chooser.setDialogTitle("Salvar arquivo");
 			// suggest a filename
-			String sugestao = "sub_servico_N" + s.getIdServico();
+			String sugestao = s.getNome_Servico();
 			chooser.setSelectedFile(new File(sugestao));
 			int resp = chooser.showSaveDialog(null);
 			if (resp != JFileChooser.APPROVE_OPTION) {
@@ -101,7 +98,7 @@ public class VisServicoCnteFinalizadoController {
 
 		this.view.Reabrir(e -> {
 			this.model.ReabrirServico(s);
-			navegador.navegarPara("SERVICOS");
+			navegador.navegarPara("SERV");
 		});
 	}
 }
