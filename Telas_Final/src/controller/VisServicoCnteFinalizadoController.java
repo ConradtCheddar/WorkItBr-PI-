@@ -45,7 +45,8 @@ public class VisServicoCnteFinalizadoController {
 				return;
 			}
 			int idServico = s.getIdServico();
-			String prevPanel = (idServico > 0) ? ("VIS_SERVICO_CNTE_ACEITO_" + idServico) : "SERVICOS";
+			// Corrige prevPanel para voltar para a tela finalizado correta
+			String prevPanel = (idServico > 0) ? ("VIS_FINALIZADO" + idServico) : "SERVICOS";
 
 			String panelName = telaFactory.criarVisContratado(contratado, prevPanel);
 			navegador.navegarPara(panelName);

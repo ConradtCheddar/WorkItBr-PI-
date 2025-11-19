@@ -57,7 +57,8 @@ public class TelaFactory {
     }
     
     public String criarVisServicoCnteAceito(Servico servico) {
-        String panelName = "VIS_SERVICO_CNTE_ACEITO";
+        // Agora registra o painel com sufixo de id para corresponder ao esperado pelos controladores
+        String panelName = "VIS_SERVICO_CNTE_ACEITO_" + servico.getIdServico();
         
         navegador.removerPainel(panelName);
         
@@ -69,13 +70,19 @@ public class TelaFactory {
     }
     
     public String criarVisContratado(Usuario usuario, String telaPreviaRetorno) {
-        String panelName = "VIS_CONTRATADO";
+        // Registra um painel por usuário para evitar conflitos quando várias visualizações forem abertas
+        String panelName = "VIS_CONTRATADO_" + usuario.getIdUsuario();
         
         navegador.removerPainel(panelName);
         
         VisContratado view = new VisContratado(usuario);
         
-        view.voltar(e -> navegador.navegarPara(telaPreviaRetorno));
+        // Adiciona log para facilitar depuração do retorno
+        view.voltar(e -> {
+            System.out.println("[TelaFactory] VisContratado.voltar -> dest=" + telaPreviaRetorno + " (usuario=" + usuario.getIdUsuario() + ")");
+            // Ao voltar, não empilha o painel atual (pushCurrent = false)
+            navegador.navegarPara(telaPreviaRetorno, false);
+        });
         
         navegador.adicionarPainel(panelName, view);
         return panelName;
@@ -100,7 +107,7 @@ public class TelaFactory {
     }
     
     public String criarVisServicoCnteFinalizado(Servico s) {
-    	String panelName = "VIS_FINALIZADO";
+    	String panelName = "VIS_FINALIZADO" + s.getIdServico();
     	
     	navegador.removerPainel(panelName);
     	

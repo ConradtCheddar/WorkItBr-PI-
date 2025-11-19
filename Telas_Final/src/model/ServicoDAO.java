@@ -194,7 +194,6 @@ public class ServicoDAO {
 		                rs.getDouble("Valor"),
 		                rs.getString("Modalidade"),
 		                rs.getString("Descricao"),
-		   //esse null e problema
 		                null, model.Status.valueOf(rs.getString("status")),
 		                contratante
 		               

@@ -37,7 +37,8 @@ public class VisContratadoController {
 			navegador.adicionarPainel(panelName, tela);
 			navegador.navegarPara(panelName);
 			int idServicoLocal = s.getIdServico();
-			String prevPanelLocal = (idServicoLocal > 0) ? ("VIS_Servico_Cnte_Aceito_" + idServicoLocal) : "SERVICOS";
+			// Usa o nome com sufixo de id para voltar corretamente
+			String prevPanelLocal = (idServicoLocal > 0) ? ("VIS_SERVICO_CNTE_ACEITO_" + idServicoLocal) : "SERVICOS";
 			tela.voltar(ev -> {
 				navegador.navegarPara(prevPanelLocal);
 			});
