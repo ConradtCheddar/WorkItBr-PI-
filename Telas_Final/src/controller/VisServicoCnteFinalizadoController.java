@@ -74,7 +74,7 @@ public class VisServicoCnteFinalizadoController {
 			JFileChooser chooser = new JFileChooser();
 			chooser.setDialogTitle("Salvar arquivo");
 			// suggest a filename
-			String sugestao = "sub_servico_N" + s.getIdServico();
+			String sugestao = s.getNome_Servico();
 			chooser.setSelectedFile(new File(sugestao));
 			int resp = chooser.showSaveDialog(null);
 			if (resp != JFileChooser.APPROVE_OPTION) {
