@@ -57,7 +57,7 @@ public class ServicoDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(url, Usuario, Senha);
 
-			String sql = "SELECT * FROM Servico WHERE id_contratante = ?";
+			String sql = "SELECT * FROM Servico WHERE (id_contratante = ?) && (status = 'CADASTRADO' || status = 'REABERTO' || status = 'ACEITO')";
 			var stmt = conn.prepareStatement(sql);
 
 			stmt.setInt(1, u.getIdUsuario());

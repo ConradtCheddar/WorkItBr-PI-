@@ -68,7 +68,9 @@ public class TelaConfigUserController {
             if (novaSenha != null && !novaSenha.isEmpty()) {
                 // optional: add complexity/length checks here
                 usuario.setSenha(novaSenha);
+                return;
             }
+            M.Sucesso("Dados salvos com sucesso", "Sucesso");
             
             usuario.setUsuario(view.getNome());
             

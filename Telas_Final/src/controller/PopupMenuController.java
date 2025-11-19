@@ -47,10 +47,6 @@ public class PopupMenuController {
 			view.toggleMenu();
 		});
 		
-		view.getBtnSettings().addActionListener(e -> {
-			navegador.navegarPara("TEMP");
-			view.toggleMenu();
-		});
 
 		view.getBtnLogout().addActionListener(e -> {
 			performLogout();

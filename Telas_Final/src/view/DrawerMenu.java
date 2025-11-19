@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.function.Consumer;
@@ -20,7 +22,6 @@ public class DrawerMenu extends JPanel {
 	private int startX;
 
 	private final JButton btnLogout;
-	private final JButton btnSettings;
 	private final JButton btnProfile;
 	private final JButton btnTrabalhos;
 	private final JButton btnHome;
@@ -56,9 +57,6 @@ public class DrawerMenu extends JPanel {
 		btnTrabalhos = createMenuButton("Trabalhos");
 		topPanel.add(btnTrabalhos);
 		topPanel.add(Box.createVerticalStrut(5));
-		btnSettings = createMenuButton("Confirgurações");
-		topPanel.add(btnSettings);
-
 		btnLogout = createMenuButton("Sair");
 		bottomPanel.add(btnLogout);
 
@@ -70,10 +68,6 @@ public class DrawerMenu extends JPanel {
 
 	public JButton getBtnLogout() {
 		return btnLogout;
-	}
-
-	public JButton getBtnSettings() {
-		return btnSettings;
 	}
 
 	public JButton getBtnProfile() {
