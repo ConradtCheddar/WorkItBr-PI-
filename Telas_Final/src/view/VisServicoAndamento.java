@@ -47,7 +47,7 @@ public class VisServicoAndamento extends JPanel {
 	private JTextArea tpDesc;
 
 	public VisServicoAndamento(Servico s) {
-		setLayout(new MigLayout("", "[grow 60][grow]", "[grow][grow][grow 10][grow]"));
+		setLayout(new MigLayout("", "[grow 60][grow]", "[grow][grow]"));
 
 		Perfil = new JPanel();
 		Perfil.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante"));
