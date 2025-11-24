@@ -488,6 +488,25 @@ public class ServicoDAO {
 		return arquivo;
 	}
 	
+	public String recuperarExtencao(int idServico) {
+		String extencao = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			try (Connection conn = DriverManager.getConnection(url, Usuario, Senha);
+					var stmt = conn.prepareStatement("SELECT extencao FROM Servico WHERE ID_servico = ?")) {
+				stmt.setInt(1, idServico);
+				try (ResultSet rs = stmt.executeQuery()) {
+					if (rs.next()) {
+						extencao = rs.getString("extencao");
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return extencao;
+	}
+	
 	// Improved: save arquivo to a local file; if bytes are missing on the Servico object, fetch from DB
 	public void salvarArquivoLocal(Servico s) throws IOException {
 		byte[] arquivoByte = s.getArquivo();

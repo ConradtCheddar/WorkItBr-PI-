@@ -56,16 +56,18 @@ public class VisServicoCnteFinalizadoController {
 		this.view.visualizar(e ->{
 			byte[] arquivoBytes = s.getArquivo();
 			String extencao = s.getExtencao();
-			System.out.println("sigma"+s.getExtencao());
+			System.out.println(s.getNome_Servico()+"."+s.getExtencao());
 			if (arquivoBytes == null || arquivoBytes.length == 0) {
 				// try to recover from DB
 				arquivoBytes = this.model.recuperarArquivo(s.getIdServico());
+				extencao = this.model.recuperarExtencao(s.getIdServico());
 				if (arquivoBytes == null || arquivoBytes.length == 0) {
 					M.Erro("Nenhum arquivo foi descarregado. Confirme com contratado.", "Arquivo não salvo");
 					return;
 				}
 				// set on object for future use
 				s.setArquivo(arquivoBytes);
+				s.setExtencao(extencao);
 			}
 
 			// Open a Save dialog to ask where to save the file
