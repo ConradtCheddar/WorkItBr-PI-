@@ -92,12 +92,23 @@ public class TelaFactory {
     }
     
     public String criarVisServicoCnteFinalizado(Servico s) {
-    	String panelName = "VIS_FINALIZADO";
+    	String panelName = "VIS_FINALIZADO_CNTE";
     	
     	navegador.removerPainel(panelName);
     	
     	VisServicoCnteFinalizado view = new VisServicoCnteFinalizado(s);
 		VisServicoCnteFinalizadoController controller = new VisServicoCnteFinalizadoController(view, servicoDAO, navegador, s, this);
+		
+		navegador.adicionarPainel(panelName, view);
+        return panelName;
+    }
+    
+    public String criarVisServicoFinalizado(Servico s) {
+    	String panelName = "VIS_FINALIZADO";
+    	
+    	navegador.removerPainel(panelName);
+    	
+    	VisServicoFinalizado view = new VisServicoFinalizado(s);
 		
 		navegador.adicionarPainel(panelName, view);
         return panelName;

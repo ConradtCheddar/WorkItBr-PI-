@@ -45,11 +45,14 @@ public class VisServicoAndamentoController {
 				try {
 					// Converter o arquivo para bytes
 					File arquivo = new File(caminhoArquivo);
+					String nomeArquivo = arquivo.getName();
+					int ponto = nomeArquivo.lastIndexOf('.');
+					String extencao = nomeArquivo.substring(ponto +1);
 					byte[] arquivoBytes = Files.readAllBytes(arquivo.toPath());
 					
 					
-					// Salvar no banco de dados
-					model.salvarArquivoServico(s.getIdServico(), arquivoBytes);
+					// Salvar no banco de dadosS
+					model.salvarArquivoServico(s.getIdServico(), arquivoBytes, extencao);
 					
 					M. Sucesso("Arquivo salvo com sucesso no banco de dados.", "Sucesso");
 					

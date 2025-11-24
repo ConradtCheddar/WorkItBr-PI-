@@ -44,7 +44,7 @@ public class CadastroContratanteController {
 				/**
 				 * salva os valores
 				 */
-				Servico s = new Servico(nome_Servico, valorD, modalidade, descricao, null, Status.CADASTRADO,
+				Servico s = new Servico(nome_Servico, valorD, modalidade, descricao, null,null, Status.CADASTRADO,
 						navegador.getCurrentUser());
 
 				boolean sucesso = model.cadastrarS(s);

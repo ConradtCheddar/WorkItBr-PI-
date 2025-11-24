@@ -187,7 +187,7 @@ public class ListaServicosController {
 							}
 						}
 
-						Servico s = new Servico(nome, valor, modalidade, descricao, null, status, null);
+						Servico s = new Servico(nome, valor, modalidade, descricao, null, null, status, null);
 						boolean ok = dao.atualizarServicoPorId(idServico, s);
 						if (ok)
 							updated++;

@@ -15,8 +15,9 @@ public class Servico {
 	private byte[] arquivo;
 	private Status status;
 	private Path caminho;
+	private String extencao;
 
-	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, byte[] arquivo, Status status,
+	public Servico(Integer id, String nome_Servico, Double valor, String modalidade, String descricao, byte[] arquivo, String extencao, Status status,
 			Usuario contratante) {
 		this.idServico = (id != null) ? id : 0;
 		this.nome_Servico = nome_Servico;
@@ -25,11 +26,12 @@ public class Servico {
 		this.descricao = descricao;
 		this.contratante = contratante;
 		this.arquivo = arquivo;
+		this.extencao = extencao;
 		this.status = status;
 	}
 
-	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, byte[] arquivo, Status status, Usuario contratante) {
-		this(null, nome_Servico, valor, modalidade, descricao, arquivo, status, contratante);
+	public Servico(String nome_Servico, Double valor, String modalidade, String descricao, byte[] arquivo, String extencao, Status status, Usuario contratante) {
+		this(null, nome_Servico, valor, modalidade, descricao, arquivo, extencao, status, contratante);
 	}
 
 	public Integer getId() {
@@ -136,6 +138,16 @@ public class Servico {
 	public void setCaminho(Path caminho) {
 		this.caminho = caminho;
 	}
+
+	public String getExtencao() {
+		return extencao;
+	}
+
+	public void setExtencao(String extencao) {
+		this.extencao = extencao;
+	}
+	
+	
 	
 	
 	

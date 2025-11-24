@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS Servico (
     Modalidade VARCHAR(50) NOT NULL,
     Descricao LONGTEXT NOT NULL,
     submicoes longblob default null,
+    extencao varchar(10),
     status ENUM('CADASTRADO', 'FINALIZADO', 'ACEITO','REABERTO') NOT NULL default 'CADASTRADO',
     id_contratante INT NOT NULL,
     id_contratado INT DEFAULT NULL,

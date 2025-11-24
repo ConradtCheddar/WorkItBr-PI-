@@ -75,7 +75,7 @@ public class ServicoDAO {
 				}
 
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"), rs.getString("extencao"),
 						model.Status.valueOf(rs.getString("status")), u);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(rs.getInt("id_contratante"));
@@ -113,7 +113,7 @@ public class ServicoDAO {
 					}
 				}
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"), rs.getString("extencao"),
 						model.Status.valueOf(rs.getString("status")), contratante);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(idContratante);
@@ -149,7 +149,7 @@ public class ServicoDAO {
 					}
 				}
 				Servico s = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),rs.getString("extencao"),
 						model.Status.valueOf(rs.getString("status")), contratante);
 				s.setIdServico(rs.getInt("ID_servico"));
 				s.setIdContratante(idContratante);
@@ -195,7 +195,7 @@ public class ServicoDAO {
 		                rs.getString("Modalidade"),
 		                rs.getString("Descricao"),
 		   //esse null e problema
-		                null, model.Status.valueOf(rs.getString("status")),
+		                null, null, model.Status.valueOf(rs.getString("status")),
 		                contratante
 		               
 	            );
@@ -235,7 +235,7 @@ public class ServicoDAO {
 					}
 				}
 				servico = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"), rs.getString("extencao"),
 						model.Status.valueOf(rs.getString("status")), contratante);
 				servico.setIdServico(rs.getInt("ID_servico"));
 				servico.setIdContratante(idContratante);
@@ -357,7 +357,7 @@ public class ServicoDAO {
 
 			if (rs.next()) {
 				Servico u = new Servico(rs.getInt("ID_servico"), rs.getString("Nome_servico"), rs.getDouble("Valor"),
-						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"),
+						rs.getString("Modalidade"), rs.getString("Descricao"), rs.getBytes("submicoes"), rs.getString("extencao"),
 						model.Status.valueOf(rs.getString("status")), null);
 				u.setIdServico(rs.getInt("ID_servico"));
 				rs.close();
@@ -440,16 +440,17 @@ public class ServicoDAO {
 		}
 	}
 
-	public void salvarArquivoServico(int idServico, byte[] arquivo) {
+	public void salvarArquivoServico(int idServico, byte[] arquivo, String extencao) {
 		Connection conn = null;
 		java.sql.PreparedStatement stmt = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(url, Usuario, Senha);
-			String sql = "UPDATE Servico SET submicoes = ? WHERE ID_servico = ?";
+			String sql = "UPDATE Servico SET submicoes = ?, extencao = ? WHERE ID_servico = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setBytes(1, arquivo);
-			stmt.setInt(2, idServico);
+			stmt.setString(2, extencao);
+			stmt.setInt(3, idServico);
 			stmt.executeUpdate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -503,7 +504,8 @@ public class ServicoDAO {
 		if (!Files.exists(dirPath)) {
 			Files.createDirectories(dirPath);
 		}
-		String nome = s.getNome_Servico();
+		String nome = s.getNome_Servico()+"."+s.getExtencao();
+
 		Path caminhoArquivo = dirPath.resolve(nome);
 		try (FileOutputStream fos = new FileOutputStream(caminhoArquivo.toFile())) {
 			fos.write(arquivoByte);

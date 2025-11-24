@@ -55,6 +55,8 @@ public class VisServicoCnteFinalizadoController {
 		// When user clicks to download/baixar the file, ask where to save and write bytes to disk
 		this.view.visualizar(e ->{
 			byte[] arquivoBytes = s.getArquivo();
+			String extencao = s.getExtencao();
+			System.out.println("sigma"+s.getExtencao());
 			if (arquivoBytes == null || arquivoBytes.length == 0) {
 				// try to recover from DB
 				arquivoBytes = this.model.recuperarArquivo(s.getIdServico());
@@ -70,7 +72,7 @@ public class VisServicoCnteFinalizadoController {
 			JFileChooser chooser = new JFileChooser();
 			chooser.setDialogTitle("Salvar arquivo");
 			// suggest a filename
-			String sugestao = s.getNome_Servico();
+			String sugestao = s.getNome_Servico()+"."+s.getExtencao();
 			chooser.setSelectedFile(new File(sugestao));
 			int resp = chooser.showSaveDialog(null);
 			if (resp != JFileChooser.APPROVE_OPTION) {
