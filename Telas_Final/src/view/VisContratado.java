@@ -42,7 +42,7 @@ public class VisContratado extends JPanel {
 	private Image imagemOriginal;
 
 	public VisContratado(Usuario u) {
-		setLayout(new MigLayout("fill, insets 20 20 20 20, gap 20", "[grow][grow][grow]", "[grow][grow][grow]"));
+		setLayout(new MigLayout("fill", "[grow][grow][grow]", "[grow][grow][grow]"));
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Perfil"));
