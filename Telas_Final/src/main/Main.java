@@ -9,6 +9,7 @@ import controller.ListaServicosController;
 import controller.LoginController;
 import controller.PopupController;
 import controller.TempController;
+import model.InicializadorDoBanco;
 import model.ServicoDAO;
 import model.UsuarioDAO;
 import view.DrawerMenu;
@@ -43,6 +44,9 @@ public class Main {
 				wbBarra wbb = new wbBarra();
 				Mensagem M = new Mensagem();
 				Thread.sleep(150);
+				
+				InicializadorDoBanco inicializadorDoBanco = new InicializadorDoBanco();
+				inicializadorDoBanco.initializeDatabase();
 				
 				splash.setProgress(25, "Conectando ao banco de dados...");
 				UsuarioDAO usuarioDAO = new UsuarioDAO();
