@@ -47,6 +47,9 @@ public class Main {
 				criarBanco.criarBanco();
 				Thread.sleep(150);
 				
+				InicializadorDoBanco inicializadorDoBanco = new InicializadorDoBanco();
+				inicializadorDoBanco.initializeDatabase();
+				
 				splash.setProgress(25, "Conectando ao banco de dados...");
 				UsuarioDAO usuarioDAO = new UsuarioDAO();
 				ServicoDAO servicoDAO = new ServicoDAO();
