@@ -115,7 +115,7 @@ public class VisServicoCnte extends JPanel {
 		taPreco.setText(String.format("R$ %.2f", s.getValor()));
 		tpDesc.setText(s.getDescricao());
 
-		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.TEXTO },
 				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
 				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnEditar, FontSize.BOTAO });
 	}

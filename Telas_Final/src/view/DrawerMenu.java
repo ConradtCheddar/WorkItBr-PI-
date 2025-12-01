@@ -1,7 +1,7 @@
 package view;
 
 import javax.swing.*;
-
+import util.FontScaler;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 public class DrawerMenu extends JPanel {
 	private static final int MENU_WIDTH = 250;
 	private static final int MARGIN = 10;
-	private static final int BUTTON_HEIGHT = 50;
 	private static final int ANIMATION_DURATION = 300;
 	private static final int ANIMATION_FPS = 60;
 
@@ -29,6 +28,7 @@ public class DrawerMenu extends JPanel {
 	private Consumer<Boolean> onStateChange;
 	private final JPanel topPanel;
 	private final JPanel bottomPanel;
+	private Component parentComponent;
 
 	public DrawerMenu() {
 		setLayout(new BorderLayout());
@@ -64,6 +64,21 @@ public class DrawerMenu extends JPanel {
 		add(bottomPanel, BorderLayout.SOUTH);
 
 		isOpen = false;
+		
+		// Configurar listener de redimensionamento para escalar tamanhos dos botões
+		addComponentListener(new ComponentAdapter() {
+			private int lastHeight = -1;
+			
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int newHeight = e.getComponent().getHeight();
+				// Só atualizar se a altura realmente mudou
+				if (newHeight != lastHeight && newHeight > 0) {
+					lastHeight = newHeight;
+					updateButtonSizes();
+				}
+			}
+		});
 	}
 
 	public JButton getBtnLogout() {
@@ -92,6 +107,11 @@ public class DrawerMenu extends JPanel {
 
 	public void setOnStateChange(Consumer<Boolean> onStateChange) {
 		this.onStateChange = onStateChange;
+	}
+
+	public void setParentComponent(Component parent) {
+		this.parentComponent = parent;
+		updateButtonSizes();
 	}
 
 	public void toggleMenu() {
@@ -186,9 +206,17 @@ public class DrawerMenu extends JPanel {
 
 	private JButton createMenuButton(String text) {
 		JButton button = new JButton(text);
-		button.setMaximumSize(new Dimension(Integer.MAX_VALUE, BUTTON_HEIGHT));
-		button.setPreferredSize(new Dimension(MENU_WIDTH - 2 * MARGIN, BUTTON_HEIGHT));
-		button.setMinimumSize(new Dimension(MENU_WIDTH - 2 * MARGIN, BUTTON_HEIGHT));
+		int initialHeight = getButtonHeight();
+		button.setMaximumSize(new Dimension(Integer.MAX_VALUE, initialHeight));
+		button.setPreferredSize(new Dimension(MENU_WIDTH - 2 * MARGIN, initialHeight));
+		button.setMinimumSize(new Dimension(MENU_WIDTH - 2 * MARGIN, initialHeight));
+		
+		// Aplicar fonte inicial escalada
+		int panelHeight = parentComponent != null ? parentComponent.getHeight() : 600;
+		int fontSize = FontScaler.calculateFontSize(panelHeight, FontScaler.FontSize.BOTAO);
+		Font initialFont = new Font("Tahoma", Font.PLAIN, fontSize);
+		button.setFont(initialFont);
+		
 		button.setFocusPainted(false);
 		button.setContentAreaFilled(true);
 		button.setOpaque(true);
@@ -214,5 +242,34 @@ public class DrawerMenu extends JPanel {
 		});
 
 		return button;
+	}
+	
+	private int getButtonHeight() {
+		int panelHeight = parentComponent != null ? parentComponent.getHeight() : getHeight();
+		if (panelHeight <= 0) {
+			panelHeight = 600; // valor padrão se ainda não foi renderizado
+		}
+		return FontScaler.calculateFontSize(panelHeight, FontScaler.FontSize.BOTAO) + 15;
+	}
+	
+	public void updateButtonSizes() {
+		int buttonHeight = getButtonHeight();
+		int panelHeight = parentComponent != null ? parentComponent.getHeight() : 600;
+		JButton[] buttons = { btnHome, btnProfile, btnTrabalhos, btnLogout };
+		
+		for (JButton button : buttons) {
+			// Atualizar tamanho do botão
+			button.setMaximumSize(new Dimension(Integer.MAX_VALUE, buttonHeight));
+			button.setPreferredSize(new Dimension(MENU_WIDTH - 2 * MARGIN, buttonHeight));
+			button.setMinimumSize(new Dimension(MENU_WIDTH - 2 * MARGIN, buttonHeight));
+			
+			// Aplicar fonte escalada com estilo bold
+			int fontSize = FontScaler.calculateFontSize(panelHeight, FontScaler.FontSize.BOTAO);
+			Font scaledFont = new Font("Tahoma", Font.PLAIN, fontSize);
+			button.setFont(scaledFont);
+		}
+		
+		revalidate();
+		repaint();
 	}
 }

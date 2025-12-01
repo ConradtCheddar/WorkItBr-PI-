@@ -63,7 +63,7 @@ public class TelaLogin extends JPanel {
 		add(lblTitulo, "cell 2 0,alignx center,growy");
 
 		txtUsuario = new JTextField();
-		txtUsuario.setForeground(Color.BLACK);
+		txtUsuario.setForeground(Color.WHITE);
 		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		add(txtUsuario, "cell 1 1 3 1,grow");
 		txtUsuario.setColumns(10);
@@ -74,6 +74,7 @@ public class TelaLogin extends JPanel {
 		txtUsuario.putClientProperty(FlatClientProperties.STYLE, "focusedBackground: null;" + "background: null");
 
 		passwordField = new JPasswordField();
+		passwordField.setForeground(Color.WHITE);
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setLayout(new MigLayout("fill, insets 0", "[grow]", "[grow]"));
 		passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Senha");

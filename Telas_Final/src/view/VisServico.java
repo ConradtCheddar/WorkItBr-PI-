@@ -140,7 +140,7 @@ public class VisServico extends JPanel {
 		btnAceitar = new JButton("Aceitar");
 		panelBotoes.add(btnAceitar);
 
-		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.TEXTO },
 				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
 				new Object[] { taDesc, FontSize.TEXTO }, new Object[] { btnAceitar, FontSize.BOTAO });
 	}

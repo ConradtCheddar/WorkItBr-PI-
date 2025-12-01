@@ -137,7 +137,7 @@ public class VisServicoAndamento extends JPanel {
 		btnFinalizar = new JButton("Finalizar trabalho");
 		add(btnFinalizar, "cell 1 2,alignx right, gap 0 100");
 
-		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.TEXTO },
 				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
 				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnFinalizar, FontSize.BOTAO },
 				new Object[] { btnArquivos, FontSize.BOTAO }, new Object[] { lblNome_Arquivo, FontSize.TEXTO });

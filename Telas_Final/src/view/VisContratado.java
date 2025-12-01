@@ -130,7 +130,7 @@ public class VisContratado extends JPanel {
 		});
 		add(btnVoltar, "cell 0 2 3 1,alignx center,aligny center");
 
-		FontScaler.addAutoResize(this, new Object[] { taNome, FontSize.SUBTITULO },
+		FontScaler.addAutoResize(this, new Object[] { taNome, FontSize.TEXTO },
 				new Object[] { taGithub, FontSize.TEXTO }, new Object[] { taEmail, FontSize.TEXTO },
 				new Object[] { taTelefone, FontSize.TEXTO }, new Object[] { btnVoltar, FontSize.BOTAO });
 

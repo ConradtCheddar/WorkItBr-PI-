@@ -69,6 +69,7 @@ public class Primario extends JFrame {
 
 		dm.setOpaque(true);
 		dm.setVisible(false);
+		dm.setParentComponent(this);
 		menuLayer.add(dm);
 
 		menuLayer.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -90,6 +91,8 @@ public class Primario extends JFrame {
 					int height = getHeight();
 					dm.setBounds(x, y, menuWidth, height);
 				}
+				// Atualizar tamanhos dos botões quando a janela é redimensionada
+				dm.updateButtonSizes();
 				menuLayer.revalidate();
 				menuLayer.repaint();
 			}

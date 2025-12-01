@@ -130,7 +130,7 @@ public class VisServicoFinalizado extends JPanel {
 		ImageIcon foto = loadUserImage(u, 150, 150);
 		lblFoto.setIcon(foto);
 
-		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.TEXTO },
 				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
 				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { lblNome_Arquivo, FontSize.TEXTO });
 	}

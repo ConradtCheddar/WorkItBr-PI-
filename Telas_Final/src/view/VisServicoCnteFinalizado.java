@@ -132,7 +132,7 @@ public class VisServicoCnteFinalizado extends JPanel {
 		btnVisualizar = new JButton("Visualizar Arquivo");
 		add(btnVisualizar, "flowx,cell 1 2,alignx center");
 
-		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.SUBTITULO },
+		FontScaler.addAutoResize(this, new Object[] { taTitulo, FontSize.TEXTO },
 				new Object[] { taModalidade, FontSize.TEXTO }, new Object[] { taPreco, FontSize.TEXTO },
 				new Object[] { tpDesc, FontSize.TEXTO }, new Object[] { btnVoltar, FontSize.BOTAO },
 				new Object[] { btnBaixar, FontSize.BOTAO }, new Object[] { btnContratado, FontSize.BOTAO },
