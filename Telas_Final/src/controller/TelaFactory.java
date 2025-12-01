@@ -83,6 +83,8 @@ public class TelaFactory {
             usuario = usuarioAtualizado;
             navegador.setCurrentUser(usuarioAtualizado);
         }
+
+        System.out.println("[TelaFactory] criarTelaConfigUser -> usuario id=" + (usuario != null ? usuario.getIdUsuario() : null) + ", nome=" + (usuario != null ? usuario.getUsuario() : null));
         
         TelaConfigUser view = new TelaConfigUser();
         TelaConfigUserController controller = new TelaConfigUserController(view, usuarioDAO, navegador, usuario);

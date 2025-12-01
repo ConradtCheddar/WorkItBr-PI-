@@ -172,7 +172,8 @@ public class UsuarioDAO {
 	    return null;
 	}
 	
-	public void atualizarUsuario(Usuario u) {
+	public int atualizarUsuario(Usuario u) {
+	    int rowsUpdated = 0;
 	    try {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(url, Usuario, Senha);
@@ -188,13 +189,14 @@ public class UsuarioDAO {
 	        stmt.setString(7, u.getImagem64());
 	        stmt.setInt(8, u.getIdUsuario());
 
-	        int rowsUpdated = stmt.executeUpdate();
+	        rowsUpdated = stmt.executeUpdate();
 
 	        stmt.close();
 	        conn.close();
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
+	    return rowsUpdated;
 	}
 	
     public Usuario getUsuarioById(int id) {

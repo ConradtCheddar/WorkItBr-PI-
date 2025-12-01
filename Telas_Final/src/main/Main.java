@@ -43,8 +43,7 @@ public class Main {
 				splash.setProgress(15, "Inicializando componentes...");
 				wbBarra wbb = new wbBarra();
 				Mensagem M = new Mensagem();
-				CriarBanco criarBanco = new CriarBanco();
-				criarBanco.criarBanco();
+				CriarBanco.criarBanco();
 				Thread.sleep(150);
 				
 				splash.setProgress(25, "Conectando ao banco de dados...");
