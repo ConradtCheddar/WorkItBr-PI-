@@ -53,7 +53,9 @@ public class VisServico extends JPanel {
 		setLayout(new MigLayout("", "[grow][grow 170]", "[grow][grow 130][grow 10]"));
 
 		panel = new JPanel();
-		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante"));
+		TitledBorder titledBorder = new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Contratante");
+		titledBorder.setTitleFont(new Font("Arial", Font.BOLD, 14));
+		panel.setBorder(titledBorder);
 		add(panel, "cell 0 0,grow");
 		panel.setLayout(new CardLayout(0, 0));
 
@@ -65,7 +67,9 @@ public class VisServico extends JPanel {
 		panelPerfil.add(lblFoto, "cell 0 0,alignx center,aligny center");
 
 		panelInfo = new JPanel();
-		panelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Serviço"));
+		TitledBorder titledBorder2 = new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Serviço");
+		titledBorder2.setTitleFont(new Font("Arial", Font.BOLD, 14));
+		panelInfo.setBorder(titledBorder2);
 		add(panelInfo, "cell 1 0,grow");
 		panelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow]"));
 
@@ -100,7 +104,9 @@ public class VisServico extends JPanel {
 		panelInfo.add(taPreco, "cell 0 2,grow");
 
 		panelDesc = new JPanel();
-		panelDesc.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Descrição"));
+		TitledBorder titledBorder3 = new TitledBorder(new LineBorder(Color.GRAY, 1), "Descrição");
+		titledBorder3.setTitleFont(new Font("Arial", Font.BOLD, 14));
+		panelDesc.setBorder(titledBorder3);
 		add(panelDesc, "cell 0 1 2 1,grow");
 		panelDesc.setLayout(new MigLayout("", "[grow]", "[grow]"));
 

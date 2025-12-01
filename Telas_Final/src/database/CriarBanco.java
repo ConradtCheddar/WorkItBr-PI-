@@ -2,6 +2,7 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class CriarBanco {
@@ -33,6 +34,8 @@ public class CriarBanco {
 
             System.out.println("🔌 Conectado ao MySQL como root.");
             Statement st = conn.createStatement();
+            
+            ResultSet rs = null;
 
             // PASSO 2: Criar banco de dados
             System.out.println("▶ Criando banco WorkItBr_BD...");
@@ -104,28 +107,30 @@ public class CriarBanco {
             System.out.println("▶ Inserindo dados iniciais...");
             
             // Admin
-            stDB.execute("""
-                INSERT IGNORE INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, isAdmin, imagem64)
-                VALUES ('Admin', 'admin@workit.com', '00000000000', '11999999999', '4321', TRUE, '/9')
-            """);
-
-            // Serviço teste
-            stDB.execute("""
-                INSERT IGNORE INTO Servico (Nome_servico, Valor, Modalidade, Descricao, id_contratante, status)
-                VALUES ('teste1', 100, 'Remoto', 'Servico ainda nao aceito', 1, 'CADASTRADO')
-            """);
-
-            // Usuário contratante
-            stDB.execute("""
-                INSERT IGNORE INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, github, isContratado, isAdmin, isContratante, imagem64)
-                VALUES ('1', 'joao.contratante@workit.com', '12345678909', '11987654321', '1', NULL, FALSE, FALSE, TRUE, '/9')
-            """);
-
-            // Usuário contratado
-            stDB.execute("""
-                INSERT IGNORE INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, github, isContratado, isAdmin, isContratante, imagem64)
-                VALUES ('2', 'maria.dev@workit.com', '11144477735', '21988887777', '2', 'github.com/mariadev', TRUE, FALSE, FALSE, '/9')
-            """);
+            String insertAdmin = "INSERT INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, isAdmin, imagem64) " +
+                    "SELECT 'Admin', 'admin@workit.com', '00000000000', '11999999999', '4321', TRUE, '' " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM Usuarios WHERE Nome_Usuario = 'Admin')";
+                stDB.executeUpdate(insertAdmin);
+                
+                // Serviço teste
+                String insertServico = "INSERT INTO Servico (Nome_servico, Valor, Modalidade, Descricao, id_contratante, status) " +
+                    "SELECT 'teste1', 100, 'Remoto', 'Serviço ainda não aceito', 1, 'CADASTRADO' " +
+                    "FROM Usuarios " +
+                    "WHERE Nome_Usuario = 'Admin' " +
+                    "AND NOT EXISTS (SELECT 1 FROM Servico WHERE Nome_servico = 'teste1')";
+                stDB.executeUpdate(insertServico);
+                
+                // Usuario 1 (Contratante)
+                String insertUser1 = "INSERT INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, github, isContratado, isAdmin, isContratante, imagem64) " +
+                    "SELECT '1', 'joao.contratante@workit.com', '12345678909', '11987654321', '1', NULL, FALSE, FALSE, TRUE, '' " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM Usuarios WHERE Email = 'joao.contratante@workit.com')";
+                stDB.executeUpdate(insertUser1);
+                
+                // Usuario 2 (Contratado)
+                String insertUser2 = "INSERT INTO Usuarios (Nome_Usuario, Email, CPF_CNPJ, Telefone, Senha, github, isContratado, isAdmin, isContratante, imagem64) " +
+                    "SELECT '2', 'maria.dev@workit.com', '11144477735', '21988887777', '2', 'github.com/mariadev', TRUE, FALSE, FALSE, '' " +
+                    "WHERE NOT EXISTS (SELECT 1 FROM Usuarios WHERE Email = 'maria.dev@workit.com')";
+                stDB.executeUpdate(insertUser2);
 
             connDB.close();
             System.out.println("✅ Banco criado e configurado com sucesso!");

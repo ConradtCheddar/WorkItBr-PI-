@@ -45,7 +45,9 @@ public class VisContratado extends JPanel {
 		setLayout(new MigLayout("fill", "[grow][grow][grow]", "[grow][grow][grow]"));
 
 		panel = new JPanel();
-		panel.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Perfil"));
+		TitledBorder titledBorder = new TitledBorder(new LineBorder(Color.GRAY, 1), "Foto do Perfil");
+		titledBorder.setTitleFont(new Font("Arial", Font.BOLD, 14));
+		panel.setBorder(titledBorder);
 		add(panel, "cell 0 0 1 2,grow");
 		panel.setLayout(new CardLayout(0, 0));
 
@@ -69,7 +71,9 @@ public class VisContratado extends JPanel {
 		});
 
 		PanelInfo = new JPanel();
-		PanelInfo.setBorder(new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Contratado"));
+		TitledBorder titledBorder2 = new TitledBorder(new LineBorder(Color.GRAY, 1), "Informações do Contratado");
+		titledBorder2.setTitleFont(new Font("Arial", Font.BOLD, 14));
+		PanelInfo.setBorder(titledBorder2);
 		add(PanelInfo, "cell 1 0 2 2,grow");
 		PanelInfo.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow]"));
 
