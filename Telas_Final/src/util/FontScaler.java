@@ -116,6 +116,8 @@ public class FontScaler {
         });
     }
     
+    
+    
     /**
      * Adds a resize listener that only runs a callback (no automatic font scaling).
      */
