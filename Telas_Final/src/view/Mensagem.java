@@ -10,93 +10,150 @@ import java.awt.event.ComponentEvent;
 public class Mensagem {
 
     public void Erro(String mensagem, String titulo) {
+        // Estimativa de tamanho inicial baseada no comprimento da mensagem
+        int estWidth = Math.max(480, Math.min(900, mensagem != null ? mensagem.length() * 7 + 200 : 480));
+        int estHeight = 220;
+
+        // Calcular fontes baseadas na estimativa (antes de criar o OptionPane)
+        int maiorDimensao = Math.max(estWidth, estHeight);
+        Font textoFont = new Font("Tahoma", Font.PLAIN, Math.max(FontScaler.calculateFontSize(maiorDimensao, FontSize.TEXTO), 12));
+        Font botaoFont = new Font("Tahoma", Font.BOLD, Math.max(FontScaler.calculateFontSize(maiorDimensao, FontSize.BOTAO), 14));
+
+        // Salvar valores antigos do UIManager e aplicar temporariamente
+        Object oldMsgFont = UIManager.get("OptionPane.messageFont");
+        Object oldBtnFont = UIManager.get("OptionPane.buttonFont");
+        UIManager.put("OptionPane.messageFont", textoFont);
+        UIManager.put("OptionPane.buttonFont", botaoFont);
+
         JOptionPane optionPane = new JOptionPane(mensagem, JOptionPane.ERROR_MESSAGE);
         JDialog dialog = optionPane.createDialog(titulo);
-        
-        // Configurar tamanho inicial
-        dialog.setSize(450, 200);
+
+        // Aplicar prefered size estimado e forçar layout com a fonte já configurada
+        dialog.setPreferredSize(new Dimension(estWidth, estHeight));
+        dialog.pack();
         dialog.setLocationRelativeTo(null);
-        
-        // Aplicar fonte após o dialog estar visível
+
+        // Aplicar fontes explicitamente na hierarquia (resiliência)
+        aplicarFonts(dialog, optionPane);
+
         dialog.addComponentListener(new ComponentAdapter() {
-            private boolean fonteAplicada = false;
-            
+            private boolean fonteAplicada = true;
+
             @Override
             public void componentShown(ComponentEvent e) {
                 if (!fonteAplicada) {
                     fonteAplicada = true;
-                    // Garantir que é executado no EDT
-                    SwingUtilities.invokeLater(() -> aplicarFonts(dialog, optionPane));
+                    aplicarFonts(dialog, optionPane);
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(null);
                 }
             }
-            
+
             @Override
             public void componentResized(ComponentEvent e) {
                 SwingUtilities.invokeLater(() -> aplicarFonts(dialog, optionPane));
             }
         });
-        
+
         dialog.setVisible(true);
+
+        // Restaurar valores antigos do UIManager
+        UIManager.put("OptionPane.messageFont", oldMsgFont);
+        UIManager.put("OptionPane.buttonFont", oldBtnFont);
     }
 
     public void Sucesso(String mensagem, String titulo) {
+        int estWidth = Math.max(480, Math.min(900, mensagem != null ? mensagem.length() * 7 + 200 : 480));
+        int estHeight = 200;
+
+        int maiorDimensao = Math.max(estWidth, estHeight);
+        Font textoFont = new Font("Tahoma", Font.PLAIN, Math.max(FontScaler.calculateFontSize(maiorDimensao, FontSize.TEXTO), 12));
+        Font botaoFont = new Font("Tahoma", Font.BOLD, Math.max(FontScaler.calculateFontSize(maiorDimensao, FontSize.BOTAO), 14));
+
+        Object oldMsgFont = UIManager.get("OptionPane.messageFont");
+        Object oldBtnFont = UIManager.get("OptionPane.buttonFont");
+        UIManager.put("OptionPane.messageFont", textoFont);
+        UIManager.put("OptionPane.buttonFont", botaoFont);
+
         JOptionPane optionPane = new JOptionPane(mensagem, JOptionPane.PLAIN_MESSAGE);
         JDialog dialog = optionPane.createDialog(titulo);
-        
-        // Configurar tamanho inicial
-        dialog.setSize(450, 200);
+
+        dialog.setPreferredSize(new Dimension(estWidth, estHeight));
+        dialog.pack();
         dialog.setLocationRelativeTo(null);
-        
-        // Aplicar fonte após o dialog estar visível
+
+        aplicarFonts(dialog, optionPane);
+
         dialog.addComponentListener(new ComponentAdapter() {
-            private boolean fonteAplicada = false;
-            
+            private boolean fonteAplicada = true;
+
             @Override
             public void componentShown(ComponentEvent e) {
                 if (!fonteAplicada) {
                     fonteAplicada = true;
-                    // Garantir que é executado no EDT
-                    SwingUtilities.invokeLater(() -> aplicarFonts(dialog, optionPane));
+                    aplicarFonts(dialog, optionPane);
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(null);
                 }
             }
-            
+
             @Override
             public void componentResized(ComponentEvent e) {
                 SwingUtilities.invokeLater(() -> aplicarFonts(dialog, optionPane));
             }
         });
-        
+
         dialog.setVisible(true);
+
+        UIManager.put("OptionPane.messageFont", oldMsgFont);
+        UIManager.put("OptionPane.buttonFont", oldBtnFont);
     }
 
     public void Aviso(String mensagem, String titulo) {
+        int estWidth = Math.max(480, Math.min(900, mensagem != null ? mensagem.length() * 7 + 200 : 480));
+        int estHeight = 200;
+
+        int maiorDimensao = Math.max(estWidth, estHeight);
+        Font textoFont = new Font("Tahoma", Font.PLAIN, Math.max(FontScaler.calculateFontSize(maiorDimensao, FontSize.TEXTO), 12));
+        Font botaoFont = new Font("Tahoma", Font.BOLD, Math.max(FontScaler.calculateFontSize(maiorDimensao, FontSize.BOTAO), 14));
+
+        Object oldMsgFont = UIManager.get("OptionPane.messageFont");
+        Object oldBtnFont = UIManager.get("OptionPane.buttonFont");
+        UIManager.put("OptionPane.messageFont", textoFont);
+        UIManager.put("OptionPane.buttonFont", botaoFont);
+
         JOptionPane optionPane = new JOptionPane(mensagem, JOptionPane.WARNING_MESSAGE);
         JDialog dialog = optionPane.createDialog(titulo);
-        
-        // Configurar tamanho inicial
-        dialog.setSize(450, 200);
+
+        dialog.setPreferredSize(new Dimension(estWidth, estHeight));
+        dialog.pack();
         dialog.setLocationRelativeTo(null);
-        
-        // Aplicar fonte após o dialog estar visível
+
+        aplicarFonts(dialog, optionPane);
+
         dialog.addComponentListener(new ComponentAdapter() {
-            private boolean fonteAplicada = false;
-            
+            private boolean fonteAplicada = true;
+
             @Override
             public void componentShown(ComponentEvent e) {
                 if (!fonteAplicada) {
                     fonteAplicada = true;
-                    // Garantir que é executado no EDT
-                    SwingUtilities.invokeLater(() -> aplicarFonts(dialog, optionPane));
+                    aplicarFonts(dialog, optionPane);
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(null);
                 }
             }
-            
+
             @Override
             public void componentResized(ComponentEvent e) {
                 SwingUtilities.invokeLater(() -> aplicarFonts(dialog, optionPane));
             }
         });
-        
+
         dialog.setVisible(true);
+
+        UIManager.put("OptionPane.messageFont", oldMsgFont);
+        UIManager.put("OptionPane.buttonFont", oldBtnFont);
     }
     
     // Método para aplicar fontes escaladas
